@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon'
+import "../css/ResourcesHeader.css"
+
+/**
+ *
+ * Required Params
+ * @param {string} image - Url to background image
+ * @param {int} height - height of background image
+ * @param {int} width - width of background image
+ *
+ * Optional Params
+ * @param {string} title - Title for resource header
+ * @param {string} text - Subtext for resource header (displayed below title)
+ * @param {bool} showArrow - Default true. Indicates whether to show white arrow on bottom right
+ * @param {function} arrowClickCallback - Only applicable if showArrow is also set to true. Callback used when arrow is clicked by user.
+ */
+
+
+const {
+    image,
+    title,
+    showArrow = true,
+    arrowClickCallback = null,
+} = Astro.props;
+---
+<style>
+    @media only screen and (min-width: 500px) {
+        .header-height
+        {
+            height: max(75vh, 400px); / height: max(40vh, 300px);
+        }
+    }
+</style>
+    <div
+        class="header-div header-height"
+        style={{
+            backgroundImage: `url("${image}")`,
+        }}
+    >
+    <!-- Purple box with a title and description -->
+    <div class="header-info-div">
+        {title ? <h1 class="header-text">{title}</h1> : null}
+        <div class="header-info"><slot /></div>
+    </div>
+    <!-- Displays white arrow on bottom left of slide -->
+    {showArrow ? (
+        <div class="circle-arrow">
+            <button type="button" onclick={arrowClickCallback}><Icon name="bi:arrow-down-circle"/></button>
+        </div>
+    ) : null}
+</div>

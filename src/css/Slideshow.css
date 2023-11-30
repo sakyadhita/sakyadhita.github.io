@@ -1,0 +1,76 @@
+.Slideshow {
+  overflow: hidden;
+  display: block;
+  position: block;
+}
+.react-slideshow-container {
+  height: 100%;
+}
+.Slideshow_arrowleft {
+  width: 50px !important;
+  margin-left: 60px;
+  z-index: 2;
+  cursor: pointer;
+}
+.Slideshow_arrowright {
+  width: 50px !important;
+  margin-right: 60px;
+  z-index: 2;
+  cursor: pointer;
+}
+.Slideshow_arrowleft--mobile {
+  width: 25px !important;
+  margin-left: 20px;
+
+  z-index: 2;
+  cursor: pointer;
+}
+.Slideshow_arrowright--mobile {
+  width: 25px !important;
+
+  z-index: 2;
+  cursor: pointer;
+}
+.indicators {
+  margin: 0 !important;
+  padding: 0;
+  z-index: 100;
+  width: 100%;
+
+  position: relative;
+  bottom: 64px;
+}
+.indicator {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 11px;
+}
+.indicators > * {
+  box-sizing: border-box;
+}
+.indicators > .dot.active {
+  width: 20px;
+  height: 20px;
+  margin: 11px;
+  border-radius: 50%;
+  color: var(--white);
+  border: 10px solid var(--white);
+}
+.indicators > .dot {
+  width: 20px;
+  height: 20px;
+  margin: 11px;
+  border-radius: 50%;
+  color: #c4c4c4;
+  border: 10px solid #c4c4c4;
+}
+.indicators > .dot:hover {
+  width: 20px;
+  height: 20px;
+  margin: 11px;
+  border-radius: 50%;
+  color: var(--white);
+  border: 10px solid var(--white);
+  cursor: pointer;
+}

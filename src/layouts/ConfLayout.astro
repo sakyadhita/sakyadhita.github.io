@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import Conferences from '../components/Layouts/Conferences'
+
+const conferences = await getCollection('conference')
+---
+
+<PageLayout>
+  <Conferences client:only="react" conferences={conferences.reverse()}>
+    <slot />
+  </Conferences>
+</PageLayout>

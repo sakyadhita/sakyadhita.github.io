@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import JoinUs from '../components/Layouts/JoinUs'
+
+const membertypes = await getCollection('membertype')
+const memberships = membertypes.map((m) => m.data)
+
+const { frontmatter } = Astro.props
+const image = await import(`../media/${frontmatter.image}.jpg`)
+---
+
+<PageLayout>
+  <JoinUs client:only="react"
+    frontmatter={frontmatter}
+    image={image.default.src}
+    memberships={memberships}
+  >
+    <slot />
+  </JoinUs>
+  <form name="membership" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="fName" />
+    <input type="text" name="mName" />
+    <input type="text" name="lName" />
+    <input type="tel" name="phone" />
+    <input type="email" name="email" />
+    <input type="text" name="address" />
+  </form>
+</PageLayout>

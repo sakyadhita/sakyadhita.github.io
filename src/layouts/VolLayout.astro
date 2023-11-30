@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import Volunteer from '../components/Layouts/Volunteer'
+
+const { frontmatter } = Astro.props
+const image = await import(`../media/${frontmatter.image}.jpg`)
+
+const volinterests = await getCollection('volinterest')
+const interests = volinterests.map((interest) => {
+  let newinterest = interest
+  newinterest.id = parseInt(interest.slug) - 1
+  return newinterest
+})
+---
+
+<PageLayout>
+  <Volunteer client:only="react"
+    frontmatter={frontmatter}
+    image={image.default.src}
+    interests={interests}
+  >
+    <slot />
+  </Volunteer>
+  <form name="volunteer" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="fName" />
+    <input type="text" name="mName" />
+    <input type="text" name="lName" />
+    <input type="tel" name="phone" />
+    <input type="email" name="email" />
+    <input type="text" name="address" />
+    <input type="text" name="interests" />
+  </form>
+</PageLayout>

@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import ResourcesNavBar from '../components/Main/ResourcesNavBar'
+import BuddhistCulture from '../components/Layouts/BuddhistCulture'
+
+const sections = await getCollection('section', ({ data }) => {
+  return data.isPublished == true && data.page == 'BuddhistCulture'
+})
+const contents = sections.map(async (s) => {
+  const { Content } = await s.render()
+  return Content
+})
+
+const { frontmatter } = Astro.props
+const image = await import(`../media/${frontmatter.image}.jpg`)
+---
+
+<PageLayout>
+  <ResourcesNavBar client:only="react">
+    <BuddhistCulture client:only="react"
+      frontmatter={frontmatter}
+      image={image.default.src}
+      sections={sections}
+    >
+      {sections.map((item, index) => {
+        const Content = contents[index]
+        
+        return (
+          <div class="buddhist-contents-div">
+            <div class="buddhist-section">
+              {/* This div is used for scrolling to the specific spot */}
+              <div class="buddhist-scroll" id={item.data.title.replaceAll(' ', '')} />
+
+              {/* The title of the paragraph */}
+              {index === 0 ? (
+                <h1>{item.data.title}</h1>
+              ) : (
+                <h1>{item.data.title}</h1>
+              )}
+              {/* The text of the div */}
+              <div class="page-content">
+                <Content />
+              </div>
+            </div>
+
+            {/* The orange divider at the bottom of the page */}
+            {index !== sections.length - 1 ? <div class="buddhist-divider" /> : null}
+          </div>)
+      })}
+      <slot />
+    </BuddhistCulture>
+  </ResourcesNavBar>
+</PageLayout>

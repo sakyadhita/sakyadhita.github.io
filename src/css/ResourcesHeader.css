@@ -1,0 +1,88 @@
+.header-div {
+  position: relative;
+  background-size: cover, contain;
+  background-position: center, top;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.header-div .header-info-div {
+  margin-left: 10%;
+  background: rgb(102, 82, 160, 0.85);
+  width: 489px;
+  height: fit-content;
+  padding: 2.97vw 3vw 2.97vw 3vw;
+  color: var(--white);
+}
+
+.header-info-div {
+  position: absolute;
+  margin-top: 10%;
+}
+
+.header-text {
+  font-family: var(--heading-font);
+  font-style: bold;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 45px;
+  width: 100%;
+}
+
+.header-info {
+  margin-top: 1.09vw;
+  font-family: var(--text-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.header-div .circle-arrow {
+  color: white;
+  position: absolute;
+  font-size: 74px;
+  bottom: 0;
+  right: 0;
+  margin: 20px 30px 0px 0px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .header-div .circle-arrow {
+    font-size: 54px;
+  }
+}
+
+@media screen and (min-width: 450px) and (max-width: 600px) {
+  .header-info {
+    font-size: 3vw;
+    line-height: 5vw;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .header-info {
+    font-size: 5vw;
+    line-height: 6.88vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header-div .header-info-div {
+    width: 66%;
+    margin-left: 7.19vw;
+    top: 7.78vw;
+    padding: 0vw 2.34vw 1vw 0vw;
+  }
+
+  .header-text {
+    font-size: 5.63vw;
+    line-height: 170%;
+    margin-left: 6.25vw;
+    margin-top: 4.19vw;
+  }
+
+  .header-info {
+    margin: 4.8vh 6.25vw 9vh 6.25vw;
+    bottom: 23.62%;
+  }
+}

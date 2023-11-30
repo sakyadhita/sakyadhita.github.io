@@ -1,0 +1,272 @@
+.main-content {
+  align-content: center;
+  width: 61%;
+  margin-left: 19.5%;
+}
+
+.thank-you {
+  font-size: 36px;
+  margin-top: 6.56vw;
+  font-weight: bold;
+}
+
+.page-info {
+  margin-top: 1.33vw;
+  font-size: 18px;
+}
+
+.checkbox-text {
+  font-size: 18px;
+}
+
+.signup-text {
+  margin-top: 6.2vw;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.contact-info-text {
+  margin-top: 8.83vw;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.additional-info-text {
+  margin-top: 8.28vw;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.payment-text {
+  margin-top: 12.3vw;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.membership-check {
+  display: inline-block;
+  margin-top: 2.97vw;
+}
+
+.donate-check {
+  display: inline-block;
+  margin-top: 2.5vw;
+  width: 100%;
+}
+
+.error-message {
+  color: #ea4444;
+  font-size: 18px;
+  text-align: center;
+}
+
+.paypal-buttons {
+  width: 100%;
+  padding-bottom: 12.34vw;
+  margin-top: 7.27vw;
+  text-align: center;
+}
+
+.continue-button {
+  width: 100%;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.error-asterisk {
+  color: red;
+  margin-left: 0.16vw;
+  font-size: 25px;
+}
+
+.form-item {
+  display: inline-block;
+  margin-top: 2.27vw;
+  width: 100%;
+}
+
+.donation-num {
+  display: inline-block;
+  margin-top: 0.7vw;
+  width: 100%;
+}
+
+.input-field {
+  width: 98%;
+  height: 2.5vw;
+}
+
+.submit-button {
+  margin-top: 6.56vw;
+  margin-bottom: 9.22vw;
+  text-align: center;
+}
+
+.select-membership-form {
+  height: 2.5vw;
+  width: 98%;
+}
+
+.select-membership {
+  height: 2.5vw;
+}
+
+.select-membership-label {
+  margin-top: -0.78vw;
+}
+
+.member-type {
+  height: 2.5vw;
+}
+
+.member-type-form {
+  height: 2.5vw;
+  width: 98%;
+}
+
+.member-type-label {
+  margin-top: -0.78vw;
+}
+
+.country-dropdown {
+  padding-left: 10px;
+  height: 40px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  font-size: 18px;
+  line-height: 1.95vw;
+  color: var(--black);
+  background: var(--white);
+}
+
+@media screen and (min-width: 901px) and (max-width: 1250px) {
+  .last-name-field {
+    margin-top: 35px;
+  }
+
+  .city-field {
+    margin-top: 35px;
+  }
+}
+
+@media screen and (min-width: 901px) and (max-width: 1000px) {
+  .input-field {
+    width: 97%;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 900px) {
+  .input-field {
+    width: 96%;
+  }
+
+  .form-item {
+    margin-top: 29px;
+  }
+
+  .last-name-field {
+    margin-top: 40px;
+  }
+
+  .city-field {
+    margin-top: 40px;
+  }
+
+  .payment-text {
+    margin-top: 120px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main-content {
+    width: 85%;
+    margin-left: 7.5%;
+  }
+  .thank-you {
+    margin-top: 50px;
+    font-size: 22px;
+    line-height: 170%;
+  }
+
+  .page-info {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .checkbox-text {
+    font-size: 16px;
+    line-height: 22px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 5px;
+  }
+
+  .input-field {
+    width: 95%;
+  }
+
+  .form-item {
+    margin-top: 15px;
+  }
+
+  .last-name-field {
+    margin-top: 28px;
+  }
+
+  .city-field {
+    margin-top: 28px;
+  }
+
+  .signup-text {
+    font-size: 22px;
+    margin-top: 50px;
+  }
+
+  .contact-info-text {
+    font-size: 22px;
+    margin-top: 70px;
+  }
+
+  .additional-info-text {
+    margin-top: 70px;
+    font-size: 22px;
+  }
+
+  .payment-text {
+    margin-top: 140px;
+    font-size: 22px;
+  }
+
+  .error-message {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .paypal-buttons {
+    padding-bottom: 79px;
+    margin-top: 43px;
+  }
+
+  .donate-checkbox {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .donation-text {
+    width: 85%;
+  }
+
+  .organizations-section {
+    margin-top: 20px;
+  }
+
+  .donate-check {
+    margin-top: 30px;
+  }
+
+  .submit-button {
+    margin-top: 31px;
+    margin-bottom: 58px;
+  }
+}

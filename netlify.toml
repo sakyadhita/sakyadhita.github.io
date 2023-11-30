@@ -1,0 +1,11 @@
+[dev]
+  targetPort = 4321
+  command = "pnpm run dev"
+
+[build]
+  command = "pnpm run build"
+  functions = "netlify/functions"
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"

@@ -1,0 +1,195 @@
+.Footer-Main-Container::before,
+.Footer-Main-Container {
+  height: 550px;
+}
+
+/* Background image */
+.Footer-Main-Container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: -1;
+
+  display: block;
+  width: 100%;
+
+  background-image: url("https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2996&q=80");
+  /* allows for a purple tint on image */
+  box-shadow: inset 0 0 0 500px rgba(26, 23, 194, 0.4);
+  border-radius: 5px;
+  filter: blur(5px);
+  background-size: cover, contain;
+  background-position: center, top;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* Content - Exists on top of image */
+.Footer-Main-Container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+
+  background-color: var(--lightpurple);
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 60px 80px 40px;
+}
+
+.Footer-Pages {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  width: 100%;
+}
+
+.Footer-Pages a {
+  color: var(--white);
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+.Footer-Pages a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.Footer-Page-Expanded {
+  display: flex;
+  flex-direction: column;
+}
+
+.Footer-Page-Expanded .sub-item {
+  font-size: 14px;
+  padding-right: 20px;
+  margin-top: 5px;
+  color: rgb(206, 229, 236);
+}
+
+.Footer-Page-Expanded .sub-item:hover {
+  color: var(--orange);
+}
+
+.Footer-Bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  flex: 1;
+  width: 100%;
+}
+
+.Footer-Social-Media-Wrapper {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+/* Social Media Icons */
+.Footer-Social-Media {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.Footer-Social-Media a {
+  font-size: 45px;
+  padding-right: 20px;
+}
+
+.cc-notice {
+  color: white;
+  text-align: center;
+}
+
+.cc-notice a:hover {
+  color: var(--orange);
+}
+
+@media only screen and (max-width: 950px) {
+  .Footer-Bottom {
+    flex-direction: column;
+  }
+
+  .Footer-Pages a {
+    font-size: 20px;
+  }
+
+  .Footer-Page-Expanded .sub-item {
+    font-size: 12px;
+  }
+
+  .Footer-Social-Media-Wrapper {
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .Footer-Main-Container::before,
+  .Footer-Main-Container {
+    height: 600px;
+  }
+
+  .Footer-Main-Container {
+    overflow: hidden;
+    align-items: flex-end;
+    padding: 5vw 10vw 10vw;
+  }
+
+  .Footer-Pages {
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .Footer-Pages a {
+    font-size: 18px;
+  }
+
+  .Footer-Bottom {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+  }
+
+  .Footer-Social-Media {
+    margin-top: -20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .Footer-Social-Media a {
+    font-size: 35px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .Footer-Social-Media {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+}
+
+/* Galaxy Fold  */
+@media only screen and (max-width: 300px) {
+  .Footer-Pages a {
+    font-size: 16px;
+  }
+
+  .Footer-Pages {
+    height: 80%;
+  }
+
+  .Footer-Social-Media a {
+    font-size: 30px;
+  }
+}

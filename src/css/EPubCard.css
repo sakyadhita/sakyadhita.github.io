@@ -1,0 +1,87 @@
+/* Desktop */
+.EPubCard {
+  display: inline-block;
+  width: 184px;
+  margin: 25px;
+}
+.EPubCard_title {
+  display: block;
+
+  font-family: var(--heading-font);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 31px;
+  text-align: left;
+
+  white-space: text-wrap;
+}
+.EPubCard_author {
+  display: block;
+
+  font-family: var(--text-font);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding-top: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.EPubCard_image {
+  width: 184px;
+  height: 271px;
+  object-fit: cover;
+  box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.25);
+  margin-bottom: 20px;
+}
+
+.EPubCard_image:hover {
+  transform: scale(1.08);
+  box-shadow: 0px 0px 12px 3px var(--darkorange);
+}
+
+/* Mobile */
+.EPubCard--mobile {
+  position: relative;
+  display: inline-block;
+  width: 152px;
+  margin: 25px;
+}
+.EPubCard_title--mobile {
+  max-height: 48px;
+
+  display: block;
+
+  font-family: var(--heading-font);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+
+  white-space: text-wrap;
+  overflow: hidden;
+}
+.EPubCard_author--mobile {
+  max-height: 21px;
+  display: block;
+
+  font-family: var(--text-font);
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+  padding-top: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.EPubCard_image--mobile {
+  width: 152px;
+  height: 221px;
+  object-fit: cover;
+  box-shadow: 0px 0px 3px 0.75px rgba(0, 0, 0, 0.25);
+  margin-bottom: 17px;
+}

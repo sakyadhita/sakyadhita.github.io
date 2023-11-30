@@ -1,0 +1,3 @@
+---
+layout: ../layouts/ConfLayout.astro
+---

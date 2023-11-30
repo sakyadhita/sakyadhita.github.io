@@ -1,0 +1,209 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.buddhist-container {
+  position: relative;
+}
+
+.buddhist-header {
+  position: relative;
+  width: 100vw;
+  height: 525px;
+}
+
+.buddhist-title {
+  position: absolute;
+  top: 120px;
+  left: 65px;
+  width: 500px;
+  height: 100px;
+
+  background-color: #6652a0d9;
+  color: white;
+  font-family: var(--heading-font);
+  font-size: 2.25em;
+
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100px;
+}
+
+.buddhist-header img {
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+}
+
+.buddhist-slider-wrapper {
+  position: absolute;
+  top: 75vh;
+  margin-left: min(50px, 2.5vw);
+  height: calc(100% - 615px);
+}
+
+.buddhist-slider {
+  position: sticky;
+  top: 210px;
+  margin-bottom: calc(18vh);
+  margin-top: 100px;
+  display: flex;
+}
+
+.buddhist-slider-nav {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.buddhist-slider-nav li {
+  padding: 15px 0;
+  font-size: min(1.125em, 1.7vw);
+}
+
+.buddhist-slider-nav li.underline {
+  text-decoration: underline solid var(--orange) 2px;
+  text-underline-offset: 6px;
+}
+
+.buddhist-slider-nav li a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.orange-underline {
+  text-decoration: underline solid var(--orange) 2px;
+  text-underline-offset: 6px;
+}
+
+.buddhist-vbar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.buddhist-contents {
+  position: relative;
+  align-self: center;
+  padding-top: 100px;
+  padding-bottom: 75px;
+  margin-left: max(25vw, 50vw - 500px);
+  width: 70vw;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buddhist-contents-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.buddhist-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buddhist-section h1 {
+  align-self: flex-start;
+  margin-bottom: 30px;
+
+  font-family: var(--heading-font);
+  font-size: 2.25em;
+  font-weight: 700;
+}
+
+.buddhist-section p {
+  font-family: var(--text-font);
+  font-size: 1.125em;
+}
+
+.buddhist-section img:not(button img) {
+  margin-top: 85px;
+  width: 100%;
+}
+
+.buddhist-scroll {
+  position: absolute;
+  top: -200px;
+}
+
+.buddhist-divider {
+  margin: 100px 0px;
+  height: 8px;
+  width: min(700px, 50vw);
+  background: var(--orange);
+  align-self: center;
+}
+
+/* Mobile Styles */
+
+@media only screen and (max-width: 750px), (max-height: 600px) {
+  .buddhist-header {
+    height: 320px;
+  }
+
+  .buddhist-header .buddhist-title {
+    top: 60px;
+    left: 18px;
+    width: 225px;
+    height: 55px;
+    font-size: 1.125em;
+    line-height: 55px;
+  }
+
+  .buddhist-slider-wrapper {
+    display: none;
+  }
+
+  .buddhist-contents {
+    margin: 0;
+    padding: 50px 25px 0px 25px;
+    width: 100%;
+  }
+
+  .buddhist-section {
+    padding-bottom: 50px;
+  }
+
+  .buddhist-section h1 {
+    font-size: 1.725em;
+  }
+
+  .buddhist-section p {
+    font-size: 1em;
+  }
+
+  .buddhist-section img:not(.profile img, button img) {
+    margin-top: 85px;
+    width: 100vw;
+    height: 300px;
+
+    object-fit: cover;
+  }
+
+  .buddhist-divider {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .buddhist-header .buddhist-title {
+    top: 60px;
+    left: 18px;
+    width: 180px;
+    height: 55px;
+    font-size: 1.125em;
+    line-height: 55px;
+  }
+}

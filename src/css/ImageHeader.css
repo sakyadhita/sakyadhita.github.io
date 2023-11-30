@@ -1,0 +1,33 @@
+.contact-image-header {
+  position: relative;
+  background-size: cover, contain;
+  background-position: center, top;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.contact-image-header .info-wrapper {
+  margin-left: 10%;
+  background: rgb(102, 82, 160, 0.85);
+  width: fit-content;
+  height: fit-content;
+  padding: max(2.5vw, 20px);
+  color: var(--white);
+  position: absolute;
+  margin-top: 10%;
+}
+
+.contact-image-header .info-title {
+  font-family: var(--heading-font);
+  font-style: bold;
+  font-weight: bold;
+  font-size: 34px;
+  line-height: 25px;
+  width: 100%;
+}
+
+/* Galaxy Fold */
+@media only screen and (max-width: 300px) {
+  .contact-image-header .info-title {
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,27 @@
+.Custom-Button {
+  width: 175px;
+  background-color: var(--orange) !important;
+  border-radius: 30px !important;
+  box-shadow: 2px 2px 2px rgb(63, 62, 62) !important;
+  color: white !important;
+  min-width: 64px;
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  margin: 0;
+  display: inline-flex;
+  outline: 0;
+  position: relative;
+  align-items: center;
+  padding: 8px 22px;
+  font-size: 0.9375rem;
+  vertical-align: middle;
+  justify-content: center;
+  text-decoration: none;
+}

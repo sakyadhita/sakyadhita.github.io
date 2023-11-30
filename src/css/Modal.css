@@ -1,0 +1,55 @@
+.modal-body-div {
+  padding: 20px 20px 20px 20px;
+  width: calc(100%);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: calc(23px);
+}
+
+.modal-body-content {
+  width: 100%;
+  border: 2px solid var(--orange);
+  padding: 10px 10px 10px 10px;
+}
+
+.modal-body {
+  padding-left: calc(30px);
+  padding-right: calc(30px);
+}
+
+.redirect-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: calc(2vh);
+}
+
+.redirect-link {
+  border: none;
+  border-left: none;
+  background-color: var(--orange);
+  color: var(--white);
+  font-family: var(--text-font);
+  font-size: calc(18px);
+  min-width: calc(8vw);
+  min-height: calc(4.5vh);
+  border-radius: calc(3vw);
+  font-weight: 600;
+  margin-left: calc(2vw);
+  margin-bottom: calc(2vh);
+}
+
+.redirect-cancel {
+  border: 1.2px solid var(--black);
+  background-color: transparent;
+  color: var(--black);
+  font-family: var(--text-font);
+  font-size: calc(18px);
+  min-width: calc(8vw);
+  min-height: calc(4.5vh);
+  border-radius: calc(3vw);
+  font-weight: 600;
+  margin-left: calc(1vw);
+  margin-bottom: calc(2vh);
+}

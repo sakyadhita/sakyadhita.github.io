@@ -1,0 +1,15 @@
+/* When video fails to load */
+.load-content-failure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--black);
+}
+
+.load-content-failure p {
+  margin-top: 10px;
+  font-family: var(--text-font);
+  color: var(--white);
+  font-size: 24px;
+}

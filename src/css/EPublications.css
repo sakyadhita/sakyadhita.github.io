@@ -1,0 +1,335 @@
+#LoaderWrapper {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.EPub_body {
+  margin: 56px 0px 100px 0px;
+}
+.EPub_SelectedSection {
+  display: block;
+  position: relative;
+  margin: 130px 10vw;
+}
+.EPub_SelectedSection_header {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+}
+.EPub_SelectedSection_header_title {
+  width: 100%;
+  font-family: var(--heading-font);
+  font-size: 36px;
+  line-height: 45px;
+  text-align: center;
+}
+.EPub_SelectedSection_header_seeAll {
+  z-index: 100;
+  position: absolute;
+  right: 25px;
+  bottom: 0;
+  width: fit-content !important;
+  font-family: var(--text-font);
+  font-size: 18px;
+  line-height: 25px;
+  text-decoration: none;
+}
+.EPub_SelectedSection_header_seeAll > span {
+  color: var(--orange);
+}
+.EPub_SelectedSection_header_back {
+  position: absolute;
+  left: 25px;
+  bottom: 0;
+  width: fit-content !important;
+  z-index: 100;
+
+  padding: 0;
+  margin-bottom: 16px;
+
+  border: none;
+  background-color: inherit;
+
+  font-family: var(--text-font);
+  font-size: 18px;
+  line-height: 25px;
+  text-decoration: none;
+}
+.EPub_SelectedSection_header_back:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.EPub_SelectedSection_body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  text-align: center;
+  margin: 0px -25px;
+}
+
+/* Mobile */
+.EPub_body--mobile {
+  margin: 0px 0px;
+}
+.EPub_SelectedSection--mobile {
+  display: block;
+  position: relative;
+  margin: 50px 10vw;
+}
+.EPub_SelectedSection_header--mobile {
+  display: block;
+  position: relative;
+  top: -50px;
+  left: -10vw;
+  padding-top: 20px;
+
+  width: 100vw;
+  height: 88px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+}
+.EPub_SelectedSection_header_title--mobile {
+  width: 100%;
+  font-family: var(--heading-font);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 31px;
+  text-align: center;
+}
+.EPub_SelectedSection_header_back--mobile {
+  display: block;
+  position: relative;
+  width: fit-content !important;
+
+  padding: 0;
+  margin: 11px auto 20px auto;
+
+  border: none;
+  background-color: inherit;
+
+  font-family: var(--text-font);
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+.EPub_SelectedSection_header_back--mobile:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.EPub_SelectedSection_body--mobile {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  text-align: center;
+  margin: 0px -25px;
+}
+.EPub_SelectedSection_body_cardcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.EPub_SelectedSection_body_readbutton--mobile {
+  height: 37px;
+  width: 158px;
+  border-radius: 40px;
+  background-color: var(--orange);
+  border: none;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+/* Slides */
+.EPub_Slide {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 450px;
+  background-color: var(--darkpurple);
+  color: var(--white);
+}
+.EPub_Slide_image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 700px;
+  margin: 0;
+  padding: 0;
+  background: var(--darkpurple);
+}
+
+.EPub_Slide_body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: var(--darkpurple);
+  margin: 30px 100px 0px 160px;
+  padding: 10px;
+  width: 350px;
+  display: block;
+  font-family: var(--heading-font);
+  text-align: left;
+  height: fit-content;
+}
+
+.EPub_Slide_body > h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 45px;
+}
+.EPub_Slide_body > h2 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 31px;
+}
+.EPub_Slide_body > p {
+  font-family: var(--text-font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 27px;
+}
+.EPub_Slide_body_readMoreButton {
+  font-family: var(--text-font);
+  font-size: 20px;
+  line-height: 27px;
+  text-align: center;
+  color: var(--white);
+  background: var(--orange);
+  border-radius: 40px;
+  width: 200px;
+  height: 55px;
+  border: none;
+}
+@media screen and (max-width: 750px) {
+  #LoaderWrapper {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .EPub_Slide {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 450;
+    background-color: var(--darkpurple);
+    color: var(--white);
+  }
+  .EPub_Slide_body {
+    z-index: 10;
+    background: rgba(102, 82, 160, 0.85);
+    padding: 20px;
+    width: 300px;
+    display: block;
+    font-family: var(--heading-font);
+    text-align: left;
+    height: fit-content;
+  }
+  .EPub_Slide_body > h1 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 30px;
+  }
+  .EPub_Slide_body > h2 {
+    display: none;
+  }
+  .EPub_Slide_body > p {
+    font-family: var(--text-font);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+  .EPub_Slide_body_readMoreButton {
+    font-family: var(--text-font);
+    font-size: 14px;
+    line-height: 27px;
+    text-align: center;
+    color: var(--white);
+    background: var(--orange);
+    border-radius: 40px;
+    width: 150px;
+    height: 35px;
+    border: none;
+  }
+  .EPub_Slide_image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100vw;
+
+    margin: 0;
+    padding: 0;
+    background: var(--darkpurple);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .EPub_Slide {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 530px;
+    background-color: var(--darkpurple);
+    color: var(--white);
+  }
+  .EPub_Slide_body {
+    z-index: 10;
+    background: rgba(102, 82, 160, 0.85);
+    margin: 40px calc((100vw - 210px) / 2);
+    padding: 20px;
+    width: 210px;
+    display: block;
+    font-family: var(--heading-font);
+    text-align: left;
+    height: 430px;
+  }
+  .EPub_Slide_body > h1 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 30px;
+  }
+  .EPub_Slide_body > h2 {
+    display: none;
+  }
+  .EPub_Slide_body > p {
+    font-family: var(--text-font);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+  .EPub_Slide_body_readMoreButton {
+    font-family: var(--text-font);
+    font-size: 14px;
+    line-height: 27px;
+    text-align: center;
+    color: var(--white);
+    background: var(--orange);
+    border-radius: 40px;
+    width: 150px;
+    height: 35px;
+    border: none;
+  }
+  .EPub_Slide_image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100vw;
+
+    margin: 0;
+    padding: 0;
+    background: var(--darkpurple);
+  }
+}

@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import ResourcesNavBar from '../components/Main/ResourcesNavBar'
+import Newsletters from '../components/Layouts/Newsletters'
+
+const newsletters = await getCollection('newsletter')
+
+const { frontmatter } = Astro.props
+const image = await import(`../media/${frontmatter.image}.jpg`)
+---
+
+<PageLayout>
+  <ResourcesNavBar client:only="react">
+    <Newsletters client:only="react"
+      frontmatter={frontmatter}
+      image={image.default.src}
+      newsletters={newsletters.reverse()}
+      >
+      <slot />
+    </Newsletters>
+  </ResourcesNavBar>
+</PageLayout>

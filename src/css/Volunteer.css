@@ -1,0 +1,260 @@
+.volunteer-content {
+  align-content: center;
+  width: 61%;
+  margin-left: 19.5%;
+}
+
+.signup-text {
+  margin-top: 2.2vw;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.contact-info-text {
+  margin-top: 8.83vw;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.help-section-title {
+  margin-top: 8.28vw;
+  font-family: var(--heading-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 45px;
+
+  color: var(--black);
+}
+
+.select-committees-text {
+  font-family: var(--text-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+
+  color: var(--black);
+}
+
+.committees-error-text {
+  font-family: var(--text-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+
+  color: var(--red);
+}
+
+.volunteer-options {
+  margin-top: 3.98vw;
+}
+
+.left-options-column {
+  display: inline-block;
+  vertical-align: top;
+  width: 45%;
+}
+
+.right-options-column {
+  display: inline-block;
+  vertical-align: top;
+  width: 45%;
+  margin-left: 5%;
+}
+
+.submit-form {
+  margin-top: 6.56vw;
+  margin-bottom: 9.22vw;
+  text-align: center;
+}
+
+.error-asterisk {
+  color: #ea4444;
+  margin-left: 0.16vw;
+  font-size: 25px;
+}
+
+.form-item {
+  display: inline-block;
+  margin-top: 2.27vw;
+  width: 100%;
+}
+
+.input-field {
+  width: 98%;
+  height: 2.5vw;
+}
+
+.committee-row {
+  margin-top: 1.25vw;
+  display: inline-block;
+}
+
+.committee-title {
+  font-family: var(--text-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+
+  color: var(--black);
+}
+
+.committee-description {
+  font-family: var(--text-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  height: 3.2vw;
+
+  color: #9b9a9a;
+}
+
+.country-dropdown {
+  padding-left: 10px;
+  height: 40px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  font-size: 18px;
+  line-height: 1.95vw;
+  color: var(--black);
+  background: var(--white);
+}
+
+.required-note {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 100px;
+}
+
+@media screen and (min-width: 840px) and (max-width: 1150px) {
+  .committee-row {
+    margin-top: 30px;
+  }
+
+  .submit-form {
+    margin-top: 100px;
+  }
+
+  .form-item {
+    margin-top: 29px;
+  }
+
+  .input-field {
+    width: 97%;
+  }
+
+  .last-name-field {
+    margin-top: 40px;
+  }
+
+  .city-field {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 839px) {
+  .committee-row {
+    margin-top: 50px;
+  }
+
+  .submit-form {
+    margin-top: 100px;
+  }
+
+  .input-field {
+    width: 96%;
+  }
+
+  .form-item {
+    margin-top: 29px;
+  }
+
+  .last-name-field {
+    margin-top: 40px;
+  }
+
+  .city-field {
+    margin-top: 40px;
+  }
+
+  .required-note {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .volunteer-content {
+    width: 85%;
+    margin-left: 7.5%;
+  }
+
+  .input-field {
+    width: 95%;
+  }
+
+  .form-item {
+    margin-top: 15px;
+  }
+
+  .last-name-field {
+    margin-top: 28px;
+  }
+
+  .city-field {
+    margin-top: 28px;
+  }
+
+  .signup-text {
+    font-size: 22px;
+    margin-top: 50px;
+  }
+
+  .contact-info-text {
+    font-size: 22px;
+    margin-top: 70px;
+  }
+
+  .help-section-title {
+    font-size: 22px;
+    line-height: 170%;
+    margin-top: 70px;
+  }
+
+  .submit-form {
+    margin-top: 50px;
+    margin-bottom: 58px;
+  }
+
+  .committee-row {
+    margin-top: 30px;
+  }
+
+  .committee-title {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .committee-description {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .required-note {
+    margin-top: 60px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .committee-row {
+    margin-top: 50px;
+  }
+
+  .submit-form {
+    margin-top: 100px;
+  }
+}

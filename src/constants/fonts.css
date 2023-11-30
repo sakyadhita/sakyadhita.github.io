@@ -1,0 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap");
+
+:root {
+  --heading-font: "Libre Baskerville", sans-serif;
+  --text-font: "Nunito", sans-serif;
+}

@@ -1,0 +1,50 @@
+---
+import '../css/index.css'
+
+import NavBar from '../components/Main/NavBar/NavBar.jsx'
+import Footer from '../components/Main/Footer.jsx'
+
+interface Props {
+  hideFooter?: boolean
+}
+
+const { hideFooter = false } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico`} sizes="any" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`} />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href={`${import.meta.env.BASE_URL}manifest.json`} />
+    <link rel="sitemap" href={`${import.meta.env.BASE_URL}sitemap-index.xml`} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="RSS"
+      href={`${import.meta.env.BASE_URL}rss.xml`}
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>Sakyadhita</title>
+    <meta name="description" content="International association of Buddhist women" />
+  </head>
+  <body>
+    <script
+      is:inline
+      src="https://www.paypal.com/sdk/js?client-id=AT0I6Qa0JYVBvlExcrLDBJAY3oqylX6-WV4aw9I7vecy2XUjbEIVeDFqI83dmygAWNtgB7tBkzK41zga"
+    ></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div style={{ overflowX: 'hidden', height: '100vh' }} id="page-layout">
+        <NavBar client:only="react" />
+        <slot />
+        {!hideFooter ? <Footer client:only="react" /> : null}
+      </div>
+    </div>
+  </body>
+</html>

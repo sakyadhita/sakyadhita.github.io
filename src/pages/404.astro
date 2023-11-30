@@ -1,0 +1,8 @@
+---
+import PageLayout from '../layouts/PageLayout.astro'
+import Custom404 from '../components/Layouts/Custom404'
+---
+
+<PageLayout>
+  <Custom404 client:only="react" />
+</PageLayout>

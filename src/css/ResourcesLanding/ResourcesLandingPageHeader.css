@@ -1,0 +1,82 @@
+.resources-landing-page-header-div {
+  position: relative;
+  background-size: cover, contain;
+  background-position: center, top;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.resources-landing-page-header-info-div {
+  position: absolute;
+  left: 15%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+
+  top: 40%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+  background: #6652a0d9;
+
+  width: min(fit-content, 66%);
+  height: fit-content;
+
+  padding: 2.67vw 2.34vw 1.67vw 2.34vw;
+  color: var(--white);
+}
+
+.resources-landing-page-header-text {
+  font-family: var(--heading-font);
+  font-style: bold;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 45px;
+}
+
+.resources-landing-page-header-info {
+  font-family: var(--text-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+@media screen and (min-width: 450px) and (max-width: 600px) {
+  .resources-landing-page-header-info {
+    font-size: 3vw;
+    line-height: 5vw;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .resources-landing-page-header-info {
+    font-size: 5vw;
+    line-height: 6.88vw;
+  }
+}
+
+/* Bug fix for this screen range that causes some whitespace to appear on bottom */
+/* @media screen and (min-width: 700px) and (max-width: 750px) {
+    .resources-landing-page-header-div{
+        height: 100% !important;
+    }
+} */
+
+@media screen and (max-width: 600px) {
+  .resources-landing-page-header-info-div {
+    width: min(fit-content, 56%);
+    left: 10%;
+
+    top: 30%;
+
+    padding: 4vw;
+  }
+
+  .resources-landing-page-header-text {
+    font-size: 6.63vw;
+    line-height: 170%;
+  }
+
+  .resources-landing-page-header-info {
+    bottom: 23.62%;
+  }
+}

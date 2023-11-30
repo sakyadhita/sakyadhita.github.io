@@ -1,0 +1,19 @@
+---
+import PageLayout from './PageLayout.astro'
+import ContactUs from '../components/Layouts/ContactUs'
+
+const { frontmatter } = Astro.props
+const image = await import(`../media/${frontmatter.image}.jpg`)
+---
+
+<PageLayout>
+  <ContactUs client:only="react" frontmatter={frontmatter} image={image.default.src} >
+    <slot />
+  </ContactUs>
+  <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <textarea name="message"></textarea>
+  </form>
+</PageLayout>

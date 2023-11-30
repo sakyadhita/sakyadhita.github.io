@@ -1,0 +1,107 @@
+.Contact-Us {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  font-family: var(--text-font);
+}
+
+.Contact-Us .address {
+  display: flex;
+}
+
+.Contact-Us .address .address-icon {
+  font-size: 17px;
+}
+
+.Contact-Us .address p {
+  margin-left: 5px;
+}
+
+.Contact-Us .address a {
+  color: black;
+}
+
+.Contact-Us .address a:hover {
+  text-decoration: none;
+  border-bottom: 2px solid var(--darkorange);
+}
+
+.Contact-Us .left-container {
+  flex: 1;
+  padding: 50px;
+  text-align: left;
+}
+
+.Contact-Us .left-container h2,
+h4 {
+  font-family: var(--heading-font);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.Contact-Us .left-container h4 {
+  margin-top: 40px;
+}
+
+/* .Contact-Us .left-container .message-form fieldset {
+  border-radius: 30px !important;
+  border-color: black !important;
+  color: black !important;
+} */
+
+.Contact-Us .left-container .form-field-wrapper {
+  display: flex;
+}
+
+.Contact-Us .left-container .required-asterisk {
+  color: #ea4444;
+  font-size: 25px;
+}
+
+/* .Contact-Us .left-container .message-form .form-field {
+  margin-top: 20px !important;
+  width: 100% !important;
+} */
+
+.Contact-Us .left-container .submit-button {
+  margin-top: 20px !important;
+  text-align: center;
+}
+
+/* Tablet + Mobile */
+@media only screen and (max-width: 1050px) {
+  .Contact-Us {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    flex: 1;
+    font-family: var(--text-font);
+  }
+}
+
+/* Galaxy Fold */
+@media only screen and (max-width: 600px) {
+  .Contact-Us .address .address-icon {
+    font-size: 20px;
+  }
+
+  .Contact-Us > .left-container > h2,
+  h4 {
+    font-size: 20px;
+  }
+
+  .Contact-Us > .left-container > h2 {
+    font-size: 22px;
+  }
+
+  .Contact-Us .left-container h4 {
+    margin-top: 30px;
+  }
+
+  .Contact-Us .left-container {
+    padding: 20px;
+  }
+}

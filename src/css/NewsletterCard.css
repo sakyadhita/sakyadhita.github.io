@@ -1,0 +1,123 @@
+/* Desktop */
+.NewsletterCard {
+  width: 300px;
+  height: 300px;
+  margin: 26px 20px;
+}
+.NewsletterCard_title {
+  height: 28px;
+  margin-top: 5px;
+  display: block;
+
+  font-family: var(--text-font);
+  font-size: 20px;
+  line-height: 28px;
+  text-align: left;
+  color: var(--black);
+
+  overflow: hidden;
+}
+.NewsletterCard_year {
+  height: 20px;
+  display: block;
+
+  font-family: var(--text-font);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  color: var(--black) !important;
+}
+.NewsletterCard_link {
+  color: var(--black) !important;
+  text-decoration-color: var(--black) !important;
+}
+.NewsletterCard_image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.NewsletterCard:hover .NewsletterCard_image {
+  transform: scale(1.04);
+  box-shadow: 0px 0px 6px 2px var(--darkorange);
+}
+
+/* Mobile */
+@media only screen and (min-width: 301px) {
+  .NewsletterCard--mobile {
+    position: relative;
+    display: inline-block;
+    width: 270px;
+    margin: 20px 16px;
+  }
+  .NewsletterCard_title--mobile {
+    display: block;
+
+    font-family: var(--text-font);
+    font-size: 20px;
+    line-height: 24px;
+    text-align: left;
+
+    white-space: text-wrap;
+    overflow: hidden;
+  }
+  .NewsletterCard_year--mobile {
+    height: 21px;
+    display: block;
+
+    font-family: var(--text-font);
+    font-size: 16px;
+    line-height: 20px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .NewsletterCard_image--mobile {
+    width: 270px;
+    height: 212px;
+    object-fit: cover;
+    box-shadow: 0px 0px 3px 0.75px rgba(0, 0, 0, 0.25);
+    margin-bottom: 16px;
+  }
+}
+@media only screen and (max-width: 300px) {
+  .NewsletterCard--mobile {
+    position: relative;
+    display: inline-block;
+    width: 242px;
+    margin: 16px;
+  }
+  .NewsletterCard_title--mobile {
+    display: block;
+
+    font-family: var(--text-font);
+    font-size: 16px;
+    line-height: 20px;
+    text-align: left;
+
+    white-space: text-wrap;
+    overflow: hidden;
+  }
+  .NewsletterCard_year--mobile {
+    height: 18px;
+    display: block;
+
+    font-family: var(--text-font);
+    font-size: 14px;
+    line-height: 16px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .NewsletterCard_image--mobile {
+    width: 242px;
+    height: 190px;
+    object-fit: cover;
+    box-shadow: 0px 0px 3px 0.75px rgba(0, 0, 0, 0.25);
+    margin-bottom: 12px;
+  }
+}

@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import ResourcesNavBar from '../components/Main/ResourcesNavBar'
+import EPublications from '../components/Layouts/EPublications'
+
+const epublications = await getCollection('publication')
+const categories = Array.from(new Set(epublications.map((p) => p.data.category)))
+const sections = categories.map((c) => ({
+  section_title: c,
+  section_list: epublications.filter((p) => p.data.category === c)
+}))
+const featuredEpubs = epublications.filter((p) => p.data.feature)
+---
+
+<PageLayout>
+  <ResourcesNavBar client:only="react">
+    <EPublications client:only="react"
+      sections={sections}
+      featuredEpubs={featuredEpubs}
+    >
+      <slot />
+    </EPublications>
+  </ResourcesNavBar>
+</PageLayout>

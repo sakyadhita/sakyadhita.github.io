@@ -1,0 +1,46 @@
+.page-content {
+  width: 70.47vw;
+  align-content: center;
+  margin-left: 14.77vw;
+  display: grid;
+}
+
+.page-content img {
+  justify-self: center;
+  max-width: 100%;
+}
+
+.ordination-text {
+  font-family: var(--text-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+  color: var(--black);
+}
+
+.ordination-image {
+  margin-top: 3.05vw;
+  width: 100%;
+}
+
+.bottom-text {
+  margin-top: 3.05vw;
+  margin-bottom: 14.92vw;
+}
+
+@media screen and (max-width: 600px) {
+  .page-content {
+    width: 78.75vw;
+    margin-left: 10.63vw;
+  }
+
+  .bottom-text {
+    margin-bottom: 10vw;
+  }
+
+  .ordination-text {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}

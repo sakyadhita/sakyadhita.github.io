@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import ResourcesNavBar from '../components/Main/ResourcesNavBar'
+import OrdinationIssue from '../components/Layouts/OrdinationIssue'
+
+const sections = await getCollection('section', ({ data }) => {
+  return data.isPublished == true && data.page == 'OrdinationIssue'
+})
+const contents = sections.map(async (s) => {
+  const { Content } = await s.render()
+  return Content
+})
+
+const { frontmatter } = Astro.props
+const image = await import(`../media/${frontmatter.image}.jpg`)
+---
+
+<PageLayout>
+  <ResourcesNavBar client:only="react">
+    <OrdinationIssue client:only="react"
+      frontmatter={frontmatter}
+      image={image.default.src}
+      ordinationIssues={sections}
+    >
+      {sections.map((section, i) => {
+        const Content = contents[i]
+        
+        return (
+        <div class="page-content">
+          <h2>{section.data.title}</h2>
+          <Content />
+        </div>
+        )
+      })}
+      <slot />
+    </OrdinationIssue>
+  </ResourcesNavBar>
+</PageLayout>

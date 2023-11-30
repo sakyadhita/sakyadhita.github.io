@@ -1,0 +1,29 @@
+---
+import { getCollection, getEntry } from 'astro:content'
+import PageLayout from './PageLayout.astro'
+import Home from '../components/Layouts/Home'
+
+const branches = await getCollection('branch')
+const branchesAndChapters = branches.map((m) => m.data)
+
+const news = await getCollection('news')
+const newsAndEvents = news.map((m) => m.data).sort((a, b) => +b.pubDate - +a.pubDate)
+
+const intro = await getEntry('section', 'introduction')
+const newsflash = await getEntry('section', 'newsflash')
+
+const additionalSections = await getCollection('section', ({ data }) => {
+  return data.isPublished == true && data.page == 'Home'
+})
+---
+
+<PageLayout>
+  <Home
+    client:only="react"
+    newsAndEvents={newsAndEvents}
+    introduction={intro.body}
+    newsflash={newsflash}
+    branchesAndChapters={branchesAndChapters}
+    additionalSections={additionalSections}
+  />
+</PageLayout>

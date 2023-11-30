@@ -1,0 +1,8 @@
+.Interactive-Map {
+  width: 100%;
+  height: 100%;
+}
+
+.Interactive-Map .marker:hover {
+  cursor: pointer;
+}
