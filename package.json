@@ -22,7 +22,7 @@
     "@material-ui/lab": "4.0.0-alpha.61",
     "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.17",
-    "astro": "^3.6.3",
+    "astro": "^3.6.4",
     "bootstrap": "4.6.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
