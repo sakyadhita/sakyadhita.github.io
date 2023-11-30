@@ -1,4 +1,5 @@
 # Sakyadhita Web Site
+[![Netlify Status](https://api.netlify.com/api/v1/badges/33b02bdb-9658-4530-9b42-55a1957cb999/deploy-status)](https://app.netlify.com/sites/sakyadhita/deploys)
 
 This is the Sakyadhita International static web site created using [Astro](https://astro.build).
 
