@@ -12,6 +12,39 @@ needed.
 
 The website is hosted on Netlify and all form submissions are sent to Netlify.
 
+## Creating a Local Build
+
+First, make sure you have Node installed in your system. You can use
+[NVM](https://nvm.sh) to install the latest LTS release of Node.
+
+Enable Corepack to use the PNPM package manager.
+
+```sh
+corepack enable
+```
+
+Install dependencies via PNPM.
+
+```sh
+pnpm install
+```
+
+To run a development version, run
+
+```sh
+pnpm dev
+```
+
+To build for production, run
+
+```sh
+pnpm build
+```
+
+To deploy to production, please commit the changes back to this repository.
+Ensure the build is successful before doing so. This will automatically trigger
+a new build, and if successful, a deploy into production in Netlify.
+
 ## 🚀 Project Structure
 
 Inside this repository, you'll see the following folders and files:
@@ -48,6 +81,15 @@ conferences, publications, newsletters etc. as Markdown files. Content in
 `public/content` can be linked from Markdown files, either within frontmatter or
 as embedded links.
 
+## Making changes
+
+Content changes can be made purely by loading files into `public/assets` and
+creating/changing Markdown content in `src/content`. Changes to pages can be
+made in Markdown in `src/pages`
+
+The structure of the Markdown files and frontmatter should be fairly obvious
+but `src/content/config.ts` contains the definitions.
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
@@ -62,7 +104,7 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm run astro -- --help` | Get help using the Astro CLI                     |
 
 
-## Deploying
+## Creating a new Deployment
 
 This website can be deployed on Netlify without any special requirements apart
 from Netlify Forms which should be enabled.
