@@ -17,17 +17,10 @@ import ConferenceDesktop from '../Conference/ConferenceDesktop'
 import MobileConference from '../Conference/MobileConference'
 import '../../css/Conferences.css'
 
-export default function Conferences({ conferences }) {
+export default function Conferences({ conferences, id=null }) {
   // Needed to determine when to render the desktop or mobile version
   const listener = useWindowSize()
   // const listener = { width: 2000 };
-
-  const location = {
-    hash: '',
-    path: '/conferences',
-    search: '',
-    state: undefined
-  }
 
   /**
    * Determine whether to render desktop or mobile view
@@ -36,11 +29,11 @@ export default function Conferences({ conferences }) {
   const isDesktop = () =>
     listener.width > 1050 ? (
       <div>
-        <ConferenceDesktop data={conferences} location={location} />
+        <ConferenceDesktop data={conferences} id={id} />
       </div>
     ) : (
       <div>
-        <MobileConference data={conferences} location={location} />
+        <MobileConference data={conferences} id={id} />
       </div>
     )
 

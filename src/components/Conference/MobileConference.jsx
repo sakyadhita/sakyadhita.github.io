@@ -38,10 +38,9 @@ export default function MobileConferences(props) {
    */
   useEffect(() => {
     // initalially set the page to render the first conference
-    if (props.location.search) {
-      const confNum = parseInt(props.location.search.split('=')[1], 10)
+    if (props.id) {
       // find the index of the conference in the items list
-      const ind = itemList.findIndex((x) => x.data.confNum === confNum)
+      const ind = itemList.findIndex((x) => x.slug === props.id)
       setIndex(ind)
       setItem(itemList[ind])
     } else setItem(itemList[index])
@@ -173,7 +172,7 @@ export default function MobileConferences(props) {
               items={props.data}
               color="#6652a0"
               setParentIndex={setParentIndex}
-              location={props.location}
+              location={props.id}
             />
           </div>
         </div>

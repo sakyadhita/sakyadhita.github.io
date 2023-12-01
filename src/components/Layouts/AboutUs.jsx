@@ -8,6 +8,7 @@
  */
 
 import React, { useState, useEffect } from 'react'
+import Markdown from 'react-markdown'
 import ResourcesHeader from '../ResourcesHeader'
 import '../../css/About.css'
 import '../../css/animations.css'
@@ -67,7 +68,7 @@ const CommitteeProfiles = ({ committees, year, computeProfileDisplay }) => {
               </div>
               <h3>{member.data.position}</h3>
             </div>
-            <p>{member.body}</p>
+            <Markdown>{member.body}</Markdown>
           </div>
         ))}
     </div>

@@ -11,7 +11,7 @@ const news = defineCollection({
 
 const item = z.object({
   description: z.string(),
-  url: z.string().url()
+  url: z.string()
 })
 
 const branch = defineCollection({
@@ -61,7 +61,7 @@ const publication = defineCollection({
       feature: z.boolean(),
       description: z.string().optional(),
       imageLink: z.string(),
-      pdfLink: z.string().url()
+      pdfLink: z.string()
     })
 })
 

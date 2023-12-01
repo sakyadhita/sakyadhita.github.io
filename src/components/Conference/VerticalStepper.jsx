@@ -132,6 +132,8 @@ export default function VerticalStepper(props) {
   // import the styling
   const classes = useStyles()
   // keep track of the current page for pagination
+  const [activePage, setActivePage] = useState(1)
+  // keep track of the current page for pagination
   const [activeStep, setActiveStep] = useState(0)
   // update the page if the user changes pages
   const [activeIndex, setActiveIndex] = useState(0)
@@ -150,6 +152,7 @@ export default function VerticalStepper(props) {
   const updatePage = (index) => {
     setIndices([(index - 1) * 9, index * 9])
     setActiveIndex(0)
+    setActivePage(index)
     props.setParentIndex((index - 1) * 9)
   }
 
@@ -197,15 +200,15 @@ export default function VerticalStepper(props) {
   useEffect(() => {
     // render only the first nine items
     setSplitSteps(steps.slice(indices[0], indices[1]))
-    if (props.location) {
-      const confNum = parseInt(props.location.search.split('=')[1], 10)
+    if (props.id) {
       // find the index of the conference in the items list
-      const ind = props.items.findIndex((x) => x.confNum === confNum)
+      const ind = props.items.findIndex((x) => x.slug === props.id)
       let i = ind
       // determine the page to change to
       if (Math.floor(i / 9) > 0) {
         const page = Math.floor(i / 9)
         i %= 9
+        console.log(page + 1)
         updatePage(page + 1)
       }
 
@@ -230,7 +233,7 @@ export default function VerticalStepper(props) {
         >
           {/* for each item in our splitSteps array */}
           {splitSteps.map((step, index) => (
-            <Step key={step.location}>
+            <Step key={step.confNum}>
               {/* add a step button that is clickable */}
               <StepButton
                 onClick={() => handleStep(index)}
@@ -257,7 +260,7 @@ export default function VerticalStepper(props) {
 
       {/* This pagination allows user to change pages and view more conferences */}
       <div className="pagination-stepper">
-        <CustomPagination count={steps.length} updatePage={updatePage} size={9} />
+        <CustomPagination count={steps.length} page={activePage} updatePage={updatePage} size={9} />
       </div>
     </div>
   )

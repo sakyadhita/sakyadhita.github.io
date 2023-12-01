@@ -166,10 +166,9 @@ export default function HorizontalStepper(props) {
   // render only the first nine items
   useEffect(() => {
     setSplitSteps(steps.slice(indices[0], indices[1]))
-    if (props.location) {
-      const confNum = parseInt(props.location.search.split('=')[1], 10)
+    if (props.id) {
       // find the index of the conference in the items list
-      let i = props.items.findIndex((x) => x.data.confNum === confNum)
+      let i = props.items.findIndex((x) => x.slug === props.id)
       // determine the page to change to
       if (Math.floor(i / 9) > 0) {
         const page = Math.floor(i / 9)

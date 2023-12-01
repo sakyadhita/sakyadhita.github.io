@@ -116,7 +116,7 @@ export default function Donate({frontmatter, image}) {
               width="400px"
               height="auto"
               alt="13th Conference"
-              src="https://www.dropbox.com/s/4m4mprrklu6i6i6/WorkingTogether-440px.jpeg?raw=1"
+              src="/assets/Donate Page/WorkingTogether-440px.jpeg"
             />
           </section>
           {/* AmazonSmile Info */}
@@ -134,7 +134,7 @@ export default function Donate({frontmatter, image}) {
               width="350px"
               height="auto"
               alt="AmazonSmile Promo"
-              src="https://www.dropbox.com/s/xg9gklgq5m4jvne/AmazonSmile-01.jpeg?raw=1"
+              src="/assets/Donate Page/AmazonSmile-01.jpeg"
             />
             <br />
             <CustomButton text="Support" redirect_link="http://smile.amazon.com/ch/95-4112765" />
