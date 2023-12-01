@@ -14,14 +14,12 @@ const contents = sections.map(async (s) => {
 })
 
 const { frontmatter } = Astro.props
-const image = await import(`../media/${frontmatter.image}.jpg`)
 ---
 
 <PageLayout>
   <ResourcesNavBar client:only="react">
     <BuddhistCulture client:only="react"
       frontmatter={frontmatter}
-      image={image.default.src}
       sections={sections}
     >
       {sections.map((item, index) => {

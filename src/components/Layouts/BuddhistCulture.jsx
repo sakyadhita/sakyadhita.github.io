@@ -22,7 +22,7 @@ import '../../css/animations.css'
 
 import Loader from '../Main/Loader'
 
-export default function BuddhistCulture({ frontmatter, image, sections, children }) {
+export default function BuddhistCulture({ frontmatter, sections, children }) {
   // Keeps track of the current location for the sticky navbar
   const [scrollLocation, setScrollLocation] = useState()
   const [isMobile, setIsMobile] = useState(false)
@@ -118,7 +118,7 @@ export default function BuddhistCulture({ frontmatter, image, sections, children
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
           title={frontmatter.title}
-          image={image}
+          image={frontmatter.image}
           height="max(40vh, 300px)"
           width="100%"
           showArrow={false}
@@ -127,7 +127,7 @@ export default function BuddhistCulture({ frontmatter, image, sections, children
         <ResourcesHeader
           title={frontmatter.title}
           text={frontmatter.description}
-          image={image}
+          image={frontmatter.image}
           height="max(75vh, 400px)"
           width="100%"
           arrowClickCallback={scrollToRef}

@@ -17,7 +17,7 @@ import { SITE_PAGES } from '../../constants/links'
 
 import '../../css/Donate.css'
 
-export default function Donate({frontmatter, image}) {
+export default function Donate({frontmatter}) {
   const [isMobile, setIsMobile] = React.useState(false)
   const arrowScrollToRef = React.createRef()
 
@@ -54,7 +54,7 @@ export default function Donate({frontmatter, image}) {
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
           title={frontmatter.title}
-          image={image}
+          image={frontmatter.image}
           height="max(40vh, 300px)"
           width="100%"
           showArrow={false}
@@ -63,7 +63,7 @@ export default function Donate({frontmatter, image}) {
         <ResourcesHeader
           title={frontmatter.title}
           text={frontmatter.description}
-          image={image}
+          image={frontmatter.image}
           height="max(75vh, 400px)"
           width="100%"
           arrowClickCallback={scrollToRef}
@@ -152,7 +152,7 @@ export default function Donate({frontmatter, image}) {
             {/* Join Us  */}
             <BeInvolved
               description="Become a member of Sakyadhita!"
-              image_url="https://d.wattpad.com/story_parts/271116779/images/161bdd205bbf18fb307084307993.jpg"
+              image_url="/assets/Join%20Us%20Page/JoinUs.jpg"
               openInSameTab="true"
               redirect_link={SITE_PAGES.JOIN_US}
               button_title="Join Us"
@@ -161,7 +161,7 @@ export default function Donate({frontmatter, image}) {
             <BeInvolved
               description="Interested in helping us with anything from writing content to
                             building?"
-              image_url="https://lh3.googleusercontent.com/tVonHCrVh7igUJjFPyZ9-Cpa9eZBQXsSHGOh0_XHioRJtwK-AWFN4nH5B12qVdn1Kw8VRe_5nvegTgVu=w1080-h608-p-no-v0"
+              image_url="/assets/Join%20Us%20Page/Volunteer.jpg"
               openInSameTab="true"
               redirect_link={SITE_PAGES.VOLUNTEER}
               button_title="Volunteer"

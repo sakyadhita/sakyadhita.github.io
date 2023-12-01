@@ -6,7 +6,7 @@ import Loader from '../Main/Loader'
 
 import Header from '../../media/Lotus_Header.png'
 
-export default function OrdinationIssue({ frontmatter, image, ordinationIssues, children }) {
+export default function OrdinationIssue({ frontmatter, ordinationIssues, children }) {
   const [isMobile, setIsMobile] = useState(false)
   const arrowScrollToRef = React.createRef()
   const [isLoading, setIsLoading] = useState(true)
@@ -59,7 +59,7 @@ export default function OrdinationIssue({ frontmatter, image, ordinationIssues, 
       {isMobile || window.innerHeight <= 500 ? (
         <div>
           <ResourcesHeader
-            image={image}
+            image={frontmatter.image}
             title={frontmatter.title}
             height="max(40vh, 300px)"
             width="100%"
@@ -74,7 +74,7 @@ export default function OrdinationIssue({ frontmatter, image, ordinationIssues, 
       ) : (
         <div>
           <ResourcesHeader
-            image={Header.src}
+            image={frontmatter.image}
             title={frontmatter.title}
             text={frontmatter.description}
             height="max(75vh, 400px)"

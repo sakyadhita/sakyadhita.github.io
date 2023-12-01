@@ -4,14 +4,12 @@ import ResourcesNavBar from '../components/Main/ResourcesNavBar'
 import LandingPage from '../components/Layouts/LandingPage'
 
 const { frontmatter } = Astro.props
-const image = await import(`../media/${frontmatter.image}.jpg`)
 ---
 
 <PageLayout hideFooter={true}>
   <ResourcesNavBar client:only="react">
     <LandingPage client:only="react" 
       frontmatter={frontmatter}
-      image={image.default.src}
       >
       <slot />
     </LandingPage>

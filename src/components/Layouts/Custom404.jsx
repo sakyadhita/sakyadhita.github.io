@@ -1,7 +1,7 @@
 import React from 'react'
 import ResourcesHeader from '../ResourcesHeader'
 
-import Header from '../../media/Lotus_Header.jpg'
+import Header from '../../media/Lotus_Header.png'
 
 export default function Custom404() {
   const [isMobile, setIsMobile] = React.useState(false)

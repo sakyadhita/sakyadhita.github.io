@@ -115,7 +115,7 @@ const CustomTextField = withStyles({
   }
 })(TextField)
 
-export default function JoinUs({ frontmatter, image, memberships }) {
+export default function JoinUs({ frontmatter, memberships }) {
   // tracks window width changes
   const [isMobile, setIsMobile] = useState(false)
   const arrowScrollToRef = React.createRef()
@@ -419,31 +419,6 @@ export default function JoinUs({ frontmatter, image, memberships }) {
           message: error
         })
       })
-    // // call backend route to store member data
-    // await fetch(`${BACKEND_URL}emailList/`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //         fName: values.firstName.value,
-    //         mName: values.middleName.value,
-    //         lName: values.lastName.value,
-    //         phone: values.phoneNumber.value,
-    //         email: values.emailAddress.value,
-    //         address: givenAddress,
-    //     }),
-    // }).then((res) => {
-    //     // form submitted
-    //     if (res.ok) {
-    //         // display thank you modal and clear form
-    //         handleFormCompleted();
-    //     } else {
-    //         // show snackbar to notify form could not be submitted
-    //         setSnackBar({
-    //             open: true,
-    //             message: "An internal error occurred. Form not submitted.",
-    //         });
-    //     }
-    // });
 
     // allow form to be edited
     document.body.style.cursor = null
@@ -475,7 +450,7 @@ export default function JoinUs({ frontmatter, image, memberships }) {
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
           title={frontmatter.title}
-          image={image}
+          image={frontmatter.image}
           height="max(40vh, 300px)"
           width="100%"
           showArrow={false}
@@ -484,7 +459,7 @@ export default function JoinUs({ frontmatter, image, memberships }) {
         <ResourcesHeader
           title={frontmatter.title}
           text={frontmatter.description}
-          image={image}
+          image={frontmatter.image}
           height="max(75vh, 400px)"
           width="100%"
           arrowClickCallback={scrollToRef}

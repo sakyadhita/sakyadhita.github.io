@@ -14,7 +14,6 @@ const contents = sections.map(async (s) => {
 })
 
 const { frontmatter } = Astro.props
-const image = await import(`../media/${frontmatter.image}.jpg`)
 
 function makeIdURLFriendly(idString : string) {
   return idString
@@ -28,7 +27,6 @@ function makeIdURLFriendly(idString : string) {
 <PageLayout>
   <AboutUs client:only="react"
     frontmatter={frontmatter}
-    image={image.default.src}
     committees={committees}
     sections={sections}
   >

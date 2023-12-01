@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/ContactLayout.astro
-image: HongKongConference
+image: /assets/Contact Page/Hong Kong Conference Video.jpeg
 email:
   - address: info@sakyadhita.org
     description: General Enquiries

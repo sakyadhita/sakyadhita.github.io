@@ -136,7 +136,7 @@ const CustomTextField = withStyles({
   }
 })(TextField)
 
-export default function Volunteer({ frontmatter, image, interests }) {
+export default function Volunteer({ frontmatter, interests }) {
   // tracks window width changes
   const [isMobile, setIsMobile] = useState(false)
   const arrowScrollToRef = React.createRef()
@@ -378,49 +378,6 @@ export default function Volunteer({ frontmatter, image, interests }) {
           message: error
         })
       })
-    // // call backend route to store volunteer data
-    // await fetch(`${BACKEND_URL}volunteers/`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //         fName: values.firstName.value,
-    //         mName: values.middleName.value,
-    //         lName: values.lastName.value,
-    //         phone: values.phoneNumber.value,
-    //         email: values.emailAddress.value,
-    //         address: givenAddress,
-    //         interests: selectedCommittees,
-    //     }),
-    // }).then((res) => {
-    //     // form submitted
-    //     if (res.ok) {
-    //         // display thank you modal
-    //         setIsThankYouNoteOpen(true);
-    //         // clear form values
-    //         setValues({
-    //             ...values,
-    //             firstName: { ...values.firstName, value: "" },
-    //             middleName: { ...values.middleName, value: "" },
-    //             lastName: { ...values.lastName, value: "" },
-    //             phoneNumber: { ...values.phoneNumber, value: "" },
-    //             emailAddress: { ...values.emailAddress, value: "" },
-    //             country: { ...values.country, value: "" },
-    //             addressOne: { ...values.addressOne, value: "" },
-    //             addressTwo: { ...values.addressTwo, value: "" },
-    //             city: { ...values.city, value: "" },
-    //             stateLocation: { ...values.stateLocation, value: "" },
-    //             zipcode: { ...values.zipcode, value: "" },
-    //         });
-    //         setSelectedCommittees([]);
-    //         setCommitteesError(false);
-    //     } else {
-    //         // show snackbar to notify form could not be submitted
-    //         setSnackBar({
-    //             open: true,
-    //             message: "An internal error occurred. Form not submitted.",
-    //         });
-    //     }
-    // });
 
     // allow form to be edited
     document.body.style.cursor = null
@@ -450,7 +407,7 @@ export default function Volunteer({ frontmatter, image, interests }) {
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
           title={frontmatter.title}
-          image={image}
+          image={frontmatter.image}
           height="max(40vh, 300px)"
           width="100%"
           showArrow={false}
@@ -459,7 +416,7 @@ export default function Volunteer({ frontmatter, image, interests }) {
         <ResourcesHeader
           title={frontmatter.title}
           text={frontmatter.description}
-          image={image}
+          image={frontmatter.image}
           height="max(75vh, 400px)"
           width="100%"
           arrowClickCallback={scrollToRef}

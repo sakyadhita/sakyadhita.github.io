@@ -269,7 +269,7 @@ export default function Home({
             {/* Join Us  */}
             <BeInvolved
               description="Become a member of Sakyadhita!"
-              image_url="https://d.wattpad.com/story_parts/271116779/images/161bdd205bbf18fb307084307993.jpg"
+              image_url="/assets/Join%20Us%20Page/JoinUs.jpg"
               openInSameTab="true"
               redirect_link={SITE_PAGES.JOIN_US}
               button_title="Join Us"
@@ -278,7 +278,7 @@ export default function Home({
             <BeInvolved
               description="Interested in helping us with anything from writing content to
                             building?"
-              image_url="https://lh3.googleusercontent.com/tVonHCrVh7igUJjFPyZ9-Cpa9eZBQXsSHGOh0_XHioRJtwK-AWFN4nH5B12qVdn1Kw8VRe_5nvegTgVu=w1080-h608-p-no-v0"
+              image_url="/assets/Join%20Us%20Page/Volunteer.jpg"
               openInSameTab="true"
               redirect_link={SITE_PAGES.VOLUNTEER}
               button_title="Volunteer"
@@ -286,7 +286,7 @@ export default function Home({
             {/* Donate  */}
             <BeInvolved
               description="Help us grow and continue to connect by donating in any amount"
-              image_url="https://cdn9.dissolve.com/p/D1024_57_273/D1024_57_273_1200.jpg"
+              image_url="/assets/Donate%20Page/Donate.jpg"
               openInSameTab="true"
               redirect_link={SITE_PAGES.DONATE}
               button_title="Donate"

@@ -5,7 +5,6 @@ import PageLayout from './PageLayout.astro'
 import Volunteer from '../components/Layouts/Volunteer'
 
 const { frontmatter } = Astro.props
-const image = await import(`../media/${frontmatter.image}.jpg`)
 
 const volinterests = await getCollection('volinterest')
 const interests = volinterests.map((interest) => {
@@ -18,7 +17,6 @@ const interests = volinterests.map((interest) => {
 <PageLayout>
   <Volunteer client:only="react"
     frontmatter={frontmatter}
-    image={image.default.src}
     interests={interests}
   >
     <slot />

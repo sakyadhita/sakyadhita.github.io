@@ -75,7 +75,7 @@ const CommitteeProfiles = ({ committees, year, computeProfileDisplay }) => {
   )
 }
 
-export default function AboutUs({ frontmatter, image, committees, sections, children }) {
+export default function AboutUs({ frontmatter, committees, sections, children }) {
   // Keeps track of the current location for the sticky navbar
   const [scrollLocation, setScrollLocation] = useState('mission')
   // Toggles the dropdown menu for different executive committees
@@ -184,7 +184,7 @@ export default function AboutUs({ frontmatter, image, committees, sections, chil
     <div className="page">
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
-          image={image}
+          image={frontmatter.image}
           title={frontmatter.title}
           height="max(40vh, 300px)"
           width="100%"
@@ -193,7 +193,7 @@ export default function AboutUs({ frontmatter, image, committees, sections, chil
         />
       ) : (
         <ResourcesHeader
-          image={image}
+          image={frontmatter.image}
           title={frontmatter.title}
           text={frontmatter.description}
           height="max(75vh, 400px)"

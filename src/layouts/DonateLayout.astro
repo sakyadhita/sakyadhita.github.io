@@ -3,13 +3,11 @@ import PageLayout from './PageLayout.astro'
 import Donate from '../components/Layouts/Donate'
 
 const { frontmatter } = Astro.props
-const image = await import(`../media/${frontmatter.image}.jpg`)
 ---
 
 <PageLayout>
   <Donate client:only="react"
     frontmatter={frontmatter}
-    image={image.default.src}
   >
     <slot />
   </Donate>

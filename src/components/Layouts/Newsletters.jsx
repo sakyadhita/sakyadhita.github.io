@@ -34,7 +34,7 @@ const PublicationGrid = ({ displayedNewsletters, isMobile }) => {
   )
 }
 
-export default function Newsletters({ frontmatter, image, newsletters }) {
+export default function Newsletters({ frontmatter, newsletters }) {
   const [maxPages, setMaxPages] = useState(9)
   const [numPerPage, setNumPerPage] = useState(9)
   const [currentPage, setCurrentPage] = useState(0)
@@ -108,7 +108,7 @@ export default function Newsletters({ frontmatter, image, newsletters }) {
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
           title={frontmatter.title}
-          image={image}
+          image={frontmatter.image}
           height="max(40vh, 300px)"
           width="100%"
           showArrow={false}
@@ -117,7 +117,7 @@ export default function Newsletters({ frontmatter, image, newsletters }) {
         <ResourcesHeader
           title={frontmatter.title}
           text={frontmatter.description}
-          image={image}
+          image={frontmatter.image}
           height="max(75vh, 400px)"
           width="100%"
           arrowClickCallback={scrollToRef}

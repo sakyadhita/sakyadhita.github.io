@@ -19,7 +19,6 @@ import ImageHeader from '../Contact/ImageHeader'
 import ResourcesHeader from '../ResourcesHeader'
 import Modal from '../Modal'
 import CustomButton from '../CustomButton'
-// import Header from "../../media/lotus-header.svg";
 import '../../css/ContactUs.css'
 
 const MAX_MOBILE_WIDTH = 1050
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ContactUs({frontmatter, image, children}) {
+export default function ContactUs({frontmatter, children}) {
   // tracks page layout to width changes
   const [isMobile, setIsMobile] = React.useState(false)
   // tracks whether form is disabled
@@ -299,14 +298,14 @@ export default function ContactUs({frontmatter, image, children}) {
 
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
-          image={MAIN_IMG_URL_LINK}
+          image={frontmatter.image}
           title="Contact Us"
           height="max(40vh, 300px)"
           width="100%"
           showArrow={false}
         />
       ) : (
-        <ImageHeader image={image} width="50%" height="auto" />
+        <ImageHeader image={frontmatter.image} width="50%" height="auto" />
       )}
 
       {/* Thank You Modal Once Form Submitted */}

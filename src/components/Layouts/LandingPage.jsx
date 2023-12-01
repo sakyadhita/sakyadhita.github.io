@@ -10,7 +10,7 @@ import ResourcesHeader from '../ResourcesLanding/ResourcesLandingPageHeader'
 
 const MAX_MOBILE_WIDTH = 750
 
-export default function LandingPage({ frontmatter, image }) {
+export default function LandingPage({ frontmatter }) {
   // tracks layout of screen
   const [isMobile, setMobileView] = useState(false)
   const [screenDim, setScreenDim] = useState({
@@ -39,7 +39,7 @@ export default function LandingPage({ frontmatter, image }) {
   if (isMobile) {
     return (
       <ResourcesHeader
-        image={image}
+        image={frontmatter.image}
         title={frontmatter.title}
         // height takes up rest of screen, excluding mobile navbar
         height="calc(100vh - 50px)"
@@ -50,7 +50,7 @@ export default function LandingPage({ frontmatter, image }) {
 
   return (
     <ResourcesHeader
-      image={image}
+      image={frontmatter.image}
       title={frontmatter.title}
       text={frontmatter.description}
       // height takes up rest of screen, excluding mobile navbar
