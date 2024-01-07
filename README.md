@@ -1,4 +1,5 @@
 # Sakyadhita Web Site
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/33b02bdb-9658-4530-9b42-55a1957cb999/deploy-status)](https://app.netlify.com/sites/sakyadhita/deploys)
 
 This is the Sakyadhita International static web site created using [Astro](https://astro.build).
@@ -11,6 +12,11 @@ content collections. The backend Express Server and SQL database is no longer
 needed.
 
 The website is hosted on Netlify and all form submissions are sent to Netlify.
+
+## Releases
+
+* 1.0.0: Initial version, converted from SERN to Astro/React
+* 1.0.1: Updated branch/chapter information
 
 ## Creating a Local Build
 

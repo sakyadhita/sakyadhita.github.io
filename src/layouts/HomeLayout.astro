@@ -4,7 +4,7 @@ import PageLayout from './PageLayout.astro'
 import Home from '../components/Layouts/Home'
 
 const branches = await getCollection('branch')
-const branchesAndChapters = branches.map((m) => m.data)
+// const branchesAndChapters = branches.map((m) => m.data)
 
 const news = await getCollection('news')
 const newsAndEvents = news.map((m) => m.data).sort((a, b) => +b.pubDate - +a.pubDate)
@@ -23,7 +23,7 @@ const additionalSections = await getCollection('section', ({ data }) => {
     newsAndEvents={newsAndEvents}
     introduction={intro.body}
     newsflash={newsflash}
-    branchesAndChapters={branchesAndChapters}
+    branchesAndChapters={branches}
     additionalSections={additionalSections}
   />
 </PageLayout>

@@ -13,6 +13,7 @@ import React, { useState, useEffect } from 'react'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdEmail } from 'react-icons/md'
 import ReactTooltip from 'react-tooltip'
+import Markdown from 'react-markdown'
 import InteractiveMap from '../Home/InteractiveMap'
 import Slideshow from '../Slideshow'
 import NewsEventsSlide from '../Home/NewsEventsSlide'
@@ -99,6 +100,41 @@ export default function Home({
     return '85vh'
   }
 
+  function displayTooltip (dataTip) {
+    if (branchesAndChapters.length > 0) {
+      const item = branchesAndChapters[Math.floor(dataTip)]
+      const data = item.data
+    
+      return <div key={item.id}>
+        {/* Display name (with hyperlink if given) */}
+        {data.siteLink ? (
+          <a
+            href={data.siteLink}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {data.name}
+            <FiExternalLink />
+          </a>
+        ) : (
+          data.name
+        )}
+        <br />
+        {/* Display email if it given */}
+        {data.email ? (
+          <div>
+            <MdEmail />
+            &nbsp;
+            {data.email}
+          </div>
+        ) : null}
+        <Markdown>
+        {item.body}
+        </Markdown>
+      </div>
+    }
+  }
+
   const formatLoader = (
     <div className="loader-wrapper">
       <Loader />
@@ -172,7 +208,7 @@ export default function Home({
           {isPageLoading ? (
             formatLoader
           ) : (
-            <InteractiveMap disableZooming={disableZoom} markers={branchesAndChapters} />
+            <InteractiveMap disableZooming={disableZoom} markers={branchesAndChapters.map((m) => m.data)} />
           )}
           {/* Custom Tooltip for Interactive Map */}
           {isPageLoading ? null : (
@@ -185,36 +221,7 @@ export default function Home({
               event="mouseover mouseenter"
               globalEventOff="click scroll mousewheel blur"
               id="tooltip"
-              getContent={(dataTip) =>
-                branchesAndChapters.length > 0 ? (
-                  <div key={branchesAndChapters[Math.floor(dataTip)].id}>
-                    {/* Display name (with hyperlink if given) */}
-                    {branchesAndChapters[Math.floor(dataTip)].siteLink ? (
-                      <a
-                        href={branchesAndChapters[Math.floor(dataTip)].siteLink}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {branchesAndChapters[Math.floor(dataTip)].name}
-                        <FiExternalLink />
-                      </a>
-                    ) : (
-                      branchesAndChapters[Math.floor(dataTip)].name
-                    )}
-                    <br />
-                    {/* Display email if it given */}
-                    {branchesAndChapters[Math.floor(dataTip)].email ? (
-                      <div>
-                        <MdEmail />
-                        &nbsp;
-                        {branchesAndChapters[Math.floor(dataTip)].email}
-                      </div>
-                    ) : null}
-                  </div>
-                ) : (
-                  <div> </div>
-                )
-              }
+              getContent={(tooltip) => displayTooltip(tooltip)}
             />
           )}
 
