@@ -182,10 +182,13 @@ export default function Home({
         <hr className="divider" />
 
         {/* Latest News */}
-        <section id="latest-news">
-          <NewsFlash article={newsflash} />
-        </section>
-
+        {newsflash.data.isPublished > 0 &&
+          <>
+            <section id="latest-news">
+              <NewsFlash article={newsflash} />
+            </section> 
+          </>
+      }
         {additionalSections.length > 0 &&
           <>
             <hr className="divider" />
@@ -211,7 +214,7 @@ export default function Home({
         }
         
         {/* Mini Divider */}
-        <hr className="divider" />
+        {/* <hr className="divider" /> */}
 
         {/* Branches & Chapters Section */}
         <section id="branches-and-chapters">
@@ -244,7 +247,7 @@ export default function Home({
               {'\n\n\n'}
               Click on a pin for more information about the branch!
               {isMobile ? ' Pinch the screen to zoom in and out of the map.' : null}
-              {'\n\n'}
+              {'\n'}
             </p>
             {/* Mini Color Legend  */}
             <section className="legend-container">
