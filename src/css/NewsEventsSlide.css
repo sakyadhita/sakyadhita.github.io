@@ -21,17 +21,6 @@
   margin: 20px 0px;
 }
 
-.NewsEventsSlide .circle-arrow {
-  color: white;
-  position: absolute;
-  font-size: 74px;
-  bottom: 0;
-  margin: 0px 0px 20px 30px;
-}
-
-.circle-arrow:hover {
-  cursor: pointer;
-}
 
 @media only screen and (max-width: 1000px) {
   .NewsEventsSlide .info-container {
@@ -43,21 +32,12 @@
     font-size: 14px;
   }
 
-  .NewsEventsSlide .circle-arrow {
-    font-size: 56px;
-  }
 }
 
 @media only screen and (max-width: 700px) {
   .NewsEventsSlide .info-container {
     width: 70.5vw;
     margin-top: 10%;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .NewsEventsSlide .circle-arrow {
-    margin: 0px 0px 1em 30px;
   }
 }
 
