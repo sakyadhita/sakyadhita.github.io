@@ -18,6 +18,7 @@ The website is hosted on Netlify and all form submissions are sent to Netlify.
 * 1.0.0: Initial version, converted from SERN to Astro/React
 * 1.0.1: Updated branch/chapter information
 * 1.0.2: Updated home page, slider, newsflash, photos, conferences, newsletters
+* 1.0.3: Updated Footer with conference links
 
 ## Creating a Local Build
 

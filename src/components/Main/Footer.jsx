@@ -160,11 +160,15 @@ export default function Footer() {
               {subitem('Volunteer', SITE_PAGES.VOLUNTEER)}
               {subitem('Donate', SITE_PAGES.DONATE)}
             </div>
-            <div>
+            <div className="Footer-Page-Expanded">
               <a href={SITE_PAGES.CONFERENCES}>
                 {' '}
                 <p className="hover-underline-animation"> Conferences </p>{' '}
               </a>
+              {subitem('2023 18th conference, (Seoul, Korea)', '/conferences/18')}
+              {subitem('2021 17th conference, (online)', '/conferences/17')}
+              {subitem('2019 16th conference, (Blue Mountains, Australia)', '/conferences/16')}
+              {subitem('2017 15th conference, (Hong Kong, China)', '/conferences/15')}
             </div>
 
             <div className="Footer-Page-Expanded">
