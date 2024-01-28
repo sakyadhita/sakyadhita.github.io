@@ -6,7 +6,9 @@ import Home from '../components/Layouts/Home'
 const branches = await getCollection('branch')
 // const branchesAndChapters = branches.map((m) => m.data)
 
-const news = await getCollection('news')
+const news = await getCollection('news', ({ data }) => {
+  return data.draft !== true;
+})
 const newsAndEvents = news.map((m) => m.data).sort((a, b) => +b.pubDate - +a.pubDate)
 
 const intro = await getEntry('section', 'introduction')
@@ -15,6 +17,8 @@ const newsflash = await getEntry('section', 'newsflash')
 const additionalSections = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'Home'
 })
+
+const images = await Astro.glob('../assets/home/*.jpg')
 ---
 
 <PageLayout>
@@ -25,5 +29,6 @@ const additionalSections = await getCollection('section', ({ data }) => {
     newsflash={newsflash}
     branchesAndChapters={branches}
     additionalSections={additionalSections}
+    images={images}
   />
 </PageLayout>

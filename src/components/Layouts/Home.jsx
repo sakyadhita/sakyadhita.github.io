@@ -21,10 +21,13 @@ import BeInvolved from '../Home/BeInvolved'
 import Introduction from '../Home/Introduction'
 import NewsFlash from '../Home/NewsFlash'
 import Loader from '../Main/Loader'
+import Gallery from 'react-photo-gallery'
 
 import { SITE_PAGES } from '../../constants/links'
 
 import '../../css/Home.css'
+// import '../../css/Masonry.css'
+// import 'photoswipe/dist/photoswipe.css'
 
 // Mobile Screens
 const MAX_HEIGHT_HORIZONTAL_MOBILE = 500 // Landscape Layout
@@ -41,7 +44,8 @@ export default function Home({
   introduction,
   newsflash,
   branchesAndChapters,
-  additionalSections
+  additionalSections,
+  images
 }) {
   // tracks layout of screen
   const [isPageLoading, setIsPageLoading] = useState(true)
@@ -149,7 +153,7 @@ export default function Home({
           <NewsEventsSlide
             key={slideInfo.title}
             height={getSlideshowHeight()}
-            showButton="true"
+            showButton={slideInfo.redirectLink}
             openInSameTab={slideInfo.openInSameTab}
             redirect_link={slideInfo.redirectLink}
             title={slideInfo.title}
@@ -198,6 +202,13 @@ export default function Home({
             </section>
           </>
         }
+        {images.length > 0 &&
+          <Gallery className="home-section" photos={images.map((image) => ({
+            src: image.default.src,
+            width: image.default.width,
+            height: image.default.height,
+           }))} />
+        }
         
         {/* Mini Divider */}
         <hr className="divider" />
@@ -229,23 +240,7 @@ export default function Home({
           <div className="branch-info">
             <h1>Branches </h1>
             <p>
-              The benefits of the National Branches is immediately obvious. The number of women who
-              can afford or set aside time to attend the Sakyadhita International Conferences on
-              Buddhist Women are limited. Activities on the national and local level are far easier
-              to organize and more affordable for larger numbers of people. Designated contact
-              persons for the national branches are listed on the Sakyadhita website and serve the
-              important role of disseminating information about Sakyadhita’s goals and activities to
-              large numbers of people on the national and local level.
-              {'\n\n'}
-              The national branches help raise awareness of Sakyadhita’s mission by distributing
-              publicity materials and organizing activities on the national level. They serve an
-              important function in helping publicize the Sakyadhita International Conferences on
-              Buddhist Women. They have also been very helpful in coordinating the registrations for
-              conferences on the national level in the local currency, booking group flights, and
-              translating conference materials (abstracts, papers, etc.) into national languages.
-              Sakyadhita Taiwan has done exceptional work in cultivating and training translators
-              who are qualified to translate abstracts, papers, and publicity materials on Buddhism
-              and issues of Buddhist women into Chinese.
+              Buddhist women and their allies gather at the Sakyadhita International Conferences every two years and also organize national branches and local chapters to facilitate networking and events closer to home. These branches and chapters help bring awareness of Sakyadhita’s goals and activities to large numbers of people in their vicinity. Some help plan the international conferences, developing leadership skillson the ground. Others are active in translation activities and have done excellent work in training translators who are qualified to translate materials on Buddhism and issues of interest to Buddhist women.
               {'\n\n\n'}
               Click on a pin for more information about the branch!
               {isMobile ? ' Pinch the screen to zoom in and out of the map.' : null}

@@ -1,12 +1,10 @@
 ---
 page: 'NewsFlash'
-title: 'Flocks of Golden Beings'
+title: 2023 Sakyadhita International Conference on Buddhist Women
 isPublished: true
-subtitle: Special Report on the Recent Full Ordination of Nuns in Bhutan
-image: /assets/Home Page/Flocks-of-Golden-Beings.jpg
-redirectLink: /assets/Home Page/Emma Slade Flocks of Golden Beings.pdf
+subtitle: '"Living in a Precarious World: Impermanence, Resilience, Awakening"'
+image: /assets/Home Page/Seoul_0174_SAK7378.jpg
+redirectLink: https://youtu.be/YGxVoV13hg8?si=vq0WVMzrIl7T6wCP
 ---
 
-If it were hundreds of years ago perhaps, I would say I saw a flock of golden beings, the patches of their cloth glinting and catching the light. Making up a crowd of beaming joy, they gathered under a tent in the forest and drank tea together, looking at one another in the understanding of a deep and profound bond and enormous gratitude to all who made it possible.
-
-On June 21, 2022, in Paro, Bhutan, on Bhutan Nuns&apos; Day, these luminous being gathered around the temple dedicated to Gelongma Palmo, the female practitioner famed for the Nyungne practice. Many threads were woven together to create the this extraordinary historic event, one I honestly did not know I would see in my lifetime, yet alone take part in. The event was historic in enabling female monastics to take full Bhikshuni (Tibetan: Gelongma) ordination within the Vajrayana lineages, which has been impossible for many centuries until now...
+The 18th Sakyadhita Conference in Seoul, Korea, June 2023 was a deeply moving and inspiring experience. Over 3,000 Buddhist women and well-wishers (5,000 on some days!) from more than 30 countries gathered to share their wisdom, compassion, and joy. Renowned meditation teachers from diverse Buddhist traditions shared their knowledge and experience in three experiential meditation sessions. The exhilarating Opening Ceremony and Cultural Performances led up to a delightful Welcome Reception for participants from around the world. Scholars and practitioners shared their latest research and activism on critical contemporary issues relevant to Buddhist women. In interactive workshops, presenters engaged participants in activities as diverse as Buddhism and Film, Mandala Meditation, Transforming Gender Injustice, Paper Flower Making, to Temple Food, Tai Chi, Tea Meditation, and much more. Evening chanting sessions evoked a sonic festival representing global Buddhist traditions. Focus groups and national branch and chapter gatherings brought participants together with like-minded friends for further collaboration. Get a glimpse of this exciting event on YouTube and get ready for the next Sakyadhita International Conference in 2025!

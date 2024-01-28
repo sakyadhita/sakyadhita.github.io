@@ -96,7 +96,7 @@
 /* Social Media Icons */
 .Footer-Social-Media {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   flex-direction: row;
 }
 

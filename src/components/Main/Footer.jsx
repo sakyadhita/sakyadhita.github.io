@@ -201,12 +201,6 @@ export default function Footer() {
                 {facebook}
                 {/* youtube */}
                 {youtube}
-                {/* pinterest */}
-                {pinterest}
-                {/* Blog */}
-                {blog}
-                {/* GoodReads */}
-                {goodreads}
               </section>
             </div>
 

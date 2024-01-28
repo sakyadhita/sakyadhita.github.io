@@ -5,7 +5,8 @@ const news = defineCollection({
   schema: ({ image }) =>
     rssSchema.extend({
       imageLink: z.string(),
-      redirectLink: z.string()
+      redirectLink: z.string().optional(),
+      draft: z.boolean().optional()
     })
 })
 
