@@ -24,7 +24,7 @@ export default function NewsFlash({ article }) {
             {article.body}
           </Markdown>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <CustomButton text="Learn More" redirect_link={article.data.redirect_link} />
+            <CustomButton text="Learn More" redirect_link={article.data.redirectLink} />
           </div>
         </div>
         <img
