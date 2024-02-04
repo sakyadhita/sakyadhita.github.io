@@ -1,6 +1,7 @@
 ---
 layout: ../layouts/NLLayout.astro
 title: Newsletters
-description: The Sakyadhita newsletter has been published once or twice a year since 1990 and currently is mailed to its members. It contains information on the Sakyadhita International conferences,  reviews of published books related to women and Buddhism, and other articles of interest to women practitioners. All articles are written by Sakyadhita members on a volunteer basis.
+description: >
+  The Sakyadhita newsletter has been published annually since 1990. The newsletter is distributed by email and social media, and posted to the Sakyadhita International website, free of charge. The newsletters contain articles about the Sakyadhita International conferences, announcements of books by and related to women and Buddhism, and articles of interest to women in Buddhism and their allies.
 image: /Lotus_Header.jpg
 ---
