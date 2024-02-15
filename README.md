@@ -21,6 +21,7 @@ The website is hosted on Netlify and all form submissions are sent to Netlify.
 * 1.0.3: Updated Footer with conference links
 * 1.0.4: Updated newsletter description and image for Vol 30
 * 1.0.5: Updated About page
+* 1.0.6: Updated Bibliographies
 
 ## Creating a Local Build
 
