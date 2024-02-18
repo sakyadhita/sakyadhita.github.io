@@ -22,6 +22,7 @@ The website is hosted on Netlify and all form submissions are sent to Netlify.
 * 1.0.4: Updated newsletter description and image for Vol 30
 * 1.0.5: Updated About page
 * 1.0.6: Updated Bibliographies
+* 1.0.7: Updated Bibliographies art work
 
 ## Creating a Local Build
 
