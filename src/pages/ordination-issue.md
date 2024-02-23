@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/OILayout.astro
-title: The Ordination Issue
-description: Discussing the ordination issue
+title: Orrdination
+description: Discussing buddhist ordination
 image: /Lotus_Header.jpg
 ---
