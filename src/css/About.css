@@ -264,7 +264,7 @@
 
 .profile p {
   font-family: var(--text-font);
-  font-size: 1.125em;
+  font-size: 1em;
   font-weight: 400;
   padding: 20px 10px;
 }
