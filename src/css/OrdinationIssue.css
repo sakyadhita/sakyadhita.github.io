@@ -1,7 +1,8 @@
 .page-content {
   width: 70.47vw;
   align-content: center;
-  margin-left: 14.77vw;
+  /* margin-left: 14.77vw; */
+  margin-left: 5vw;
   display: grid;
 }
 
