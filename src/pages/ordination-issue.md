@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/OILayout.astro
-title: Orrdination
+title: Ordination
 description: Discussing buddhist ordination
 image: /Lotus_Header.jpg
 ---
