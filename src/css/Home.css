@@ -28,6 +28,12 @@
   width: 100%;
 }
 
+h1 #logo{
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+}
+
 .home-section-body {
   display: flex;
   flex-direction: column;
@@ -177,5 +183,11 @@
   .home-section img {
     width: calc(100% + 2rem);
     height: auto;
+  }
+
+  h1 #logo{
+    height: 2rem;
+    width: 2rem;
+    display: inline-block;
   }
 }
