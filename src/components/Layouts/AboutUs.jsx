@@ -202,55 +202,57 @@ export default function AboutUs({ frontmatter, committees, sections, children })
         />
       )}
 
-      {/* Sticky Nav */}
-      <div className="slider-wrapper">
-        <div className="slider">
-          <ul className="slider-nav">
-            {sections.map((section) => (
-              <li
-                className={computeNavUnderline(makeIdURLFriendly(section.data.title))}
-                key={section.id}
-              >
-                <a href={`#${makeIdURLFriendly(section.data.title)}`}> {section.data.title} </a>
-              </li>
-            ))}
-            <li className={computeNavUnderline('exec')}>
-              <a href="#exec"> Executive Committee </a>
-            </li>
-          </ul>
-          <div className="vbar" />
+      <div class="about-us-container">
+        {/* Sticky Nav */}
+        <div className="slider-wrapper">
+            <div className="slider">
+              <ul className="slider-nav">
+                {sections.map((section) => (
+                  <li
+                    className={computeNavUnderline(makeIdURLFriendly(section.data.title))}
+                    key={section.id}
+                  >
+                    <a href={`#${makeIdURLFriendly(section.data.title)}`}> {section.data.title} </a>
+                  </li>
+                ))}
+                <li className={computeNavUnderline('exec')}>
+                  <a href="#exec"> Executive Committee </a>
+                </li>
+              </ul>
+              <div className="vbar" />
+            </div>
         </div>
-      </div>
 
-      {/* Contents of page */}
-      <div className="contents">
-        {children}
+        {/* Contents of page */}
+        <div className="contents">
+            {children}
 
-        <div className="divider" />
+            <div className="divider" />
 
-        {/* Executive Committee Section */}
-        <div className="section" id="exec">
-          {/* Anchor for navigation */}
-          <div className="scroll" id="committee" />
+            {/* Executive Committee Section */}
+            <div className="section" id="exec">
+              {/* Anchor for navigation */}
+              <div className="scroll" id="committee" />
 
-          <h1>Executive Committee</h1>
+              <h1>Executive Committee</h1>
 
-          {/* Committee Profiles */}
-          {/* Each year has a different set of profiles */}
-          {/* Profiles will have to be put in reverse order (President goes last) */}
+              {/* Committee Profiles */}
+              {/* Each year has a different set of profiles */}
+              {/* Profiles will have to be put in reverse order (President goes last) */}
 
-          <CommitteeSelector
-            years={years}
-            toggleDropdown={toggleDropdown}
-            dropdownOn={dropdownOn}
-            clickDropdown={clickDropdown}
-            committeeIndex={committeeIndex}
-          />
-          <CommitteeProfiles
-            committees={committees}
-            year={year}
-            computeProfileDisplay={computeProfileDisplay}
-          />
+              <CommitteeSelector
+                years={years}
+                toggleDropdown={toggleDropdown}
+                dropdownOn={dropdownOn}
+                clickDropdown={clickDropdown}
+                committeeIndex={committeeIndex}
+              />
+              <CommitteeProfiles
+                committees={committees}
+                year={year}
+                computeProfileDisplay={computeProfileDisplay}
+              />
+            </div>
         </div>
       </div>
     </div>

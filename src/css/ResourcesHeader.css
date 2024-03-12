@@ -37,20 +37,6 @@
   line-height: 25px;
 }
 
-.header-div .circle-arrow {
-  color: white;
-  position: absolute;
-  font-size: 74px;
-  bottom: 0;
-  right: 0;
-  margin: 20px 30px 0px 0px;
-}
-
-@media only screen and (max-width: 1000px) {
-  .header-div .circle-arrow {
-    font-size: 54px;
-  }
-}
 
 @media screen and (min-width: 450px) and (max-width: 600px) {
   .header-info {
