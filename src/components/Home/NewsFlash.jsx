@@ -16,7 +16,7 @@ export default function NewsFlash({ article }) {
       <h1>{article.data.title}</h1>
 
       <div id="news-flash-wrapper" style={{ display: 'flex', flexDirection: 'row' }}>
-        <div>
+        <div style={{ paddingBottom: '16px' }}>
           <p style={{ fontStyle: 'italic', fontWeight: 'bold', color: 'var(--darkpurple)' }}>
             {article.data.subtitle}
           </p>
@@ -27,9 +27,9 @@ export default function NewsFlash({ article }) {
         </div>
         <img
           id="news-flash-img"
-          style={{ marginLeft: '20px' }}
-          src={article.data.image}
+          style={{ marginLeft: '20px', objectFit: 'cover' }}
           width="50%"
+          src={article.data.image}
           alt={article.data.title}
         />
       </div>
