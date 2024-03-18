@@ -6,7 +6,7 @@ const { frontmatter } = Astro.props
 ---
 
 <PageLayout>
-  <ContactUs client:only="react" frontmatter={frontmatter} >
+  <ContactUs client:only="react" frontmatter={frontmatter}>
     <slot />
   </ContactUs>
   <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>

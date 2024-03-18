@@ -44,7 +44,6 @@ export default function ResourcesHeader({
         {title ? <h1 className="header-text">{title}</h1> : null}
         {text ? <p className="header-info">{text}</p> : null}
       </div>
-    
     </div>
   )
 }

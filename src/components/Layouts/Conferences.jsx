@@ -17,7 +17,7 @@ import ConferenceDesktop from '../Conference/ConferenceDesktop'
 import MobileConference from '../Conference/MobileConference'
 import '../../css/Conferences.css'
 
-export default function Conferences({ conferences, id=null }) {
+export default function Conferences({ conferences, id = null }) {
   // Needed to determine when to render the desktop or mobile version
   const listener = useWindowSize()
   // const listener = { width: 2000 };

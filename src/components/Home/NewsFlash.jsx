@@ -20,9 +20,7 @@ export default function NewsFlash({ article }) {
           <p style={{ fontStyle: 'italic', fontWeight: 'bold', color: 'var(--darkpurple)' }}>
             {article.data.subtitle}
           </p>
-          <Markdown>
-            {article.body}
-          </Markdown>
+          <Markdown>{article.body}</Markdown>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <CustomButton text="Learn More" redirect_link={article.data.redirectLink} />
           </div>

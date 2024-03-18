@@ -13,10 +13,14 @@ export default function Introduction({ body }) {
   // return <div id="home-introduction" dangerouslySetInnerHTML={{ __html: `${body}` }} />
   return (
     <>
-      <h1> Grassr<img src="/logo.svg" alt="Logo" id="logo" /><img src="/logo.svg" alt="Logo" id="logo" />ts </h1>
-      <Markdown>
-        {body}
-      </Markdown>
+      <h1>
+        {' '}
+        Grassr
+        <img src="/logo.svg" alt="Logo" id="logo" />
+        <img src="/logo.svg" alt="Logo" id="logo" />
+        ts{' '}
+      </h1>
+      <Markdown>{body}</Markdown>
     </>
   )
 }

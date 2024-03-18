@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function CustomPagination(props) {
-  console.log("P", props.page)
+  console.log('P', props.page)
   const classes = useStyles()
 
   // set the tabs for the pagination
@@ -42,7 +42,12 @@ export default function CustomPagination(props) {
 
   return (
     <div className={classes.root}>
-      <Pagination count={count} size="small" page={props.page} onChange={(e, page) => handleChange(e, page)} />
+      <Pagination
+        count={count}
+        size="small"
+        page={props.page}
+        onChange={(e, page) => handleChange(e, page)}
+      />
     </div>
   )
 }

@@ -18,35 +18,31 @@ const { frontmatter } = Astro.props
 
 <PageLayout>
   <ResourcesNavBar client:only="react">
-    <BuddhistCulture client:only="react"
-      frontmatter={frontmatter}
-      sections={sections}
-    >
-      {sections.map((item, index) => {
-        const Content = contents[index]
-        
-        return (
-          <div class="buddhist-contents-div">
-            <div class="buddhist-section">
-              {/* This div is used for scrolling to the specific spot */}
-              <div class="buddhist-scroll" id={item.data.title.replaceAll(' ', '')} />
+    <BuddhistCulture client:only="react" frontmatter={frontmatter} sections={sections}>
+      {
+        sections.map((item, index) => {
+          const Content = contents[index]
 
-              {/* The title of the paragraph */}
-              {index === 0 ? (
-                <h1>{item.data.title}</h1>
-              ) : (
-                <h1>{item.data.title}</h1>
-              )}
-              {/* The text of the div */}
-              <div class="page-content">
-                <Content />
+          return (
+            <div className="buddhist-contents-div">
+              <div className="buddhist-section">
+                {/* This div is used for scrolling to the specific spot */}
+                <div className="buddhist-scroll" id={item.data.title.replaceAll(' ', '')} />
+
+                {/* The title of the paragraph */}
+                {index === 0 ? <h1>{item.data.title}</h1> : <h1>{item.data.title}</h1>}
+                {/* The text of the div */}
+                <div className="page-content">
+                  <Content />
+                </div>
               </div>
-            </div>
 
-            {/* The orange divider at the bottom of the page */}
-            {index !== sections.length - 1 ? <div class="buddhist-divider" /> : null}
-          </div>)
-      })}
+              {/* The orange divider at the bottom of the page */}
+              {index !== sections.length - 1 ? <div className="buddhist-divider" /> : null}
+            </div>
+          )
+        })
+      }
       <slot />
     </BuddhistCulture>
   </ResourcesNavBar>

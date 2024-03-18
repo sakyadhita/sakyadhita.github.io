@@ -60,9 +60,7 @@ export default function ConferenceTheme(props) {
       <div className="conference-theme-paragraph-div">
         <div className="slideshow-div">{props.slideShow ? props.slideShow() : null}</div>
         <div className="conference-theme-paragraph">
-          <Markdown>
-            {props.theme}
-          </Markdown>
+          <Markdown>{props.theme}</Markdown>
         </div>
       </div>
 

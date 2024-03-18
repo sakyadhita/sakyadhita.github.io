@@ -15,7 +15,7 @@ const contents = sections.map(async (s) => {
 
 const { frontmatter } = Astro.props
 
-function makeIdURLFriendly(idString : string) {
+function makeIdURLFriendly(idString: string) {
   return idString
     .replace(/\s+/g, '-')
     .replace(/:/g, '')
@@ -25,21 +25,25 @@ function makeIdURLFriendly(idString : string) {
 ---
 
 <PageLayout>
-  <AboutUs client:only="react"
+  <AboutUs
+    client:only="react"
     frontmatter={frontmatter}
     committees={committees}
     sections={sections}
   >
-    {sections.map((section, i) => {
-      const Content = contents[i]
-      
-      return (
-        <div class="section">
-          <div class="scroll" id={makeIdURLFriendly(section.data.title)} />
-          <h1>{section.data.title}</h1>
-          <Content />
-        </div>
-    )})}
+    {
+      sections.map((section, i) => {
+        const Content = contents[i]
+
+        return (
+          <div className="section">
+            <div className="scroll" id={makeIdURLFriendly(section.data.title)} />
+            <h1>{section.data.title}</h1>
+            <Content />
+          </div>
+        )
+      })
+    }
     <slot />
   </AboutUs>
 </PageLayout>

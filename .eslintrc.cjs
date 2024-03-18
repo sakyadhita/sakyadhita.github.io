@@ -2,7 +2,7 @@
 module.exports = {
   extends: [
     'plugin:mdx/recommended',
-    'plugin:markdown/recommended',
+    'plugin:markdown/recommended-legacy',
     'plugin:astro/recommended'
     // 'plugin:react/recommended'
   ],

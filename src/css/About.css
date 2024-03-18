@@ -190,7 +190,7 @@
 
 .profiles {
   position: relative;
-  width: min(1000px, 100%);
+  width: min(800px, 100%);
   display: flex;
   flex-flow: row-reverse wrap-reverse;
   justify-content: space-evenly;
@@ -206,7 +206,7 @@
 
 .profile {
   position: relative;
-  width: 450px;
+  width: 350px;
   margin: 0 20px;
 
   display: flex;
@@ -331,7 +331,7 @@
 
 /* Mobile Styles */
 
-@media only screen and (max-width: 1000px), (max-height: 600px) {
+@media only screen and (max-width: 800px), (max-height: 600px) {
   .header {
     height: 320px;
   }

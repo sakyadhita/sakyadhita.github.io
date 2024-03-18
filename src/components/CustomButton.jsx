@@ -44,6 +44,7 @@ export default function CustomButton({
       href={redirect_link}
       target={openInSameTab ? null : '_blank'}
       className="Custom-Button"
+      rel="noreferrer"
     >
       {text}
     </a>

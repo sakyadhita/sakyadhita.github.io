@@ -67,9 +67,7 @@ export default function OrdinationIssue({ frontmatter, ordinationIssues, childre
             showArrow={false}
           />
 
-          <div className="page-content">
-            {children}
-          </div>
+          <div className="page-content">{children}</div>
         </div>
       ) : (
         <div>
@@ -94,9 +92,7 @@ export default function OrdinationIssue({ frontmatter, ordinationIssues, childre
               </h1>
             </div>
           ) : (
-            <div className="page-content">
-              {children}
-            </div>
+            <div className="page-content">{children}</div>
           )}
         </div>
       )}

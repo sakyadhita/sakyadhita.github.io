@@ -104,38 +104,34 @@ export default function Home({
     return '85vh'
   }
 
-  function displayTooltip (dataTip) {
+  function displayTooltip(dataTip) {
     if (branchesAndChapters.length > 0) {
       const item = branchesAndChapters[Math.floor(dataTip)]
       const data = item.data
-    
-      return <div key={item.id}>
-        {/* Display name (with hyperlink if given) */}
-        {data.siteLink ? (
-          <a
-            href={data.siteLink}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {data.name}
-            <FiExternalLink />
-          </a>
-        ) : (
-          data.name
-        )}
-        <br />
-        {/* Display email if it given */}
-        {data.email ? (
-          <div>
-            <MdEmail />
-            &nbsp;
-            {data.email}
-          </div>
-        ) : null}
-        <Markdown>
-        {item.body}
-        </Markdown>
-      </div>
+
+      return (
+        <div key={item.id}>
+          {/* Display name (with hyperlink if given) */}
+          {data.siteLink ? (
+            <a href={data.siteLink} target="_blank" rel="noreferrer">
+              {data.name}
+              <FiExternalLink />
+            </a>
+          ) : (
+            data.name
+          )}
+          <br />
+          {/* Display email if it given */}
+          {data.email ? (
+            <div>
+              <MdEmail />
+              &nbsp;
+              {data.email}
+            </div>
+          ) : null}
+          <Markdown>{item.body}</Markdown>
+        </div>
+      )
     }
   }
 
@@ -182,37 +178,40 @@ export default function Home({
         <hr className="divider" />
 
         {/* Latest News */}
-        {newsflash.data.isPublished > 0 &&
+        {newsflash.data.isPublished > 0 && (
           <>
             <section id="latest-news">
               <NewsFlash article={newsflash} />
-            </section> 
+            </section>
           </>
-      }
-        {additionalSections.length > 0 &&
+        )}
+        {additionalSections.length > 0 && (
           <>
             <hr className="divider" />
             <section className="home-section">
               {additionalSections.map((section) => (
-                  <div key={section.id}>
-                    <h1 className="home-section-title">{section.data.title}</h1>
-                    <div
-                      className="home-section-body"
-                      dangerouslySetInnerHTML={{ __html: `${section.body}` }}
-                    />
-                  </div>
+                <div key={section.id}>
+                  <h1 className="home-section-title">{section.data.title}</h1>
+                  <div
+                    className="home-section-body"
+                    dangerouslySetInnerHTML={{ __html: `${section.body}` }}
+                  />
+                </div>
               ))}
             </section>
           </>
-        }
-        {images.length > 0 &&
-          <Gallery className="home-section" photos={images.map((image) => ({
-            src: image.default.src,
-            width: image.default.width,
-            height: image.default.height,
-           }))} />
-        }
-        
+        )}
+        {images.length > 0 && (
+          <Gallery
+            className="home-section"
+            photos={images.map((image) => ({
+              src: image.default.src,
+              width: image.default.width,
+              height: image.default.height
+            }))}
+          />
+        )}
+
         {/* Mini Divider */}
         {/* <hr className="divider" /> */}
 
@@ -222,7 +221,10 @@ export default function Home({
           {isPageLoading ? (
             formatLoader
           ) : (
-            <InteractiveMap disableZooming={disableZoom} markers={branchesAndChapters.map((m) => m.data)} />
+            <InteractiveMap
+              disableZooming={disableZoom}
+              markers={branchesAndChapters.map((m) => m.data)}
+            />
           )}
           {/* Custom Tooltip for Interactive Map */}
           {isPageLoading ? null : (
@@ -243,7 +245,14 @@ export default function Home({
           <div className="branch-info">
             <h1>Branches </h1>
             <p>
-              Buddhist women and their allies gather at the Sakyadhita International Conferences every two years and also organize national branches and local chapters to facilitate networking and events closer to home. These branches and chapters help bring awareness of Sakyadhita’s goals and activities to large numbers of people in their vicinity. Some help plan the international conferences, developing leadership skillson the ground. Others are active in translation activities and have done excellent work in training translators who are qualified to translate materials on Buddhism and issues of interest to Buddhist women.
+              Buddhist women and their allies gather at the Sakyadhita International Conferences
+              every two years and also organize national branches and local chapters to facilitate
+              networking and events closer to home. These branches and chapters help bring awareness
+              of Sakyadhita’s goals and activities to large numbers of people in their vicinity.
+              Some help plan the international conferences, developing leadership skillson the
+              ground. Others are active in translation activities and have done excellent work in
+              training translators who are qualified to translate materials on Buddhism and issues
+              of interest to Buddhist women.
               {'\n\n\n'}
               Click on a pin for more information about the branch!
               {isMobile ? ' Pinch the screen to zoom in and out of the map.' : null}

@@ -10,29 +10,25 @@ const newsletters = await getCollection('newsletter')
 const { frontmatter } = Astro.props
 // return a reverse sort of the newsletter
 let reverseSortNewsletter = newsletters.sort((a, b) => {
-    let a_d = a.data;
-    let b_d = b.data;
+  let a_d = a.data
+  let b_d = b.data
 
-    if (a_d.year < b_d.year) return 1;
-    if (a_d.year > b_d.year) return -1;
+  if (a_d.year < b_d.year) return 1
+  if (a_d.year > b_d.year) return -1
 
-    if (a_d.volume < b_d.volume) return 1;
-    if (a_d.volume > b_d.volume) return -1;
+  if (a_d.volume < b_d.volume) return 1
+  if (a_d.volume > b_d.volume) return -1
 
-    if (a_d.number < b_d.number) return 1;
-    if (a_d.number > b_d.number) return -1;
+  if (a_d.number < b_d.number) return 1
+  if (a_d.number > b_d.number) return -1
 
-    return 0;
-  });
-
+  return 0
+})
 ---
 
 <PageLayout>
   <ResourcesNavBar client:only="react">
-    <Newsletters client:only="react"
-      frontmatter={frontmatter}
-      newsletters={reverseSortNewsletter}
-      >
+    <Newsletters client:only="react" frontmatter={frontmatter} newsletters={reverseSortNewsletter}>
       <slot />
     </Newsletters>
   </ResourcesNavBar>

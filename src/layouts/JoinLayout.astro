@@ -11,10 +11,7 @@ const { frontmatter } = Astro.props
 ---
 
 <PageLayout>
-  <JoinUs client:only="react"
-    frontmatter={frontmatter}
-    memberships={memberships}
-  >
+  <JoinUs client:only="react" frontmatter={frontmatter} memberships={memberships}>
     <slot />
   </JoinUs>
   <form name="membership" data-netlify="true" netlify-honeypot="bot-field" hidden>

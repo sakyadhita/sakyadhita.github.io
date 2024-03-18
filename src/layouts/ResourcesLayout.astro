@@ -8,9 +8,7 @@ const { frontmatter } = Astro.props
 
 <PageLayout hideFooter={true}>
   <ResourcesNavBar client:only="react">
-    <LandingPage client:only="react" 
-      frontmatter={frontmatter}
-      >
+    <LandingPage client:only="react" frontmatter={frontmatter}>
       <slot />
     </LandingPage>
   </ResourcesNavBar>

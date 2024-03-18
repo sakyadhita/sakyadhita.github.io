@@ -176,8 +176,9 @@ export default function BuddhistCulture({ frontmatter, sections, children }) {
               Coming soon
             </h1>
           </div>
-        ) : children
-      }
+        ) : (
+          children
+        )}
       </div>
     </div>
   )

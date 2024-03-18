@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ContactUs({frontmatter, children}) {
+export default function ContactUs({ frontmatter, children }) {
   // tracks page layout to width changes
   const [isMobile, setIsMobile] = React.useState(false)
   // tracks whether form is disabled
@@ -209,10 +209,11 @@ export default function ContactUs({frontmatter, children}) {
         {/* Contact Information */}
         <h4>Reach us at: </h4>
         {/* Email */}
-        {frontmatter.email.map(email => (
+        {frontmatter.email.map((email) => (
           <p>
             {' '}
-            <GoMail /> <a href={"mailto:" + email.address}> {email.address} </a> ({email.description}){' '}
+            <GoMail /> <a href={'mailto:' + email.address}> {email.address} </a> (
+            {email.description}){' '}
           </p>
         ))}
         {/* Phone Number */}

@@ -15,10 +15,7 @@ const interests = volinterests.map((interest) => {
 ---
 
 <PageLayout>
-  <Volunteer client:only="react"
-    frontmatter={frontmatter}
-    interests={interests}
-  >
+  <Volunteer client:only="react" frontmatter={frontmatter} interests={interests}>
     <slot />
   </Volunteer>
   <form name="volunteer" data-netlify="true" netlify-honeypot="bot-field" hidden>

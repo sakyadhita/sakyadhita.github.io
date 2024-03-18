@@ -17,7 +17,7 @@ import { SITE_PAGES } from '../../constants/links'
 
 import '../../css/Donate.css'
 
-export default function Donate({frontmatter}) {
+export default function Donate({ frontmatter }) {
   const [isMobile, setIsMobile] = React.useState(false)
   const arrowScrollToRef = React.createRef()
 

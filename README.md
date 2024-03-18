@@ -26,6 +26,7 @@ The website is hosted on Netlify and all form submissions are sent to Netlify.
 * 1.0.8: Updated Buddhist Culture and Ordination Issue
 * 1.0.9: Updated Contact Page, Bibliography subtitle
 * 1.0.10: Minor changes to exco bios, update packages, ordination alignment
+* 1.0.11: Updated packages, exco photos and bios
 
 ## Creating a Local Build
 
