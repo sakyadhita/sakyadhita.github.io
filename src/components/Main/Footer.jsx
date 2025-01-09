@@ -165,10 +165,10 @@ export default function Footer() {
                 {' '}
                 <p className="hover-underline-animation"> Conferences </p>{' '}
               </a>
+              {subitem('2025 19th conference, (Sarawak, Malaysia)', '/conferences/19')}
               {subitem('2023 18th conference, (Seoul, Korea)', '/conferences/18')}
               {subitem('2021 17th conference, (online)', '/conferences/17')}
               {subitem('2019 16th conference, (Blue Mountains, Australia)', '/conferences/16')}
-              {subitem('2017 15th conference, (Hong Kong, China)', '/conferences/15')}
             </div>
 
             <div className="Footer-Page-Expanded">
