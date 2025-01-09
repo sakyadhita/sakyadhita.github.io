@@ -2,7 +2,7 @@
 page: 'NewsFlash'
 title: International Conference Registration Open on January 5
 isPublished: true
-subtitle: '"Living in a Precarious World: Impermanence, Resilience, Awakening"'
+subtitle: '"Navigating Change: Buddhist Women in Transition"'
 image: /assets/Conference 19/2025 Sakyadhita Banner.jpg
 redirectLink: https://sakyadhita2025.kbs.org.my
 ---
