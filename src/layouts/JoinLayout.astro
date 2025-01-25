@@ -22,4 +22,17 @@ const { frontmatter } = Astro.props
     <input type="email" name="email" />
     <input type="text" name="address" />
   </form>
+  <form name="paidmembership" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name = "fName" />
+    <input type="text" name = "lName" />
+    <input type="email" name = "email" />
+    <input type="tel" name = "phone" />
+    <input type="text" name = "mName" />
+    <input type="text" name = "address" />
+    <input type="text" name = "isNewMember" />
+    <input type="text" name = "affiliatedOrgs" />
+    <input type="text" name = "membershipType" />
+    <input type="number" name = "totalPaid" />
+    <input type="text" name = "payPalTransactionId" />
+  </form>
 </PageLayout>

@@ -138,45 +138,54 @@ export default function PayPal({
           return actions.order.capture().then((details) => {
             // restore screen back to normal
             document.body.style.cursor = null
-
-            transactionCompleted()
             // // create membership object
-            // const membershipObject = {
-            //   fName: fName || details.payer.name.given_name,
-            //   lName: lName || details.payer.name.surname,
-            //   email: email || details.payer.email_address,
-            //   phone,
-            //   mName,
-            //   address,
-            //   isNewMember,
-            //   affiliatedOrgs,
-            //   membershipType: membershipID,
-            //   totalPaid: parseFloat(details.purchase_units[0].amount.value),
-            //   payPalTransactionId: details.purchase_units[0].payments.captures[0].id
-            // }
+            const membershipObject = {
+              fName: fName || details.payer.name.given_name,
+              lName: lName || details.payer.name.surname,
+              email: email || details.payer.email_address,
+              phone,
+              mName,
+              address,
+              isNewMember,
+              affiliatedOrgs,
+              membershipType: membershipID,
+              totalPaid: parseFloat(details.purchase_units[0].amount.value),
+              payPalTransactionId: details.purchase_units[0].payments.captures[0].id
+            }
 
-          //   return fetch(`${BACKEND_URL}memberships/`, {
-          //     method: 'post',
-          //     headers: {
-          //       'content-type': 'application/json'
-          //     },
-          //     body: JSON.stringify(membershipObject)
-          //   })
-          //     .then((res) => {
-          //       if (res.ok) {
-          //         transactionCompleted()
-          //       } else {
-          //         alert(
-          //           "Transaction completed but it wasn't added to our database. Please email us with the receipt sent to your email."
-          //         )
-          //       }
-          //     })
-          //     .catch(() => {
-          //       document.body.style.cursor = null
-          //       alert(
-          //         'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
-          //       )
-          //     })
+            return fetch('/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: encode({
+                'form-name': 'paidmembership',
+                fName: fName || details.payer.name.given_name,
+                lName: lName || details.payer.name.surname,
+                email: email || details.payer.email_address,
+                phone,
+                mName,
+                address,
+                isNewMember,
+                affiliatedOrgs,
+                membershipType: membershipID,
+                totalPaid: parseFloat(details.purchase_units[0].amount.value),
+                payPalTransactionId: details.purchase_units[0].payments.captures[0].id
+              })
+            })
+              .then((res) => {
+                if (res.ok) {
+                  transactionCompleted()
+                } else {
+                  alert(
+                    "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email."
+                  )
+                }
+              })
+              .catch(() => {
+                document.body.style.cursor = null
+                alert(
+                  'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
+                )
+              })
           })
         },
         onCancel: () => {
