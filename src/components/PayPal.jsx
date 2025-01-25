@@ -139,20 +139,21 @@ export default function PayPal({
             // restore screen back to normal
             document.body.style.cursor = null
 
-            // create membership object
-            const membershipObject = {
-              fName: fName || details.payer.name.given_name,
-              lName: lName || details.payer.name.surname,
-              email: email || details.payer.email_address,
-              phone,
-              mName,
-              address,
-              isNewMember,
-              affiliatedOrgs,
-              membershipType: membershipID,
-              totalPaid: parseFloat(details.purchase_units[0].amount.value),
-              payPalTransactionId: details.purchase_units[0].payments.captures[0].id
-            }
+            transactionCompleted()
+            // // create membership object
+            // const membershipObject = {
+            //   fName: fName || details.payer.name.given_name,
+            //   lName: lName || details.payer.name.surname,
+            //   email: email || details.payer.email_address,
+            //   phone,
+            //   mName,
+            //   address,
+            //   isNewMember,
+            //   affiliatedOrgs,
+            //   membershipType: membershipID,
+            //   totalPaid: parseFloat(details.purchase_units[0].amount.value),
+            //   payPalTransactionId: details.purchase_units[0].payments.captures[0].id
+            // }
 
           //   return fetch(`${BACKEND_URL}memberships/`, {
           //     method: 'post',
