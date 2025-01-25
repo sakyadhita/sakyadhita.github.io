@@ -177,7 +177,7 @@ export default function PayPal({
           //         'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
           //       )
           //     })
-          // })
+          })
         },
         onCancel: () => {
           document.body.style.cursor = null
