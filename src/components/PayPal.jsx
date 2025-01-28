@@ -126,11 +126,12 @@ export default function PayPal({
               address,
               isNewMember,
               affiliatedOrgs,
-              membershipType: membershipTitle,
+              membershipType: membershipID,
               totalPaid: parseFloat(details.purchase_units[0].amount.value),
               payPalTransactionId: details.purchase_units[0].payments.captures[0].id
             }
             console.log(membershipObject)
+            transactionCompleted()
 
             return fetch('/', {
               method: 'POST',
@@ -145,7 +146,7 @@ export default function PayPal({
                 address,
                 isNewMember,
                 affiliatedOrgs,
-                membershipType: membershipTitle,
+                membershipType: membershipID,
                 totalPaid: parseFloat(details.purchase_units[0].amount.value),
                 payPalTransactionId: details.purchase_units[0].payments.captures[0].id
               })
@@ -153,7 +154,7 @@ export default function PayPal({
             // message sent
             .then(() => {
               // display thank you modal and clear form
-              transactionCompleted()
+              // transactionCompleted()
             })
             // message could not be sent
             .catch((error) => {
