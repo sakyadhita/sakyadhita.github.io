@@ -15,6 +15,12 @@ import React from 'react'
 
 const TAX_RATE = 0.08
 
+const encode = (data) => {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&')
+}
+
 // PayPal script is located in public/index.html (contains Client ID)
 export default function PayPal({
   fName,
@@ -120,7 +126,7 @@ export default function PayPal({
             return fetch('/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: JSON.stringify({
+              body: encode({
                 'form-name': 'paidmembership',
                 fName: fName || details.payer.name.given_name,
                 lName: lName || details.payer.name.surname,
