@@ -126,7 +126,7 @@ export default function PayPal({
               address,
               isNewMember,
               affiliatedOrgs,
-              membershipType: membershipID,
+              membershipType: membershipTitle,
               totalPaid: parseFloat(details.purchase_units[0].amount.value),
               payPalTransactionId: details.purchase_units[0].payments.captures[0].id
             }
@@ -145,26 +145,36 @@ export default function PayPal({
                 address,
                 isNewMember,
                 affiliatedOrgs,
-                membershipType: membershipID,
+                membershipType: membershipTitle,
                 totalPaid: parseFloat(details.purchase_units[0].amount.value),
                 payPalTransactionId: details.purchase_units[0].payments.captures[0].id
               })
             })
-              .then((res) => {
-                if (res.ok) {
-                  transactionCompleted()
-                } else {
-                  alert(
-                    "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email."
-                  )
-                }
-              })
-              .catch(() => {
-                document.body.style.cursor = null
-                alert(
-                  'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
-                )
-              })
+            // message sent
+            .then(() => {
+              // display thank you modal and clear form
+              transactionCompleted()
+            })
+            // message could not be sent
+            .catch((error) => {
+              document.body.style.cursor = null
+              alert( "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email. Error: " + error)
+            })
+            // .then((res) => {
+            //     if (res.ok) {
+            //       transactionCompleted()
+            //     } else {
+            //       alert(
+            //         "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email."
+            //       )
+            //     }
+            //   })
+            //   .catch(() => {
+            //     document.body.style.cursor = null
+            //     alert(
+            //       'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
+            //     )
+            //   })
           })
         },
         onCancel: () => {

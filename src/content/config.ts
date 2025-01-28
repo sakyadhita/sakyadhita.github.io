@@ -102,6 +102,7 @@ const volinterest = defineCollection({
 
 const membertype = defineCollection({
   schema: z.object({
+    id: z.number(),
     title: z.string(),
     cost: z.number().optional()
   })
