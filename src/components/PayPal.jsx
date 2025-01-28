@@ -107,7 +107,7 @@ export default function PayPal({
     window.paypal
       .Buttons({
         createOrder: async (_data, actions) => {
-          console.log(paypalOrderObject)
+          // console.log(paypalOrderObject)
           return actions.order.create(paypalOrderObject)
         },
         onApprove: async (_data, actions) => {
@@ -116,22 +116,6 @@ export default function PayPal({
           return actions.order.capture().then((details) => {
             // restore screen back to normal
             document.body.style.cursor = null
-            // create membership object
-            const membershipObject = {
-              fName: fName || details.payer.name.given_name,
-              lName: lName || details.payer.name.surname,
-              email: email || details.payer.email_address,
-              phone,
-              mName,
-              address,
-              isNewMember,
-              affiliatedOrgs,
-              membershipType: membershipID,
-              totalPaid: parseFloat(details.purchase_units[0].amount.value),
-              payPalTransactionId: details.purchase_units[0].payments.captures[0].id
-            }
-            console.log(membershipObject)
-            // transactionCompleted()
 
             return fetch('/', {
               method: 'POST',
@@ -146,7 +130,7 @@ export default function PayPal({
                 address,
                 isNewMember,
                 affiliatedOrgs,
-                membershipType: membershipID,
+                membershipType: membershipTitle,
                 totalPaid: parseFloat(details.purchase_units[0].amount.value),
                 payPalTransactionId: details.purchase_units[0].payments.captures[0].id
               })
