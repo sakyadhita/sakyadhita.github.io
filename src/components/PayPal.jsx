@@ -107,7 +107,7 @@ export default function PayPal({
     window.paypal
       .Buttons({
         createOrder: async (_data, actions) => {
-          // console.log(paypalOrderObject)
+          console.log(paypalOrderObject)
           return actions.order.create(paypalOrderObject)
         },
         onApprove: async (_data, actions) => {
@@ -131,12 +131,12 @@ export default function PayPal({
               payPalTransactionId: details.purchase_units[0].payments.captures[0].id
             }
             console.log(membershipObject)
-            transactionCompleted()
+            // transactionCompleted()
 
             return fetch('/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: encode({
+              body: JSON.stringify({
                 'form-name': 'paidmembership',
                 fName: fName || details.payer.name.given_name,
                 lName: lName || details.payer.name.surname,
@@ -154,7 +154,7 @@ export default function PayPal({
             // message sent
             .then(() => {
               // display thank you modal and clear form
-              // transactionCompleted()
+              transactionCompleted()
             })
             // message could not be sent
             .catch((error) => {
