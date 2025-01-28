@@ -1,0 +1,89 @@
+---
+---
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!-- Set up a container element for the button -->
+        <div id="paypal-button-container"></div>
+
+        <script
+        is:inline
+        src="https://www.paypal.com/sdk/js?client-id=AT0I6Qa0JYVBvlExcrLDBJAY3oqylX6-WV4aw9I7vecy2XUjbEIVeDFqI83dmygAWNtgB7tBkzK41zga"
+        ></script>
+
+        <script is:inline>
+            paypal.Buttons({
+                style: {
+                    layout:  'vertical',
+                    color:   'blue', 
+                    shape:   'rect',
+                    label:   'checkout'
+                },
+                // createOrder when clicked
+                createOrder: function(data, actions) {
+                    return actions.order.create(
+                    {
+                        intent: 'CAPTURE',
+                        application_context: {
+                        shipping_preference: 'NO_SHIPPING'
+                        },
+                        purchase_units: [
+                        {
+                            description: 'Sakyadhita Membership or Donation Confirmation',
+                            // Deals with pricing of the cart
+                            amount: {
+                            currency_code: 'USD',
+                            value: 11,
+                            breakdown: {
+                                // includes totals for items and taxes. Shipping and handling can be ignored
+                                // because the items are for pickup and handling is included in price
+                                item_total: {
+                                currency_code: 'USD',
+                                value: 10
+                                },
+                                tax_total: {
+                                currency_code: 'USD',
+                                value: 1
+                                }
+                            }
+                            },
+                            // Deals with the individual item entries for the order
+                            items: [{
+                                name: "Hello World",
+                                description: `Membership level: Basic`,
+                                unit_amount: {
+                                    currency_code: 'USD',
+                                    value: 10
+                                },
+                                tax: {
+                                    currency_code: 'USD',
+                                    value: 1
+                                },
+                                quantity: 1
+                            }]
+                        }
+                        ]
+                    });
+                },
+                // Capture the Transaction
+                onApprove: function(data, actions) {
+                    // Show a success message to the buyer
+                    console.log(data);
+                }
+                }).render('#paypal-button-container');
+
+                //Render the Message
+                paypal.Messages({
+                placement: 'payment',
+                style: {
+                    layout: 'flex',
+                    ratio: '20x1'
+                },
+                amount: 100
+            }).render('#paypal-button-container');
+        </script>
+    </body>
+</html>

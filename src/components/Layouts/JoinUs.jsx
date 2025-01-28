@@ -181,7 +181,7 @@ export default function JoinUs({ frontmatter, memberships }) {
   // stores donation amount entered
   const [donation, setDonation] = useState(0)
   // stores cost of memebership selected
-  const [selectedMembershipIndex, setSelectedMembershipIndex] = useState(-1)
+  const [selectedMembershipIndex, setSelectedMembershipIndex] = useState(0)
   // stores whether user is a new member
   const [memberType, setMemberType] = useState(false)
   // stores options to display in new member field
@@ -224,7 +224,7 @@ export default function JoinUs({ frontmatter, memberships }) {
       values.zipcode.value === '' ||
       memberType === '' ||
       organizations === '' ||
-      selectedMembershipIndex === -1 ||
+      selectedMembershipIndex === 0 ||
       (donateCheck && donation === 0)
     ) {
       setDisplayPayPal(false)
@@ -316,7 +316,7 @@ export default function JoinUs({ frontmatter, memberships }) {
     // clear all other values
     setOrganizations('')
     setDonation(0)
-    setSelectedMembershipIndex(-1)
+    setSelectedMembershipIndex(0)
     setMemberType(false)
     setIsNewMember('')
     setMembershipCheck(false)
@@ -688,7 +688,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                   value={organizations}
                   onChange={(e) => setOrganizations(e.target.value)}
                   multiline
-                  rows={3}
+                  minRows={3}
                 />
                 {displayAsterisk()}
               </div>
@@ -746,7 +746,7 @@ export default function JoinUs({ frontmatter, memberships }) {
               {/* displays paypal modal if continue button is clicked */}
               {displayPayPalModal ? (
                 <PayPalModal
-                  key={displayPayPal}
+                  // key={displayPayPal}
                   fName={values.firstName.value}
                   mName={values.middleName.value}
                   lName={values.lastName.value}

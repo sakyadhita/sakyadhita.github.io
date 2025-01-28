@@ -106,39 +106,17 @@ export default function PayPal({
   React.useEffect(() => {
     window.paypal
       .Buttons({
-        // onClick is called when the button is clicked, makes server call to validate order first
-        onClick(_data, actions) {
-          // // Validate the membership type
-          // return fetch(
-          //     `${BACKEND_URL}memberships/membershipTypes/${membershipID}?cost=${membershipCost.toFixed(
-          //         2
-          //     )}`,
-          //     {
-          //         method: "get",
-          //         headers: {
-          //             "content-type": "application/json",
-          //         },
-          //     }
-          // ).then(async (res) => {
-          //     // not working? res isn't showing the boolean
-          //     const json = await res.json();
-          //     if (res.ok && json.isValid) {
-          //         // update
-          //         return actions.resolve();
-          //     }
-          //     alert("An error occurred. Please try refreshing the page, and try again.");
-          //     return actions.reject();
-          // });
-          return actions.resolve()
+        createOrder: async (_data, actions) => {
+          // console.log(paypalOrderObject)
+          return actions.order.create(paypalOrderObject)
         },
-        createOrder: async (_data, actions) => actions.order.create(paypalOrderObject),
         onApprove: async (_data, actions) => {
           // loading cursor to indicate to the user they need to wait
           document.body.style.cursor = 'wait'
           return actions.order.capture().then((details) => {
             // restore screen back to normal
             document.body.style.cursor = null
-            // // create membership object
+            // create membership object
             const membershipObject = {
               fName: fName || details.payer.name.given_name,
               lName: lName || details.payer.name.surname,
@@ -152,6 +130,7 @@ export default function PayPal({
               totalPaid: parseFloat(details.purchase_units[0].amount.value),
               payPalTransactionId: details.purchase_units[0].payments.captures[0].id
             }
+            console.log(membershipObject)
 
             return fetch('/', {
               method: 'POST',
