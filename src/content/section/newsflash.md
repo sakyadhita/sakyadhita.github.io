@@ -1,14 +1,14 @@
 ---
 page: 'NewsFlash'
-title: International Conference Registration Open on January 5
+title: 19th Sakyadhita International Conference on Buddhist tWomen
 isPublished: true
 subtitle: '"Navigating Change: Buddhist Women in Transition"'
 image: /assets/Conference 19/2025 Sakyadhita Banner.jpg
 redirectLink: https://sakyadhita2025.kbs.org.my
 ---
 
-Sakyadhita 19th International Conference on Buddhist Women  
-Kuching, Sarawak, East Malaysia  
+Sakyadhita 19th International Conference on Buddhist Women
+Kuching, Sarawak, East Malaysia
 June 15-23, 2025
 
 The theme of the 19th Sakyadhita Conference, “Navigating Change: Buddhist Women in Transition,” explores the evolving roles and challenges faced by Buddhist women as they adapt to personal, social, and spiritual transformations in a rapidly changing world.
