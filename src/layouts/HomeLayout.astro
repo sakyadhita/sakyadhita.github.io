@@ -9,7 +9,7 @@ const branches = await getCollection('branch')
 const news = await getCollection('news', ({ data }) => {
   return data.draft !== true
 })
-const newsAndEvents = news.map((m) => m.data).sort((a, b) => +b.pubDate - +a.pubDate)
+const newsAndEvents = news.map((m) => m.data).sort((a, b) => a.title > b.title)
 
 const intro = await getEntry('section', 'introduction')
 const newsflash = await getEntry('section', 'newsflash')
