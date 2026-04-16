@@ -70,8 +70,8 @@ export default function ConferencesDesktop(props) {
     <div className="flex space-x-1 bg-gray-100 p-1 rounded-xl w-fit mb-8 font-body">
       <button
         className={cn(
-          "px-6 py-2 rounded-lg font-bold transition-all",
-          isInfo ? "bg-white text-brand-dark-purple shadow-sm" : "text-gray-500 hover:text-gray-700"
+          'px-6 py-2 rounded-lg font-bold transition-all',
+          isInfo ? 'bg-white text-brand-dark-purple shadow-sm' : 'text-gray-500 hover:text-gray-700'
         )}
         onClick={() => setIsInfo(true)}
         type="button"
@@ -80,8 +80,10 @@ export default function ConferencesDesktop(props) {
       </button>
       <button
         className={cn(
-          "px-6 py-2 rounded-lg font-bold transition-all",
-          !isInfo ? "bg-white text-brand-dark-purple shadow-sm" : "text-gray-500 hover:text-gray-700"
+          'px-6 py-2 rounded-lg font-bold transition-all',
+          !isInfo
+            ? 'bg-white text-brand-dark-purple shadow-sm'
+            : 'text-gray-500 hover:text-gray-700'
         )}
         onClick={() => setIsInfo(false)}
         type="button"

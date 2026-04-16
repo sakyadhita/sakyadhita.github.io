@@ -27,10 +27,10 @@ export default function ConferenceOverview(props) {
         </div>
       ) : (
         item.map((program) => (
-          <a 
-            href={program.url} 
-            download 
-            className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 hover:bg-brand-orange/10 hover:text-brand-orange transition-all group border border-gray-100 no-underline hover:no-underline w-[307.2px]" 
+          <a
+            href={program.url}
+            download
+            className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 hover:bg-brand-orange/10 hover:text-brand-orange transition-all group border border-gray-100 no-underline hover:no-underline w-[307.2px]"
             key={program.url}
           >
             <Download className="w-5 h-5 text-brand-dark-purple group-hover:text-brand-orange" />
@@ -61,19 +61,27 @@ export default function ConferenceOverview(props) {
       <div className="flex flex-col lg:flex-row gap-12">
         <div className="w-[31vw] space-y-2">
           {/* brochures */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">Brochures</div>
+          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+            Brochures
+          </div>
           {itemList(items.data.brochures)}
 
           {/* programs */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">Programs</div>
+          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+            Programs
+          </div>
           {itemList(items.data.programs)}
 
           {/* abstracts */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">Abstracts</div>
+          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+            Abstracts
+          </div>
           {itemList(items.data.abstracts)}
 
           {/* presentations */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">Presentations</div>
+          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+            Presentations
+          </div>
           {itemList(items.data.presentations)}
         </div>
 

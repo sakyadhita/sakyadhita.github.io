@@ -1,47 +1,91 @@
+import tseslint from 'typescript-eslint'
 import astroPlugin from 'eslint-plugin-astro'
-import * as mdxPlugin from 'eslint-plugin-mdx'
-import markdownPlugin from 'eslint-plugin-markdown'
-import tsParser from '@typescript-eslint/parser'
+import reactPlugin from 'eslint-plugin-react'
+import reactHooksPlugin from 'eslint-plugin-react-hooks'
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y'
+import markdown from '@eslint/markdown'
+import globals from 'globals'
 import astroParser from 'astro-eslint-parser'
-import { FlatCompat } from '@eslint/eslintrc'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import tsParser from '@typescript-eslint/parser'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname
-})
-
-export default [
+export default tseslint.config(
   {
-    ignores: ['dist/**', '.astro/**', 'node_modules/**']
+    ignores: ['dist/**', '.astro/**', 'node_modules/**', 'public/**']
   },
+  
+  // Base configuration
+  {
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx,astro}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      },
+      ecmaVersion: 'latest',
+      sourceType: 'module'
+    }
+  },
+
+  // JS/TS
+  ...tseslint.configs.recommended,
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ]
+    }
+  },
+  
+  // React
+  {
+    files: ['**/*.{jsx,tsx}'],
+    ...reactPlugin.configs.flat.recommended,
+    ...reactPlugin.configs.flat['jsx-runtime'],
+    settings: {
+      react: {
+        version: 'detect'
+      }
+    }
+  },
+  {
+    files: ['**/*.{jsx,tsx}'],
+    plugins: {
+      'react-hooks': reactHooksPlugin,
+      'jsx-a11y': jsxA11yPlugin
+    },
+    rules: {
+      ...reactHooksPlugin.configs.recommended.rules,
+      ...jsxA11yPlugin.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off'
+    }
+  },
+
+  // Astro
   ...astroPlugin.configs.recommended,
-  ...compat.extends('plugin:mdx/recommended'),
-  ...markdownPlugin.configs.recommended,
   {
     files: ['**/*.astro'],
     languageOptions: {
       parser: astroParser,
       parserOptions: {
         parser: tsParser,
-        extraFileExtensions: ['.astro']
+        extraFileExtensions: ['.astro'],
+        sourceType: 'module'
       }
     }
   },
+
+  // Markdown
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true
-        }
-      }
-    }
+    files: ['**/*.md'],
+    plugins: {
+      markdown
+    },
+    language: 'markdown/commonmark'
   }
-]
+)

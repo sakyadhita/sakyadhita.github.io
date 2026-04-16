@@ -67,29 +67,41 @@ export default function MobileConferences(props) {
     if (isInfo) {
       return (
         <div className="relative h-[300px] sm:h-[400px] w-full rounded-b-3xl overflow-hidden shadow-xl">
-           {item.data.slideShowImages.length === 1 ? (
-              <div className="w-full h-full relative">
-                <div className="absolute bottom-10 left-6 z-10 text-white drop-shadow-md pr-12">
-                   <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">{item.data.title}</h1>
-                   <h3 className="text-sm font-bold opacity-90 uppercase tracking-widest font-body">{item.data.location}</h3>
-                </div>
-                <img className="w-full h-full object-cover" alt="Event" src={item.data.slideShowImages[0]} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          {item.data.slideShowImages.length === 1 ? (
+            <div className="w-full h-full relative">
+              <div className="absolute bottom-10 left-6 z-10 text-white drop-shadow-md pr-12">
+                <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">
+                  {item.data.title}
+                </h1>
+                <h3 className="text-sm font-bold opacity-90 uppercase tracking-widest font-body">
+                  {item.data.location}
+                </h3>
               </div>
-           ) : (
-              <Slideshow height="100%" width="100%" isMobile>
-                {item.data.slideShowImages.map((image) => (
-                  <div key={image} className="w-full h-full relative">
-                     <div className="absolute bottom-12 left-6 z-10 text-white drop-shadow-md pr-12">
-                        <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">{item.data.title}</h1>
-                        <h3 className="text-sm font-bold opacity-90 uppercase tracking-widest font-body">{item.data.location}</h3>
-                     </div>
-                     <img className="w-full h-full object-cover" alt="Event" src={image} />
-                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <img
+                className="w-full h-full object-cover"
+                alt="Event"
+                src={item.data.slideShowImages[0]}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            </div>
+          ) : (
+            <Slideshow height="100%" width="100%" isMobile>
+              {item.data.slideShowImages.map((image) => (
+                <div key={image} className="w-full h-full relative">
+                  <div className="absolute bottom-12 left-6 z-10 text-white drop-shadow-md pr-12">
+                    <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">
+                      {item.data.title}
+                    </h1>
+                    <h3 className="text-sm font-bold opacity-90 uppercase tracking-widest font-body">
+                      {item.data.location}
+                    </h3>
                   </div>
-                ))}
-              </Slideshow>
-           )}
+                  <img className="w-full h-full object-cover" alt="Event" src={image} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                </div>
+              ))}
+            </Slideshow>
+          )}
         </div>
       )
     }
@@ -115,7 +127,9 @@ export default function MobileConferences(props) {
   const displayInformation = () => (
     <div className="space-y-12 mt-8">
       <section className="animate-in fade-in slide-in-from-bottom-4">
-        <h2 className="text-2xl font-bold font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 mb-6 italic lowercase">Theme</h2>
+        <h2 className="text-2xl font-bold font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 mb-6 italic lowercase">
+          Theme
+        </h2>
         <ConferenceTheme
           redirect={item.data.signUpLink}
           theme={item.body}
@@ -125,7 +139,9 @@ export default function MobileConferences(props) {
         />
       </section>
       <section className="animate-in fade-in slide-in-from-bottom-4 delay-200">
-        <h2 className="text-2xl font-bold font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 mb-6 italic lowercase">Overview</h2>
+        <h2 className="text-2xl font-bold font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 mb-6 italic lowercase">
+          Overview
+        </h2>
         <ConferenceOverview info={item} />
       </section>
     </div>
@@ -157,9 +173,7 @@ export default function MobileConferences(props) {
         </div>
 
         {/* The information for either theme or overview */}
-        <div className="px-6">
-           {displayInformation()}
-        </div>
+        <div className="px-6">{displayInformation()}</div>
 
         {/* Render the video at bottom if it exists */}
         {item.data.video && slideshowVideo(false)}

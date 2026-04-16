@@ -53,8 +53,8 @@ export default function ConferenceTheme(props) {
       {/* Button that opens the modal */}
       {props.signup && !props.isMobile ? (
         <section>
-          <button 
-            onClick={() => redirect()} 
+          <button
+            onClick={() => redirect()}
             type="button"
             className="px-8 py-3 bg-brand-orange text-white rounded-full font-bold font-body uppercase tracking-wider hover:bg-brand-dark-orange transition-all shadow-md active:scale-95 border-none"
           >
@@ -68,9 +68,7 @@ export default function ConferenceTheme(props) {
         <div className="flex-1 prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic lowercase">
           <Markdown>{props.theme}</Markdown>
         </div>
-        <div className="lg:w-[55%] shrink-0">
-           {props.slideShow ? props.slideShow() : null}
-        </div>
+        <div className="lg:w-[55%] shrink-0">{props.slideShow ? props.slideShow() : null}</div>
       </div>
 
       <Modal

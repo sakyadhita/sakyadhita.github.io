@@ -15,7 +15,9 @@ import { cn } from '../../lib/utils'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return <span className="error-asterisk text-brand-red ml-2 font-bold text-xl flex-shrink-0">*</span>
+  return (
+    <span className="error-asterisk text-brand-red ml-2 font-bold text-xl flex-shrink-0">*</span>
+  )
 }
 
 export default function JoinUs({ frontmatter, memberships }) {
@@ -383,10 +385,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                 onCheckedChange={handleMembershipChange}
                 className="border-black data-[state=checked]:bg-brand-orange"
               />
-              <Label
-                htmlFor="membershipCheck"
-                className="cursor-pointer text-lg font-bold"
-              >
+              <Label htmlFor="membershipCheck" className="cursor-pointer text-lg font-bold">
                 Want to join email list only.
               </Label>
             </div>
@@ -413,10 +412,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                 onCheckedChange={handleMembershipChange}
                 className="border-black data-[state=checked]:bg-brand-orange"
               />
-              <Label
-                htmlFor="membershipCheck"
-                className="cursor-pointer text-lg font-bold"
-              >
+              <Label htmlFor="membershipCheck" className="cursor-pointer text-lg font-bold">
                 Not interested in membership, but want to be on the email list.
               </Label>
             </div>
@@ -741,8 +737,7 @@ export default function JoinUs({ frontmatter, memberships }) {
           ) : (
             <div className="pt-16 space-y-10">
               <p className="text-center text-gray-500 font-body text-lg italic">
-                <span className="text-brand-red font-bold"> * </span> indicates a
-                required field
+                <span className="text-brand-red font-bold"> * </span> indicates a required field
               </p>
               {/* submit button for email list only form */}
               <div className="flex justify-center pb-12">
@@ -760,7 +755,10 @@ export default function JoinUs({ frontmatter, memberships }) {
         {snackbar.open && (
           <div className="fixed bottom-5 left-5 bg-brand-red text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center justify-between min-w-[300px]">
             <span>{snackbar.message}</span>
-            <button onClick={() => setSnackBar({ open: false })} className="ml-4 font-bold text-white">
+            <button
+              onClick={() => setSnackBar({ open: false })}
+              className="ml-4 font-bold text-white"
+            >
               X
             </button>
           </div>

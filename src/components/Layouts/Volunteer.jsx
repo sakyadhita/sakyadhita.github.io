@@ -10,7 +10,9 @@ import { cn } from '../../lib/utils'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return <span className="error-asterisk text-brand-red ml-2 font-bold text-xl flex-shrink-0">*</span>
+  return (
+    <span className="error-asterisk text-brand-red ml-2 font-bold text-xl flex-shrink-0">*</span>
+  )
 }
 
 // funcion to render all volunteer committees
@@ -571,7 +573,10 @@ export default function Volunteer({ frontmatter, interests }) {
         {snackbar.open && (
           <div className="fixed bottom-5 left-5 bg-brand-red text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center justify-between min-w-[300px]">
             <span>{snackbar.message}</span>
-            <button onClick={() => setSnackBar({ open: false })} className="ml-4 font-bold text-white">
+            <button
+              onClick={() => setSnackBar({ open: false })}
+              className="ml-4 font-bold text-white"
+            >
               X
             </button>
           </div>
