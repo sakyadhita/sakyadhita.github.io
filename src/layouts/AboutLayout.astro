@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
 import AboutUs from '../components/Layouts/AboutUs'
@@ -8,10 +8,12 @@ const committees = await getCollection('exco')
 const sections = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'AboutUs'
 })
-const contents = sections.map(async (s) => {
-  const { Content } = await s.render()
-  return Content
-})
+const contents = await Promise.all(
+  sections.map(async (s) => {
+    const { Content } = await render(s)
+    return Content
+  })
+)
 
 const { frontmatter } = Astro.props
 
@@ -36,8 +38,8 @@ function makeIdURLFriendly(idString: string) {
         const Content = contents[i]
 
         return (
-          <div className="section">
-            <div className="scroll" id={makeIdURLFriendly(section.data.title)} />
+          <div class="section">
+            <div class="scroll" id={makeIdURLFriendly(section.data.title)} />
             <h1>{section.data.title}</h1>
             <Content />
           </div>

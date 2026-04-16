@@ -143,7 +143,7 @@ export default function HorizontalStepper(props) {
   useEffect(() => {
     if (listener.width > 600) {
       // we want stepper of length 6 when it is greater than 600px
-      /* eslint-disable no-unused-vars */
+
       const indicies = listener.width < 900 ? setIndices([0, 6]) : setIndices([0, 9])
     } else setIndices([0, 4])
   }, [listener])

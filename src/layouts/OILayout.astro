@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar'
@@ -8,10 +8,12 @@ import OrdinationIssue from '../components/Layouts/OrdinationIssue'
 const sections = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'OrdinationIssue'
 })
-const contents = sections.map(async (s) => {
-  const { Content } = await s.render()
-  return Content
-})
+const contents = await Promise.all(
+  sections.map(async (s) => {
+    const { Content } = await render(s)
+    return Content
+  })
+)
 
 const { frontmatter } = Astro.props
 ---
@@ -24,7 +26,7 @@ const { frontmatter } = Astro.props
           const Content = contents[i]
 
           return (
-            <div className="page-content">
+            <div class="page-content">
               <h2>{section.data.title}</h2>
               <Content />
             </div>

@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * The contact us page on the website.It displays contact information, including email,
  * phone number, and address (on click opens up google maps). It also includes a small form

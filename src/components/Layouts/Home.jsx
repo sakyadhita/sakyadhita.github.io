@@ -12,7 +12,7 @@
 import React, { useState, useEffect } from 'react'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdEmail } from 'react-icons/md'
-import ReactTooltip from 'react-tooltip'
+import { Tooltip } from 'react-tooltip'
 import Markdown from 'react-markdown'
 import InteractiveMap from '../Home/InteractiveMap'
 import Slideshow from '../Slideshow'
@@ -228,16 +228,12 @@ export default function Home({
           )}
           {/* Custom Tooltip for Interactive Map */}
           {isPageLoading ? null : (
-            <ReactTooltip
+            <Tooltip
               place="left"
-              effect="solid"
-              type="light"
+              variant="light"
               border={true}
-              data-iscapture="false"
-              event="mouseover mouseenter"
-              globalEventOff="click scroll mousewheel blur"
               id="tooltip"
-              getContent={(tooltip) => displayTooltip(tooltip)}
+              render={({ content }) => displayTooltip(content)}
             />
           )}
 

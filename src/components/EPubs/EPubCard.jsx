@@ -5,14 +5,15 @@
  * @Author PatrickBrown1, Navid Boloorian
  */
 import React from 'react'
-import ReactTooltip from 'react-tooltip'
+import { Tooltip } from 'react-tooltip'
 import '../../css/EPubCard.css'
 
 export default function EPubCard({ title, author, image_url, redirect_link, isMobile }) {
   // props title, author name, image_url, redirect link, isMobile
+  const tooltipId = `epub-tooltip-${author.replace(/\s+/g, '-').toLowerCase()}`
   return (
     <>
-      <ReactTooltip />
+      <Tooltip id={tooltipId} />
       {!isMobile ? (
         <div className="EPubCard">
           {redirect_link === null ? (
@@ -25,7 +26,11 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
             </>
           )}
           <div className="EPubCard_title">{title}</div>
-          <div data-tip={author} className="EPubCard_author">
+          <div
+            data-tooltip-id={tooltipId}
+            data-tooltip-content={author}
+            className="EPubCard_author"
+          >
             {author}
           </div>
         </div>
@@ -41,7 +46,11 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
             </>
           )}
           <div className="EPubCard_title--mobile">{title}</div>
-          <div data-tip={author} className="EPubCard_author--mobile">
+          <div
+            data-tooltip-id={tooltipId}
+            data-tooltip-content={author}
+            className="EPubCard_author--mobile"
+          >
             By {author}
           </div>
         </div>

@@ -4,12 +4,13 @@ import PageLayout from './PageLayout.astro'
 import Home from '../components/Layouts/Home'
 
 const branches = await getCollection('branch')
-// const branchesAndChapters = branches.map((m) => m.data)
 
 const news = await getCollection('news', ({ data }) => {
   return data.draft !== true
 })
-const newsAndEvents = news.map((m) => m.data).sort((a, b) => a.title > b.title)
+const newsAndEvents = news
+  .map((m) => m.data)
+  .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
 
 const intro = await getEntry('section', 'introduction')
 const newsflash = await getEntry('section', 'newsflash')
@@ -18,17 +19,44 @@ const additionalSections = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'Home'
 })
 
-const images = await Astro.glob('../assets/home/*.jpg')
+const images = Object.values(import.meta.glob('../assets/home/*.jpg', { eager: true }))
+
+// Since entry.body is not available in Content Layer, we fetch raw content using import.meta.glob
+const rawContent = import.meta.glob('../content/**/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true
+})
+
+function getRawBody(id: string, collection: string) {
+  const key = `../content/${collection}/${id}.md`
+  const raw = rawContent[key] as string
+  if (raw) {
+    return raw.replace(/^---[\s\S]*?---/, '').trim()
+  }
+  return ''
+}
+
+const introBody = intro ? getRawBody(intro.id, 'section') : ''
+const additionalSectionsWithBody = additionalSections.map((s) => ({
+  ...s,
+  body: getRawBody(s.id, 'section')
+}))
+
+const branchesWithBody = branches.map((b) => ({
+  ...b,
+  body: getRawBody(b.id, 'branch')
+}))
 ---
 
 <PageLayout>
   <Home
     client:only="react"
     newsAndEvents={newsAndEvents}
-    introduction={intro.body}
+    introduction={introBody}
     newsflash={newsflash}
-    branchesAndChapters={branches}
-    additionalSections={additionalSections}
+    branchesAndChapters={branchesWithBody}
+    additionalSections={additionalSectionsWithBody}
     images={images}
   />
 </PageLayout>

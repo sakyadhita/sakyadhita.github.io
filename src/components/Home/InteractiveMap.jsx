@@ -11,7 +11,6 @@
 import React from 'react'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdEmail } from 'react-icons/md'
-import ReactTooltip from 'react-tooltip'
 import {
   ComposableMap,
   Geographies,
@@ -66,8 +65,8 @@ export default function InteractiveMap({ markers, disableZooming = false }) {
           {/* Creates custom markers for all information passed */}
           {markers.map(({ name, latitude, longitude, isBranch }, i) => (
             <Marker
-              data-for="tooltip"
-              data-tip={i}
+              data-tooltip-id="tooltip"
+              data-tooltip-content={i}
               data-event="click"
               key={name}
               className="marker"

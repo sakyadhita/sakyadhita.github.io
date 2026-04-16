@@ -123,34 +123,39 @@ export default function PayPal({
             // restore screen back to normal
             document.body.style.cursor = null
 
-            return fetch('/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: encode({
-                'form-name': 'paidmembership',
-                fName: fName || details.payer.name.given_name,
-                lName: lName || details.payer.name.surname,
-                email: email || details.payer.email_address,
-                phone,
-                mName,
-                address,
-                isNewMember,
-                affiliatedOrgs,
-                membershipType: membershipTitle,
-                totalPaid: parseFloat(details.purchase_units[0].amount.value),
-                payPalTransactionId: details.purchase_units[0].payments.captures[0].id
+            return (
+              fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: encode({
+                  'form-name': 'paidmembership',
+                  fName: fName || details.payer.name.given_name,
+                  lName: lName || details.payer.name.surname,
+                  email: email || details.payer.email_address,
+                  phone,
+                  mName,
+                  address,
+                  isNewMember,
+                  affiliatedOrgs,
+                  membershipType: membershipTitle,
+                  totalPaid: parseFloat(details.purchase_units[0].amount.value),
+                  payPalTransactionId: details.purchase_units[0].payments.captures[0].id
+                })
               })
-            })
-            // message sent
-            .then(() => {
-              // display thank you modal and clear form
-              transactionCompleted()
-            })
-            // message could not be sent
-            .catch((error) => {
-              document.body.style.cursor = null
-              alert( "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email. Error: " + error)
-            })
+                // message sent
+                .then(() => {
+                  // display thank you modal and clear form
+                  transactionCompleted()
+                })
+                // message could not be sent
+                .catch((error) => {
+                  document.body.style.cursor = null
+                  alert(
+                    "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email. Error: " +
+                      error
+                  )
+                })
+            )
             // .then((res) => {
             //     if (res.ok) {
             //       transactionCompleted()

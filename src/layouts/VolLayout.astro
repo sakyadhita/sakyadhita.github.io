@@ -8,8 +8,8 @@ const { frontmatter } = Astro.props
 
 const volinterests = await getCollection('volinterest')
 const interests = volinterests.map((interest) => {
-  let newinterest = interest
-  newinterest.id = parseInt(interest.slug) - 1
+  let newinterest = { ...interest }
+  newinterest.id = (parseInt(interest.id) - 1).toString()
   return newinterest
 })
 ---
