@@ -1,27 +1,16 @@
-/**
- * This file implements the Volunteer page, which contains a header and a form that is
- * used to sign up for volunteering. The form asks for the user's name, contact
- * information, and committee interests. It renders both the desktop and mobile version
- * of this page based on the screen size.
- *
- * @summary Implements the Volunteer page
- * @author Dhanush Nanjunda Reddy
- */
-
 import React, { useState, useEffect } from 'react'
-import '../../css/Volunteer.css'
 
-import { withStyles } from '@material-ui/core/styles'
-import { TextField, Snackbar } from '@material-ui/core'
+import { Input } from '../ui/input'
 import { CountryDropdown } from 'react-country-region-selector'
 import ResourcesHeader from '../ResourcesHeader'
 import VolunteerOption from '../VolunteerOption'
 import Modal from '../Modal'
 import CustomButton from '../CustomButton'
-// function to display asterisk for required fields
+import { cn } from '../../lib/utils'
 
+// function to display asterisk for required fields
 function displayAsterisk() {
-  return <span className="error-asterisk">*</span>
+  return <span className="error-asterisk text-brand-red ml-2 font-bold text-xl flex-shrink-0">*</span>
 }
 
 // funcion to render all volunteer committees
@@ -36,12 +25,13 @@ function displayCommittees(
   if (isMobile) {
     // renders a single column if device is mobile
     return (
-      <div className="volunteer-options">
+      <div className="volunteer-options flex flex-col space-y-4">
         {volunteerCommittees.map((committee) => (
           <VolunteerOption
+            key={committee.id}
             value={committee.id}
             checked={selectedCommittees.includes(committee.id)}
-            handleChange={(e) => handleCommitteesChange(e)}
+            handleChange={handleCommitteesChange}
             title={committee.data.title}
             description={committee.data.description}
           />
@@ -60,7 +50,7 @@ function displayCommittees(
         key={volunteerCommittees[ind].id}
         value={volunteerCommittees[ind].id}
         checked={selectedCommittees.includes(volunteerCommittees[ind].id)}
-        handleChange={(e) => handleCommitteesChange(e)}
+        handleChange={handleCommitteesChange}
         title={volunteerCommittees[ind].data.title}
         description={volunteerCommittees[ind].data.description}
       />
@@ -73,7 +63,7 @@ function displayCommittees(
         key={volunteerCommittees[i].id}
         value={volunteerCommittees[i].id}
         checked={selectedCommittees.includes(volunteerCommittees[i].id)}
-        handleChange={(e) => handleCommitteesChange(e)}
+        handleChange={handleCommitteesChange}
         title={volunteerCommittees[i].data.title}
         description={volunteerCommittees[i].data.description}
       />
@@ -82,59 +72,12 @@ function displayCommittees(
 
   // renders committees in two columns
   return (
-    <div className="volunteer-options">
-      <div className="left-options-column">{volunteerOptionsLeft}</div>
-      <div className="right-options-column">{volunteerOptionsRight}</div>
+    <div className="volunteer-options grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="left-options-column flex flex-col space-y-6">{volunteerOptionsLeft}</div>
+      <div className="right-options-column flex flex-col space-y-6">{volunteerOptionsRight}</div>
     </div>
   )
 }
-
-// custom style for text fields on form
-const CustomTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: 'black'
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'black'
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: '1px solid #000000',
-        borderRadius: '15px',
-        fontFamily: 'Nunito',
-        fontSize: '18px',
-        lineHeight: '1.95vw',
-        boxSizing: 'border-box',
-        color: '#000000'
-      },
-      '&:hover fieldset': {
-        borderColor: 'black'
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#6652a0'
-      }
-    },
-    '& input': {
-      height: '0.2vw',
-      fontFamily: 'Nunito',
-      fontSize: '18px',
-      lineHeight: '25px',
-      color: 'black',
-      opacity: '1',
-      '&::placeholder': {
-        fontFamily: 'Nunito',
-        fontSize: '18px',
-        lineHeight: '25px',
-        color: 'black',
-        opacity: '1'
-      }
-    },
-    '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'red'
-    }
-  }
-})(TextField)
 
 export default function Volunteer({ frontmatter, interests }) {
   // tracks window width changes
@@ -228,11 +171,6 @@ export default function Volunteer({ frontmatter, interests }) {
     })
   }
 
-  // closes snackbar
-  const handleSnackClose = () => {
-    setSnackBar({ open: false })
-  }
-
   // handles user input to country field
   const handleCountryChange = (val) => {
     setValues({
@@ -250,12 +188,12 @@ export default function Volunteer({ frontmatter, interests }) {
 
   // handles any changes to committees selected
   function handleCommitteesChange(event) {
-    if (selectedCommittees.includes(parseInt(event.target.value, 10))) {
-      setSelectedCommittees(
-        selectedCommittees.filter((committee) => committee !== parseInt(event.target.value, 10))
-      )
+    const val = parseInt(event.target.value, 10)
+    if (selectedCommittees.includes(val)) {
+      setSelectedCommittees(selectedCommittees.filter((committee) => committee !== val))
     } else {
-      setSelectedCommittees((oldArray) => [...oldArray, parseInt(event.target.value, 10)])
+      setSelectedCommittees((oldArray) => [...oldArray, val])
+      setCommitteesError(false)
     }
   }
 
@@ -375,21 +313,13 @@ export default function Volunteer({ frontmatter, interests }) {
         // show snackbar to notify message could not be sent
         setSnackBar({
           open: true,
-          message: error
+          message: error.toString()
         })
       })
 
     // allow form to be edited
     document.body.style.cursor = null
     setIsFormDisabled(false)
-  }
-
-  const inputFieldStyle = {
-    border: '1px solid #000000'
-  }
-
-  const inputErrorStyle = {
-    border: '1px solid #ea4444'
   }
 
   const scrollToRef = () => {
@@ -402,8 +332,14 @@ export default function Volunteer({ frontmatter, interests }) {
     }
   }
 
+  const inputClasses = (hasError) =>
+    cn(
+      'h-12 border-black rounded-[15px] focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple px-4 text-[18px] font-body bg-white w-full',
+      hasError && 'border-brand-red'
+    )
+
   return (
-    <div>
+    <div className="font-body">
       {isMobile || window.innerHeight <= 500 ? (
         <ResourcesHeader
           title={frontmatter.title}
@@ -422,192 +358,224 @@ export default function Volunteer({ frontmatter, interests }) {
           arrowClickCallback={scrollToRef}
         />
       )}
-      <div className="volunteer-content">
-        <form autoComplete="off">
-          <p className="required-note">
+      <div className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-12">
+        <form autoComplete="off" className="space-y-4 max-w-2xl mx-auto">
+          <p className="text-right text-sm text-gray-500 font-body italic mb-10">
             {' '}
-            <span className="error-asterisk"> * </span> indicates a required field
+            <span className="error-asterisk text-brand-red font-bold"> * </span> indicates a
+            required field
           </p>
-          <h1 ref={arrowScrollToRef} className="signup-text">
+          <h1
+            ref={arrowScrollToRef}
+            className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-12"
+          >
             Sign Me Up!
           </h1>
-          <div className="form-item">
-            <CustomTextField
-              variant="outlined"
-              className="first-name input-field"
-              placeholder="First Name"
-              value={values.firstName.value}
-              error={values.firstName.error}
-              onChange={handleChange}
-              disabled={isFormDisabled}
-              name="firstName"
-            />
+          {/* first name field */}
+          <div className="flex items-center !mt-1">
+            <div className="flex-1">
+              <Input
+                className={inputClasses(values.firstName.error)}
+                placeholder="First Name"
+                value={values.firstName.value}
+                onChange={handleChange}
+                disabled={isFormDisabled}
+                name="firstName"
+              />
+            </div>
             {displayAsterisk()}
           </div>
           {/* middle name field */}
-          <div className="form-item">
-            <CustomTextField
-              variant="outlined"
-              className="middle-name input-field"
-              placeholder="Middle Name"
-              value={values.middleName.value}
-              onChange={handleChange}
-              disabled={isFormDisabled}
-              name="middleName"
-            />
+          <div className="flex items-center !mt-1">
+            <div className="flex-1">
+              <Input
+                className={inputClasses(values.middleName.error)}
+                placeholder="Middle Name"
+                value={values.middleName.value}
+                onChange={handleChange}
+                disabled={isFormDisabled}
+                name="middleName"
+              />
+            </div>
+            <span className="ml-2 w-4 flex-shrink-0"></span>
           </div>
           {/* last name field */}
-          <div className="form-item last-name-field">
-            <CustomTextField
-              variant="outlined"
-              className="input-field"
-              placeholder="Last Name"
-              value={values.lastName.value}
-              error={values.lastName.error}
-              onChange={handleChange}
-              disabled={isFormDisabled}
-              name="lastName"
-            />
+          <div className="flex items-center !mt-1">
+            <div className="flex-1">
+              <Input
+                className={inputClasses(values.lastName.error)}
+                placeholder="Last Name"
+                value={values.lastName.value}
+                onChange={handleChange}
+                disabled={isFormDisabled}
+                name="lastName"
+              />
+            </div>
             {displayAsterisk()}
           </div>
-          <h1 className="contact-info-text">Contact Information</h1>
+
+          <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mt-16 mb-8">
+            Contact Information
+          </h1>
           {/* email address field */}
-          <div className="form-item">
-            <CustomTextField
-              variant="outlined"
-              className="email-address input-field"
-              placeholder="Email Address"
-              type="email"
-              value={values.emailAddress.value}
-              error={values.emailAddress.error}
-              onChange={handleChange}
-              disabled={isFormDisabled}
-              name="emailAddress"
-            />
+          <div className="flex items-center !mt-1">
+            <div className="flex-1">
+              <Input
+                className={inputClasses(values.emailAddress.error)}
+                placeholder="Email Address"
+                type="email"
+                value={values.emailAddress.value}
+                onChange={handleChange}
+                disabled={isFormDisabled}
+                name="emailAddress"
+              />
+            </div>
             {displayAsterisk()}
           </div>
           {/* country dropdown field */}
-          {values.country.error ? (
-            <div className="form-item">
+          <div className="flex items-center !mt-1">
+            <div className="flex-1">
               <CountryDropdown
-                className="input-field country-dropdown"
-                style={inputErrorStyle}
+                className="input-field country-dropdown h-12 border-black rounded-[15px] px-4 text-[18px] font-body w-full bg-white transition-all focus:ring-2 focus:ring-brand-dark-purple outline-none"
+                style={
+                  values.country.error
+                    ? { border: '1px solid #ea4444' }
+                    : { border: '1px solid #000000' }
+                }
                 value={values.country.value}
                 onChange={handleCountryChange}
                 disabled={isFormDisabled}
               />
-              {displayAsterisk()}
             </div>
-          ) : (
-            <div className="form-item">
-              <CountryDropdown
-                className="input-field country-dropdown"
-                style={inputFieldStyle}
-                value={values.country.value}
-                onChange={handleCountryChange}
-                disabled={isFormDisabled}
-              />
-              {displayAsterisk()}
-            </div>
-          )}
+            {displayAsterisk()}
+          </div>
           {/* displays other address fields if country is selected */}
           {values.country.value !== '' ? (
-            <div>
+            <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500 pt-4">
               {/* address line 1 field */}
-              <div className="form-item">
-                <CustomTextField
-                  variant="outlined"
-                  className="address-line1 input-field"
-                  placeholder="Address Line 1"
-                  value={values.addressOne.value}
-                  error={values.addressOne.error}
-                  onChange={handleChange}
-                  disabled={isFormDisabled}
-                  name="addressOne"
-                />
+              <div className="flex items-center !mt-1">
+                <div className="flex-1">
+                  <Input
+                    className={inputClasses(values.addressOne.error)}
+                    placeholder="Address Line 1"
+                    value={values.addressOne.value}
+                    onChange={handleChange}
+                    disabled={isFormDisabled}
+                    name="addressOne"
+                  />
+                </div>
                 {displayAsterisk()}
               </div>
               {/* address line 2 field */}
-              <div className="form-item">
-                <CustomTextField
-                  variant="outlined"
-                  className="address-line2 input-field"
-                  placeholder="Address Line 2"
-                  value={values.addressTwo.value}
-                  onChange={handleChange}
-                  disabled={isFormDisabled}
-                  name="addressTwo"
-                />
+              <div className="flex items-center !mt-1">
+                <div className="flex-1">
+                  <Input
+                    className={inputClasses(values.addressTwo.value)}
+                    placeholder="Address Line 2"
+                    value={values.addressTwo.value}
+                    onChange={handleChange}
+                    disabled={isFormDisabled}
+                    name="addressTwo"
+                  />
+                </div>
+                <span className="ml-2 w-4 flex-shrink-0"></span>
               </div>
               {/* city field */}
-              <div className="city-field form-item">
-                <CustomTextField
-                  variant="outlined"
-                  className="input-field"
-                  placeholder="City"
-                  value={values.city.value}
-                  error={values.city.error}
-                  onChange={handleChange}
-                  disabled={isFormDisabled}
-                  name="city"
-                />
+              <div className="flex items-center !mt-1">
+                <div className="flex-1">
+                  <Input
+                    className={inputClasses(values.city.error)}
+                    placeholder="City"
+                    value={values.city.value}
+                    onChange={handleChange}
+                    disabled={isFormDisabled}
+                    name="city"
+                  />
+                </div>
                 {displayAsterisk()}
               </div>
               {/* state field */}
-              <div className="form-item">
-                <CustomTextField
-                  variant="outlined"
-                  className="state-field input-field"
-                  placeholder="State"
-                  value={values.stateLocation.value}
-                  error={values.stateLocation.error}
-                  onChange={handleChange}
-                  disabled={isFormDisabled}
-                  name="stateLocation"
-                />
+              <div className="flex items-center !mt-1">
+                <div className="flex-1">
+                  <Input
+                    className={inputClasses(values.stateLocation.error)}
+                    placeholder="State"
+                    value={values.stateLocation.value}
+                    onChange={handleChange}
+                    disabled={isFormDisabled}
+                    name="stateLocation"
+                  />
+                </div>
                 {displayAsterisk()}
               </div>
               {/* zipcode field */}
-              <div className="form-item">
-                <CustomTextField
-                  variant="outlined"
-                  className="zipcode-field input-field"
-                  placeholder="Zip Code"
-                  value={values.zipcode.value}
-                  error={values.zipcode.error}
-                  onChange={handleChange}
-                  disabled={isFormDisabled}
-                  name="zipcode"
-                />
+              <div className="flex items-center !mt-1">
+                <div className="flex-1">
+                  <Input
+                    className={inputClasses(values.zipcode.error)}
+                    placeholder="Zip Code"
+                    value={values.zipcode.value}
+                    onChange={handleChange}
+                    disabled={isFormDisabled}
+                    name="zipcode"
+                  />
+                </div>
                 {displayAsterisk()}
               </div>
               {/* phone number field */}
-              <div className="form-item">
-                <CustomTextField
-                  variant="outlined"
-                  className="phone-number input-field"
-                  placeholder="Phone Number"
-                  type="tel"
-                  value={values.phoneNumber.value}
-                  onChange={handleChange}
-                  disabled={isFormDisabled}
-                  name="phoneNumber"
-                />
+              <div className="flex items-center !mt-1">
+                <div className="flex-1">
+                  <Input
+                    className={inputClasses(values.phoneNumber.error)}
+                    placeholder="Phone Number"
+                    type="tel"
+                    value={values.phoneNumber.value}
+                    onChange={handleChange}
+                    disabled={isFormDisabled}
+                    name="phoneNumber"
+                  />
+                </div>
+                <span className="ml-2 w-4 flex-shrink-0"></span>
               </div>
             </div>
           ) : null}
-          <h1 className="help-section-title">What would you like to help with?</h1>
-          <p className="select-committees-text">Select all committees you are interested in.</p>
-          {committeesError ? (
-            <p className="committees-error-text">At least one committee must be selected.</p>
-          ) : null}
-          {/* displays all committee options or spinner if loading data */}
-          {displayCommittees(isMobile, interests, selectedCommittees, handleCommitteesChange)}
+
+          <div className="space-y-6 pt-10">
+            <h1 className="text-3xl font-heading text-brand-dark-purple text-center lowercase italic">
+              What would you like to help with?
+            </h1>
+            <p className="text-center text-lg text-gray-600 font-body">
+              Select all committees you are interested in.
+            </p>
+            {committeesError ? (
+              <p className="text-center text-brand-red font-bold animate-pulse">
+                At least one committee must be selected.
+              </p>
+            ) : null}
+            {/* displays all committee options or spinner if loading data */}
+            <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 shadow-inner">
+              {displayCommittees(isMobile, interests, selectedCommittees, handleCommitteesChange)}
+            </div>
+          </div>
           {/* submit button */}
-          <div className="submit-form">
-            <CustomButton text="Submit" onClickCallback={handleSubmit} />
+          <div className="flex justify-center pt-12 pb-16">
+            <CustomButton
+              className="w-auto px-16 h-16 text-2xl rounded-full"
+              text="Submit"
+              onClickCallback={handleSubmit}
+            />
           </div>
         </form>
+
+        {/* Simple Snackbar Replacement */}
+        {snackbar.open && (
+          <div className="fixed bottom-5 left-5 bg-brand-red text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center justify-between min-w-[300px]">
+            <span>{snackbar.message}</span>
+            <button onClick={() => setSnackBar({ open: false })} className="ml-4 font-bold text-white">
+              X
+            </button>
+          </div>
+        )}
       </div>
       {/* thank you modal displayed when form is submitted */}
       <Modal
@@ -615,13 +583,6 @@ export default function Volunteer({ frontmatter, interests }) {
         open={isThankYouNoteOpen}
         hide={handleModalClose}
         negativeButtonText="Ok"
-      />
-      {/* snackbar to display error messages */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleSnackClose}
-        message={snackbar.message}
       />
     </div>
   )

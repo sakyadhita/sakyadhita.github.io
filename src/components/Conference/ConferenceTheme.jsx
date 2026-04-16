@@ -15,7 +15,7 @@
 import React, { useState } from 'react'
 import Markdown from 'react-markdown'
 import Modal from '../Modal'
-import '../../css/Conferences.css'
+import { cn } from '../../lib/utils'
 
 export default function ConferenceTheme(props) {
   // used to control the state of the CustomModal
@@ -32,45 +32,54 @@ export default function ConferenceTheme(props) {
   const hide = () => setOpen(false)
 
   return (
-    <div className="conference-info">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4">
       {/* The title of the conference */}
       {props.title ? (
-        <section className="conference-info-title">
-          <h1>{props.title}</h1>
+        <section className="space-y-6">
+          <h1 className="text-3xl md:text-5xl font-bold font-heading text-brand-dark-purple lowercase tracking-tight">
+            {props.title}
+          </h1>
           {props.tabs ? props.tabs() : null}
         </section>
       ) : null}
 
       {/* The location of the conference */}
-      <section className="conference-info-location">
-        <h3>{props.location}</h3>
+      <section>
+        <h3 className="text-xl md:text-2xl font-bold font-heading italic text-brand-orange lowercase">
+          {props.location}
+        </h3>
       </section>
 
       {/* Button that opens the modal */}
       {props.signup && !props.isMobile ? (
-        <section className="conference-info-signup">
-          {/* When button is clicked, it will render the modal */}
-          <button onClick={() => redirect()} type="button">
+        <section>
+          <button 
+            onClick={() => redirect()} 
+            type="button"
+            className="px-8 py-3 bg-brand-orange text-white rounded-full font-bold font-body uppercase tracking-wider hover:bg-brand-dark-orange transition-all shadow-md active:scale-95 border-none"
+          >
             Sign Up
           </button>
         </section>
       ) : null}
 
       {/* The text describing the specific conference */}
-      <div className="conference-theme-paragraph-div">
-        <div className="slideshow-div">{props.slideShow ? props.slideShow() : null}</div>
-        <div className="conference-theme-paragraph">
+      <div className="flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 mr-[3.5vw]">
+        <div className="flex-1 prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic lowercase">
           <Markdown>{props.theme}</Markdown>
+        </div>
+        <div className="lg:w-[55%] shrink-0">
+           {props.slideShow ? props.slideShow() : null}
         </div>
       </div>
 
-      {/* The Modal that renders if the signup button is clicked under 'overview' 
-            on conferences */}
       <Modal
         open={open}
         hide={hide}
         text="You will be redirected to a new link to sign up for the conference. Do you want to be redirected?"
-        url={props.redirect}
+        positiveUrl={props.redirect}
+        positiveButtonText="Yes"
+        negativeButtonText="No"
       />
     </div>
   )

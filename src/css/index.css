@@ -1,14 +1,33 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+@import "tailwindcss";
 @import 'react-tooltip/dist/react-tooltip.css';
 @import "../constants/colorPalette.css";
 @import "../constants/fonts.css";
 
+@theme {
+  --color-brand-light-purple: #8477b9;
+  --color-brand-dark-purple: #6652a0;
+  --color-brand-orange: #ea8644;
+  --color-brand-dark-orange: #d77a3d;
+  --color-brand-red: #ea4444;
+  --color-brand-grey: #9b9b9b;
+  --color-brand-dark-grey: #5a5a5a;
+  
+  --font-heading: "Libre Baskerville", serif;
+  --font-body: "Nunito", sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--text-font);
+  color: var(--black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
 }
 
 code {

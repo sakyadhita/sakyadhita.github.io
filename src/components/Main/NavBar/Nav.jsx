@@ -8,11 +8,10 @@
 
 import React from 'react'
 import { SITE_PAGES } from '../../../constants/links'
-
-import '../../../css/Nav.css'
 import Cross from '../../../media/cross.svg'
+import { cn } from '../../../lib/utils'
 
-export default function Nav(props) {
+export default function Nav({ visible, transition, toggle }) {
   const home = SITE_PAGES.HOME
   const conferences = SITE_PAGES.CONFERENCES
   const resources = SITE_PAGES.RESOURCES_LANDING
@@ -23,35 +22,53 @@ export default function Nav(props) {
    * Checks page path from props to change color of the active nav link.
    *
    * @param {String} pageToCheck - URL of site to check
-   * @returns {boolean} - True if currently on the desired page
+   * @returns {string} - class name for current page
    */
   function isPageActive(pageToCheck) {
-    return pageToCheck === window.location.pathname ? 'current' : ''
+    const path = typeof window !== 'undefined' ? window.location.pathname : ''
+    return path === pageToCheck ? 'bg-brand-dark-orange' : ''
   }
 
+  const navOptionClasses =
+    'w-full h-[60px] md:h-[calc((100vh-120px)/5)] flex justify-start items-center px-8 md:px-[calc(1.9vw+2px)] hover:bg-brand-dark-orange hover:no-underline transition-colors group'
+  const navTextClasses = 'font-heading text-lg md:text-[min(1.25em,2.5vw)] text-white lowercase'
+
   return (
-    <div className={`navigation ${props.visible} ${props.transition}`}>
+    <div
+      className={cn(
+        'fixed top-0 md:top-[120px] h-full md:h-[calc(100vh-120px)] w-full md:w-[min(350px,22vw)] bg-brand-orange flex flex-col justify-start md:justify-between z-[1001] pt-[60px] md:pt-0',
+        transition && 'transition-[right] duration-500 ease-in-out',
+        visible === 'visible' ? 'right-0' : 'right-[-100vw] md:right-[max(-350px,-22vw)]'
+      )}
+    >
       {/* Cross icon to close panel on mobile */}
-      <button type="button" id="cross" onClick={props.toggle} onKeyDown={props.toggle}>
-        <img src={Cross.src} alt="Close Navigation" />
+      <button
+        type="button"
+        className="absolute top-[25px] right-[25px] w-[25px] h-[25px] md:hidden cursor-pointer bg-transparent border-none"
+        onClick={toggle}
+        onKeyDown={toggle}
+      >
+        <img src={Cross.src} alt="Close Navigation" className="w-full" />
       </button>
 
       {/* Nav Links */}
-      <a className={`nav-option ${isPageActive(home)}`} href={home}>
-        <span>Home</span>
-      </a>
-      <a className={`nav-option ${isPageActive(conferences)}`} href={conferences}>
-        <span>Conferences</span>
-      </a>
-      <a className={`nav-option ${isPageActive(resources)}`} href={resources}>
-        <span>Resources</span>
-      </a>
-      <a className={`nav-option ${isPageActive(about)}`} href={about}>
-        <span>About Us</span>
-      </a>
-      <a className={`nav-option ${isPageActive(contact)}`} href={contact}>
-        <span>Contact Us</span>
-      </a>
+      <div className="flex flex-col w-full h-full md:h-auto">
+        {[
+          { label: 'Home', link: home },
+          { label: 'Conferences', link: conferences },
+          { label: 'Resources', link: resources },
+          { label: 'About Us', link: about },
+          { label: 'Contact Us', link: contact }
+        ].map((item) => (
+          <a
+            key={item.label}
+            className={cn(navOptionClasses, isPageActive(item.link))}
+            href={item.link}
+          >
+            <span className={navTextClasses}>{item.label}</span>
+          </a>
+        ))}
+      </div>
     </div>
   )
 }

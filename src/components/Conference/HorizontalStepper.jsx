@@ -14,14 +14,9 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
-import Stepper from '@material-ui/core/Stepper'
-import StepConnector from '@material-ui/core/StepConnector'
-import Step from '@material-ui/core/Step'
-import { StepButton } from '@material-ui/core'
 import CustomPagination from './Pagination'
 import useWindowSize from '../../util/ScreenListener'
-import '../../css/Stepper/Stepper.css'
+import { cn } from '../../lib/utils'
 
 /**
  * Convert a given number into an ordinal number
@@ -47,60 +42,9 @@ const ordinal_suffix_of = (i) => {
   return `${i}th`
 }
 
-// custom node for the text within a node
-const stepperNode = (index) => <div className="stepper-node">{ordinal_suffix_of(index)}</div>
-
 export default function HorizontalStepper(props) {
   // a listener that checks the screen width
   const listener = useWindowSize()
-
-  // custom styling used for various components
-  const useStyles = makeStyles(() => ({
-    root: {
-      minHeight: 'calc(10.5px)'
-    },
-    // used for each node in the stepper
-    button: {
-      width: '45px',
-      height: '45px',
-      backgroundColor: 'white',
-      border: `2px solid ${props.color}`,
-      borderRadius: '50%',
-      fontWeight: '400',
-      color: `${props.color}`,
-      margin: '0',
-      marginRight: '10px',
-      padding: '0',
-      zIndex: '100'
-    },
-    // for active node in the stepper
-    buttonActive: {
-      width: '45px',
-      height: '45px',
-      backgroundColor: `${props.color}`,
-      border: `2px solid ${props.color}`,
-      borderRadius: '50%',
-      color: 'white',
-      fontWeight: '400',
-      margin: '0',
-      marginRight: '10px',
-      padding: '0',
-      zIndex: '100'
-    }
-  }))
-
-  // custom styling for the connectors on the stepper
-  const ColorlibConnector = withStyles({
-    lineHorizontal: {
-      width: '55px',
-      height: '2px',
-      border: 0,
-      backgroundColor: props.color,
-      borderRadius: 1,
-      marginTop: 'calc(10px)',
-      marginLeft: 'calc(-1.6px)'
-    }
-  })(StepConnector)
 
   /**
    * Return all the locations and conference number as an array
@@ -123,19 +67,16 @@ export default function HorizontalStepper(props) {
     return arr
   }
 
-  // import the styling
-  const classes = useStyles()
   // keep track of the current page for pagination
   const [activeStep, setActiveStep] = useState(0)
   // update the page if the user changes pages
   const [activeIndex, setActiveIndex] = useState(0)
   // indicies to render 9 items per page
   const [indices, setIndices] = useState([0, 4])
-  // steps that are split based on indices
-  const [splitSteps, setSplitSteps] = useState(getSteps())
 
   // initial call to get all steps
   const steps = getSteps()
+  const [splitSteps, setSplitSteps] = useState(steps.slice(0, 4))
 
   /**
    * When the screen size changes to below 600px, updates the stepper
@@ -143,14 +84,15 @@ export default function HorizontalStepper(props) {
   useEffect(() => {
     if (listener.width > 600) {
       // we want stepper of length 6 when it is greater than 600px
-
-      const indicies = listener.width < 900 ? setIndices([0, 6]) : setIndices([0, 9])
+      if (listener.width < 900) setIndices([0, 6])
+      else setIndices([0, 9])
     } else setIndices([0, 4])
   }, [listener])
 
   /**
-   * Update the stepper to render the 9 items depending on the page
+   * Update the stepper to render the items depending on the page
    * @param {number} index
+   * @param {number} count
    */
   const updatePage = (index, count) => {
     // determine if it is a mobile screen or tablet
@@ -163,17 +105,17 @@ export default function HorizontalStepper(props) {
     props.setParentIndex((index - 1) * size)
   }
 
-  // render only the first nine items
+  // render items
   useEffect(() => {
     setSplitSteps(steps.slice(indices[0], indices[1]))
     if (props.id) {
       // find the index of the conference in the items list
-      let i = props.items.findIndex((x) => x.slug === props.id)
+      let i = props.items.findIndex((x) => x.id === props.id)
       // determine the page to change to
       if (Math.floor(i / 9) > 0) {
         const page = Math.floor(i / 9)
         i %= 9
-        updatePage(page + 1)
+        updatePage(page + 1, updateSize())
       }
 
       setActiveIndex(i)
@@ -214,25 +156,41 @@ export default function HorizontalStepper(props) {
   }
 
   return (
-    <div className={classes.root}>
-      <Stepper alternativeLabel nonLinear activeStep={activeStep} connector={<ColorlibConnector />}>
-        {/* loop through each item in splitSteps */}
+    <div className="min-h-[10.5px]">
+      <div className="flex items-center justify-center py-4">
         {splitSteps.map((step, index) => (
-          <Step key={step.confNum}>
-            {/* add a button with custom icon */}
-            <StepButton
+          <React.Fragment key={step.confNum}>
+            {/* Node Button */}
+            <button
               onClick={() => handleStep(index)}
-              icon={stepperNode(step.confNum)}
-              classes={
-                activeIndex === index ? { root: classes.buttonActive } : { root: classes.button }
+              className={cn(
+                'relative z-10 w-[45px] h-[45px] rounded-full border-2 flex items-center justify-center transition-all duration-300',
+                activeIndex === index ? 'text-white shadow-md' : 'bg-white hover:bg-gray-50'
+              )}
+              style={
+                activeIndex === index
+                  ? { backgroundColor: props.color, borderColor: props.color }
+                  : { color: props.color, borderColor: props.color }
               }
-            />
-          </Step>
+            >
+              <span className="text-[14px] font-bold lowercase">
+                {ordinal_suffix_of(step.confNum)}
+              </span>
+            </button>
+
+            {/* Connector */}
+            {index < splitSteps.length - 1 && (
+              <div
+                className="h-[2px] w-[55px] -ml-[1.6px]"
+                style={{ backgroundColor: props.color }}
+              />
+            )}
+          </React.Fragment>
         ))}
-      </Stepper>
+      </div>
 
       {/* pagination allows user to see more conferences */}
-      <div className="pagination-stepper">
+      <div className="pagination-stepper flex justify-center mt-2">
         <CustomPagination count={steps.length} updatePage={updatePage} size={updateSize()} />
       </div>
     </div>

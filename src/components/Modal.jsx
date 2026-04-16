@@ -12,8 +12,8 @@
  */
 
 import React from 'react'
-import { Modal } from 'react-bootstrap'
-import '../css/Modal.css'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
+import { Button } from './ui/button'
 
 export default function CustomModal({
   hide,
@@ -29,31 +29,36 @@ export default function CustomModal({
   }
 
   return (
-    <Modal show={open} onHide={() => hide(false)} centered>
-      <div className="modal-body-div">
-        <div className="modal-body-content">
-          <Modal.Body>
-            {/* The text of the modal */}
-            <p>{text}</p>
+    <Dialog open={open} onOpenChange={hide}>
+      <DialogContent className="max-w-md border-2 border-brand-orange p-4 rounded-lg bg-white">
+        <DialogHeader>
+          <DialogTitle className="sr-only">Notification</DialogTitle>
+          <DialogDescription className="text-center text-[23px] text-black pt-4 px-4 font-body">
+            {text}
+          </DialogDescription>
+        </DialogHeader>
 
-            {/* Contains the two buttons within the modal */}
-            <div className="redirect-div">
-              {/* The close modal button */}
-              {negativeButtonText ? (
-                <button className="redirect-cancel" onClick={() => hide(false)} type="button">
-                  {negativeButtonText}
-                </button>
-              ) : null}
+        <div className="flex flex-row justify-center mt-6 space-x-4 mb-4">
+          {negativeButtonText && (
+            <Button
+              variant="outline"
+              onClick={() => hide(false)}
+              className="border-[1.2px] border-black bg-transparent text-black text-[18px] min-w-[120px] rounded-[3vw] font-bold font-body h-10"
+            >
+              {negativeButtonText}
+            </Button>
+          )}
 
-              {positiveButtonText ? (
-                <button className="redirect-link" onClick={() => redirectLink()} type="button">
-                  {positiveButtonText}
-                </button>
-              ) : null}
-            </div>
-          </Modal.Body>
+          {positiveButtonText && (
+            <Button
+              onClick={redirectLink}
+              className="bg-brand-orange text-white text-[18px] min-w-[120px] rounded-[3vw] font-bold hover:bg-brand-dark-orange font-body h-10"
+            >
+              {positiveButtonText}
+            </Button>
+          )}
         </div>
-      </div>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   )
 }

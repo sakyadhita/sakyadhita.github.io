@@ -8,38 +8,36 @@
  */
 
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import '../css/Volunteer.css'
-import { Checkbox } from '@material-ui/core'
+import { Checkbox } from './ui/checkbox'
+import { Label } from './ui/label'
 
 export default function VolunteerOption(props) {
-  const handleCheckbox = (event) => {
-    props.handleChange(event)
+  const handleCheckbox = (checked) => {
+    // Replicate event object for the legacy handler
+    props.handleChange({ target: { value: props.value, checked } })
   }
 
-  const CustomColorCheckbox = withStyles({
-    root: {
-      color: '#000000',
-      paddingLeft: 0,
-      '&$checked': {
-        color: '#EA8644'
-      }
-    },
-    checked: {}
-  })(Checkbox)
+  const id = `committee-${props.value}`
 
   return (
-    <div>
-      <div className="committee-row">
-        <CustomColorCheckbox
-          className="committee-checkbox"
-          value={props.value}
+    <div className="mb-4">
+      <div className="committee-row flex items-center space-x-3">
+        <Checkbox
+          id={id}
+          className="border-black data-[state=checked]:bg-brand-orange w-6 h-6 rounded-md shadow-sm"
           checked={props.checked}
-          onChange={handleCheckbox}
+          onCheckedChange={handleCheckbox}
         />
-        <span className="committee-title">{props.title}</span>
+        <Label
+          htmlFor={id}
+          className="committee-title cursor-pointer font-bold text-[18px] font-body text-brand-dark-purple"
+        >
+          {props.title}
+        </Label>
       </div>
-      <p className="committee-description">{props.description}</p>
+      <p className="committee-description mt-2 ml-9 text-[16px] font-body text-gray-600 leading-relaxed italic">
+        {props.description}
+      </p>
     </div>
   )
 }

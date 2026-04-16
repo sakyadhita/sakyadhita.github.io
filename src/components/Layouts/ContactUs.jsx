@@ -12,42 +12,16 @@ import React, { useEffect } from 'react'
 import { GoMail } from 'react-icons/go'
 import { FaPhoneAlt } from 'react-icons/fa'
 import { BsHouseFill } from 'react-icons/bs'
-import { TextField, Snackbar } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Input } from '../ui/input'
+import { Textarea } from '../ui/textarea'
 import ImageHeader from '../Contact/ImageHeader'
 import ResourcesHeader from '../ResourcesHeader'
 import Modal from '../Modal'
 import CustomButton from '../CustomButton'
+import { cn } from '../../lib/utils'
 import '../../css/ContactUs.css'
 
 const MAX_MOBILE_WIDTH = 1050
-
-// provides custom style/border colors for form fields
-const useStyles = makeStyles((theme) => ({
-  form: {
-    // input field - general layout
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '95%'
-    },
-    // default rendering of field
-    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'black',
-      borderRadius: '30px'
-    },
-    // on focus rendering of field
-    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#6652a0'
-    },
-    '& .MuiInputLabel-outlined.Mui-focused': {
-      color: '#d77a3d'
-    },
-    // on error rendering of field
-    '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'red'
-    }
-  }
-}))
 
 export default function ContactUs({ frontmatter, children }) {
   // tracks page layout to width changes
@@ -80,8 +54,6 @@ export default function ContactUs({ frontmatter, children }) {
       error: false
     }
   })
-
-  const classes = useStyles()
 
   // handler to call on window resize
   useEffect(() => {
@@ -116,11 +88,6 @@ export default function ContactUs({ frontmatter, children }) {
     setIsEmailSentModuleOpen(event)
   }
 
-  // closes snackbar for any error messages shown
-  const handleSnackClose = () => {
-    setSnackBar({ open: false })
-  }
-
   const encode = (data) => {
     return Object.keys(data)
       .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
@@ -137,23 +104,23 @@ export default function ContactUs({ frontmatter, children }) {
     // display loading cursor
     document.body.style.cursor = 'wait'
 
-    let name = false
-    let message = false
-    let email = false
+    let nameError = false
+    let messageError = false
+    let emailError = false
 
-    if (values.name.value === '') name = true
-    if (values.message.value === '') message = true
-    if (values.email.value === '') email = true
+    if (values.name.value === '') nameError = true
+    if (values.message.value === '') messageError = true
+    if (values.email.value === '') emailError = true
 
     setValues({
       ...values,
-      name: { ...values.name, error: name },
-      message: { ...values.message, error: message },
-      email: { ...values.email, error: email }
+      name: { ...values.name, error: nameError },
+      message: { ...values.message, error: messageError },
+      email: { ...values.email, error: emailError }
     })
 
     // check to see if any required fields are empty
-    if (name || message || email) {
+    if (nameError || messageError || emailError) {
       setSnackBar({ open: true, message: 'Missing required fields' })
       setIsFormDisabled(false)
       document.body.style.cursor = null
@@ -189,7 +156,7 @@ export default function ContactUs({ frontmatter, children }) {
         // show snackbar to notify message could not be sent
         setSnackBar({
           open: true,
-          message: error
+          message: error.toString()
         })
       })
 
@@ -198,102 +165,130 @@ export default function ContactUs({ frontmatter, children }) {
     setIsFormDisabled(false)
   }
 
+  const inputClasses = (hasError) =>
+    cn(
+      'm-2 w-[95%] border-black rounded-[30px] focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple h-12 px-6 bg-white font-body',
+      hasError && 'border-brand-red ring-brand-red'
+    )
+
   return (
     <div className="Contact-Us">
       {/* contains textual rendering of all information not including header image  */}
       <section className="left-container">
         {/* Main paragraph at top  */}
-        <h2>{isMobile ? 'Thank you for your interest in Sakyadhita!' : 'Contact Us'}</h2>
-        {children}
+        <h2 className="font-heading lowercase tracking-tight">
+          {isMobile ? 'Thank you for your interest in Sakyadhita!' : 'Contact Us'}
+        </h2>
+        <div className="font-body text-lg leading-relaxed text-gray-700">{children}</div>
         {/* Contact Information */}
-        <h4>Reach us at: </h4>
+        <h4 className="font-heading italic lowercase text-2xl mt-8 mb-4 border-b-2 border-brand-orange w-fit">
+          Reach us at:{' '}
+        </h4>
         {/* Email */}
-        {frontmatter.email.map((email) => (
-          <p>
+        <div className="space-y-3 font-body">
+          {frontmatter.email.map((email) => (
+            <p key={email.address} className="flex items-center space-x-2">
+              {' '}
+              <GoMail className="text-brand-orange text-xl" />{' '}
+              <a
+                href={'mailto:' + email.address}
+                className="hover:text-brand-orange transition-colors"
+              >
+                {' '}
+                {email.address}{' '}
+              </a>{' '}
+              ({email.description}){' '}
+            </p>
+          ))}
+          {/* Phone Number */}
+          <p className="flex items-center space-x-2">
             {' '}
-            <GoMail /> <a href={'mailto:' + email.address}> {email.address} </a> (
-            {email.description}){' '}
+            <FaPhoneAlt className="text-brand-orange text-lg" /> <span>{frontmatter.phone}</span>
           </p>
-        ))}
-        {/* Phone Number */}
-        <p>
-          {' '}
-          <FaPhoneAlt /> {frontmatter.phone}
-        </p>
-        {/* Address */}
-        <div className="address">
-          <BsHouseFill className="address-icon" />
-          {frontmatter.address}
+          {/* Address */}
+          <div className="address flex items-start space-x-2">
+            <BsHouseFill className="address-icon text-brand-orange text-2xl shrink-0 mt-1" />
+            <span>{frontmatter.address}</span>
+          </div>
         </div>
 
         {/* Renders Form */}
-        <h4>Send us a message!</h4>
-        <form className={classes.form} autoComplete="off" name="contact">
-          {/* <input type="hidden" name="form-name" value="contact" /> */}
+        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6">Send us a message!</h4>
+        <form autoComplete="off" name="contact" className="space-y-4">
           {/* Full Name Field */}
           <div className="form-field-wrapper">
-            <TextField
+            <Input
               name="name"
               value={values.name.value}
-              error={values.name.error}
               onChange={handleChange}
               placeholder="Full Name"
               disabled={isFormDisabled}
-              variant="outlined"
+              className={inputClasses(values.name.error)}
             />
-            <span className="required-asterisk"> * </span>
+            <span className="required-asterisk text-brand-red font-bold"> * </span>
           </div>
           {/* Email Field */}
           <div className="form-field-wrapper">
-            <TextField
+            <Input
               name="email"
+              type="email"
               value={values.email.value}
-              error={values.email.error}
               onChange={handleChange}
               placeholder="Email"
               disabled={isFormDisabled}
-              variant="outlined"
+              className={inputClasses(values.email.error)}
             />
-            <span className="required-asterisk"> * </span>
+            <span className="required-asterisk text-brand-red font-bold"> * </span>
           </div>
           {/* Phone Number Field */}
           <div className="form-field-wrapper">
-            <TextField
+            <Input
               name="phone"
               onChange={handleChange}
               placeholder="Phone Number"
               value={values.phone.value}
               disabled={isFormDisabled}
-              error={values.phone.error}
-              variant="outlined"
+              className={inputClasses(values.phone.error)}
             />
             <span style={{ color: 'white' }}> * </span>
           </div>
           {/* Message Field */}
           <div className="form-field-wrapper">
-            <TextField
+            <Textarea
               name="message"
               value={values.message.value}
               onChange={handleChange}
               placeholder="Write your message here"
               disabled={isFormDisabled}
-              error={values.message.error}
-              variant="outlined"
-              multiline
+              className={cn(
+                inputClasses(values.message.error),
+                'h-48 rounded-[20px] py-4 resize-none'
+              )}
               rows={8}
             />
-            <span className="required-asterisk"> * </span>
+            <span className="required-asterisk text-brand-red font-bold"> * </span>
           </div>
           {/* Note on required fields  */}
-          <p style={{ textAlign: 'center' }}>
+          <p className="text-center font-body text-sm text-gray-500">
             {' '}
-            <span className="required-asterisk"> * </span> indicates a required field
+            <span className="required-asterisk text-brand-red font-bold"> * </span> indicates a
+            required field
           </p>
           {/* Submit Button */}
-          <div className="submit-button">
+          <div className="submit-button flex justify-center py-4">
             <CustomButton text="Submit" onClickCallback={handleFormSubmit} />
           </div>
         </form>
+
+        {/* Simple Snackbar Replacement */}
+        {snackbar.open && (
+          <div className="fixed bottom-5 left-5 bg-brand-red text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center justify-between min-w-[300px]">
+            <span>{snackbar.message}</span>
+            <button onClick={() => setSnackBar({ open: false })} className="ml-4 font-bold">
+              X
+            </button>
+          </div>
+        )}
       </section>
 
       {isMobile || window.innerHeight <= 500 ? (
@@ -314,13 +309,6 @@ export default function ContactUs({ frontmatter, children }) {
         open={isEmailSentModuleOpen}
         hide={handleModalHide}
         negativeButtonText="Ok"
-      />
-      {/* Snackbar for Error Displays */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleSnackClose}
-        message={snackbar.message}
       />
     </div>
   )

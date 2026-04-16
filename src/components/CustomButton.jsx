@@ -7,8 +7,8 @@
  */
 
 import React from 'react'
-// import Button from "@material-ui/core/Button";
-import '../css/CustomButton.css'
+import { Button } from './ui/button'
+import { cn } from '../lib/utils'
 
 /**
  *
@@ -23,30 +23,20 @@ export default function CustomButton({
   redirect_link,
   openInSameTab = false,
   onClickCallback,
-  style = null
+  className = ''
 }) {
   return (
-    // <Button
-    //     style={style}
-    //     onClick={onClickCallback}
-    //     href={redirect_link}
-    //     target={openInSameTab ? null : "_blank"}
-    //     rel="noreferrer noopener"
-    //     variant="contained"
-    //     size="large"
-    //     className="Custom-Button"
-    // >
-    //     {text}
-    // </Button>
-    <a
-      style={style}
+    <Button
+      asChild
       onClick={onClickCallback}
-      href={redirect_link}
-      target={openInSameTab ? null : '_blank'}
-      className="Custom-Button"
-      rel="noreferrer"
+      className={cn(
+        'w-[175px] bg-brand-orange hover:bg-brand-dark-orange rounded-[30px] shadow-[2px_2px_2px_rgb(63,62,62)] text-white uppercase font-bold h-auto py-2 text-[0.9375rem] font-body transition-transform active:scale-95 border-none',
+        className
+      )}
     >
-      {text}
-    </a>
+      <a href={redirect_link} target={openInSameTab ? null : '_blank'} rel="noreferrer">
+        {text}
+      </a>
+    </Button>
   )
 }

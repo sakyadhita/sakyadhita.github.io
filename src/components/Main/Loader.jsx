@@ -6,9 +6,10 @@
 
 import React from 'react'
 
-import CircularProgress from '@material-ui/core/CircularProgress'
-import '../../constants/colorPalette.css'
-
-const Loader = () => <CircularProgress style={{ color: '--lightpurple', margin: '150px 0' }} />
+const Loader = () => (
+  <div className="flex justify-center items-center my-[150px]">
+    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-light-purple"></div>
+  </div>
+)
 
 export default Loader

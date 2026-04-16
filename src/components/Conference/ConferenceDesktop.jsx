@@ -20,8 +20,7 @@ import VerticalStepper from './VerticalStepper'
 import ConferenceOverview from './ConferenceOverview'
 import ConferenceTheme from './ConferenceTheme'
 import Slideshow from '../Slideshow'
-
-import '../../css/Conferences.css'
+import { cn } from '../../lib/utils'
 
 export default function ConferencesDesktop(props) {
   // switch used to toggle theme and overview state
@@ -42,9 +41,11 @@ export default function ConferencesDesktop(props) {
     // initalially set the page to render the first conference
     if (props.id) {
       // find the index of the conference in the items list
-      const ind = itemList.findIndex((x) => x.slug === props.id)
-      setIndex(ind)
-      setItem(itemList[ind])
+      const ind = itemList.findIndex((x) => x.id === props.id)
+      if (ind !== -1) {
+        setIndex(ind)
+        setItem(itemList[ind])
+      }
     } else setItem(itemList[index])
   }, [])
 
@@ -66,25 +67,27 @@ export default function ConferencesDesktop(props) {
   }
 
   const tabs = () => (
-    <div className="slideshow-section">
-      <div className="slideshow-section-tabs">
-        {/* The 'theme' tab button */}
-        <button
-          className={isInfo ? 'slideshow-section-theme-active' : 'slideshow-section-theme'}
-          onClick={() => updateInformation()}
-          type="button"
-        >
-          Theme
-        </button>
-        {/* The 'overview' tab button */}
-        <button
-          className={isInfo ? 'slideshow-section-overview' : 'slideshow-section-overview-active'}
-          onClick={() => updateInformation()}
-          type="button"
-        >
-          Overview
-        </button>
-      </div>
+    <div className="flex space-x-1 bg-gray-100 p-1 rounded-xl w-fit mb-8 font-body">
+      <button
+        className={cn(
+          "px-6 py-2 rounded-lg font-bold transition-all",
+          isInfo ? "bg-white text-brand-dark-purple shadow-sm" : "text-gray-500 hover:text-gray-700"
+        )}
+        onClick={() => setIsInfo(true)}
+        type="button"
+      >
+        Theme
+      </button>
+      <button
+        className={cn(
+          "px-6 py-2 rounded-lg font-bold transition-all",
+          !isInfo ? "bg-white text-brand-dark-purple shadow-sm" : "text-gray-500 hover:text-gray-700"
+        )}
+        onClick={() => setIsInfo(false)}
+        type="button"
+      >
+        Overview
+      </button>
     </div>
   )
 
@@ -95,41 +98,42 @@ export default function ConferencesDesktop(props) {
    */
   const slideshowVideo = () => {
     if (isInfo || !item.data.video) {
-      if (item.data.slideShowImages.length === 1) {
-        return (
-          <div key={item.data.slideShowImages[0]} height="430px" width="100%">
-            {/* Set styling on the img */}
+      return (
+        <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-50 h-[430px]">
+          {item.data.slideShowImages.length === 1 ? (
             <img
-              className="img-slideshow-conferences"
+              className="w-full h-full object-cover"
               alt="Event Visual"
               src={item.data.slideShowImages[0]}
             />
-          </div>
-        )
-      }
-      return (
-        <Slideshow height="430px" width="100%" isMobile={false}>
-          {/* Loop through all the images associated with the conference */}
-          {item.data.slideShowImages.map((image) => (
-            <div key={image}>
-              {/* Set styling on the img */}
-              <img className="img-slideshow-conferences" alt="Event Visual" src={image} />
-            </div>
-          ))}
-        </Slideshow>
+          ) : (
+            <Slideshow height="100%" width="100%" isMobile={false}>
+              {item.data.slideShowImages.map((image) => (
+                <div key={image} className="w-full h-full">
+                  <img className="w-full h-full object-cover" alt="Event Visual" src={image} />
+                </div>
+              ))}
+            </Slideshow>
+          )}
+        </div>
       )
     }
 
     // if it is the overivew tab, render the associated video
-    return videoError ? (
-      <ErrorLoadingContent height="430px" width="100%" />
-    ) : (
-      <ReactPlayer
-        url={item.data.video}
-        height="430px"
-        width="100%"
-        onError={() => setVideoError(true)}
-      />
+    return (
+      <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-black h-[430px]">
+        {videoError ? (
+          <ErrorLoadingContent height="100%" width="100%" />
+        ) : (
+          <ReactPlayer
+            url={item.data.video}
+            height="100%"
+            width="100%"
+            controls
+            onError={() => setVideoError(true)}
+          />
+        )}
+      </div>
     )
   }
 
@@ -172,18 +176,18 @@ export default function ConferencesDesktop(props) {
   // check to see if data exists
   if (props.data.length === 0) {
     return (
-      <div className="empty-conferences">
-        <p>We have no conferences to show you at this time</p>
+      <div className="flex items-center justify-center py-24 italic text-gray-500 text-xl font-body">
+        We have no conferences to show you at this time
       </div>
     )
   }
 
   return (
-    <div className="conferences-outer-container">
-      <div className="component-display">
+    <div className="w-full pl-[50px] pr-[101px] py-12">
+      <div className="flex flex-row gap-16 relative">
         {/* The vertical stepper */}
-        <div className="conference-vertical-stepper">
-          <div className="sticky-vertical-stepper">
+        <aside className="w-[200px] shrink-0">
+          <div className="sticky top-32">
             <VerticalStepper
               items={props.data}
               color="#6652a0"
@@ -191,16 +195,14 @@ export default function ConferencesDesktop(props) {
               id={props.id}
             />
           </div>
-        </div>
+        </aside>
 
-        {/* This outer div is used for 1050 < x < 1200 screen widths */}
-        <div className="small-desktop-div-container">
-          {/* Display the information for either theme or overview */}
-          <div className="conference-container">
+        {/* Main Content Area */}
+        <main className="flex-1 min-w-0">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             {displayInformation()}
-            {/* <div style={{ width: "100%" }}>{slideshowVideo()}</div> */}
           </div>
-        </div>
+        </main>
       </div>
     </div>
   )

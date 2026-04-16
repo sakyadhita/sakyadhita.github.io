@@ -9,45 +9,72 @@
  */
 
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Pagination from '@material-ui/lab/Pagination'
-import '../../css/Conferences.css'
-
-const useStyles = makeStyles((theme) => ({
-  // custom styling for the paginations
-  root: {
-    '& > *': {
-      marginTop: theme.spacing(2),
-      width: '100%'
-    }
-  }
-}))
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious
+} from '../ui/pagination'
 
 export default function CustomPagination(props) {
-  console.log('P', props.page)
-  const classes = useStyles()
-
   // set the tabs for the pagination
-  const count = parseInt(props.count / props.size, 10) + 1
+  const count = Math.ceil(props.count / props.size)
 
   /**
    * Update the parent's page number
    *
-   * @param {Event} e - event trigger
    * @param {number} page - the page number
    */
-  const handleChange = (e, page) => {
+  const handlePageChange = (page) => {
+    if (page < 1 || page > count) return
     props.updatePage(page, props.size)
   }
 
+  const pages = Array.from({ length: count }, (_, i) => i + 1)
+
   return (
-    <div className={classes.root}>
-      <Pagination
-        count={count}
-        size="small"
-        page={props.page}
-        onChange={(e, page) => handleChange(e, page)}
-      />
-    </div>
+    <Pagination className="mt-4 w-full">
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              handlePageChange(props.page - 1)
+            }}
+            className={props.page === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+          />
+        </PaginationItem>
+
+        {pages.map((p) => (
+          <PaginationItem key={p}>
+            <PaginationLink
+              href="#"
+              isActive={props.page === p}
+              onClick={(e) => {
+                e.preventDefault()
+                handlePageChange(p)
+              }}
+              className="cursor-pointer"
+            >
+              {p}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+
+        <PaginationItem>
+          <PaginationNext
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              handlePageChange(props.page + 1)
+            }}
+            className={props.page === count ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   )
 }

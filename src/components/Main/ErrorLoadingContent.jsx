@@ -10,19 +10,18 @@
  */
 
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { AlertCircle } from 'lucide-react'
 
-import '../../css/ErrorLoadingContent.css'
-
-export const ErrorLoadingContent = (props) => {
-  const height = props.height ? props.height : '100%'
-  const width = props.width ? props.width : '100%'
-
+export const ErrorLoadingContent = ({ height = '100%', width = '100%' }) => {
   return (
-    <div className="load-content-failure" style={{ height, width }}>
-      <FontAwesomeIcon icon={faExclamationCircle} color="white" size="3x" />
-      <p>Failed to load content</p>
+    <div
+      className="flex flex-col items-center justify-center bg-gray-900 text-white rounded-2xl space-y-4"
+      style={{ height, width }}
+    >
+      <AlertCircle className="w-16 h-16 text-brand-red animate-pulse" />
+      <p className="text-xl font-bold font-heading tracking-wide lowercase">
+        Failed to load content
+      </p>
     </div>
   )
 }

@@ -13,8 +13,7 @@ import { FaGoodreads, FaBloggerB } from 'react-icons/fa'
 import Brand from './Brand'
 import Logo from '../../media/logo.svg'
 import { SITE_PAGES } from '../../constants/links'
-import '../../css/Footer.css'
-import '../../css/animations.css'
+import { cn } from '../../lib/utils'
 
 const FACEBOOK_LINK = 'https://www.facebook.com/sakyadhita.international'
 const YOUTUBE_LINK = 'https://www.youtube.com/channel/UCLOIc4vqaqPKcjaRqmn6-yg/playlists'
@@ -45,228 +44,178 @@ export default function Footer() {
     return () => window.removeEventListener('resize', handleResize)
   }, []) // Empty array ensures that effect is only run on mount
 
-  const facebook = (
-    <a href={FACEBOOK_LINK} target="_blank" rel="noreferrer">
-      <AiOutlineFacebook
-        title="Facebook"
-        style={{ color: 'white' }}
-        onMouseOut={({ target }) => {
-          target.style.color = 'white'
-          target.style.backgroundColor = null
-        }}
-        onMouseOver={({ target }) => {
-          target.style.backgroundColor = '#3b5998'
-        }}
-      />
-    </a>
-  )
-
-  const youtube = (
-    <a href={YOUTUBE_LINK} target="_blank" rel="noreferrer">
-      <AiOutlineYoutube
-        title="YouTube"
-        style={{ color: 'white', borderRadius: '10px' }}
-        onMouseOut={({ target }) => {
-          target.style.color = 'white'
-          target.style.backgroundColor = null
-        }}
-        onMouseOver={({ target }) => {
-          target.style.backgroundColor = '#c4302b'
-        }}
-      />
-    </a>
-  )
-
-  const pinterest = (
-    <a href={PINTEREST_LINK} target="_blank" rel="noreferrer">
-      <ImPinterest2
-        title="Pinterest"
-        style={{ color: 'white', borderRadius: '20px' }}
-        onMouseOut={({ target }) => {
-          target.style.color = 'white'
-          target.style.backgroundColor = null
-        }}
-        onMouseOver={({ target }) => {
-          target.style.backgroundColor = '#E60023'
-        }}
-      />
-    </a>
-  )
-
-  const blog = (
-    <a href={ABW_BLOG_LINK} target="_blank" rel="noreferrer">
-      <FaBloggerB
-        title="ABW Blog"
-        style={{ color: 'white', borderRadius: '20px' }}
-        onMouseOut={({ target }) => {
-          target.style.color = 'white'
-        }}
-        onMouseOver={({ target }) => {
-          target.style.color = '#EA8644'
-        }}
-      />
-    </a>
-  )
-
-  const goodreads = (
-    <a href={GOODREADS_LINK} target="_blank" rel="noreferrer">
-      <FaGoodreads
-        title="goodreads"
-        style={{ color: 'white' }}
-        onMouseOut={({ target }) => {
-          target.style.color = 'white'
-        }}
-        onMouseOver={({ target }) => {
-          target.style.color = '#e9e5cd'
-        }}
-      />
-    </a>
-  )
+  const socialIconClasses = 'text-[30px] md:text-[35px] lg:text-[45px] transition-all'
 
   const subitem = (text, redirect_link) => (
-    <a href={redirect_link} className="sub-item">
-      <img width="20px" height="auto" src={Logo.src} alt="Logo" id="logo" />
-      &nbsp;
+    <a
+      href={redirect_link}
+      className="text-[12px] md:text-[14px] text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+    >
+      <img width="20px" height="auto" src={Logo.src} alt="Logo" className="mr-2" />
       {text}
     </a>
   )
 
   const cclicense = (
-    <p className="cc-notice">
-      <img width={64} src="/by-nc-nd.png" alt="license" />
-      &nbsp;Website is licensed under a
-      <a target="_blank" rel="noreferrer" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
-        {' '}
-        Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International License
-      </a>
-      .
-    </p>
+    <div className="text-white text-center text-sm md:text-base mt-4 font-body">
+      <img width={64} src="/by-nc-nd.png" alt="license" className="inline-block mb-2 md:mb-0" />
+      <span className="block md:inline-block md:ml-2">
+        Website is licensed under a
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+          className="hover:text-brand-orange transition-colors mx-1"
+        >
+          Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International License
+        </a>
+        .
+      </span>
+    </div>
   )
 
-  // desktop rendering
-  if (windowSize.width > MAX_MOBILE_VIEW_WIDTH) {
-    return (
-      // outer relative div is needed so navbar can function properly
-      <div style={{ position: 'relative' }}>
-        <div className="Footer-Main-Container">
-          {/* all linked pages in website  */}
-          <section className="Footer-Pages">
-            <div className="Footer-Page-Expanded">
-              <a href={SITE_PAGES.HOME}>
-                {' '}
-                <p className="hover-underline-animation"> Home </p>{' '}
-              </a>
+  const headingClasses =
+    'font-heading font-bold text-[18px] md:text-[24px] text-white capitalize hover:no-underline mb-2 block'
+
+  const isDesktop = windowSize.width > MAX_MOBILE_VIEW_WIDTH
+
+  return (
+    <div className="relative mt-auto">
+      {/* Background Image Layer */}
+      <div
+        className="absolute inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat blur-[5px] rounded-[5px] shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)]"
+        style={{
+          backgroundImage:
+            'url("https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2996&q=80")'
+        }}
+      ></div>
+
+      <div className="relative z-0 bg-brand-light-purple/90 w-full min-h-[550px] flex flex-col justify-center items-center px-6 md:px-20 py-10 md:py-[60px] overflow-hidden font-body">
+        {/* Pages Links */}
+        <section className="w-full flex flex-col md:flex-row justify-between flex-1 space-y-8 md:space-y-0">
+          <div className="flex flex-col">
+            <a href={SITE_PAGES.HOME} className={headingClasses}>
+              Home
+            </a>
+            <div className="flex flex-col ml-1 md:ml-0">
               {subitem('Join Us', SITE_PAGES.JOIN_US)}
               {subitem('Volunteer', SITE_PAGES.VOLUNTEER)}
               {subitem('Donate', SITE_PAGES.DONATE)}
             </div>
-            <div className="Footer-Page-Expanded">
-              <a href={SITE_PAGES.CONFERENCES}>
-                {' '}
-                <p className="hover-underline-animation"> Conferences </p>{' '}
-              </a>
+          </div>
+
+          <div className="flex flex-col text-left">
+            <a href={SITE_PAGES.CONFERENCES} className={headingClasses}>
+              Conferences
+            </a>
+            <div className="flex flex-col ml-1 md:ml-0">
               {subitem('2025 19th conference, (Sarawak, Malaysia)', '/conferences/19')}
               {subitem('2023 18th conference, (Seoul, Korea)', '/conferences/18')}
               {subitem('2021 17th conference, (online)', '/conferences/17')}
               {subitem('2019 16th conference, (Blue Mountains, Australia)', '/conferences/16')}
             </div>
+          </div>
 
-            <div className="Footer-Page-Expanded">
-              <a href={SITE_PAGES.RESOURCES_LANDING}>
-                {' '}
-                <p className="hover-underline-animation"> Resources </p>{' '}
-              </a>
+          <div className="flex flex-col">
+            <a href={SITE_PAGES.RESOURCES_LANDING} className={headingClasses}>
+              Resources
+            </a>
+            <div className="flex flex-col ml-1 md:ml-0">
               {subitem('Newsletters', SITE_PAGES.RESOURCES_NEWSLETTERS)}
               {subitem('Publications', SITE_PAGES.RESOURCES_EPUBS)}
               {subitem('Buddhist Culture', SITE_PAGES.RESOURCES_BUDDHIST_CULTURE)}
               {subitem('Ordination', SITE_PAGES.RESOURCES_ORDINATION_ISSUE)}
             </div>
+          </div>
 
-            <div>
-              <a href={SITE_PAGES.ABOUT_US}>
-                {' '}
-                <p className="hover-underline-animation"> About </p>{' '}
-              </a>
-            </div>
-
-            <div>
-              <a href={SITE_PAGES.CONTACT_US}>
-                {' '}
-                <p className="hover-underline-animation"> Contact </p>{' '}
-              </a>
-            </div>
-          </section>
-          <section className="Footer-Bottom">
-            {/* social media icons + links */}
-
-            <div className="Footer-Social-Media-Wrapper">
-              Check us out on these platforms!
-              <section className="Footer-Social-Media">
-                {facebook}
-                {/* youtube */}
-                {youtube}
-              </section>
-            </div>
-
-            {/* site logo */}
-            <Brand location="footer" />
-          </section>
-          <br />
-          {cclicense}
-        </div>
-      </div>
-    )
-  }
-
-  // mobile rendering
-
-  return (
-    // outer relative div is needed so navbar can function properly
-    <div style={{ position: 'relative' }}>
-      <div className="Footer-Main-Container">
-        <section className="Footer-Bottom">
-          {/* all linked pages in website  */}
-          <section className="Footer-Pages">
-            <a href={SITE_PAGES.HOME}>
-              {' '}
-              <p className="hover-underline-animation"> Home </p>{' '}
+          <div>
+            <a href={SITE_PAGES.ABOUT_US} className={headingClasses}>
+              About
             </a>
-            <a href={SITE_PAGES.CONFERENCES}>
-              {' '}
-              <p className="hover-underline-animation"> Conferences </p>{' '}
+          </div>
+
+          <div>
+            <a href={SITE_PAGES.CONTACT_US} className={headingClasses}>
+              Contact
             </a>
-            <a href={SITE_PAGES.RESOURCES_LANDING}>
-              {' '}
-              <p className="hover-underline-animation"> Resources </p>{' '}
-            </a>
-            <a href={SITE_PAGES.ABOUT_US}>
-              {' '}
-              <p className="hover-underline-animation"> About </p>{' '}
-            </a>
-            <a href={SITE_PAGES.CONTACT_US}>
-              {' '}
-              <p className="hover-underline-animation"> Contact </p>{' '}
-            </a>
-          </section>
-
-          {/* social media icons + links */}
-          <section className="Footer-Social-Media">
-            {/* facebook */}
-            <div>{facebook}</div>
-
-            <div>{youtube}</div>
-
-            <div>{pinterest}</div>
-
-            <div>{blog}</div>
-
-            <div>{goodreads}</div>
-          </section>
+          </div>
         </section>
-        {/* site logo */}
-        <Brand location="footer" />
-        <br />
-        {cclicense}
+
+        {/* Bottom Section: Social Media & Brand */}
+        <section className="w-full flex flex-col md:flex-row justify-between items-center mt-12 space-y-8 md:space-y-0">
+          <div className="flex flex-col items-center md:items-start text-white">
+            <span className="mb-4 text-[18px] md:text-[20px] font-bold">
+              Check us out on these platforms!
+            </span>
+            <div className="flex flex-row space-x-6">
+              <a
+                href={FACEBOOK_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className="group transition-transform hover:scale-110"
+              >
+                <AiOutlineFacebook
+                  title="Facebook"
+                  className={cn(socialIconClasses, 'text-white group-hover:bg-[#3b5998]')}
+                />
+              </a>
+              <a
+                href={YOUTUBE_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className="group transition-transform hover:scale-110"
+              >
+                <AiOutlineYoutube
+                  title="YouTube"
+                  className={cn(
+                    socialIconClasses,
+                    'text-white group-hover:bg-[#c4302b] rounded-[10px]'
+                  )}
+                />
+              </a>
+              <a
+                href={PINTEREST_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className="group transition-transform hover:scale-110"
+              >
+                <ImPinterest2
+                  title="Pinterest"
+                  className={cn(
+                    socialIconClasses,
+                    'text-white group-hover:bg-[#E60023] rounded-[20px]'
+                  )}
+                />
+              </a>
+              <a
+                href={ABW_BLOG_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className="group transition-transform hover:scale-110"
+              >
+                <FaBloggerB
+                  title="ABW Blog"
+                  className={cn(socialIconClasses, 'text-white group-hover:text-brand-orange')}
+                />
+              </a>
+              <a
+                href={GOODREADS_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className="group transition-transform hover:scale-110"
+              >
+                <FaGoodreads
+                  title="goodreads"
+                  className={cn(socialIconClasses, 'text-white group-hover:text-[#e9e5cd]')}
+                />
+              </a>
+            </div>
+          </div>
+
+          <Brand location="footer" />
+        </section>
+
+        <div className="mt-12 w-full border-t border-white/20 pt-8">{cclicense}</div>
       </div>
     </div>
   )

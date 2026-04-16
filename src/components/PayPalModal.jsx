@@ -10,19 +10,20 @@
 import React from 'react'
 import PayPal from './PayPal'
 import CustomButton from './CustomButton'
-import '../css/PayPalModal.css'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog'
 
 export default function PayPalModal(props) {
   return (
-    <>
-      <div className="background" onClick={props.toggleModal} />
-      <div className="paypal-modal-wrapper">
-        <p className="header-text">Choose Your Payment Method</p>
+    <Dialog open={true} onOpenChange={props.toggleModal}>
+      <DialogContent className="max-w-xl p-8 border-2 border-brand-orange bg-white rounded-lg">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold font-heading text-brand-dark-purple text-center lowercase">
+            Choose Your Payment Method
+          </DialogTitle>
+        </DialogHeader>
 
-        <div className="paypal-component">
-          {/* displays PayPal buttons component */}
+        <div className="py-8">
           <PayPal
-            key={props.key}
             fName={props.fName}
             mName={props.mName}
             lName={props.lName}
@@ -39,11 +40,11 @@ export default function PayPalModal(props) {
             transactionCompleted={props.transactionCompleted}
           />
         </div>
-        {/* button to close modal */}
-        <div className="return-button">
+
+        <div className="flex justify-center">
           <CustomButton text="Return to Form" onClickCallback={props.toggleModal} />
         </div>
-      </div>
-    </>
+      </DialogContent>
+    </Dialog>
   )
 }

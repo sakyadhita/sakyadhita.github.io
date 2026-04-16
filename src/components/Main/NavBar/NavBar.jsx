@@ -8,12 +8,10 @@
  */
 
 import React, { useState } from 'react'
-
-import '../../../css/NavBar.css'
 import Hamburger from '../../../media/hamburger.svg'
-
 import Nav from './Nav'
 import Brand from '../Brand'
+import { cn } from '../../../lib/utils'
 
 export default function NavBar() {
   // Tells the navigation panel whether or not to render
@@ -40,37 +38,34 @@ export default function NavBar() {
   }
 
   return (
-    <div className="NavBar">
+    <div className="sticky top-0 w-full z-[1000]">
       {/* The actual Navigation Bar */}
-      {/* Overlay and Nav Panel are outside to allow sticky positioning */}
-      <div className="navBar">
+      <div className="h-[50px] md:h-[120px] w-full px-6 md:px-[55px] flex justify-between items-center bg-brand-light-purple text-white shadow-none md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]">
         {/* Logo and Branding */}
         <Brand />
 
         {/* Hamburger Button to Toggle Navigation */}
-        <button type="button" id="nav-toggle" onClick={toggleNav} onKeyDown={toggleNav}>
-          <img src={Hamburger.src} alt="Toggle Navigation" />
+        <button
+          type="button"
+          className="relative w-8 h-8 md:w-[50px] md:h-[50px] cursor-pointer border-none bg-transparent"
+          onClick={toggleNav}
+          onKeyDown={toggleNav}
+        >
+          <img src={Hamburger.src} alt="Toggle Navigation" className="w-full h-full" />
         </button>
       </div>
 
       {/* Conditionally Rendered Navigation Panel */}
-      {navToggled ? (
-        <Nav visible="visible" toggle={toggleNav} transition={navTransition} />
-      ) : (
-        <Nav toggle={toggleNav} transition={navTransition} />
-      )}
+      <Nav visible={navToggled ? 'visible' : ''} toggle={toggleNav} transition={navTransition} />
 
       {/* Overlay to darken website content when toggled */}
-      {navToggled ? (
-        <button
-          className="nav-overlay visible"
-          type="button"
-          onClick={toggleNav}
-          aria-label="Disable Navigation"
-        />
-      ) : (
-        <button type="button" className="nav-overlay" aria-label="Disable Navigation" />
-      )}
+      <div
+        className={cn(
+          'fixed inset-0 bg-black/30 backdrop-blur-[2px] transition-opacity duration-500 z-[999] pointer-events-none opacity-0 md:block hidden',
+          navToggled && 'opacity-100 pointer-events-auto'
+        )}
+        onClick={toggleNav}
+      />
     </div>
   )
 }

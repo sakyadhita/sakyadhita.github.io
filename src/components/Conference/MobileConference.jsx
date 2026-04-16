@@ -20,8 +20,7 @@ import HorizontalStepper from './HorizontalStepper'
 import ConferenceOverview from './ConferenceOverview'
 import ConferenceTheme from './ConferenceTheme'
 import Slideshow from '../Slideshow'
-
-import '../../css/Conferences.css'
+import { cn } from '../../lib/utils'
 
 export default function MobileConferences(props) {
   // keep track of the conference
@@ -40,9 +39,11 @@ export default function MobileConferences(props) {
     // initalially set the page to render the first conference
     if (props.id) {
       // find the index of the conference in the items list
-      const ind = itemList.findIndex((x) => x.slug === props.id)
-      setIndex(ind)
-      setItem(itemList[ind])
+      const ind = itemList.findIndex((x) => x.id === props.id)
+      if (ind !== -1) {
+        setIndex(ind)
+        setItem(itemList[ind])
+      }
     } else setItem(itemList[index])
   }, [])
 
@@ -64,124 +65,104 @@ export default function MobileConferences(props) {
    */
   const slideshowVideo = (isInfo) => {
     if (isInfo) {
-      if (item.data.slideShowImages.length === 1) {
-        return (
-          <div key={item.data.slideShowImages[0]} height="400px" width="100%">
-            {/* Set styling on the img */}
-            <div className="mobile-slideshow-label">
-              <h1>{item.data.title}</h1>
-              <h3>{item.data.location}</h3>
-            </div>
-            <img
-              style={{
-                height: '400px',
-                width: '100%'
-              }}
-              alt="Event Visual"
-              src={item.data.slideShowImages[0]}
-            />
-          </div>
-        )
-      }
       return (
-        <Slideshow height="400px" width="100%" isMobile>
-          {/* Loop through all the images associated with the conference */}
-          {item && item.data.slideShowImages
-            ? item.data.slideShowImages.map((image) => (
-                <div key={image}>
-                  {/* Set styling on the img */}
-                  <div className="mobile-slideshow-label">
-                    <h1>{item.data.title}</h1>
-                    <h3>{item.data.location}</h3>
-                  </div>
-                  <img
-                    style={{
-                      height: '400px',
-                      width: '100%'
-                    }}
-                    alt="Event Visual"
-                    src={image}
-                  />
+        <div className="relative h-[300px] sm:h-[400px] w-full rounded-b-3xl overflow-hidden shadow-xl">
+           {item.data.slideShowImages.length === 1 ? (
+              <div className="w-full h-full relative">
+                <div className="absolute bottom-10 left-6 z-10 text-white drop-shadow-md pr-12">
+                   <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">{item.data.title}</h1>
+                   <h3 className="text-sm font-bold opacity-90 uppercase tracking-widest font-body">{item.data.location}</h3>
                 </div>
-              ))
-            : null}
-        </Slideshow>
+                <img className="w-full h-full object-cover" alt="Event" src={item.data.slideShowImages[0]} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              </div>
+           ) : (
+              <Slideshow height="100%" width="100%" isMobile>
+                {item.data.slideShowImages.map((image) => (
+                  <div key={image} className="w-full h-full relative">
+                     <div className="absolute bottom-12 left-6 z-10 text-white drop-shadow-md pr-12">
+                        <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">{item.data.title}</h1>
+                        <h3 className="text-sm font-bold opacity-90 uppercase tracking-widest font-body">{item.data.location}</h3>
+                     </div>
+                     <img className="w-full h-full object-cover" alt="Event" src={image} />
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  </div>
+                ))}
+              </Slideshow>
+           )}
+        </div>
       )
     }
 
     // if it is the overivew tab, render the associated video
-    return videoError ? (
-      <ErrorLoadingContent height="400px" width="100%" />
-    ) : (
-      <ReactPlayer
-        url={item.data.video}
-        height="430px"
-        width="100%"
-        onError={() => setVideoError(true)}
-      />
+    return (
+      <div className="my-8 rounded-2xl overflow-hidden shadow-lg bg-black aspect-video">
+        {videoError ? (
+          <ErrorLoadingContent height="100%" width="100%" />
+        ) : (
+          <ReactPlayer
+            url={item.data.video}
+            height="100%"
+            width="100%"
+            controls
+            onError={() => setVideoError(true)}
+          />
+        )}
+      </div>
     )
   }
 
-  /**
-   * Rendersthe conference theme information
-   * title - the title of the conference
-   * location - location of the conference
-   * redirect - redirect url for registration
-   * theme - information about the conference
-   * info - overview of conference, files
-   * @returns Node - component to render
-   */
   const displayInformation = () => (
-    <div>
-      <div className="theme-header-mobile">
-        <h2>Theme</h2>
-      </div>
-      <ConferenceTheme
-        redirect={item.data.signUpLink}
-        theme={item.body}
-        signup={item.data.signUpLink}
-        location={item.data.location}
-        isMobile
-      />
-      <div className="overview-header-mobile">
-        <h2>Overview</h2>
-      </div>
-      <ConferenceOverview info={item} />
+    <div className="space-y-12 mt-8">
+      <section className="animate-in fade-in slide-in-from-bottom-4">
+        <h2 className="text-2xl font-bold font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 mb-6 italic lowercase">Theme</h2>
+        <ConferenceTheme
+          redirect={item.data.signUpLink}
+          theme={item.body}
+          signup={item.data.signUpLink}
+          location={item.data.location}
+          isMobile
+        />
+      </section>
+      <section className="animate-in fade-in slide-in-from-bottom-4 delay-200">
+        <h2 className="text-2xl font-bold font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 mb-6 italic lowercase">Overview</h2>
+        <ConferenceOverview info={item} />
+      </section>
     </div>
   )
 
   // check to see if data exists
   if (props.data.length === 0) {
     return (
-      <div className="empty-conferences">
-        <p>We have no conferences to show you at this time</p>
+      <div className="py-20 text-center italic text-gray-500 font-body">
+        We have no conferences to show you at this time
       </div>
     )
   }
 
   return (
-    <div className="conferences-outer-container">
+    <div className="flex flex-col min-h-screen pb-12 font-body">
       <div className="component-display">
         {/* Render either the associated video or the slideshow of images */}
         <div style={{ width: '100%' }}>{slideshowVideo(true)}</div>
 
-        {/* The vertical stepper */}
-        <div className="conference-vertical-stepper">
-          <div className="horizontal-stepper">
-            <HorizontalStepper
-              items={props.data}
-              color="#6652a0"
-              setParentIndex={setParentIndex}
-              location={props.id}
-            />
-          </div>
+        {/* The stepper component */}
+        <div className="py-8 bg-gray-50 border-y border-gray-100 shadow-inner overflow-x-auto no-scrollbar">
+          <HorizontalStepper
+            items={props.data}
+            color="#6652a0"
+            setParentIndex={setParentIndex}
+            id={props.id}
+          />
         </div>
 
-        {/* The tabs to switch between theme and overview */}
-        {displayInformation()}
+        {/* The information for either theme or overview */}
+        <div className="px-6">
+           {displayInformation()}
+        </div>
 
-        {/* Render either the associated video or the slideshow of images */}
-        {item.data.video ? <div style={{ width: '100%' }}>{slideshowVideo(false)}</div> : null}
+        {/* Render the video at bottom if it exists */}
+        {item.data.video && slideshowVideo(false)}
       </div>
     </div>
   )

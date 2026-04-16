@@ -14,13 +14,8 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
-import Stepper from '@material-ui/core/Stepper'
-import StepConnector from '@material-ui/core/StepConnector'
-import Step from '@material-ui/core/Step'
-import { StepButton, StepLabel } from '@material-ui/core'
 import CustomPagination from './Pagination'
-import '../../css/Stepper/Stepper.css'
+import { cn } from '../../lib/utils'
 
 /**
  * Convert a given number into an ordinal number
@@ -46,68 +41,7 @@ const ordinal_suffix_of = (i) => {
   return `${i}th`
 }
 
-// custom node for the text within a node
-const stepperNode = (index) => <div className="stepper-node">{ordinal_suffix_of(index)}</div>
-
 export default function VerticalStepper(props) {
-  // custom styling used for various components
-  const useStyles = makeStyles(() => ({
-    root: {
-      minWidth: 'calc(11.39vw)'
-    },
-    stepDiv: {
-      minHeight: 'calc(666.5px)'
-    },
-    // styling for the country/state label
-    step_label_root: {
-      fontSize: '16px',
-      color: `${props.color} !important`,
-      width: 'calc(150px)',
-      textAlign: 'left',
-      marginLeft: 'calc(15px)'
-    },
-    // this is used for the custom stepper node text
-    icon_container: {
-      width: '30px',
-      height: '22px',
-      justifyContent: 'center'
-    },
-    // this is styling for stepper node
-    button: {
-      width: '22px',
-      height: '22px',
-      backgroundColor: 'transparent',
-      border: `2px solid ${props.color}`,
-      borderRadius: '50%',
-      fontWeight: '400',
-      color: `${props.color}`
-    },
-    // when a user clicks a stepper, this class is active
-    buttonActive: {
-      width: '22px',
-      height: '22px',
-      backgroundColor: `${props.color}`,
-      border: `2px solid ${props.color}`,
-      borderRadius: '50%',
-      color: 'white',
-      fontWeight: '400'
-    }
-  }))
-
-  // custom styling for the connectors on the stepper
-  const ColorlibConnector = withStyles({
-    line: {
-      marginTop: 'calc(6.5px)',
-      marginBottom: 'calc(-2px)',
-      width: 2,
-      minHeight: '22px',
-      border: 0,
-      backgroundColor: props.color,
-      borderRadius: 1,
-      marginLeft: 'calc(0px)'
-    }
-  })(StepConnector)
-
   /**
    * Return all the locations and conference number as an array
    * @returns array
@@ -129,8 +63,6 @@ export default function VerticalStepper(props) {
     return arr
   }
 
-  // import the styling
-  const classes = useStyles()
   // keep track of the current page for pagination
   const [activePage, setActivePage] = useState(1)
   // keep track of the current page for pagination
@@ -139,11 +71,10 @@ export default function VerticalStepper(props) {
   const [activeIndex, setActiveIndex] = useState(0)
   // indicies to render 9 items per page
   const [indices, setIndices] = useState([0, 9])
-  // steps that are split based on indices
-  const [splitSteps, setSplitSteps] = useState(getSteps())
 
   // initial call to get all steps
   const steps = getSteps()
+  const [splitSteps, setSplitSteps] = useState(steps.slice(0, 9))
 
   /**
    * Update the stepper to render the 9 items depending on the page
@@ -195,20 +126,19 @@ export default function VerticalStepper(props) {
   }
 
   /**
-   * This is called when the page is rendered
+   * This is a component for the vertical stepper.
    */
   useEffect(() => {
     // render only the first nine items
     setSplitSteps(steps.slice(indices[0], indices[1]))
     if (props.id) {
       // find the index of the conference in the items list
-      const ind = props.items.findIndex((x) => x.slug === props.id)
+      const ind = props.items.findIndex((x) => x.id === props.id)
       let i = ind
       // determine the page to change to
       if (Math.floor(i / 9) > 0) {
         const page = Math.floor(i / 9)
         i %= 9
-        console.log(page + 1)
         updatePage(page + 1)
       }
 
@@ -222,44 +152,57 @@ export default function VerticalStepper(props) {
   }, [indices])
 
   return (
-    <div className={classes.root}>
-      <div className={classes.stepDiv}>
-        {/* The material-ui stepper class */}
-        <Stepper
-          nonLinear
-          activeStep={activeStep}
-          orientation="vertical"
-          connector={<ColorlibConnector />}
-        >
-          {/* for each item in our splitSteps array */}
-          {splitSteps.map((step, index) => (
-            <Step key={step.confNum}>
-              {/* add a step button that is clickable */}
-              <StepButton
+    <div className="w-fit">
+      <div className="min-h-[666.5px] flex flex-col items-start px-2">
+        {splitSteps.map((step, index) => (
+          <div key={step.confNum} className="flex flex-col items-start group w-full">
+            <div className="flex items-center w-full">
+              {/* Node Button */}
+              <button
                 onClick={() => handleStep(index)}
-                classes={
-                  activeIndex === index ? { root: classes.buttonActive } : { root: classes.button }
+                className={cn(
+                  'relative z-10 w-[36px] h-[36px] rounded-full border-2 flex items-center justify-center transition-all duration-300 shrink-0',
+                  activeIndex === index
+                    ? 'bg-brand-dark-purple text-white border-brand-dark-purple shadow-lg scale-105'
+                    : 'bg-white text-brand-dark-purple border-brand-dark-purple hover:bg-brand-dark-purple hover:text-white'
+                )}
+                style={
+                  activeIndex === index
+                    ? { backgroundColor: props.color, borderColor: props.color }
+                    : { color: props.color, borderColor: props.color }
                 }
-                icon={stepperNode(step.confNum)}
               >
-                {/* step label provides the location */}
-                <StepLabel
-                  classes={{
-                    label: classes.step_label_root,
-                    iconContainer: classes.icon_container,
-                    active: classes.step_label_root
-                  }}
-                >
-                  {determineLocationLabel(step.location)}
-                </StepLabel>
-              </StepButton>
-            </Step>
-          ))}
-        </Stepper>
+                <span className="text-[12px] font-bold pointer-events-none lowercase">
+                  {ordinal_suffix_of(step.confNum)}
+                </span>
+              </button>
+
+              {/* Label */}
+              <span
+                className={cn(
+                  'ml-4 text-[16px] text-left max-w-[150px] truncate cursor-pointer hover:underline font-body transition-colors',
+                  activeIndex === index ? 'font-bold opacity-100' : 'opacity-80'
+                )}
+                style={{ color: props.color }}
+                onClick={() => handleStep(index)}
+              >
+                {determineLocationLabel(step.location)}
+              </span>
+            </div>
+
+            {/* Connector below */}
+            {index < splitSteps.length - 1 && (
+              <div
+                className="w-[2px] min-h-[30px] ml-[17px] my-1 opacity-40"
+                style={{ backgroundColor: props.color }}
+              />
+            )}
+          </div>
+        ))}
       </div>
 
       {/* This pagination allows user to change pages and view more conferences */}
-      <div className="pagination-stepper">
+      <div className="pagination-stepper mt-4">
         <CustomPagination count={steps.length} page={activePage} updatePage={updatePage} size={9} />
       </div>
     </div>
