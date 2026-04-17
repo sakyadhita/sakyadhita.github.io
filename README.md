@@ -27,11 +27,12 @@ The website is hosted on Netlify and all form submissions are sent to Netlify.
 * 1.0.9: Updated Contact Page, Bibliography subtitle
 * 1.0.10: Minor changes to exco bios, update packages, ordination alignment
 * 1.0.11: Updated packages, exco photos and bios
+* 1.0.12: Switched brand icons to Simple Icons, added Playwright E2E tests, upgraded all packages
 
 ## Creating a Local Build
 
 First, make sure you have Node installed in your system. You can use
-[NVM](https://nvm.sh) to install the latest LTS release of Node.
+[NVM](https://nvm.sh) to install the latest LTS release of Node (v22+ recommended).
 
 Enable Corepack to use the PNPM package manager.
 
@@ -57,8 +58,14 @@ To build for production, run
 pnpm build
 ```
 
+To run end-to-end tests, run
+
+```sh
+pnpm test:e2e
+```
+
 To deploy to production, please commit the changes back to this repository.
-Ensure the build is successful before doing so. This will automatically trigger
+Ensure the build and tests are successful before doing so. This will automatically trigger
 a new build, and if successful, a deploy into production in Netlify.
 
 ## 🚀 Project Structure
@@ -68,15 +75,17 @@ Inside this repository, you'll see the following folders and files:
 ```text
 /
 ├── astro.config.mjs          # Astro configuration file 
+├── playwright.config.ts      # Playwright E2E testing configuration
 ├── public/                   # Location of static assets
 │   ├── assets/               # Location of static content (images, documents)
 │   └── favicon.svg
+├── tests/                    # E2E test files (Playwright)
 ├── src/
 │   ├── css/                  # Location CSS files
 │   │   └── index.css
 │   ├── media/                # Location of dynamic assets (eg. images)
 │   │   └── logo.svg
-│   ├── components/           # React components
+│   ├── components/           # React and Astro components
 │   │   └── Slideshow.jsx
 │   ├── content/              # Location of page content (Markdown and data)
 │   │   └── config.ts
@@ -113,13 +122,15 @@ All commands are run from the root of the project, from a terminal:
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
 | `pnpm install`             | Installs dependencies                            |
-| `pnpm run dev`             | Starts local dev server at `localhost:3000`      |
+| `pnpm run dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm run build`           | Build your production site to `./dist/`          |
 | `pnpm run preview`         | Preview your build locally, before deploying     |
+| `pnpm run test:e2e`        | Run end-to-end tests with Playwright             |
 | `pnpm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm run astro -- --help` | Get help using the Astro CLI                     |
 
 ## Creating a new Deployment
 
 This website can be deployed on Netlify without any special requirements apart
-from Netlify Forms which should be enabled.
+from Netlify Forms which should be enabled. Continuous Integration (CI) is handled
+via GitHub Actions to run tests and deploy to production.

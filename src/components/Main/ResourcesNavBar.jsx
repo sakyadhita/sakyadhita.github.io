@@ -129,7 +129,11 @@ export default function ResourcesNavBar(props) {
           type="button"
           className="absolute top-[25px] right-[25px] w-[25px] h-[25px] bg-transparent border-none cursor-pointer"
         >
-          <img src={typeof Cross === 'string' ? Cross : Cross.src} alt="Close Resources Navigation" className="w-full h-full" />
+          <img
+            src={typeof Cross === 'string' ? Cross : Cross.src}
+            alt="Close Resources Navigation"
+            className="w-full h-full"
+          />
         </button>
 
         {/* Nav Links */}
@@ -165,9 +169,7 @@ export default function ResourcesNavBar(props) {
       </nav>
 
       {/* Allows for remaining page content to be rendered */}
-      <main className="relative z-0">
-        {props.children}
-      </main>
+      <main className="relative z-0">{props.children}</main>
     </>
   )
 }

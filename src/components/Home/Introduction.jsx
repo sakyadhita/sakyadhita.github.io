@@ -14,13 +14,13 @@ export default function Introduction({ body }) {
   return (
     <>
       <div className="prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic">
-      <h1>
-        {' '}
-        Grassr
-        <img src="/logo.svg" alt="Logo" id="logo" />
-        <img src="/logo.svg" alt="Logo" id="logo" />
-        ts{' '}
-      </h1>
+        <h1>
+          {' '}
+          Grassr
+          <img src="/logo.svg" alt="Logo" id="logo" />
+          <img src="/logo.svg" alt="Logo" id="logo" />
+          ts{' '}
+        </h1>
         <Markdown>{body}</Markdown>
       </div>
     </>

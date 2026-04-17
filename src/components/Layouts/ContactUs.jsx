@@ -9,9 +9,7 @@
  * @author      Amrit Kaur Singh
  */
 import React, { useEffect } from 'react'
-import { GoMail } from 'react-icons/go'
-import { FaPhoneAlt } from 'react-icons/fa'
-import { BsHouseFill } from 'react-icons/bs'
+import { Mail, Phone, House } from 'lucide-react'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 import ImageHeader from '../Contact/ImageHeader'
@@ -189,7 +187,7 @@ export default function ContactUs({ frontmatter, children }) {
           {frontmatter.email.map((email) => (
             <p key={email.address} className="flex items-center space-x-2">
               {' '}
-              <GoMail className="text-brand-orange text-xl" />{' '}
+              <Mail className="text-brand-orange w-5 h-5" />{' '}
               <a
                 href={'mailto:' + email.address}
                 className="hover:text-brand-orange transition-colors"
@@ -203,11 +201,11 @@ export default function ContactUs({ frontmatter, children }) {
           {/* Phone Number */}
           <p className="flex items-center space-x-2">
             {' '}
-            <FaPhoneAlt className="text-brand-orange text-lg" /> <span>{frontmatter.phone}</span>
+            <Phone className="text-brand-orange w-5 h-5" /> <span>{frontmatter.phone}</span>
           </p>
           {/* Address */}
           <div className="address flex items-start space-x-2">
-            <BsHouseFill className="address-icon text-brand-orange text-2xl shrink-0 mt-1" />
+            <House className="text-brand-orange w-6 h-6 shrink-0 mt-1" />
             <span>{frontmatter.address}</span>
           </div>
         </div>

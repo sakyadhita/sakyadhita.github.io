@@ -27,9 +27,7 @@ export default function Brand({ location }) {
         src="/logo.svg"
         alt="Logo"
         className={cn(
-          isFooter
-            ? 'h-[80px] md:h-[max(150px,18.5vw)]'
-            : 'h-9 md:h-full max-h-full w-auto object-contain'
+          isFooter ? 'h-12 md:h-[max(80px,10vw)]' : 'h-9 md:h-full max-h-full w-auto object-contain'
         )}
       />
       <div

@@ -13,7 +13,7 @@
  */
 
 import React from 'react'
-import { FiArrowDownCircle } from 'react-icons/fi'
+import { ArrowDownCircle } from 'lucide-react'
 import CustomButton from '../CustomButton'
 import '../../css/NewsEventsSlide.css'
 

@@ -7,9 +7,8 @@
  * @author Amrit Kaur Singh
  */
 import React, { useEffect, useState } from 'react'
-import { AiOutlineFacebook, AiOutlineYoutube } from 'react-icons/ai'
-import { ImPinterest2 } from 'react-icons/im'
-import { FaGoodreads, FaBloggerB } from 'react-icons/fa'
+import { siFacebook, siYoutube, siPinterest, siRss, siGoodreads } from 'simple-icons'
+import SimpleIcon from './SimpleIcon'
 import Brand from './Brand'
 import Logo from '../../media/logo.svg'
 import { SITE_PAGES } from '../../constants/links'
@@ -44,7 +43,7 @@ export default function Footer() {
     return () => window.removeEventListener('resize', handleResize)
   }, []) // Empty array ensures that effect is only run on mount
 
-  const socialIconClasses = 'text-[30px] md:text-[35px] lg:text-[45px] transition-all'
+  const socialIconClasses = 'w-10 h-10 transition-all shrink-0'
 
   const subitem = (text, redirect_link) => (
     <a
@@ -76,8 +75,6 @@ export default function Footer() {
 
   const headingClasses =
     'font-heading font-bold text-[18px] md:text-[24px] text-white capitalize hover:no-underline mb-2 block'
-
-  const isDesktop = windowSize.width > MAX_MOBILE_VIEW_WIDTH
 
   return (
     <div className="relative mt-auto">
@@ -154,9 +151,9 @@ export default function Footer() {
                 rel="noreferrer"
                 className="group transition-transform hover:scale-110"
               >
-                <AiOutlineFacebook
-                  title="Facebook"
-                  className={cn(socialIconClasses, 'text-white group-hover:bg-[#3b5998]')}
+                <SimpleIcon
+                  icon={siFacebook}
+                  className={cn(socialIconClasses, 'text-white group-hover:bg-[#3b5998] p-1')}
                 />
               </a>
               <a
@@ -165,11 +162,11 @@ export default function Footer() {
                 rel="noreferrer"
                 className="group transition-transform hover:scale-110"
               >
-                <AiOutlineYoutube
-                  title="YouTube"
+                <SimpleIcon
+                  icon={siYoutube}
                   className={cn(
                     socialIconClasses,
-                    'text-white group-hover:bg-[#c4302b] rounded-[10px]'
+                    'text-white group-hover:bg-[#c4302b] rounded-[10px] p-1'
                   )}
                 />
               </a>
@@ -179,11 +176,11 @@ export default function Footer() {
                 rel="noreferrer"
                 className="group transition-transform hover:scale-110"
               >
-                <ImPinterest2
-                  title="Pinterest"
+                <SimpleIcon
+                  icon={siPinterest}
                   className={cn(
                     socialIconClasses,
-                    'text-white group-hover:bg-[#E60023] rounded-[20px]'
+                    'text-white group-hover:bg-[#E60023] rounded-[20px] p-2'
                   )}
                 />
               </a>
@@ -193,9 +190,9 @@ export default function Footer() {
                 rel="noreferrer"
                 className="group transition-transform hover:scale-110"
               >
-                <FaBloggerB
-                  title="ABW Blog"
-                  className={cn(socialIconClasses, 'text-white group-hover:text-brand-orange')}
+                <SimpleIcon
+                  icon={siRss}
+                  className={cn(socialIconClasses, 'text-white group-hover:text-brand-orange p-1')}
                 />
               </a>
               <a
@@ -204,9 +201,9 @@ export default function Footer() {
                 rel="noreferrer"
                 className="group transition-transform hover:scale-110"
               >
-                <FaGoodreads
-                  title="goodreads"
-                  className={cn(socialIconClasses, 'text-white group-hover:text-[#e9e5cd]')}
+                <SimpleIcon
+                  icon={siGoodreads}
+                  className={cn(socialIconClasses, 'text-white group-hover:text-[#e9e5cd] p-1')}
                 />
               </a>
             </div>

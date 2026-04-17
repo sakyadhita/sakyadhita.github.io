@@ -10,9 +10,10 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { FiExternalLink } from 'react-icons/fi'
-import { MdEmail } from 'react-icons/md'
+import { ExternalLink, Mail } from 'lucide-react'
 import Markdown from 'react-markdown'
+import { Gallery, Item } from 'react-photoswipe-gallery'
+import 'photoswipe/dist/photoswipe.css'
 import InteractiveMap from '../Home/InteractiveMap'
 import Slideshow from '../Slideshow'
 import NewsEventsSlide from '../Home/NewsEventsSlide'
@@ -24,8 +25,6 @@ import Loader from '../Main/Loader'
 import { SITE_PAGES } from '../../constants/links'
 
 import '../../css/Home.css'
-// import '../../css/Masonry.css'
-// import 'photoswipe/dist/photoswipe.css'
 
 // Mobile Screens
 const MAX_HEIGHT_HORIZONTAL_MOBILE = 500 // Landscape Layout
@@ -118,7 +117,7 @@ export default function Home({
               className="flex items-center gap-1 hover:underline"
             >
               {data.name}
-              <FiExternalLink className="shrink-0" />
+              <ExternalLink className="shrink-0 w-4 h-4" />
             </a>
           ) : (
             data.name
@@ -126,7 +125,7 @@ export default function Home({
           {/* Display email if it given */}
           {data.email ? (
             <div className="flex items-center gap-1 mt-1">
-              <MdEmail className="shrink-0" />
+              <Mail className="shrink-0 w-4 h-4" />
               {data.email}
             </div>
           ) : null}
@@ -205,19 +204,32 @@ export default function Home({
           </>
         )}
         {images.length > 0 && (
-          <section className="home-gallery" aria-label="Gallery">
-            {images.map((image, index) => (
-              <img
-                key={`${image.default.src}-${index}`}
-                src={image.default.src}
-                width={image.default.width}
-                height={image.default.height}
-                loading="lazy"
-                alt="Home gallery"
-                className="home-gallery-image"
-              />
-            ))}
-          </section>
+          <Gallery>
+            <section className="home-gallery" aria-label="Gallery">
+              {images.map((image, index) => (
+                <Item
+                  key={`${image.default.src}-${index}`}
+                  original={image.default.src}
+                  thumbnail={image.default.src}
+                  width={image.default.width}
+                  height={image.default.height}
+                >
+                  {({ ref, open }) => (
+                    <img
+                      ref={ref}
+                      onClick={open}
+                      src={image.default.src}
+                      width={image.default.width}
+                      height={image.default.height}
+                      loading="lazy"
+                      alt="Home gallery"
+                      className="home-gallery-image cursor-pointer hover:opacity-90 transition-opacity"
+                    />
+                  )}
+                </Item>
+              ))}
+            </section>
+          </Gallery>
         )}
 
         {/* Mini Divider */}

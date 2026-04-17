@@ -5,7 +5,7 @@
  * @author Dhanush Nanjunda Reddy, Amrit Kaur Singh
  */
 import React from 'react'
-import { FiArrowDownCircle } from 'react-icons/fi'
+import { ArrowDownCircle } from 'lucide-react'
 import '../css/ResourcesHeader.css'
 
 /**
