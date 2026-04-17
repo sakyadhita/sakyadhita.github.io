@@ -21,7 +21,6 @@ import BeInvolved from '../Home/BeInvolved'
 import Introduction from '../Home/Introduction'
 import NewsFlash from '../Home/NewsFlash'
 import Loader from '../Main/Loader'
-import Gallery from 'react-photo-gallery'
 
 import { SITE_PAGES } from '../../constants/links'
 
@@ -129,7 +128,9 @@ export default function Home({
               {data.email}
             </div>
           ) : null}
-          <Markdown>{item.body}</Markdown>
+          <div className="prose prose-sm prose-invert max-w-none mt-2">
+            <Markdown>{item.body}</Markdown>
+          </div>
         </div>
       )
     }
@@ -202,14 +203,19 @@ export default function Home({
           </>
         )}
         {images.length > 0 && (
-          <Gallery
-            className="home-section"
-            photos={images.map((image) => ({
-              src: image.default.src,
-              width: image.default.width,
-              height: image.default.height
-            }))}
-          />
+          <section className="home-gallery" aria-label="Gallery">
+            {images.map((image, index) => (
+              <img
+                key={`${image.default.src}-${index}`}
+                src={image.default.src}
+                width={image.default.width}
+                height={image.default.height}
+                loading="lazy"
+                alt="Home gallery"
+                className="home-gallery-image"
+              />
+            ))}
+          </section>
         )}
 
         {/* Mini Divider */}
@@ -231,14 +237,14 @@ export default function Home({
             <Tooltip
               place="left"
               variant="light"
-              border={true}
+              className="home-map-tooltip"
               id="tooltip"
               render={({ content }) => displayTooltip(content)}
             />
           )}
 
           {/* Branch/Chapter Information  */}
-          <div className="branch-info">
+          <div className="branch-info prose mt-6">
             <h1>Branches </h1>
             <p>
               Buddhist women and their allies gather at the Sakyadhita International Conferences
@@ -273,7 +279,7 @@ export default function Home({
         <hr className="divider" />
 
         {/* Be Involved Section  */}
-        <section id="home-be-involved">
+        <section id="home-be-involved" className="prose max-w-none">
           <h1>Be Involved </h1>
           <div className="involve-sections-container">
             {/* Join Us  */}

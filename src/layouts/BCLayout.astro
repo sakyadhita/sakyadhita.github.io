@@ -34,7 +34,7 @@ const { frontmatter } = Astro.props
                 {/* The title of the paragraph */}
                 {index === 0 ? <h1>{item.data.title}</h1> : <h1>{item.data.title}</h1>}
                 {/* The text of the div */}
-                <div class="page-content">
+                <div class="page-content prose max-w-none">
                   <Content />
                 </div>
               </div>

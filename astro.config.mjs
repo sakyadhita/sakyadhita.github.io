@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://sakyadhita.org',
+  devToolbar: {
+    enabled: false
+  },
   integrations: [
     sitemap(),
     react()

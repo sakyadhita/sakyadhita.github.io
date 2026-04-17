@@ -383,7 +383,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                 id="membershipCheck"
                 checked={membershipCheck}
                 onCheckedChange={handleMembershipChange}
-                className="border-black data-[state=checked]:bg-brand-orange"
+                className="border-black data-checked:bg-brand-orange"
               />
               <Label htmlFor="membershipCheck" className="cursor-pointer text-lg font-bold">
                 Want to join email list only.
@@ -410,7 +410,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                 id="membershipCheck"
                 checked={membershipCheck}
                 onCheckedChange={handleMembershipChange}
-                className="border-black data-[state=checked]:bg-brand-orange"
+                className="border-black data-checked:bg-brand-orange"
               />
               <Label htmlFor="membershipCheck" className="cursor-pointer text-lg font-bold">
                 Not interested in membership, but want to be on the email list.
@@ -663,7 +663,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                     id="donateCheck"
                     checked={donateCheck}
                     onCheckedChange={handleDonateChange}
-                    className="border-black data-[state=checked]:bg-brand-orange w-6 h-6 rounded-md shrink-0"
+                    className="border-black data-checked:bg-brand-orange w-6 h-6 rounded-md shrink-0"
                   />
                   <Label
                     htmlFor="donateCheck"

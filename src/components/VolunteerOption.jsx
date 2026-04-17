@@ -24,7 +24,7 @@ export default function VolunteerOption(props) {
       <div className="committee-row flex items-center space-x-3">
         <Checkbox
           id={id}
-          className="border-black data-[state=checked]:bg-brand-orange w-6 h-6 rounded-md shadow-sm"
+          className="border-black data-checked:bg-brand-orange w-6 h-6 rounded-md shadow-sm"
           checked={props.checked}
           onCheckedChange={handleCheckbox}
         />

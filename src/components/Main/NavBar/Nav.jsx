@@ -26,7 +26,9 @@ export default function Nav({ visible, transition, toggle }) {
    */
   function isPageActive(pageToCheck) {
     const path = typeof window !== 'undefined' ? window.location.pathname : ''
-    return path === pageToCheck ? 'bg-brand-dark-orange' : ''
+    const normalizedPath = path.replace(/\/$/, '') || '/'
+    const normalizedCheck = pageToCheck.replace(/\/$/, '') || '/'
+    return normalizedPath === normalizedCheck ? 'bg-brand-dark-orange' : ''
   }
 
   const navOptionClasses =

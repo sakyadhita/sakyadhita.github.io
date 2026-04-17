@@ -131,6 +131,25 @@ h1 #logo{
   text-align: left;
 }
 
+.home-gallery {
+  width: 100%;
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.home-gallery-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.home-map-tooltip {
+  border: 1px solid #cbd5e1;
+}
+
 @media only screen and (max-width: 1100px) {
   .Home #branches-and-chapters {
     margin-top: 30px;
@@ -176,6 +195,10 @@ h1 #logo{
     margin-left: 0px;
     margin-top: 20px;
   }
+
+  .home-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -189,5 +212,14 @@ h1 #logo{
     height: 2rem;
     width: 2rem;
     display: inline-block;
+  }
+
+  .home-gallery {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .home-gallery-image {
+    height: 220px;
   }
 }

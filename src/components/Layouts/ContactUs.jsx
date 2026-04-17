@@ -174,7 +174,7 @@ export default function ContactUs({ frontmatter, children }) {
   return (
     <div className="Contact-Us">
       {/* contains textual rendering of all information not including header image  */}
-      <section className="left-container">
+      <section className="left-container prose">
         {/* Main paragraph at top  */}
         <h2 className="font-heading lowercase tracking-tight">
           {isMobile ? 'Thank you for your interest in Sakyadhita!' : 'Contact Us'}

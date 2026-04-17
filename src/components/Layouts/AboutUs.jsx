@@ -68,7 +68,9 @@ const CommitteeProfiles = ({ committees, year, computeProfileDisplay }) => {
               </div>
               <h3>{member.data.position}</h3>
             </div>
-            <Markdown>{member.body}</Markdown>
+            <div className="prose prose-sm max-w-none">
+              <Markdown>{member.body}</Markdown>
+            </div>
           </div>
         ))}
     </div>

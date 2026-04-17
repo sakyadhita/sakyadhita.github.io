@@ -7,7 +7,6 @@
  * @author      Aaron Kirk
  */
 
-import React from 'react'
 import { SITE_PAGES } from '../../constants/links'
 import { cn } from '../../lib/utils'
 
@@ -18,17 +17,19 @@ export default function Brand({ location }) {
     <a
       href={SITE_PAGES.HOME}
       className={cn(
-        'flex items-center text-inherit hover:no-underline hover:text-inherit',
+        'inline-flex items-center text-inherit hover:no-underline hover:text-inherit',
         isFooter
           ? 'flex-row-reverse text-right justify-end text-white hover:text-white'
-          : 'text-left justify-start'
+          : 'text-left justify-start h-full max-h-full overflow-hidden'
       )}
     >
       <img
         src="/logo.svg"
         alt="Logo"
         className={cn(
-          isFooter ? 'h-[80px] md:h-[max(150px,18.5vw)]' : 'h-9 md:h-[max(90px,13.5vw)]'
+          isFooter
+            ? 'h-[80px] md:h-[max(150px,18.5vw)]'
+            : 'h-9 md:h-full max-h-full w-auto object-contain'
         )}
       />
       <div

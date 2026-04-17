@@ -1,16 +1,9 @@
-/**
- * Renders a custom button for the site, with display and linking information passed as props.
- *
- * @summary Displays one custom button.
- *
- * @author Amrit Kaur Singh
- */
-
 import React from 'react'
-import { Button } from './ui/button'
 import { cn } from '../lib/utils'
+import { buttonVariants } from './ui/button'
 
 /**
+ * Component that renders a button that redirects to a new page
  *
  * @param {string} text  - The display name given to the button
  * @param {string} redirect_url  - The redirect url once the button is clicked
@@ -25,18 +18,28 @@ export default function CustomButton({
   onClickCallback,
   className = ''
 }) {
-  return (
-    <Button
-      asChild
-      onClick={onClickCallback}
-      className={cn(
-        'w-[175px] bg-brand-orange hover:bg-brand-dark-orange rounded-[30px] shadow-[2px_2px_2px_rgb(63,62,62)] text-white uppercase font-bold h-auto py-2 text-[0.9375rem] font-body transition-transform active:scale-95 border-none',
-        className
-      )}
-    >
-      <a href={redirect_link} target={openInSameTab ? null : '_blank'} rel="noreferrer">
+  const classes = cn(
+    'w-[175px] bg-brand-orange hover:bg-brand-dark-orange rounded-[30px] shadow-[2px_2px_2px_rgb(63,62,62)] text-white uppercase font-bold h-auto py-2 text-[0.9375rem] font-body transition-transform active:scale-95 border-none inline-flex items-center justify-center no-underline hover:no-underline',
+    className
+  )
+
+  if (redirect_link) {
+    return (
+      <a
+        href={redirect_link}
+        target={openInSameTab ? null : '_blank'}
+        rel="noreferrer"
+        className={classes}
+        onClick={onClickCallback}
+      >
         {text}
       </a>
-    </Button>
+    )
+  }
+
+  return (
+    <button type="button" onClick={onClickCallback} className={classes}>
+      {text}
+    </button>
   )
 }

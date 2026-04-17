@@ -44,7 +44,7 @@ const { hideFooter = false } = Astro.props
     ></script> -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
-      <div style={{ overflowX: 'hidden', height: '100vh' }} id="page-layout">
+      <div id="page-layout">
         <NavBar client:only="react" />
         <slot />
         {!hideFooter ? <Footer client:only="react" /> : null}

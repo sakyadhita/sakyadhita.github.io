@@ -26,7 +26,7 @@ const { frontmatter } = Astro.props
           const Content = contents[i]
 
           return (
-            <div class="page-content">
+            <div class="page-content prose max-w-none">
               <h2>{section.data.title}</h2>
               <Content />
             </div>

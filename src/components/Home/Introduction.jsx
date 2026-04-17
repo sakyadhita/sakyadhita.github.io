@@ -13,6 +13,7 @@ export default function Introduction({ body }) {
   // return <div id="home-introduction" dangerouslySetInnerHTML={{ __html: `${body}` }} />
   return (
     <>
+      <div className="prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic">
       <h1>
         {' '}
         Grassr
@@ -20,7 +21,8 @@ export default function Introduction({ body }) {
         <img src="/logo.svg" alt="Logo" id="logo" />
         ts{' '}
       </h1>
-      <Markdown>{body}</Markdown>
+        <Markdown>{body}</Markdown>
+      </div>
     </>
   )
 }

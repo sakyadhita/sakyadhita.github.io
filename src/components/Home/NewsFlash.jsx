@@ -12,7 +12,7 @@ import CustomButton from '../CustomButton'
 
 export default function NewsFlash({ article }) {
   return (
-    <div id="news-flash">
+    <div id="news-flash" className="prose max-w-none mb-6">
       <h1>{article.data.title}</h1>
 
       <div id="news-flash-wrapper" className="row align-items-lg-stretch">
