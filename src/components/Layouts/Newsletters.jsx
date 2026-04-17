@@ -17,17 +17,18 @@ import {
   PaginationNext,
   PaginationPrevious
 } from '../ui/pagination'
-import '../../css/Newsletters.css'
 
 // renders the current newsletters from props in a grid
 const PublicationGrid = ({ displayedNewsletters, isMobile }) => {
   if (displayedNewsletters.length === 0) {
     return (
-      <div className="NewsletterContainer">We have no newsletters to show you at this time</div>
+      <div className="w-full flex justify-center py-20 italic text-gray-500 font-body">
+        We have no newsletters to show you at this time
+      </div>
     )
   }
   return (
-    <div className="NewsletterContainer">
+    <div className="flex flex-row justify-center flex-wrap mx-[16px] md:mx-[75px] mb-[70px] max-w-[1100px]">
       {displayedNewsletters.map((newsletter) => (
         <NewsletterCard
           key={newsletter.id}
@@ -127,6 +128,7 @@ export default function Newsletters({ frontmatter, newsletters }) {
                 handlePageChange(i)
               }}
               href="#"
+              className="cursor-pointer font-body"
             >
               {i + 1}
             </PaginationLink>
@@ -141,7 +143,7 @@ export default function Newsletters({ frontmatter, newsletters }) {
 
   return (
     <>
-      {isMobile || window.innerHeight <= 500 ? (
+      {isMobile || (typeof window !== 'undefined' && window.innerHeight <= 500) ? (
         <ResourcesHeader
           title={frontmatter.title}
           image={frontmatter.image}
@@ -160,10 +162,10 @@ export default function Newsletters({ frontmatter, newsletters }) {
         />
       )}
 
-      <div className="NewsletterPage">
+      <div className="flex flex-col items-center w-full">
         <h1
           ref={arrowScrollToRef}
-          className={!isMobile ? 'NewsletterPage__title' : 'NewsletterPage__title--mobile'}
+          className="font-heading font-bold text-[26px] md:text-[36px] leading-[45px] text-black mt-[24px] md:mt-[86px] mb-[12px] md:mb-[30px]"
         >
           Latest
         </h1>
@@ -179,7 +181,7 @@ export default function Newsletters({ frontmatter, newsletters }) {
                     if (currentPage > 0) handlePageChange(currentPage - 1)
                   }}
                   href="#"
-                  className={currentPage === 0 ? 'pointer-events-none opacity-50' : ''}
+                  className={currentPage === 0 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
                 />
               </PaginationItem>
 
@@ -192,7 +194,7 @@ export default function Newsletters({ frontmatter, newsletters }) {
                     if (currentPage < maxPages - 1) handlePageChange(currentPage + 1)
                   }}
                   href="#"
-                  className={currentPage === maxPages - 1 ? 'pointer-events-none opacity-50' : ''}
+                  className={currentPage === maxPages - 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
                 />
               </PaginationItem>
             </PaginationContent>

@@ -18,7 +18,6 @@ import {
   Graticule
 } from 'react-simple-maps'
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '../ui/tooltip'
-import '../../css/InteractiveMap.css'
 
 // loads topological map information (continents/countries, general outline) using json request
 const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
@@ -29,7 +28,7 @@ const mapHeight = 600
 
 export default function InteractiveMap({ markers, disableZooming = false, renderTooltipContent }) {
   return (
-    <div className="Interactive-Map">
+    <div className="w-full h-full">
       <TooltipProvider>
         <ComposableMap>
           {/* Makes map zoomable/pannable, with default zoom set as zoomed out as possible */}
@@ -68,7 +67,7 @@ export default function InteractiveMap({ markers, disableZooming = false, render
                 <TooltipTrigger
                   render={
                     <Marker
-                      className="marker"
+                      className="cursor-pointer"
                       // coordinates of marker
                       coordinates={[longitude, latitude]}
                     />

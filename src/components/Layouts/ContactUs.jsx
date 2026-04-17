@@ -17,7 +17,6 @@ import ResourcesHeader from '../ResourcesHeader'
 import Modal from '../Modal'
 import CustomButton from '../CustomButton'
 import { cn } from '../../lib/utils'
-import '../../css/ContactUs.css'
 
 const MAX_MOBILE_WIDTH = 1050
 
@@ -170,27 +169,27 @@ export default function ContactUs({ frontmatter, children }) {
     )
 
   return (
-    <div className="Contact-Us">
+    <div className="w-full h-auto flex flex-col lg:flex-row flex-1 font-body">
       {/* contains textual rendering of all information not including header image  */}
-      <section className="left-container prose max-w-none px-12 md:px-24">
+      <section className="flex-1 p-6 md:p-12 lg:p-24 text-left prose max-w-none">
         {/* Main paragraph at top  */}
-        <h2 className="font-heading lowercase tracking-tight">
+        <h2 className="font-heading font-bold text-2xl lg:text-3xl lowercase tracking-tight mb-5">
           {isMobile ? 'Thank you for your interest in Sakyadhita!' : 'Contact Us'}
         </h2>
         <div className="font-body text-lg leading-relaxed text-gray-700">{children}</div>
         {/* Contact Information */}
-        <h4 className="font-heading italic lowercase text-2xl mt-8 mb-4 border-b-2 border-brand-orange w-fit">
+        <h4 className="font-heading italic lowercase text-2xl mt-10 mb-5 border-b-2 border-brand-orange w-fit font-semibold">
           Reach us at:{' '}
         </h4>
         {/* Email */}
         <div className="space-y-3 font-body">
           {frontmatter.email.map((email) => (
-            <p key={email.address} className="flex items-center space-x-2">
+            <p key={email.address} className="flex items-center space-x-2 m-0">
               {' '}
               <Mail className="text-brand-orange w-5 h-5" />{' '}
               <a
                 href={'mailto:' + email.address}
-                className="hover:text-brand-orange transition-colors"
+                className="hover:text-brand-orange transition-colors no-underline"
               >
                 {' '}
                 {email.address}{' '}
@@ -199,22 +198,22 @@ export default function ContactUs({ frontmatter, children }) {
             </p>
           ))}
           {/* Phone Number */}
-          <p className="flex items-center space-x-2">
+          <p className="flex items-center space-x-2 m-0">
             {' '}
             <Phone className="text-brand-orange w-5 h-5" /> <span>{frontmatter.phone}</span>
           </p>
           {/* Address */}
-          <div className="address flex items-start space-x-2">
+          <div className="flex items-start space-x-2">
             <House className="text-brand-orange w-6 h-6 shrink-0 mt-1" />
             <span>{frontmatter.address}</span>
           </div>
         </div>
 
         {/* Renders Form */}
-        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6">Send us a message!</h4>
+        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6 font-semibold">Send us a message!</h4>
         <form autoComplete="off" name="contact" className="space-y-4">
           {/* Full Name Field */}
-          <div className="form-field-wrapper">
+          <div className="flex">
             <Input
               name="name"
               value={values.name.value}
@@ -223,10 +222,10 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={inputClasses(values.name.error)}
             />
-            <span className="required-asterisk text-brand-red font-bold"> * </span>
+            <span className="text-brand-red font-bold text-[25px]"> * </span>
           </div>
           {/* Email Field */}
-          <div className="form-field-wrapper">
+          <div className="flex">
             <Input
               name="email"
               type="email"
@@ -236,10 +235,10 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={inputClasses(values.email.error)}
             />
-            <span className="required-asterisk text-brand-red font-bold"> * </span>
+            <span className="text-brand-red font-bold text-[25px]"> * </span>
           </div>
           {/* Phone Number Field */}
-          <div className="form-field-wrapper">
+          <div className="flex">
             <Input
               name="phone"
               onChange={handleChange}
@@ -248,10 +247,10 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={inputClasses(values.phone.error)}
             />
-            <span style={{ color: 'white' }}> * </span>
+            <span className="text-white"> * </span>
           </div>
           {/* Message Field */}
-          <div className="form-field-wrapper">
+          <div className="flex">
             <Textarea
               name="message"
               value={values.message.value}
@@ -264,16 +263,16 @@ export default function ContactUs({ frontmatter, children }) {
               )}
               rows={8}
             />
-            <span className="required-asterisk text-brand-red font-bold"> * </span>
+            <span className="text-brand-red font-bold text-[25px]"> * </span>
           </div>
           {/* Note on required fields  */}
-          <p className="text-center font-body text-sm text-gray-500">
+          <p className="text-center font-body text-sm text-gray-500 m-0">
             {' '}
-            <span className="required-asterisk text-brand-red font-bold"> * </span> indicates a
+            <span className="text-brand-red font-bold"> * </span> indicates a
             required field
           </p>
           {/* Submit Button */}
-          <div className="submit-button flex justify-center py-4">
+          <div className="flex justify-center py-4 mt-5">
             <CustomButton text="Submit" onClickCallback={handleFormSubmit} />
           </div>
         </form>
@@ -289,16 +288,20 @@ export default function ContactUs({ frontmatter, children }) {
         )}
       </section>
 
-      {isMobile || window.innerHeight <= 500 ? (
-        <ResourcesHeader
-          image={frontmatter.image}
-          title="Contact Us"
-          height="max(40vh, 300px)"
-          width="100%"
-          showArrow={false}
-        />
+      {isMobile || (typeof window !== 'undefined' && window.innerHeight <= 500) ? (
+        <div className="order-first">
+          <ResourcesHeader
+            image={frontmatter.image}
+            title="Contact Us"
+            height="max(40vh, 300px)"
+            width="100%"
+            showArrow={false}
+          />
+        </div>
       ) : (
-        <ImageHeader image={frontmatter.image} width="50%" height="auto" />
+        <div className="flex-1 min-h-[500px]">
+          <ImageHeader image={frontmatter.image} width="100%" height="100%" />
+        </div>
       )}
 
       {/* Thank You Modal Once Form Submitted */}

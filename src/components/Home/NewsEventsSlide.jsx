@@ -13,9 +13,7 @@
  */
 
 import React from 'react'
-import { ArrowDownCircle } from 'lucide-react'
 import CustomButton from '../CustomButton'
-import '../../css/NewsEventsSlide.css'
 
 /**
  *
@@ -39,13 +37,18 @@ export default function NewsEventsSlide({
   height
 }) {
   return (
-    <div className="NewsEventsSlide" style={{ backgroundImage: `url("${image_url}")`, height }}>
+    <div
+      className="w-full bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat]"
+      style={{ backgroundImage: `url("${image_url}")`, height }}
+    >
       {/* Displays all slide information in rectangular box */}
-      <div className="info-container">
+      <div className="absolute top-[7%] left-[15%] lg:left-[15%] lg:ml-0 md:left-1/2 md:-translate-x-1/2 md:ml-0 bg-brand-dark-purple/20 w-[70.5vw] md:w-[500px] min-[350px]:w-[70.5vw] max-[350px]:w-[75%] h-fit p-5 min-[350px]:p-[30px] lg:p-[50px] text-white">
         {/* Title */}
-        {title ? <h1 className="news-slide-info"> {title} </h1> : null}
+        {title ? (
+          <h1 className="font-heading font-bold text-2xl lg:text-3xl mb-5"> {title} </h1>
+        ) : null}
         {/* Description */}
-        {description ? <p className="news-slide-info"> {description}</p> : null}
+        {description ? <p className="mb-5 text-sm lg:text-base"> {description}</p> : null}
         {/* Button */}
         {showButton ? (
           <CustomButton

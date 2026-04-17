@@ -23,8 +23,7 @@ import NewsFlash from '../Home/NewsFlash'
 import Loader from '../Main/Loader'
 
 import { SITE_PAGES } from '../../constants/links'
-
-import '../../css/Home.css'
+import { cn } from '../../lib/utils'
 
 // Mobile Screens
 const MAX_HEIGHT_HORIZONTAL_MOBILE = 500 // Landscape Layout
@@ -114,22 +113,22 @@ export default function Home({
               href={data.siteLink}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1 hover:underline"
+              className="flex items-center gap-1 hover:underline text-brand-orange"
             >
               {data.name}
               <ExternalLink className="shrink-0 w-4 h-4" />
             </a>
           ) : (
-            data.name
+            <span className="font-bold text-brand-dark-purple">{data.name}</span>
           )}
           {/* Display email if it given */}
           {data.email ? (
-            <div className="flex items-center gap-1 mt-1">
-              <Mail className="shrink-0 w-4 h-4" />
+            <div className="flex items-center gap-1 mt-1 text-sm">
+              <Mail className="shrink-0 w-4 h-4 text-brand-orange" />
               {data.email}
             </div>
           ) : null}
-          <div className="prose prose-sm max-w-none mt-1">
+          <div className="prose prose-sm max-w-none mt-2 leading-tight">
             <Markdown>{item.body}</Markdown>
           </div>
         </div>
@@ -138,7 +137,7 @@ export default function Home({
   }
 
   const formatLoader = (
-    <div className="loader-wrapper">
+    <div className="flex justify-center items-center h-screen">
       <Loader />
     </div>
   )
@@ -166,36 +165,36 @@ export default function Home({
     return formatLoader
   }
   return (
-    <div className="Home">
+    <div className="w-full">
       {/* Slideshow component */}
       {isPageLoading ? formatLoader : renderSlideshow}
       {/* Body of Page - Everthing below slideshow */}
-      <section className="home-body">
+      <section className="w-full px-4 md:px-12 py-12 md:py-24 flex flex-col items-center font-body">
         {/* Introduction */}
-        <section id="home-intro">
+        <section id="home-intro" className="w-full whitespace-pre-line">
           <Introduction body={introduction} />
         </section>
 
         {/* Mini Divider */}
-        <hr className="divider" />
+        <hr className="w-1/2 h-0.5 bg-brand-orange border-none my-16 md:my-[70px_0_40px_0]" />
 
         {/* Latest News */}
         {newsflash.data.isPublished > 0 && (
           <>
-            <section id="latest-news">
+            <section id="latest-news" className="w-full">
               <NewsFlash article={newsflash} />
             </section>
           </>
         )}
         {additionalSections.length > 0 && (
           <>
-            <hr className="divider" />
-            <section className="home-section">
+            <hr className="w-1/2 h-0.5 bg-brand-orange border-none my-16" />
+            <section className="w-full flex flex-col gap-8">
               {additionalSections.map((section) => (
-                <div key={section.id}>
-                  <h1 className="home-section-title">{section.data.title}</h1>
+                <div key={section.id} className="flex flex-col text-left whitespace-pre-line">
+                  <h1 className="font-heading font-bold text-2xl md:text-3xl mb-8 mt-5">{section.data.title}</h1>
                   <div
-                    className="home-section-body"
+                    className="prose max-w-none flex flex-col items-center justify-center"
                     dangerouslySetInnerHTML={{ __html: `${section.body}` }}
                   />
                 </div>
@@ -205,7 +204,7 @@ export default function Home({
         )}
         {images.length > 0 && (
           <Gallery>
-            <section className="home-gallery" aria-label="Gallery">
+            <section className="w-full mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" aria-label="Gallery">
               {images.map((image, index) => (
                 <Item
                   key={`${image.default.src}-${index}`}
@@ -223,7 +222,7 @@ export default function Home({
                       height={image.default.height}
                       loading="lazy"
                       alt="Home gallery"
-                      className="home-gallery-image cursor-pointer hover:opacity-90 transition-opacity"
+                      className="w-full h-[220px] md:h-[260px] object-cover rounded-md cursor-pointer hover:opacity-90 transition-opacity"
                     />
                   )}
                 </Item>
@@ -232,26 +231,25 @@ export default function Home({
           </Gallery>
         )}
 
-        {/* Mini Divider */}
-        {/* <hr className="divider" /> */}
-
         {/* Branches & Chapters Section */}
-        <section id="branches-and-chapters">
+        <section id="branches-and-chapters" className="w-full flex flex-col-reverse lg:flex-row-reverse items-center justify-center mt-[30px]">
           {/* Interactive Map */}
           {isPageLoading ? (
             formatLoader
           ) : (
-            <InteractiveMap
-              disableZooming={disableZoom}
-              markers={branchesAndChapters.map((m) => m.data)}
-              renderTooltipContent={(index) => displayTooltip(index)}
-            />
+            <div className="w-full lg:w-1/2 h-[400px] md:h-[600px]">
+              <InteractiveMap
+                disableZooming={disableZoom}
+                markers={branchesAndChapters.map((m) => m.data)}
+                renderTooltipContent={(index) => displayTooltip(index)}
+              />
+            </div>
           )}
 
           {/* Branch/Chapter Information  */}
-          <div className="branch-info prose max-w-none mt-6">
-            <h1>Branches </h1>
-            <p>
+          <div className="w-full lg:w-1/2 lg:pr-12 prose max-w-none mt-6 lg:mt-0 whitespace-pre-wrap">
+            <h1 className="font-heading font-bold mb-[30px] text-2xl md:text-3xl">Branches </h1>
+            <p className="text-gray-700">
               Buddhist women and their allies gather at the Sakyadhita International Conferences
               every two years and also organize national branches and local chapters to facilitate
               networking and events closer to home. These branches and chapters help bring awareness
@@ -266,27 +264,27 @@ export default function Home({
               {'\n'}
             </p>
             {/* Mini Color Legend  */}
-            <section className="legend-container">
-              <div className="label">
-                <div className="color-box" style={{ backgroundColor: '#EA8644' }} />
-                <div className="tag"> Branch </div>
+            <section className="flex flex-row justify-evenly items-start mt-8">
+              <div className="flex flex-row items-center justify-center text-center">
+                <div className="w-6 h-6 mr-2 bg-[#EA8644]" />
+                <div className="font-bold lowercase"> Branch </div>
               </div>
 
-              <div className="label">
-                <div className="color-box" style={{ backgroundColor: '#8477B9' }} />
-                <div className="tag"> Chapter </div>
+              <div className="flex flex-row items-center justify-center text-center">
+                <div className="w-6 h-6 mr-2 bg-[#8477B9]" />
+                <div className="font-bold lowercase"> Chapter </div>
               </div>
             </section>
           </div>
         </section>
 
         {/* Mini Divider */}
-        <hr className="divider" />
+        <hr className="w-1/2 h-0.5 bg-brand-orange border-none my-16 md:my-[70px_0_40px_0]" />
 
         {/* Be Involved Section  */}
-        <section id="home-be-involved" className="prose max-w-none">
-          <h1>Be Involved </h1>
-          <div className="involve-sections-container">
+        <section id="home-be-involved" className="w-full prose max-w-none mt-8">
+          <h1 className="font-heading font-bold mb-[30px] text-2xl md:text-3xl text-center md:text-left">Be Involved </h1>
+          <div className="flex flex-col md:flex-row gap-5 md:gap-10 lg:gap-12 justify-between items-center mt-[30px]">
             {/* Join Us  */}
             <BeInvolved
               description="Become a member of Sakyadhita!"

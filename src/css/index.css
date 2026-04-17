@@ -2,8 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@import "../constants/colorPalette.css";
-@import "../constants/fonts.css";
 
 @theme {
   --color-brand-light-purple: #8477b9;
@@ -13,21 +11,71 @@
   --color-brand-red: #ea4444;
   --color-brand-grey: #9b9b9b;
   --color-brand-dark-grey: #5a5a5a;
-  
+
   --font-heading: "Libre Baskerville", serif;
   --font-body: "Nunito", sans-serif;
 }
 
+:root {
+  /* Legacy variables for compatibility during migration */
+  --lightpurple: #8477b9;
+  --darkpurple: #6652a0;
+  --orange: #ea8644;
+  --darkorange: #d77a3d;
+  --red: #ea4444;
+  --white: #ffffff;
+  --black: #000000;
+  --grey: #9b9b9b;
+  --darkgrey: #5a5a5a;
+
+  --heading-font: "Libre Baskerville", serif;
+  --text-font: "Nunito", sans-serif;
+}
+
+@utility hover-underline-animation {
+  display: inline-block;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      to right,
+      var(--color-brand-dark-orange),
+      var(--color-brand-orange),
+      var(--color-brand-light-purple),
+      var(--color-brand-dark-purple)
+    );
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
+
 body {
   margin: 0;
-  font-family: var(--text-font);
+  font-family: var(--font-body);
   color: var(--black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--heading-font);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
 }
 
 code {

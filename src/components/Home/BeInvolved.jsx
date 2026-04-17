@@ -9,7 +9,6 @@
 
 import React from 'react'
 import CustomButton from '../CustomButton'
-import '../../css/BeInvolved.css'
 
 /**
  *
@@ -31,11 +30,11 @@ export default function BeInvolved({
   return (
     <div
       id={button_title}
-      className="involve-section"
+      className="flex-1 w-full h-[450px] bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat] font-body text-white text-2xl shadow-[0px_0px_4px_2px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 group"
       style={{ backgroundImage: `url(${image_url})` }}
     >
-      <div className="overlay">
-        <p> {description} </p>
+      <div className="w-full h-full bg-black/40 group-hover:bg-transparent flex flex-col justify-end items-center p-[10vw_20vw] md:p-[4vw_6vw] lg:p-[4vw_7vw] transition-colors">
+        <p className="text-center mb-6"> {description} </p>
         <CustomButton
           openInSameTab={openInSameTab}
           redirect_link={redirect_link}

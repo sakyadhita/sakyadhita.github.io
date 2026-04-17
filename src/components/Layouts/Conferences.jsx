@@ -11,31 +11,19 @@
  * @author      Amitesh Sharma
  */
 
-import React, { useEffect, useState } from 'react'
-import useWindowSize from '../../util/ScreenListener'
+import React from 'react'
 import ConferenceDesktop from '../Conference/ConferenceDesktop'
 import MobileConference from '../Conference/MobileConference'
-import '../../css/Conferences.css'
 
 export default function Conferences({ conferences, id = '' }) {
-  // Needed to determine when to render the desktop or mobile version
-  const listener = useWindowSize()
-  // const listener = { width: 2000 };
-
-  /**
-   * Determine whether to render desktop or mobile view
-   * @returns desktop or mobile rendering
-   */
-  const isDesktop = () =>
-    listener.width > 1050 ? (
-      <div>
+  return (
+    <>
+      <div className="hidden lg:block">
         <ConferenceDesktop data={conferences} id={id} />
       </div>
-    ) : (
-      <div>
+      <div className="block lg:hidden">
         <MobileConference data={conferences} id={id} />
       </div>
-    )
-
-  return isDesktop()
+    </>
+  )
 }

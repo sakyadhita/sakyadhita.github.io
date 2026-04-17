@@ -17,8 +17,8 @@ export default function Introduction({ body }) {
         <h1>
           {' '}
           Grassr
-          <img src="/logo.svg" alt="Logo" id="logo" />
-          <img src="/logo.svg" alt="Logo" id="logo" />
+          <img src="/logo.svg" alt="Logo" className="h-[30px] w-[30px] inline-block" />
+          <img src="/logo.svg" alt="Logo" className="h-[30px] w-[30px] inline-block" />
           ts{' '}
         </h1>
         <Markdown>{body}</Markdown>

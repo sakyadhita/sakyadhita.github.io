@@ -10,8 +10,7 @@
 import React, { useState, useEffect } from 'react'
 import Markdown from 'react-markdown'
 import ResourcesHeader from '../ResourcesHeader'
-import '../../css/About.css'
-import '../../css/animations.css'
+import { cn } from '../../lib/utils'
 
 import DownArrow from '../../media/down-arrow.svg'
 import Link from '../../media/link.svg'
@@ -25,54 +24,82 @@ const CommitteeSelector = ({
 }) => {
   if (years.length === 0) return null
   return (
-    <div className="dropdown">
-      <button type="button" id="dropdown-button" onClick={() => toggleDropdown()}>
-        <span>{years[committeeIndex]}</span>
-        <img src={DownArrow.src} alt="dropdown arrow" />
+    <div className="relative mb-8">
+      <button
+        type="button"
+        className="relative h-10 w-[175px] bg-white border-2 border-black rounded-full flex items-center justify-between px-4 z-30 cursor-pointer"
+        onClick={() => toggleDropdown()}
+      >
+        <span className="font-body font-bold">{years[committeeIndex]}</span>
+        <img src={DownArrow.src} alt="dropdown arrow" className="h-[9px]" />
       </button>
-      <div id="dropdown" style={dropdownOn ? null : { display: 'none' }}>
-        {years.map((year, index) => (
-          <button type="button" onClick={() => clickDropdown(year, index)} key={index}>
-            {year}
-          </button>
-        ))}
-      </div>
+      {dropdownOn && (
+        <div className="absolute top-10 left-[17.5px] w-[140px] flex flex-col items-center bg-white border-2 border-gray-400 z-20 shadow-lg">
+          {years.map((year, index) => (
+            <button
+              type="button"
+              className="w-full py-2.5 px-0 border-none bg-white hover:bg-gray-200 transition-colors cursor-pointer font-body"
+              onClick={() => clickDropdown(year, index)}
+              key={index}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
 
-const CommitteeProfiles = ({ committees, year, computeProfileDisplay }) => {
-  if (committees.length === 0) return <p id="committee-err">No Committees to Show</p>
+const CommitteeProfiles = ({ committees, year }) => {
+  if (committees.length === 0)
+    return (
+      <p className="text-center font-body text-[1.125em] text-gray-500 italic">
+        No Committees to Show
+      </p>
+    )
   const committee = committees.filter((x) => x.data.startYear === parseInt(year)).reverse()
   if (committee === undefined) return null
   return (
-    <div className="profiles" style={computeProfileDisplay(year)}>
-      {committee
-        // .slice(0)
-        // .reverse()
-        .map((member) => (
-          <div className="profile" key={member.id}>
-            <img className="headshot" src={member.data.imageLink} alt="Exec Headshot" />
-            <h2>{member.data.name}</h2>
-            <div className="position">
-              <div className="link-holder">
-                <a
-                  href={member.data.redirectLink}
-                  target={member.data.openInSameTab ? '' : '_blank'}
-                  rel="noreferrer"
-                >
-                  {member.data.redirectLink === null ? null : (
-                    <img className="profile-link" src={Link.src} alt="Profile Link" />
-                  )}
-                </a>
-              </div>
-              <h3>{member.data.position}</h3>
-            </div>
-            <div className="prose prose-sm max-w-none">
-              <Markdown>{member.body}</Markdown>
-            </div>
+    <div className="relative w-full max-w-[800px] flex flex-row-reverse flex-wrap-reverse justify-evenly gap-y-12">
+      {committee.map((member) => (
+        <div className="relative w-full md:w-[350px] mx-5 flex flex-col items-center md:items-start" key={member.id}>
+          <img
+            className="h-[250px] w-[250px] object-cover rounded-full mb-4 mt-[85px] border-[15px] border-[#f7f7f7]"
+            src={member.data.imageLink}
+            alt="Exec Headshot"
+          />
+          <h2 className="my-1 font-heading text-[1.875em] font-bold text-center md:text-left">
+            {member.data.name}
+          </h2>
+          <div className="relative flex flex-row justify-center md:justify-start items-center">
+            {member.data.redirectLink && (
+              <a
+                href={member.data.redirectLink}
+                target={member.data.openInSameTab ? '' : '_blank'}
+                rel="noreferrer"
+                className="mr-2"
+              >
+                <img
+                  className="h-[1.2em] hover:brightness-75 transition-all"
+                  src={Link.src}
+                  alt="Profile Link"
+                  style={{
+                    filter:
+                      'invert(54%) sepia(100%) saturate(466%) hue-rotate(334deg) brightness(101%) contrast(84%)'
+                  }}
+                />
+              </a>
+            )}
+            <h3 className="my-1 font-heading text-[1.5em] font-normal text-center md:text-left">
+              {member.data.position}
+            </h3>
           </div>
-        ))}
+          <div className="prose prose-sm max-w-none font-body py-5 px-2.5">
+            <Markdown>{member.body}</Markdown>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -97,18 +124,14 @@ export default function AboutUs({ frontmatter, committees, sections, children })
   // Effect to update the sticky nav on scroll
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth <= 600) {
-        setIsMobile(true)
-      } else {
-        setIsMobile(false)
-      }
+      setIsMobile(window.innerWidth <= 800)
     }
 
     // Add event listener
     window.addEventListener('resize', handleResize)
     handleResize()
 
-    document.querySelector('#page-layout').addEventListener('scroll', () => {
+    const scrollHandler = () => {
       for (let i = 0; i < sections.length; i++) {
         const idString = sections[i].data.title
           .replace(/\s+/g, '-')
@@ -116,27 +139,43 @@ export default function AboutUs({ frontmatter, committees, sections, children })
           .replace(/[^a-z0-9]/gi, '')
           .toLowerCase()
         const selected = document.querySelector(`#${idString}`)
-
-        if (selected <= 1) setScrollLocation(sections[i].data.title)
+        if (selected) {
+          const rect = selected.getBoundingClientRect()
+          if (rect.top <= 200 && rect.bottom >= 200) {
+            setScrollLocation(sections[i].data.title)
+          }
+        }
       }
-    })
+    }
+
+    const scrollContainer = document.querySelector('#page-layout')
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', scrollHandler)
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', scrollHandler)
+      }
+    }
   }, [sections])
 
-  /**
-   * Compares the desired location to the current scrollLocation to change
-   * selected location on sticky nav
-   *
-   * @param {String} location - desired location to compare against
-   * @returns {String} - underline class if desired location matches current
-   */
   function computeNavUnderline(location) {
-    if (location === scrollLocation) return 'orange-underline'
-    return ''
+    if (
+      location ===
+      scrollLocation
+        .replace(/\s+/g, '-')
+        .replace(/:/g, '')
+        .replace(/[^a-z0-9-]/gi, '')
+        .toLowerCase()
+    )
+      return 'text-brand-orange border-b-2 border-brand-orange'
+    return 'border-b-2 border-transparent'
   }
 
   // Scroll to the first section when clicking arrow button on resource header
   const scrollToSection = () => {
-    // only scrolls if element has been rendered on the screen by DOM first
     if (introSection.current) {
       introSection.current.scrollIntoView({
         behavior: 'smooth',
@@ -145,33 +184,14 @@ export default function AboutUs({ frontmatter, committees, sections, children })
     }
   }
 
-  /**
-   * Toggles the dropdown state
-   */
   function toggleDropdown() {
     setDropdownOn(!dropdownOn)
   }
 
-  /**
-   * Changes the currently viewed year for the committee section
-   *
-   * @param {String} newYear - desired year to view
-   */
   function clickDropdown(newYear, index) {
     setYear(newYear)
     setCommitteeIndex(index)
     toggleDropdown()
-  }
-
-  /**
-   * Choose whether or not to render a profile based on the current year
-   *
-   * @param {String} newYear - the year from which the profile in question belongs
-   * @returns {?} - object containing display: none style if not the current year
-   */
-  function computeProfileDisplay(newYear) {
-    if (newYear === year) return null
-    return { display: 'none' }
   }
 
   function makeIdURLFriendly(idString) {
@@ -183,8 +203,8 @@ export default function AboutUs({ frontmatter, committees, sections, children })
   }
 
   return (
-    <div className="page">
-      {isMobile || window.innerHeight <= 500 ? (
+    <div className="relative w-full">
+      {isMobile || (typeof window !== 'undefined' && window.innerHeight <= 500) ? (
         <ResourcesHeader
           image={frontmatter.image}
           title={frontmatter.title}
@@ -204,43 +224,55 @@ export default function AboutUs({ frontmatter, committees, sections, children })
         />
       )}
 
-      <div className="about-us-container">
+      <div className="w-full flex flex-col md:flex-row">
         {/* Sticky Nav */}
-        <div className="slider-wrapper">
-          <div className="slider">
-            <ul className="slider-nav">
-              {sections.map((section) => (
-                <li
-                  className={computeNavUnderline(makeIdURLFriendly(section.data.title))}
-                  key={section.id}
-                >
-                  <a href={`#${makeIdURLFriendly(section.data.title)}`}> {section.data.title} </a>
+        {!isMobile && (
+          <aside className="hidden md:block w-[250px] shrink-0 h-fit sticky top-32 mt-24 ml-8 lg:ml-16">
+            <nav className="relative flex border-r border-gray-300 pr-8">
+              <ul className="flex flex-col list-none p-0 m-0 space-y-4">
+                {sections.map((section) => (
+                  <li key={section.id} className="py-2">
+                    <a
+                      href={`#${makeIdURLFriendly(section.data.title)}`}
+                      className={cn(
+                        'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
+                        computeNavUnderline(makeIdURLFriendly(section.data.title))
+                      )}
+                    >
+                      {section.data.title}
+                    </a>
+                  </li>
+                ))}
+                <li className="py-2">
+                  <a
+                    href="#exec"
+                    className={cn(
+                      'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
+                      scrollLocation === 'Executive Committee'
+                        ? 'text-brand-orange border-b-2 border-brand-orange'
+                        : 'border-b-2 border-transparent'
+                    )}
+                  >
+                    Executive Committee
+                  </a>
                 </li>
-              ))}
-              <li className={computeNavUnderline('exec')}>
-                <a href="#exec"> Executive Committee </a>
-              </li>
-            </ul>
-            <div className="vbar" />
-          </div>
-        </div>
+              </ul>
+            </nav>
+          </aside>
+        )}
 
         {/* Contents of page */}
-        <div className="contents">
-          {children}
+        <div className="flex-1 w-full max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-24 font-body">
+          <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:mb-8 prose-img:mt-12 prose-img:w-full prose-img:rounded-lg prose-img:shadow-lg">
+            {children}
+          </div>
 
-          <div className="divider" />
+          {/* Mini Divider */}
+          <hr className="w-1/2 md:w-[700px] h-2 bg-brand-orange border-none mx-auto my-24 hidden md:block" />
 
           {/* Executive Committee Section */}
-          <div className="section" id="exec">
-            {/* Anchor for navigation */}
-            <div className="scroll" id="committee" />
-
-            <h1>Executive Committee</h1>
-
-            {/* Committee Profiles */}
-            {/* Each year has a different set of profiles */}
-            {/* Profiles will have to be put in reverse order (President goes last) */}
+          <div className="flex flex-col items-center mt-12 md:mt-0" id="exec">
+            <h1 className="font-heading font-bold text-3xl md:text-5xl mb-8">Executive Committee</h1>
 
             <CommitteeSelector
               years={years}
@@ -249,11 +281,7 @@ export default function AboutUs({ frontmatter, committees, sections, children })
               clickDropdown={clickDropdown}
               committeeIndex={committeeIndex}
             />
-            <CommitteeProfiles
-              committees={committees}
-              year={year}
-              computeProfileDisplay={computeProfileDisplay}
-            />
+            <CommitteeProfiles committees={committees} year={year} />
           </div>
         </div>
       </div>

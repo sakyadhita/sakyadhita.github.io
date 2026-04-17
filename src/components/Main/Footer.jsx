@@ -21,29 +21,7 @@ const ABW_BLOG_LINK = 'http://awakeningbuddhistwomen.blogspot.com/'
 const GOODREADS_LINK = 'https://www.goodreads.com/group/show/94269-women-in-buddhism'
 
 export default function Footer() {
-  // max width size that mobile view will be rendered
-  const MAX_MOBILE_VIEW_WIDTH = 750
-
-  const [windowSize, setWindowSize] = useState({
-    width: undefined
-  })
-
-  // track window resizes to determine rerender
-  useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth
-      })
-    }
-    // Add event listener
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize)
-  }, []) // Empty array ensures that effect is only run on mount
-
-  const socialIconClasses = 'w-10 h-10 transition-all shrink-0'
+  const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-all shrink-0'
 
   const subitem = (text, redirect_link) => (
     <a
@@ -80,7 +58,7 @@ export default function Footer() {
     <div className="relative mt-auto">
       {/* Background Image Layer */}
       <div
-        className="absolute inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat blur-[5px] rounded-[5px] shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)]"
+        className="absolute inset-0 z-[-1] w-full h-full bg-cover bg-[position:center,top] bg-no-repeat blur-[5px] rounded-[5px] shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)]"
         style={{
           backgroundImage:
             'url("https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2996&q=80")'

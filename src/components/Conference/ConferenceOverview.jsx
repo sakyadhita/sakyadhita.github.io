@@ -14,7 +14,6 @@
 
 import React from 'react'
 import { Download } from 'lucide-react'
-import { cn } from '../../lib/utils'
 
 export default function ConferenceOverview(props) {
   const items = props.info
@@ -30,7 +29,7 @@ export default function ConferenceOverview(props) {
           <a
             href={program.url}
             download
-            className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 hover:bg-brand-orange/10 hover:text-brand-orange transition-all group border border-gray-100 no-underline hover:no-underline w-[307.2px]"
+            className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 hover:bg-brand-orange/10 hover:text-brand-orange transition-all group border border-gray-100 no-underline hover:no-underline w-full md:w-[307.2px]"
             key={program.url}
           >
             <Download className="w-5 h-5 text-brand-dark-purple group-hover:text-brand-orange" />
@@ -42,24 +41,24 @@ export default function ConferenceOverview(props) {
   )
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 w-[80.24vw]">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 w-full">
       {/* The title of the conference */}
       <section className="space-y-6">
-        <h1 className="text-3xl md:text-5xl font-bold font-heading text-brand-dark-purple lowercase tracking-tight w-[35vw]">
+        <h1 className="text-3xl md:text-5xl font-bold font-heading text-brand-dark-purple lowercase tracking-tight max-w-2xl">
           {props.title}
         </h1>
         {props.tabs ? props.tabs() : null}
       </section>
 
       {/* Header section for file downloads */}
-      <section className="w-[307.2px]">
-        <h4 className="text-xl font-bold font-heading italic text-gray-600 mb-8 border-l-4 border-brand-orange pl-4 lowercase">
+      <section className="max-w-md">
+        <h4 className="text-xl font-bold font-heading italic text-gray-600 mb-8 border-l-4 border-brand-orange pl-4 lowercase leading-relaxed">
           Conference resources are available for download as a PDF.
         </h4>
       </section>
 
-      <div className="flex flex-col lg:flex-row gap-12">
-        <div className="w-[31vw] space-y-2">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        <div className="flex-1 space-y-2 max-w-md">
           {/* brochures */}
           <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
             Brochures
@@ -85,7 +84,7 @@ export default function ConferenceOverview(props) {
           {itemList(items.data.presentations)}
         </div>
 
-        <div className="w-[42vw] ml-[50px] -mt-6 mr-[25px]">
+        <div className="lg:w-[50%] shrink-0">
           {props.slideShow ? props.slideShow() : null}
         </div>
       </div>
