@@ -3,6 +3,7 @@ import '../css/index.css'
 
 import NavBar from '../components/Main/NavBar/NavBar.jsx'
 import Footer from '../components/Main/Footer.jsx'
+import { Font } from 'astro:assets'
 
 interface Props {
   hideFooter?: boolean
@@ -14,6 +15,8 @@ const { hideFooter = false } = Astro.props
 <!doctype html>
 <html lang="en">
   <head>
+    <Font cssVariable="--font-heading" preload />
+    <Font cssVariable="--font-body" preload />
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
