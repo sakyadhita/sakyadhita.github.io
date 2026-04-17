@@ -46,9 +46,6 @@
   padding: 0;
   margin: 11px;
 }
-.indicators > * {
-  box-sizing: border-box;
-}
 .indicators > .dot.active {
   width: 20px;
   height: 20px;

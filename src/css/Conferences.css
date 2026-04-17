@@ -34,7 +34,7 @@
 /* Design for when there is no conferences to load */
 .empty-conferences {
   height: calc(80vh);
-  width: calc(100vw);
+  width: calc(100%);
   display: flex;
   align-items: center;
 }

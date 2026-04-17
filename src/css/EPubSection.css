@@ -127,7 +127,7 @@
   position: absolute;
   bottom: 0;
   height: 1px;
-  width: 100vw;
+  width: 100%;
   background-color: var(--orange);
 }
 .EPubSection_body_scrollbutton--mobile {

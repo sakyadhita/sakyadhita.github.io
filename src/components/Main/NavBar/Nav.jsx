@@ -32,7 +32,7 @@ export default function Nav({ visible, transition, toggle }) {
   }
 
   const navOptionClasses =
-    'w-full h-[60px] md:h-[calc((100vh-120px)/5)] flex justify-start items-center px-8 md:px-[calc(1.9vw+2px)] hover:bg-brand-dark-orange hover:no-underline transition-colors group'
+    'w-full h-[60px] md:h-[calc((100vh-120px)/5)] flex justify-start items-center pl-[25vw] md:pl-[calc(1.9vw+2px)] md:pr-0 hover:bg-brand-dark-orange hover:no-underline transition-colors group'
   const navTextClasses = 'font-heading text-lg md:text-[min(1.25em,2.5vw)] text-white lowercase'
 
   return (
