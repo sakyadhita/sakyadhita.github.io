@@ -11,6 +11,12 @@ This project is the official website for **Sakyadhita International Association 
 - **Styling**: Vanilla CSS located in `src/css/`.
 - **Deployment**: Hosted on **Netlify**, with forms handled by Netlify Forms.
 
+## 🏗️ Architectural Decisions
+
+- **Astro**: The project is committed to using Astro as the core meta-framework for static site generation and modern routing.
+- **shadcn/ui (Base UI Native)**: All new UI components should be built using shadcn/ui. The project specifically uses the **Base UI** native version of shadcn components to ensure a headless, accessible, and highly customizable UI layer without the bloat of traditional component libraries.
+- **Tailwind CSS v4**: Tailwind CSS is the primary utility for styling, used in conjunction with shadcn/ui.
+
 ## 🛠️ Getting Started
 
 ### Prerequisites
