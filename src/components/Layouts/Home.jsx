@@ -12,7 +12,6 @@
 import React, { useState, useEffect } from 'react'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdEmail } from 'react-icons/md'
-import { Tooltip } from 'react-tooltip'
 import Markdown from 'react-markdown'
 import InteractiveMap from '../Home/InteractiveMap'
 import Slideshow from '../Slideshow'
@@ -112,23 +111,26 @@ export default function Home({
         <div key={item.id}>
           {/* Display name (with hyperlink if given) */}
           {data.siteLink ? (
-            <a href={data.siteLink} target="_blank" rel="noreferrer">
+            <a
+              href={data.siteLink}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1 hover:underline"
+            >
               {data.name}
-              <FiExternalLink />
+              <FiExternalLink className="shrink-0" />
             </a>
           ) : (
             data.name
           )}
-          <br />
           {/* Display email if it given */}
           {data.email ? (
-            <div>
-              <MdEmail />
-              &nbsp;
+            <div className="flex items-center gap-1 mt-1">
+              <MdEmail className="shrink-0" />
               {data.email}
             </div>
           ) : null}
-          <div className="prose prose-sm prose-invert max-w-none mt-2">
+          <div className="prose prose-sm max-w-none mt-1">
             <Markdown>{item.body}</Markdown>
           </div>
         </div>
@@ -230,21 +232,12 @@ export default function Home({
             <InteractiveMap
               disableZooming={disableZoom}
               markers={branchesAndChapters.map((m) => m.data)}
-            />
-          )}
-          {/* Custom Tooltip for Interactive Map */}
-          {isPageLoading ? null : (
-            <Tooltip
-              place="left"
-              variant="light"
-              className="home-map-tooltip"
-              id="tooltip"
-              render={({ content }) => displayTooltip(content)}
+              renderTooltipContent={(index) => displayTooltip(index)}
             />
           )}
 
           {/* Branch/Chapter Information  */}
-          <div className="branch-info prose mt-6">
+          <div className="branch-info prose max-w-none mt-6">
             <h1>Branches </h1>
             <p>
               Buddhist women and their allies gather at the Sakyadhita International Conferences

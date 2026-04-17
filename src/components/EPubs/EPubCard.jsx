@@ -5,15 +5,13 @@
  * @Author PatrickBrown1, Navid Boloorian
  */
 import React from 'react'
-import { Tooltip } from 'react-tooltip'
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '../ui/tooltip'
 import '../../css/EPubCard.css'
 
 export default function EPubCard({ title, author, image_url, redirect_link, isMobile }) {
   // props title, author name, image_url, redirect link, isMobile
-  const tooltipId = `epub-tooltip-${author.replace(/\s+/g, '-').toLowerCase()}`
   return (
-    <>
-      <Tooltip id={tooltipId} />
+    <TooltipProvider>
       {!isMobile ? (
         <div className="EPubCard">
           {redirect_link === null ? (
@@ -26,13 +24,14 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
             </>
           )}
           <div className="EPubCard_title">{title}</div>
-          <div
-            data-tooltip-id={tooltipId}
-            data-tooltip-content={author}
-            className="EPubCard_author"
-          >
-            {author}
-          </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="EPubCard_author cursor-default">{author}</div>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="bg-black text-white border-black font-body">
+              {author}
+            </TooltipContent>
+          </Tooltip>
         </div>
       ) : (
         <div className="EPubCard--mobile">
@@ -46,15 +45,16 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
             </>
           )}
           <div className="EPubCard_title--mobile">{title}</div>
-          <div
-            data-tooltip-id={tooltipId}
-            data-tooltip-content={author}
-            className="EPubCard_author--mobile"
-          >
-            By {author}
-          </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="EPubCard_author--mobile cursor-default">By {author}</div>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="bg-black text-white border-black font-body">
+              {author}
+            </TooltipContent>
+          </Tooltip>
         </div>
       )}
-    </>
+    </TooltipProvider>
   )
 }

@@ -185,7 +185,7 @@ export default function ConferencesDesktop(props) {
   }
 
   return (
-    <div className="w-full pl-[50px] pr-[101px] py-12">
+    <div className="w-full pl-[50px] py-12">
       <div className="flex flex-row gap-16 relative">
         {/* The vertical stepper */}
         <aside className="w-[200px] shrink-0">
