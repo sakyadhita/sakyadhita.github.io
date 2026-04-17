@@ -7,7 +7,7 @@ test.describe('Home Page', () => {
 
   test('should display the slideshow', async ({ page }) => {
     // Check for the presence of the slideshow container
-    const slideshow = page.locator('.react-slideshow-container');
+    const slideshow = page.locator('.Slideshow');
     await expect(slideshow).toBeVisible();
   });
 

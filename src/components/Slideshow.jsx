@@ -1,65 +1,95 @@
 /**
- * Slideshow component built with react-slideshow-image. Takes in children
- * components (should be divs) and renders them in a slideshow with custom
- * arrows and indicators. The slideshow requires height and width props, that
- * update the size of the component, BUT THE SLIDES MUST BE THE SAME SIZE or
- * else you will have padding issues.
- * @author PatrickBrown1
+ * Slideshow component built with Embla Carousel.
+ * Replaces react-slideshow-image to better align with current tech stack (shadcn/ui style).
  */
 
-import React from 'react'
-import 'react-slideshow-image/dist/styles.css'
-import { Fade } from 'react-slideshow-image'
+import React, { useState, useEffect, useCallback } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
+import Fade from 'embla-carousel-fade'
 import LeftArrow from '../media/leftarrow.svg'
 import RightArrow from '../media/rightarrow.svg'
+import { cn } from '../lib/utils'
 
 import '../css/Slideshow.css'
 
-const Slideshow = (props) => (
-  // required props: height, width, isMobile
-  <Fade
-    autoPlay
-    duration={4000}
-    transitionDuration={500}
-    prevArrow={
-      // custom left arrow component
-      <div
-        style={
-          !props.isMobile
-            ? { width: '50px', marginRight: '-50px' }
-            : { width: '25px', marginRight: '-25px' }
-        }
-      >
-        <img
-          className={!props.isMobile ? 'Slideshow_arrowleft' : 'Slideshow_arrowleft--mobile'}
-          src={LeftArrow.src}
-          alt="left arrow"
-        />
+const Slideshow = ({ children, height, width, isMobile }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 }, [
+    Autoplay({ delay: 4000, stopOnInteraction: false }),
+    Fade()
+  ])
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnapList] = useState([])
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi])
+  const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi])
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi, setSelectedIndex])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    setScrollSnapList(emblaApi.scrollSnapList())
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onSelect)
+  }, [emblaApi, setScrollSnapList, onSelect])
+
+  return (
+    <div className="Slideshow group relative overflow-hidden" style={{ width }}>
+      <div className="embla__viewport h-full" ref={emblaRef} style={{ height }}>
+        <div className="embla__container flex h-full">
+          {React.Children.map(children, (child) => (
+            <div className="embla__slide relative flex-[0_0_100%] min-w-0 h-full">{child}</div>
+          ))}
+        </div>
       </div>
-    }
-    nextArrow={
-      // custom right arrow component
-      <div
-        style={
-          !props.isMobile
-            ? { width: '50px', marginLeft: '-100px' }
-            : { width: '25px', marginLeft: '-40px' }
-        }
-      >
-        <img
-          className={!props.isMobile ? 'Slideshow_arrowright' : 'Slideshow_arrowright--mobile'}
-          src={RightArrow.src}
-          alt="right arrow"
-        />
+
+      {/* Custom Arrows - Only on desktop as per original implementation */}
+      {!isMobile && (
+        <>
+          <button
+            type="button"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={scrollPrev}
+            aria-label="Previous slide"
+          >
+            <img className="Slideshow_arrowleft" src={LeftArrow.src} alt="left arrow" />
+          </button>
+          <button
+            type="button"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={scrollNext}
+            aria-label="Next slide"
+          >
+            <img className="Slideshow_arrowright" src={RightArrow.src} alt="right arrow" />
+          </button>
+        </>
+      )}
+
+      {/* Indicators */}
+      <div className="absolute bottom-16 left-0 right-0 z-20 flex justify-center gap-4">
+        {scrollSnaps.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            className={cn(
+              'w-5 h-5 rounded-full transition-all border-[10px]',
+              index === selectedIndex
+                ? 'bg-white border-white scale-110'
+                : 'bg-[#c4c4c4] border-[#c4c4c4] hover:bg-white/50 hover:border-white/50'
+            )}
+            onClick={() => scrollTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
-    }
-    arrows={!props.isMobile}
-    pauseOnHover
-    indicators={() => <div className="dot" />}
-    style={{ maxHeight: props.height, minHeight: props.height, width: props.width }}
-    className="Slideshow"
-  >
-    {props.children}
-  </Fade>
-)
+    </div>
+  )
+}
+
 export default Slideshow
