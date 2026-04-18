@@ -8,7 +8,6 @@
  * @author Amrit Kaur Singh
  */
 
-import React from 'react'
 import {
   ComposableMap,
   Geographies,
@@ -101,9 +100,7 @@ export default function InteractiveMap({ markers, disableZooming = false }) {
                     ) : (
                       <span className="font-bold text-brand-dark-purple">{markers[i].name}</span>
                     )}
-                    {markers[i].email && (
-                      <div className="text-sm mt-1">{markers[i].email}</div>
-                    )}
+                    {markers[i].email && <div className="text-sm mt-1">{markers[i].email}</div>}
                     {markers[i].html && (
                       <div
                         className="prose prose-sm max-w-none mt-2 leading-tight italic"

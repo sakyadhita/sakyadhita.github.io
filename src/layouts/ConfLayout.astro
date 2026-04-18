@@ -30,7 +30,7 @@ const conferences = await Promise.all(
 ---
 
 <PageLayout>
-  <Conferences client:load conferences={conferences.reverse()}>
+  <Conferences client:idle conferences={conferences.reverse()}>
     <slot />
   </Conferences>
 </PageLayout>

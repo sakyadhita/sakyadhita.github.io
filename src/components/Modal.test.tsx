@@ -1,0 +1,51 @@
+import { describe, it, expect, vi } from 'vitest'
+import { render } from '@testing-library/react'
+import Modal from './Modal'
+
+describe('Modal Component', () => {
+  const defaultProps = {
+    hide: vi.fn(),
+    open: true,
+    text: 'Test modal text'
+  }
+
+  it('renders modal when open is true', () => {
+    const { container } = render(<Modal {...defaultProps} />)
+    expect(container.textContent).toContain('Test modal text')
+  })
+
+  it('does not render when open is false', () => {
+    const { container } = render(<Modal {...defaultProps} open={false} />)
+    expect(container.textContent).not.toContain('Test modal text')
+  })
+
+  it('renders negative button when negativeButtonText is provided', () => {
+    const { container } = render(<Modal {...defaultProps} negativeButtonText="Cancel" />)
+    const button = container.querySelector('button')
+    expect(button?.textContent).toContain('Cancel')
+  })
+
+  it('calls hide when negative button is clicked', () => {
+    const hideCallback = vi.fn()
+    const { container } = render(
+      <Modal {...defaultProps} hide={hideCallback} negativeButtonText="Cancel" />
+    )
+    const button = container.querySelector('button') as HTMLButtonElement
+    button?.click()
+    expect(hideCallback).toHaveBeenCalledWith(false)
+  })
+
+  it('renders both buttons when both are provided', () => {
+    const { container } = render(
+      <Modal {...defaultProps} negativeButtonText="Cancel" positiveButtonText="Confirm" />
+    )
+    const buttons = container.querySelectorAll('button')
+    expect(buttons.length).toBeGreaterThanOrEqual(2)
+  })
+
+  it('has modal styling', () => {
+    const { container } = render(<Modal {...defaultProps} />)
+    const text = container.textContent
+    expect(text).toContain('Test modal text')
+  })
+})

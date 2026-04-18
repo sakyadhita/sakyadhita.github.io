@@ -8,6 +8,7 @@
  * @author PatrickBrown1
  */
 import React from 'react'
+import { usePayPalSDK } from '../hooks/usePayPalSDK'
 
 // const config = require("../config.js");
 
@@ -29,7 +30,7 @@ export default function PayPal({
   email,
   phone,
   membershipTitle,
-  membershipID,
+  membershipID: _membershipID,
   membershipCost,
   donationAmount,
   isNewMember,
@@ -108,82 +109,96 @@ export default function PayPal({
       }
     ]
   }
-  // To show PayPal buttons once the component loads
-  React.useEffect(() => {
-    window.paypal
-      .Buttons({
-        createOrder: async (_data, actions) => {
-          // console.log(paypalOrderObject)
-          return actions.order.create(paypalOrderObject)
-        },
-        onApprove: async (_data, actions) => {
-          // loading cursor to indicate to the user they need to wait
-          document.body.style.cursor = 'wait'
-          return actions.order.capture().then((details) => {
-            // restore screen back to normal
-            document.body.style.cursor = null
 
-            return (
-              fetch('/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: encode({
-                  'form-name': 'paidmembership',
-                  fName: fName || details.payer.name.given_name,
-                  lName: lName || details.payer.name.surname,
-                  email: email || details.payer.email_address,
-                  phone,
-                  mName,
-                  address,
-                  isNewMember,
-                  affiliatedOrgs,
-                  membershipType: membershipTitle,
-                  totalPaid: parseFloat(details.purchase_units[0].amount.value),
-                  payPalTransactionId: details.purchase_units[0].payments.captures[0].id
-                })
+  // Load PayPal SDK dynamically
+  usePayPalSDK()
+
+  // To show PayPal buttons once the component loads and SDK is available
+  React.useEffect(() => {
+    // Wait for PayPal SDK to load
+    const waitForPayPal = () => {
+      if (window.paypal && window.paypal.Buttons) {
+        window.paypal
+          .Buttons({
+            createOrder: async (_data, actions) => {
+              // console.log(paypalOrderObject)
+              return actions.order.create(paypalOrderObject)
+            },
+            onApprove: async (_data, actions) => {
+              // loading cursor to indicate to the user they need to wait
+              document.body.style.cursor = 'wait'
+              return actions.order.capture().then((details) => {
+                // restore screen back to normal
+                document.body.style.cursor = null
+
+                return (
+                  fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: encode({
+                      'form-name': 'paidmembership',
+                      fName: fName || details.payer.name.given_name,
+                      lName: lName || details.payer.name.surname,
+                      email: email || details.payer.email_address,
+                      phone,
+                      mName,
+                      address,
+                      isNewMember,
+                      affiliatedOrgs,
+                      membershipType: membershipTitle,
+                      totalPaid: parseFloat(details.purchase_units[0].amount.value),
+                      payPalTransactionId: details.purchase_units[0].payments.captures[0].id
+                    })
+                  })
+                    // message sent
+                    .then(() => {
+                      // display thank you modal and clear form
+                      transactionCompleted()
+                    })
+                    // message could not be sent
+                    .catch((error) => {
+                      document.body.style.cursor = null
+                      alert(
+                        "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email. Error: " +
+                          error
+                      )
+                    })
+                )
+                // .then((res) => {
+                //     if (res.ok) {
+                //       transactionCompleted()
+                //     } else {
+                //       alert(
+                //         "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email."
+                //       )
+                //     }
+                //   })
+                //   .catch(() => {
+                //     document.body.style.cursor = null
+                //     alert(
+                //       'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
+                //     )
+                //   })
               })
-                // message sent
-                .then(() => {
-                  // display thank you modal and clear form
-                  transactionCompleted()
-                })
-                // message could not be sent
-                .catch((error) => {
-                  document.body.style.cursor = null
-                  alert(
-                    "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email. Error: " +
-                      error
-                  )
-                })
-            )
-            // .then((res) => {
-            //     if (res.ok) {
-            //       transactionCompleted()
-            //     } else {
-            //       alert(
-            //         "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email."
-            //       )
-            //     }
-            //   })
-            //   .catch(() => {
-            //     document.body.style.cursor = null
-            //     alert(
-            //       'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
-            //     )
-            //   })
+            },
+            onCancel: () => {
+              document.body.style.cursor = null
+            },
+            onError: (_err) => {
+              document.body.style.cursor = null
+              alert(
+                'An unexpected error occurred - your payment did not go through. Please try again later.'
+              )
+            }
           })
-        },
-        onCancel: () => {
-          document.body.style.cursor = null
-        },
-        onError: (_err) => {
-          document.body.style.cursor = null
-          alert(
-            'An unexpected error occurred - your payment did not go through. Please try again later.'
-          )
-        }
-      })
-      .render(paypalRef.current)
+          .render(paypalRef.current)
+      } else {
+        // PayPal SDK not yet loaded, try again soon
+        setTimeout(waitForPayPal, 100)
+      }
+    }
+
+    waitForPayPal()
   }, [membershipTitle, membershipCost, donationAmount])
 
   return <div>{!disable && <div ref={paypalRef} />}</div>

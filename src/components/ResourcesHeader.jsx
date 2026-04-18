@@ -5,7 +5,6 @@
  * @summary Creates a component for resources header
  * @author Dhanush Nanjunda Reddy, Amrit Kaur Singh
  */
-import React from 'react'
 
 /**
  *

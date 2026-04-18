@@ -7,8 +7,7 @@
  *
  * @author Amrit Kaur Singh
  */
-import { siFacebook, siYoutube, siPinterest, siRss, siGoodreads } from 'simple-icons'
-import SimpleIcon from './SimpleIcon'
+import { Icon } from 'astro-icon/components'
 import Brand from './Brand.astro'
 import Logo from '../../media/logo.svg'
 import { SITE_PAGES } from '../../constants/links'
@@ -181,9 +180,9 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             rel="noreferrer"
             class="group transition-transform hover:scale-110"
           >
-            <SimpleIcon
-              icon={siFacebook}
-              className={cn(socialIconClasses, 'text-white group-hover:bg-[#3b5998] p-1')}
+            <Icon
+              name="simple-icons:facebook"
+              class={cn(socialIconClasses, 'text-white group-hover:bg-[#3b5998] p-1')}
             />
           </a>
           <a
@@ -192,12 +191,9 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             rel="noreferrer"
             class="group transition-transform hover:scale-110"
           >
-            <SimpleIcon
-              icon={siYoutube}
-              className={cn(
-                socialIconClasses,
-                'text-white group-hover:bg-[#c4302b] rounded-xl p-1'
-              )}
+            <Icon
+              name="simple-icons:youtube"
+              class={cn(socialIconClasses, 'text-white group-hover:bg-[#c4302b] rounded-xl p-1')}
             />
           </a>
           <a
@@ -206,12 +202,9 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             rel="noreferrer"
             class="group transition-transform hover:scale-110"
           >
-            <SimpleIcon
-              icon={siPinterest}
-              className={cn(
-                socialIconClasses,
-                'text-white group-hover:bg-[#E60023] rounded-2xl p-2'
-              )}
+            <Icon
+              name="simple-icons:pinterest"
+              class={cn(socialIconClasses, 'text-white group-hover:bg-[#E60023] rounded-2xl p-2')}
             />
           </a>
           <a
@@ -220,9 +213,9 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             rel="noreferrer"
             class="group transition-transform hover:scale-110"
           >
-            <SimpleIcon
-              icon={siRss}
-              className={cn(socialIconClasses, 'text-white group-hover:text-brand-orange p-1')}
+            <Icon
+              name="simple-icons:rss"
+              class={cn(socialIconClasses, 'text-white group-hover:text-brand-orange p-1')}
             />
           </a>
           <a
@@ -231,9 +224,9 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             rel="noreferrer"
             class="group transition-transform hover:scale-110"
           >
-            <SimpleIcon
-              icon={siGoodreads}
-              className={cn(socialIconClasses, 'text-white group-hover:text-[#e9e5cd] p-1')}
+            <Icon
+              name="simple-icons:goodreads"
+              class={cn(socialIconClasses, 'text-white group-hover:text-[#e9e5cd] p-1')}
             />
           </a>
         </div>

@@ -27,8 +27,8 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
 ---
 
 <PageLayout>
-  <ResourcesNavBar client:load>
-    <EPublications client:load sections={sections} featuredEpubs={featuredEpubs}>
+  <ResourcesNavBar client:idle>
+    <EPublications client:idle sections={sections} featuredEpubs={featuredEpubs}>
       <slot />
     </EPublications>
   </ResourcesNavBar>

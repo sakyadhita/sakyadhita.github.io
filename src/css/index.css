@@ -14,22 +14,6 @@
   --font-body: "Nunito", sans-serif;
 }
 
-:root {
-  /* Legacy variables for compatibility during migration */
-  --lightpurple: #8477b9;
-  --darkpurple: #6652a0;
-  --orange: #ea8644;
-  --darkorange: #d77a3d;
-  --red: #ea4444;
-  --white: #ffffff;
-  --black: #000000;
-  --grey: #9b9b9b;
-  --darkgrey: #5a5a5a;
-
-  --heading-font: "Libre Baskerville", serif;
-  --text-font: "Nunito", sans-serif;
-}
-
 @utility hover-underline-animation {
   display: inline-block;
   position: relative;

@@ -12,7 +12,6 @@
  * @author Amrit Kaur Singh
  */
 
-import React from 'react'
 import CustomButton from '../CustomButtonReact'
 
 /**

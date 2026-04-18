@@ -90,4 +90,4 @@ const Slideshow = ({ children, height, width, isMobile }) => {
   )
 }
 
-export default Slideshow
+export default React.memo(Slideshow)

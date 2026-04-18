@@ -7,7 +7,7 @@ const { frontmatter } = Astro.props
 ---
 
 <PageLayout hideFooter={true}>
-  <ResourcesNavBar client:load>
+  <ResourcesNavBar client:idle>
     <div class="w-full">
       {/* Responsive Headers - Astro */}
       <div class="md:hidden">

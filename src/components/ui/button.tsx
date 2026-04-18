@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { Button as BaseButton } from '@base-ui/react'
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { forwardRef, type ButtonHTMLAttributes } from 'react'
 import { cn } from '../../lib/utils'
 
 const buttonVariants = cva(
@@ -14,7 +13,8 @@ const buttonVariants = cva(
           'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-brand-orange text-white shadow-sm hover:bg-brand-dark-orange',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-brand-dark-purple underline-offset-4 hover:underline'
+        link: 'text-brand-dark-purple underline-offset-4 hover:underline',
+        cta: 'w-44 bg-brand-orange hover:bg-brand-dark-orange rounded-full shadow-[2px_2px_2px_rgb(63,62,62)] text-white uppercase font-bold h-auto py-2 text-sm font-body transition-transform active:scale-95 border-none'
       },
       size: {
         default: 'h-9 px-4 py-2',
@@ -30,16 +30,21 @@ const buttonVariants = cva(
   }
 )
 
-const Button = React.forwardRef(({ className, variant, size, ...props }, ref) => {
-  return (
-    <BaseButton.Root
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      ref={ref}
-      {...props}
-    />
-  )
-})
+interface ButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {}
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <button
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
 Button.displayName = 'Button'
 
 export { Button, buttonVariants }

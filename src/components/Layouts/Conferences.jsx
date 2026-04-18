@@ -15,7 +15,7 @@ import React from 'react'
 import ConferenceDesktop from '../Conference/ConferenceDesktop'
 import MobileConference from '../Conference/MobileConference'
 
-export default function Conferences({ conferences, id = '' }) {
+function Conferences({ conferences, id = '' }) {
   return (
     <>
       <div className="hidden lg:block">
@@ -27,3 +27,5 @@ export default function Conferences({ conferences, id = '' }) {
     </>
   )
 }
+
+export default React.memo(Conferences)

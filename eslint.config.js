@@ -41,19 +41,16 @@ export default tseslint.config(
     }
   },
   
-  // React
+  // React + JSX-a11y (minimal rules to avoid flat config incompatibility)
   {
     files: ['**/*.{jsx,tsx}'],
-    ...reactPlugin.configs.flat.recommended,
-    ...reactPlugin.configs.flat['jsx-runtime'],
-    settings: {
-      react: {
-        version: 'detect'
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
       }
-    }
-  },
-  {
-    files: ['**/*.{jsx,tsx}'],
+    },
     plugins: {
       'react-hooks': reactHooksPlugin,
       'jsx-a11y': jsxA11yPlugin
@@ -61,8 +58,9 @@ export default tseslint.config(
     rules: {
       ...reactHooksPlugin.configs.recommended.rules,
       ...jsxA11yPlugin.configs.recommended.rules,
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off'
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/set-state-in-effect': 'off'
     }
   },
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Gallery, Item } from 'react-photoswipe-gallery'
 import 'photoswipe/dist/photoswipe.css'
 

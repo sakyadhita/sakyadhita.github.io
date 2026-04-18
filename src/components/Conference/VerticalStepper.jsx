@@ -13,7 +13,7 @@
  * @author      Amitesh Sharma
  */
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import CustomPagination from './Pagination'
 import { cn } from '../../lib/utils'
 

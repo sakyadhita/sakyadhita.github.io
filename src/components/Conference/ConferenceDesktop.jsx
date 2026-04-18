@@ -87,11 +87,7 @@ export default function ConferencesDesktop(props) {
       return (
         <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-50 h-112">
           {displayImages.length === 1 ? (
-            <img
-              className="w-full h-full object-cover"
-              alt="Event Visual"
-              src={displayImages[0]}
-            />
+            <img className="w-full h-full object-cover" alt="Event Visual" src={displayImages[0]} />
           ) : (
             <Slideshow height="100%" width="100%" isMobile={false}>
               {displayImages.map((image) => (

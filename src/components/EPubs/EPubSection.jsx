@@ -5,7 +5,7 @@
  *
  * @Author PatrickBrown1
  */
-import React, { useState } from 'react'
+import { useState } from 'react'
 import EPubCard from './EPubCard'
 import LeftArrowBlack from '../../media/left-arrow-black.svg'
 import RightArrowBlack from '../../media/right-arrow-black.svg'

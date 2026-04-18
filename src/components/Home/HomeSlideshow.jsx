@@ -1,4 +1,3 @@
-import React from 'react'
 import Slideshow from '../Slideshow'
 import NewsSlideReact from './NewsSlideReact'
 

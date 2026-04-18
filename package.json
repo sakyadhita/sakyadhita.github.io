@@ -1,12 +1,14 @@
 {
   "name": "sakyadhita.github.io",
   "type": "module",
-  "version": "1.0.11",
+  "version": "2.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
     "lint": "pnpm run lint:prettier && pnpm run lint:eslint",
     "lint:prettier": "prettier --write  \"src/**/*.{js,jsx,ts,tsx,md,astro}\"",
@@ -18,7 +20,9 @@
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@base-ui/react": "^1.4.0",
+    "@iconify-json/simple-icons": "^1.2.78",
     "astro": "^6.1.7",
+    "astro-icon": "^1.1.5",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-fade": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
@@ -31,8 +35,7 @@
     "react-photoswipe-gallery": "^4.0.0",
     "react-player": "^3.4.0",
     "react-simple-maps": "^3.0.0",
-    "sharp": "^0.34.5",
-    "simple-icons": "^16.16.0"
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
@@ -41,10 +44,14 @@
     "@playwright/test": "^1.59.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.58.2",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/ui": "^4.1.4",
     "astro-eslint-parser": "^1.4.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -55,12 +62,14 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.5.0",
+    "happy-dom": "^20.9.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.58.2"
+    "typescript-eslint": "^8.58.2",
+    "vitest": "^4.1.4"
   },
   "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
 }

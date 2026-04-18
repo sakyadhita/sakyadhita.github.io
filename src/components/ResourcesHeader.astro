@@ -15,13 +15,15 @@ interface Props {
   title?: string
   text?: string
   showArrow?: boolean
-  arrowClickCallback?: (event: any) => void
+  arrowClickCallback?: (event: Event) => void
 }
 
 const { image, height, width, title, text } = Astro.props
 
 const rawImage = getRawImage(image)
-const optimizedImage = rawImage ? await getImage({ src: rawImage, format: 'webp', width: 1600 }) : null
+const optimizedImage = rawImage
+  ? await getImage({ src: rawImage, format: 'webp', width: 1600 })
+  : null
 ---
 
 <div

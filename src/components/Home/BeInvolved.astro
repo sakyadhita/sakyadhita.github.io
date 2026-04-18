@@ -20,7 +20,9 @@ interface Props {
 const { description, image_url, button_title, redirect_link, openInSameTab } = Astro.props
 
 const rawImage = getRawImage(image_url)
-const optimizedImage = rawImage ? await getImage({ src: rawImage, format: 'webp', width: 800 }) : null
+const optimizedImage = rawImage
+  ? await getImage({ src: rawImage, format: 'webp', width: 800 })
+  : null
 ---
 
 <div

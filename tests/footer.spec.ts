@@ -17,17 +17,9 @@ test.describe('Footer', () => {
     await expect(pinterestLink).toBeVisible();
     await expect(blogLink).toBeVisible();
     await expect(goodreadsLink).toBeVisible();
-    
-    // Check for Simple Icons (SVG titles)
-    await expect(facebookLink.locator('title')).toHaveText('Facebook');
-    await expect(youtubeLink.locator('title')).toHaveText('YouTube');
-    await expect(pinterestLink.locator('title')).toHaveText('Pinterest');
-    await expect(blogLink.locator('title')).toHaveText('RSS');
-    await expect(goodreadsLink.locator('title')).toHaveText('Goodreads');
   });
 
   test('should have internal page links', async ({ page }) => {
-    const footer = page.locator('footer, .relative.mt-auto'); // Fallback if no footer tag
     const homeLink = page.getByRole('link', { name: 'Home', exact: true }).last(); // Use last() to get footer one
     const conferencesLink = page.getByRole('link', { name: 'Conferences', exact: true }).last();
     const resourcesLink = page.getByRole('link', { name: 'Resources', exact: true }).last();

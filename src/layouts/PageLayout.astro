@@ -29,7 +29,7 @@ const { hideFooter = false } = Astro.props
 
   <body class="flex flex-col min-h-screen">
     <div id="page-layout" class="flex flex-col flex-1">
-      <NavBar client:load />
+      <NavBar client:idle />
       <main class="flex-1">
         <slot />
       </main>
@@ -43,10 +43,6 @@ const { hideFooter = false } = Astro.props
       <input type="tel" name="phone" />
       <textarea name="message"></textarea>
     </form>
-
-    <script
-      src="https://www.paypal.com/sdk/js?client-id=AT0I6Qa0JYVBvlExcrLDBJAY3oqylXV_pIIn471l6C289hFh7E19i46YhR5G3Nq9mYyZ8v4u3m_m&currency=USD"
-      is:inline></script>
 
     <iframe
       src="https://consent.trustarc.com/?domain=sakyadhita.org&c=tecm&js=nj&type=tecm&mrid=d8d38cd8-942b-240340173b4b&propertyId=T2D7QGF6MF9B2-1&flow=visitor-info&variant=analytics&mrid=T2D7QGF6MF9B2&isMobileEnabled=true&isDesktopEnabled=true&shouldCheckCountry=true&mobileVariant=analytics&mobileFlow=visitor-info&disableSetCookie=true"

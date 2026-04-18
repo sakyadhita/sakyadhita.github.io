@@ -4,7 +4,6 @@
  * @summary Creates a component for Contact Page Image Header.
  * @author Amrit Kaur Singh
  */
-import React from 'react'
 
 export default function ImageHeader(props) {
   return (

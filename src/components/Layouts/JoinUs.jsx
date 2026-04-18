@@ -19,7 +19,7 @@ function displayAsterisk() {
   )
 }
 
-export default function JoinUs({ frontmatter, memberships }) {
+export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
   const [membershipCheck, setMembershipCheck] = useState(false)
   // tracks whether donation field should be displayed
   const [donateCheck, setDonateCheck] = useState(false)

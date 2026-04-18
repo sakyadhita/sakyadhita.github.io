@@ -4,10 +4,16 @@
  *
  * @Author PatrickBrown1, Navid Boloorian
  */
-import React from 'react'
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '../ui/tooltip'
 
-export default function EPubCard({ title, author, image_url, optimized_url, redirect_link, isMobile }) {
+export default function EPubCard({
+  title,
+  author,
+  image_url,
+  optimized_url,
+  redirect_link,
+  isMobile
+}) {
   const displayImage = optimized_url || image_url
   // props title, author name, image_url, redirect link, isMobile
   return (

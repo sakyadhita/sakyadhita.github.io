@@ -29,7 +29,7 @@ const PaginationItem = React.forwardRef(({ className, ...props }, ref) => (
 ))
 PaginationItem.displayName = 'PaginationItem'
 
-const PaginationLink = ({ className, isActive, size = 'icon', ...props }) => (
+const PaginationLink = ({ className, isActive, size = 'icon', children, ...props }) => (
   <a
     aria-current={isActive ? 'page' : undefined}
     data-slot="pagination-link"
@@ -41,7 +41,9 @@ const PaginationLink = ({ className, isActive, size = 'icon', ...props }) => (
       className
     )}
     {...props}
-  />
+  >
+    {children}
+  </a>
 )
 PaginationLink.displayName = 'PaginationLink'
 

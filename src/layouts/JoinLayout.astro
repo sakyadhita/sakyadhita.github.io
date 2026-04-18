@@ -8,7 +8,11 @@ import JoinUs from '../components/Layouts/JoinUs'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 
 const membertypes = await getCollection('membertype')
-const memberships = membertypes.map((m) => m.data)
+const memberships = membertypes.map((m) => ({
+  id: String(m.data.id),
+  title: m.data.title,
+  cost: String(m.data.cost || '0')
+}))
 
 const { frontmatter } = Astro.props
 const rawHeader = getRawImage(frontmatter.image)

@@ -7,6 +7,10 @@ import PageLayout from './PageLayout.astro'
 import HomeSlideshow from '../components/Home/HomeSlideshow'
 import HomeBody from '../components/Home/HomeBody.astro'
 
+interface HomeImageModule {
+  default: ImageMetadata
+}
+
 const branches = await getCollection('branch')
 
 const newsRaw = await getCollection('news', ({ data }) => {
@@ -41,9 +45,11 @@ const additionalSections = await Promise.all(
   })
 )
 
-const imagesRaw = Object.values(import.meta.glob('../assets/home/*.jpg', { eager: true }))
+const imagesRaw = Object.values(
+  import.meta.glob('../assets/home/*.jpg', { eager: true })
+) as HomeImageModule[]
 const images = await Promise.all(
-  imagesRaw.map(async (img: any) => {
+  imagesRaw.map(async (img) => {
     const optimized = await getImage({ src: img.default, format: 'webp', width: 600 })
     return {
       original: img.default.src,
@@ -61,12 +67,11 @@ const branchesWithHtml = await Promise.all(
     return { ...b, html }
   })
 )
-
 ---
 
 <PageLayout>
   <div class="w-full text-black">
-    <HomeSlideshow client:load newsAndEvents={newsAndEvents} />
+    <HomeSlideshow client:idle newsAndEvents={newsAndEvents} />
 
     <HomeBody
       IntroContent={IntroContent}

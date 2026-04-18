@@ -10,7 +10,7 @@ test.describe('Navigation', () => {
     await hamburger.click();
     const navPanel = page.locator('div.fixed.bg-brand-orange')
     await expect(navPanel).toBeVisible();
-    await navPanel.evaluate((element) => {
+    await navPanel.evaluate((element: HTMLElement) => {
       element.scrollTop = element.scrollHeight
     })
     await expect(navPanel.getByRole('link', { name: 'Contact Us' })).toBeInViewport();

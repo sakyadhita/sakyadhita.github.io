@@ -6,23 +6,60 @@ import HomeGallery from './HomeGallery'
 import InteractiveMap from './InteractiveMap'
 import { SITE_PAGES } from '../../constants/links'
 
-interface Props {
-  IntroContent: any
-  newsflash: any
-  NewsFlashContent: any
-  additionalSections: any[]
-  images: any[]
-  branches: any[]
+type RenderableComponent = (...args: unknown[]) => unknown
+
+interface NewsFlashArticle {
+  data: {
+    title: string
+    subtitle: string
+    image: string
+    redirectLink: string
+  }
 }
 
-const {
-  IntroContent,
-  newsflash,
-  NewsFlashContent,
-  additionalSections,
-  images,
-  branches,
-} = Astro.props
+interface NewsflashLike {
+  data: {
+    title?: string
+    subtitle?: string
+    image?: string
+    redirectLink?: string
+    isPublished?: boolean
+    [key: string]: unknown
+  }
+  [key: string]: unknown
+}
+
+interface SectionLike {
+  data: {
+    title?: string
+    [key: string]: unknown
+  }
+  Content: RenderableComponent
+}
+
+interface ImageLike {
+  original: string
+  thumbnail: string
+  width: number
+  height: number
+}
+
+interface BranchLike {
+  data: Record<string, unknown>
+  html: string
+}
+
+interface Props {
+  IntroContent: RenderableComponent | null
+  newsflash: NewsflashLike | undefined
+  NewsFlashContent: RenderableComponent | null
+  additionalSections: SectionLike[]
+  images: ImageLike[]
+  branches: BranchLike[]
+}
+
+const { IntroContent, newsflash, NewsFlashContent, additionalSections, images, branches } =
+  Astro.props
 ---
 
 <section
@@ -30,16 +67,16 @@ const {
 >
   <section id="home-intro" class="w-full whitespace-pre-line text-black">
     <Introduction>
-      <IntroContent />
+      {IntroContent && <IntroContent />}
     </Introduction>
   </section>
 
   <div class="w-1/2 h-0.5 bg-brand-orange my-16 md:my-20"></div>
 
   {
-    newsflash && newsflash.data.isPublished && (
+    newsflash && newsflash.data.isPublished && NewsFlashContent && (
       <section id="latest-news" class="w-full">
-        <NewsFlash article={newsflash}>
+        <NewsFlash article={newsflash as NewsFlashArticle}>
           <NewsFlashContent />
         </NewsFlash>
       </section>

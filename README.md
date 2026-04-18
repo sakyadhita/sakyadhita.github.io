@@ -2,32 +2,47 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/33b02bdb-9658-4530-9b42-55a1957cb999/deploy-status)](https://app.netlify.com/sites/sakyadhita/deploys)
 
-This is the Sakyadhita International static web site created using [Astro](https://astro.build).
+This is the Sakyadhita International static web site, recently refactored and modernized using **Astro 6** and **React 19**.
 
-The design is based on a previous website written by
-[Triton Software Engineering](https://github.com/TritonSE/SI-Website-Revamp)
-which was a SERN three tier application (SQL, Express, React, Node). This version
-retains the React components but all content has been extracted into Astro
-content collections. The backend Express Server and SQL database is no longer
-needed.
+## 🚀 2.0 Refactor & Modernization
 
-The website is hosted on Netlify and all form submissions are sent to Netlify.
+The website has undergone a complete architectural overhaul to ensure long-term maintainability, accessibility, and performance. Key updates include:
+
+- **Framework**: Upgraded to **Astro 6** and **React 19** for the latest features and performance optimizations.
+- **Styling**: Migrated to **Tailwind CSS v4**, providing a more robust and modern utility-first styling engine.
+- **UI Components**: Rebuilt UI components using **Base UI (headless)** for maximum accessibility and customizability.
+- **Slideshows**: Replaced heavy dependencies with **Embla Carousel** for smoother, more performant image galleries.
+- **Testing**: Integrated **Playwright** for comprehensive End-to-End (E2E) testing across browsers.
+- **Maintainability**: Consolidated CSS, removed legacy code, and optimized the content collection structure.
 
 ## Releases
 
-* 1.0.0: Initial version, converted from SERN to Astro/React
-* 1.0.1: Updated branch/chapter information
-* 1.0.2: Updated home page, slider, newsflash, photos, conferences, newsletters
-* 1.0.3: Updated Footer with conference links
-* 1.0.4: Updated newsletter description and image for Vol 30
-* 1.0.5: Updated About page
-* 1.0.6: Updated Bibliographies
-* 1.0.7: Updated Bibliographies art work
-* 1.0.8: Updated Buddhist Culture and Ordination Issue
-* 1.0.9: Updated Contact Page, Bibliography subtitle
-* 1.0.10: Minor changes to exco bios, update packages, ordination alignment
-* 1.0.11: Updated packages, exco photos and bios
+* 2.0.1: **Stability, Lint, and Typecheck Improvements**
+    - Resolved Astro typecheck issues in Home layout and Home body component typing.
+    - Fixed blocking ESLint errors and aligned project linting to pass consistently.
+    - Updated component type definitions and prop guards for safer rendering.
+    - Verified build, lint, and E2E test workflow with no regressions.
+* 2.0.0: **Complete Refactor & Revision**
+    - Upgraded to Astro 6, React 19.
+    - Removed Material UI, Bootstrap, custom CSS and replaced with Tailwind
+    - Switched to shadcn and Base UI for accessible, headless components.
+    - Integrated Embla Carousel for performant slideshows.
+    - Added Playwright E2E test suite.
+    - Refactored Home page with new sections (Gallery, News Flash, "Be Involved").
+    - Cleaned up legacy styles and optimized assets.
 * 1.0.12: Switched brand icons to Simple Icons, added Playwright E2E tests, upgraded all packages
+* 1.0.11: Updated packages, exco photos and bios
+* 1.0.10: Minor changes to exco bios, update packages, ordination alignment
+* 1.0.9: Updated Contact Page, Bibliography subtitle
+* 1.0.8: Updated Buddhist Culture and Ordination Issue
+* 1.0.7: Updated Bibliographies art work
+* 1.0.6: Updated Bibliographies
+* 1.0.5: Updated About page
+* 1.0.4: Updated newsletter description and image for Vol 30
+* 1.0.3: Updated Footer with conference links
+* 1.0.2: Updated home page, slider, newsflash, photos, conferences, newsletters
+* 1.0.1: Updated branch/chapter information
+* 1.0.0: Initial version, converted from SERN to Astro/React
 
 ## Creating a Local Build
 

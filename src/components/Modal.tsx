@@ -1,19 +1,14 @@
-/**
- * This is a custom modal that can be reused for other pages.
- * Takes in the following props:
- *  - open: control if the modal should be open or not
- *  - hide: function to hide the modal
- *  - text: required, pass in text for the modal.
- *  - url: required if button is rendered within modal,
- *         directs the user to the specified link.
- *
- * @summary     popup modal
- * @author      Amitesh Sharma
- */
-
-import React from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
 import { Button } from './ui/button'
+
+interface CustomModalProps {
+  hide: (value: boolean) => void
+  open: boolean
+  text: string
+  negativeButtonText?: string
+  positiveButtonText?: string
+  positiveUrl?: string
+}
 
 export default function CustomModal({
   hide,
@@ -22,10 +17,12 @@ export default function CustomModal({
   negativeButtonText,
   positiveButtonText,
   positiveUrl
-}) {
+}: CustomModalProps) {
   // redirect to the registration url
   const redirectLink = () => {
-    window.location.href = positiveUrl
+    if (positiveUrl) {
+      window.location.href = positiveUrl
+    }
   }
 
   return (
@@ -33,10 +30,10 @@ export default function CustomModal({
       <DialogContent className="max-w-md border-2 border-brand-orange p-4 rounded-lg bg-white">
         <DialogHeader>
           <DialogTitle className="sr-only">Notification</DialogTitle>
-          <DialogDescription className="text-center text-2xl text-black pt-4 px-4 font-body">
-            {text}
-          </DialogDescription>
         </DialogHeader>
+        <DialogDescription className="text-center text-2xl text-black pt-4 px-4 font-body">
+          {text}
+        </DialogDescription>
 
         <div className="flex flex-row justify-center mt-6 space-x-4 mb-4">
           {negativeButtonText && (

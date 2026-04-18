@@ -26,7 +26,7 @@
             label: 'checkout'
           },
           // createOrder when clicked
-          createOrder: function (data, actions) {
+          createOrder: function (_data, actions) {
             return actions.order.create({
               intent: 'CAPTURE',
               application_context: {

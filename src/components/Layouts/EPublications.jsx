@@ -8,7 +8,7 @@
  * @Author PatrickBrown1, Navid Boloorian
  */
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Slideshow from '../Slideshow'
 import EPubSection from '../EPubs/EPubSection'
 import EPubCard from '../EPubs/EPubCard'

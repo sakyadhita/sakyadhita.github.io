@@ -39,8 +39,8 @@ let reverseSortNewsletter = newsletters.sort((a, b) => {
 ---
 
 <PageLayout>
-  <ResourcesNavBar client:load>
-    <Newsletters client:load frontmatter={frontmatter} newsletters={reverseSortNewsletter}>
+  <ResourcesNavBar client:idle>
+    <Newsletters client:idle frontmatter={frontmatter} newsletters={reverseSortNewsletter}>
       <slot />
     </Newsletters>
   </ResourcesNavBar>
