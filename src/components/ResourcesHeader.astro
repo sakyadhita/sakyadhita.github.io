@@ -1,0 +1,48 @@
+---
+/**
+ * This file creates a component for the resources header with an image, title, and description text.
+ *
+ * @summary Creates a component for resources header
+ * @author Dhanush Nanjunda Reddy, Amrit Kaur Singh
+ */
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
+
+interface Props {
+  image: string
+  height?: string
+  width?: string
+  title?: string
+  text?: string
+  showArrow?: boolean
+  arrowClickCallback?: (event: any) => void
+}
+
+const { image, height, width, title, text } = Astro.props
+
+const rawImage = getRawImage(image)
+const optimizedImage = rawImage ? await getImage({ src: rawImage, format: 'webp', width: 1600 }) : null
+---
+
+<div
+  class="relative bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat]"
+  style={{
+    backgroundImage: `url("${optimizedImage?.src || image}")`,
+    height,
+    width
+  }}
+>
+  {/* Purple box with a title and description */}
+  <div
+    class="absolute ml-[7vw] sm:ml-[10%] mt-[10%] top-8 sm:top-0 bg-brand-dark-purple/90 w-2/3 sm:w-128 h-fit p-8 text-white"
+  >
+    {
+      title ? (
+        <h1 class="font-heading font-bold text-2xl sm:text-4xl leading-relaxed w-full ml-6 sm:ml-0 mt-4 sm:mt-0">
+          {title}
+        </h1>
+      ) : null
+    }
+    {text ? <p class="font-body font-normal text-lg leading-relaxed mt-4">{text}</p> : null}
+  </div>
+</div>

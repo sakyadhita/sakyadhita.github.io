@@ -1,11 +1,23 @@
 ---
 import { getCollection } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
 
 import PageLayout from './PageLayout.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar'
 import Newsletters from '../components/Layouts/Newsletters'
 
-const newsletters = await getCollection('newsletter')
+const newslettersRaw = await getCollection('newsletter')
+const newsletters = await Promise.all(
+  newslettersRaw.map(async (n) => {
+    const raw = getRawImage(n.data.imageLink)
+    if (raw) {
+      const optimized = await getImage({ src: raw, format: 'webp', width: 300 })
+      return { ...n, data: { ...n.data, optimizedImage: optimized.src } }
+    }
+    return n
+  })
+)
 
 const { frontmatter } = Astro.props
 // return a reverse sort of the newsletter
@@ -27,8 +39,8 @@ let reverseSortNewsletter = newsletters.sort((a, b) => {
 ---
 
 <PageLayout>
-  <ResourcesNavBar client:only="react">
-    <Newsletters client:only="react" frontmatter={frontmatter} newsletters={reverseSortNewsletter}>
+  <ResourcesNavBar client:load>
+    <Newsletters client:load frontmatter={frontmatter} newsletters={reverseSortNewsletter}>
       <slot />
     </Newsletters>
   </ResourcesNavBar>

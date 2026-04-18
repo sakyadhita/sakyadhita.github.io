@@ -8,21 +8,15 @@
  * @summary     Displays Contact Us Page.
  * @author      Amrit Kaur Singh
  */
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Mail, Phone, House } from 'lucide-react'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
-import ImageHeader from '../Contact/ImageHeader'
-import ResourcesHeader from '../ResourcesHeader'
 import Modal from '../Modal'
-import CustomButton from '../CustomButton'
+import CustomButton from '../CustomButtonReact'
 import { cn } from '../../lib/utils'
 
-const MAX_MOBILE_WIDTH = 1050
-
 export default function ContactUs({ frontmatter, children }) {
-  // tracks page layout to width changes
-  const [isMobile, setIsMobile] = React.useState(false)
   // tracks whether form is disabled
   const [isFormDisabled, setIsFormDisabled] = React.useState(false)
   // tracks whether thank you modal should open
@@ -51,24 +45,6 @@ export default function ContactUs({ frontmatter, children }) {
       error: false
     }
   })
-
-  // handler to call on window resize
-  useEffect(() => {
-    function handleResize() {
-      // check if now in mobile mode
-      if (window.innerWidth <= MAX_MOBILE_WIDTH) {
-        setIsMobile(true)
-      } else {
-        setIsMobile(false)
-      }
-    }
-    // add event listener
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    // remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // handles user updates to any field in form
   const handleChange = (event) => {
@@ -164,32 +140,32 @@ export default function ContactUs({ frontmatter, children }) {
 
   const inputClasses = (hasError) =>
     cn(
-      'm-2 w-[95%] border-black rounded-[30px] focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple h-12 px-6 bg-white font-body',
+      'm-2 w-[95%] border-black rounded-3xl focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple h-12 px-6 bg-white font-body',
       hasError && 'border-brand-red ring-brand-red'
     )
 
   return (
     <div className="w-full h-auto flex flex-col lg:flex-row flex-1 font-body">
       {/* contains textual rendering of all information not including header image  */}
-      <section className="flex-1 p-6 md:p-12 lg:p-24 text-left prose max-w-none">
+      <section className="flex-1 p-6 md:p-12 lg:p-24 text-left prose max-w-none text-black">
         {/* Main paragraph at top  */}
-        <h2 className="font-heading font-bold text-2xl lg:text-3xl lowercase tracking-tight mb-5">
-          {isMobile ? 'Thank you for your interest in Sakyadhita!' : 'Contact Us'}
+        <h2 className="font-heading font-bold text-2xl lg:text-3xl lowercase tracking-tight mb-5 text-black">
+          Contact Us
         </h2>
         <div className="font-body text-lg leading-relaxed text-gray-700">{children}</div>
         {/* Contact Information */}
-        <h4 className="font-heading italic lowercase text-2xl mt-10 mb-5 border-b-2 border-brand-orange w-fit font-semibold">
+        <h4 className="font-heading italic lowercase text-2xl mt-10 mb-5 border-b-2 border-brand-orange w-fit font-semibold text-black">
           Reach us at:{' '}
         </h4>
         {/* Email */}
         <div className="space-y-3 font-body">
           {frontmatter.email.map((email) => (
-            <p key={email.address} className="flex items-center space-x-2 m-0">
+            <p key={email.address} className="flex items-center space-x-2 m-0 text-black">
               {' '}
               <Mail className="text-brand-orange w-5 h-5" />{' '}
               <a
                 href={'mailto:' + email.address}
-                className="hover:text-brand-orange transition-colors no-underline"
+                className="hover:text-brand-orange transition-colors no-underline text-black"
               >
                 {' '}
                 {email.address}{' '}
@@ -198,19 +174,19 @@ export default function ContactUs({ frontmatter, children }) {
             </p>
           ))}
           {/* Phone Number */}
-          <p className="flex items-center space-x-2 m-0">
+          <p className="flex items-center space-x-2 m-0 text-black">
             {' '}
             <Phone className="text-brand-orange w-5 h-5" /> <span>{frontmatter.phone}</span>
           </p>
           {/* Address */}
-          <div className="flex items-start space-x-2">
+          <div className="flex items-start space-x-2 text-black">
             <House className="text-brand-orange w-6 h-6 shrink-0 mt-1" />
             <span>{frontmatter.address}</span>
           </div>
         </div>
 
         {/* Renders Form */}
-        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6 font-semibold">
+        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6 font-semibold text-black">
           Send us a message!
         </h4>
         <form autoComplete="off" name="contact" className="space-y-4">
@@ -224,7 +200,7 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={inputClasses(values.name.error)}
             />
-            <span className="text-brand-red font-bold text-[25px]"> * </span>
+            <span className="text-brand-red font-bold text-3xl"> * </span>
           </div>
           {/* Email Field */}
           <div className="flex">
@@ -237,7 +213,7 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={inputClasses(values.email.error)}
             />
-            <span className="text-brand-red font-bold text-[25px]"> * </span>
+            <span className="text-brand-red font-bold text-3xl"> * </span>
           </div>
           {/* Phone Number Field */}
           <div className="flex">
@@ -265,7 +241,7 @@ export default function ContactUs({ frontmatter, children }) {
               )}
               rows={8}
             />
-            <span className="text-brand-red font-bold text-[25px]"> * </span>
+            <span className="text-brand-red font-bold text-3xl"> * </span>
           </div>
           {/* Note on required fields  */}
           <p className="text-center font-body text-sm text-gray-500 m-0">
@@ -288,22 +264,6 @@ export default function ContactUs({ frontmatter, children }) {
           </div>
         )}
       </section>
-
-      {isMobile || (typeof window !== 'undefined' && window.innerHeight <= 500) ? (
-        <div className="order-first">
-          <ResourcesHeader
-            image={frontmatter.image}
-            title="Contact Us"
-            height="max(40vh, 300px)"
-            width="100%"
-            showArrow={false}
-          />
-        </div>
-      ) : (
-        <div className="flex-1 min-h-[500px]">
-          <ImageHeader image={frontmatter.image} width="100%" height="100%" />
-        </div>
-      )}
 
       {/* Thank You Modal Once Form Submitted */}
       <Modal

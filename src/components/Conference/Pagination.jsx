@@ -8,7 +8,6 @@
  * @author      Amitesh Sharma
  */
 
-import React from 'react'
 import {
   Pagination,
   PaginationContent,

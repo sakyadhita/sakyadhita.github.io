@@ -6,7 +6,6 @@
  * @author      Aaron Kirk
  */
 
-import React from 'react'
 import { SITE_PAGES } from '../../../constants/links'
 import Cross from '../../../media/cross.svg'
 import { cn } from '../../../lib/utils'
@@ -32,13 +31,13 @@ export default function Nav({ visible, transition, toggle }) {
   }
 
   const navOptionClasses =
-    'w-full h-16 md:h-32 flex justify-start items-center pl-10 md:pl-8 hover:bg-brand-dark-orange hover:no-underline transition-colors group'
+    'w-full h-16 md:h-24 flex justify-start items-center pl-10 md:pl-8 hover:bg-brand-dark-orange hover:no-underline transition-colors group'
   const navTextClasses = 'font-heading text-lg md:text-xl text-white lowercase'
 
   return (
     <div
       className={cn(
-        'fixed top-0 md:top-32 h-full md:h-[calc(100vh-128px)] w-full md:w-80 bg-brand-orange flex flex-col justify-start md:justify-between z-[1001] pt-16 md:pt-0',
+        'fixed top-0 md:top-32 h-full md:h-[calc(100vh-128px)] w-full md:w-80 bg-brand-orange flex flex-col justify-start md:justify-between z-[1001] pt-16 md:pt-0 overflow-y-auto',
         transition && 'transition-[right] duration-500 ease-in-out',
         visible === 'visible' ? 'right-0' : 'right-[-100vw] md:right-[-320px]'
       )}

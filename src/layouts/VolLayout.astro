@@ -1,10 +1,18 @@
 ---
 import { getCollection } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
 
 import PageLayout from './PageLayout.astro'
 import Volunteer from '../components/Layouts/Volunteer'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
 
 const { frontmatter } = Astro.props
+
+const rawHeader = getRawImage(frontmatter.image)
+const optimizedHeader = rawHeader
+  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
+  : null
 
 const volinterests = await getCollection('volinterest')
 const interests = volinterests.map((interest) => {
@@ -15,9 +23,31 @@ const interests = volinterests.map((interest) => {
 ---
 
 <PageLayout>
-  <Volunteer client:only="react" frontmatter={frontmatter} interests={interests}>
+  {/* Responsive Headers - Astro */}
+  <div class="sm:hidden">
+    <ResourcesHeader
+      title={frontmatter.title}
+      image={optimizedHeader?.src || frontmatter.image}
+      height="max(40vh, 300px)"
+      width="100%"
+      showArrow={false}
+    />
+  </div>
+  <div class="hidden sm:block">
+    <ResourcesHeader
+      title={frontmatter.title}
+      text={frontmatter.description}
+      image={optimizedHeader?.src || frontmatter.image}
+      height="max(75vh, 400px)"
+      width="100%"
+    />
+  </div>
+
+  <Volunteer client:load frontmatter={frontmatter} interests={interests}>
     <slot />
   </Volunteer>
+
+  {/* Hidden form for Netlify detection */}
   <form name="volunteer" data-netlify="true" netlify-honeypot="bot-field" hidden>
     <input type="text" name="fName" />
     <input type="text" name="mName" />

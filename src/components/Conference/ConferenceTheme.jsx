@@ -6,16 +6,14 @@
  *  - title: required, string
  *  - location: required, string
  *  - redirect: required, string
- *  - theme: required, string
+ *  - theme: required, string (HTML)
  *
  * @summary     conferences theme component
  * @author      Amitesh Sharma
  */
 
-import React, { useState } from 'react'
-import Markdown from 'react-markdown'
+import { useState } from 'react'
 import Modal from '../Modal'
-import { cn } from '../../lib/utils'
 
 export default function ConferenceTheme(props) {
   // used to control the state of the CustomModal
@@ -65,9 +63,10 @@ export default function ConferenceTheme(props) {
 
       {/* The text describing the specific conference */}
       <div className="flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 mr-8">
-        <div className="flex-1 prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic lowercase">
-          <Markdown>{props.theme}</Markdown>
-        </div>
+        <div
+          className="flex-1 prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic lowercase"
+          dangerouslySetInnerHTML={{ __html: props.theme }}
+        />
         <div className="lg:w-1/2 shrink-0">{props.slideShow ? props.slideShow() : null}</div>
       </div>
 

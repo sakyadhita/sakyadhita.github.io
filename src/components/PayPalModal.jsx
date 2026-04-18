@@ -9,7 +9,7 @@
 
 import React from 'react'
 import PayPal from './PayPal'
-import CustomButton from './CustomButton'
+import CustomButton from './CustomButtonReact'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog'
 
 export default function PayPalModal(props) {

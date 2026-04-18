@@ -1,62 +1,80 @@
 ---
-import { getCollection, getEntry } from 'astro:content'
+import { getCollection, getEntry, render } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
+import { marked } from 'marked'
 import PageLayout from './PageLayout.astro'
-import Home from '../components/Layouts/Home'
+import HomeSlideshow from '../components/Home/HomeSlideshow'
+import HomeBody from '../components/Home/HomeBody.astro'
 
 const branches = await getCollection('branch')
 
-const news = await getCollection('news', ({ data }) => {
+const newsRaw = await getCollection('news', ({ data }) => {
   return data.draft !== true
 })
-const newsAndEvents = news
-  .map((m) => m.data)
-  .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+const newsAndEvents = await Promise.all(
+  newsRaw.map(async (n) => {
+    const raw = getRawImage(n.data.imageLink)
+    if (raw) {
+      const optimized = await getImage({ src: raw, format: 'webp', width: 1600 })
+      return { ...n.data, optimizedImage: optimized.src }
+    }
+    return n.data
+  })
+)
+newsAndEvents.sort((a, b) => (a.title || '').localeCompare(b.title || ''))
 
 const intro = await getEntry('section', 'introduction')
-const newsflash = await getEntry('section', 'newsflash')
+const { Content: IntroContent } = intro ? await render(intro) : { Content: null }
 
-const additionalSections = await getCollection('section', ({ data }) => {
+const newsflash = await getEntry('section', 'newsflash')
+const { Content: NewsFlashContent } = newsflash ? await render(newsflash) : { Content: null }
+
+const additionalSectionsRaw = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'Home'
 })
 
-const images = Object.values(import.meta.glob('../assets/home/*.jpg', { eager: true }))
+const additionalSections = await Promise.all(
+  additionalSectionsRaw.map(async (s) => {
+    const { Content } = await render(s)
+    return { ...s, Content }
+  })
+)
 
-// Since entry.body is not available in Content Layer, we fetch raw content using import.meta.glob
-const rawContent = import.meta.glob('../content/**/*.md', {
-  query: '?raw',
-  import: 'default',
-  eager: true
-})
+const imagesRaw = Object.values(import.meta.glob('../assets/home/*.jpg', { eager: true }))
+const images = await Promise.all(
+  imagesRaw.map(async (img: any) => {
+    const optimized = await getImage({ src: img.default, format: 'webp', width: 600 })
+    return {
+      original: img.default.src,
+      thumbnail: optimized.src,
+      width: img.default.width,
+      height: img.default.height
+    }
+  })
+)
 
-function getRawBody(id: string, collection: string) {
-  const key = `../content/${collection}/${id}.md`
-  const raw = rawContent[key] as string
-  if (raw) {
-    return raw.replace(/^---[\s\S]*?---/, '').trim()
-  }
-  return ''
-}
+// For tooltips, we still need HTML strings
+const branchesWithHtml = await Promise.all(
+  branches.map(async (b) => {
+    const html = await marked.parse(b.body || '')
+    return { ...b, html }
+  })
+)
 
-const introBody = intro ? getRawBody(intro.id, 'section') : ''
-const additionalSectionsWithBody = additionalSections.map((s) => ({
-  ...s,
-  body: getRawBody(s.id, 'section')
-}))
-
-const branchesWithBody = branches.map((b) => ({
-  ...b,
-  body: getRawBody(b.id, 'branch')
-}))
 ---
 
 <PageLayout>
-  <Home
-    client:only="react"
-    newsAndEvents={newsAndEvents}
-    introduction={introBody}
-    newsflash={newsflash}
-    branchesAndChapters={branchesWithBody}
-    additionalSections={additionalSectionsWithBody}
-    images={images}
-  />
+  <div class="w-full text-black">
+    <HomeSlideshow client:load newsAndEvents={newsAndEvents} />
+
+    <HomeBody
+      IntroContent={IntroContent}
+      newsflash={newsflash}
+      NewsFlashContent={NewsFlashContent}
+      additionalSections={additionalSections}
+      images={images}
+      branches={branchesWithHtml}
+    />
+  </div>
 </PageLayout>

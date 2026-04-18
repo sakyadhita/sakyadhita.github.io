@@ -9,7 +9,6 @@
  * @author      Amitesh Sharma
  */
 
-import React from 'react'
 import { AlertCircle } from 'lucide-react'
 
 export const ErrorLoadingContent = ({ height = '100%', width = '100%' }) => {

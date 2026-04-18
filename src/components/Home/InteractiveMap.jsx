@@ -26,7 +26,7 @@ const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
 const mapWidth = 800
 const mapHeight = 600
 
-export default function InteractiveMap({ markers, disableZooming = false, renderTooltipContent }) {
+export default function InteractiveMap({ markers, disableZooming = false }) {
   return (
     <div className="w-full h-full">
       <TooltipProvider>
@@ -88,7 +88,29 @@ export default function InteractiveMap({ markers, disableZooming = false, render
                   </g>
                 </TooltipTrigger>
                 <TooltipContent side="left" className="home-map-tooltip">
-                  {renderTooltipContent(i)}
+                  <div>
+                    {markers[i].siteLink ? (
+                      <a
+                        href={markers[i].siteLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-brand-orange hover:underline"
+                      >
+                        {markers[i].name}
+                      </a>
+                    ) : (
+                      <span className="font-bold text-brand-dark-purple">{markers[i].name}</span>
+                    )}
+                    {markers[i].email && (
+                      <div className="text-sm mt-1">{markers[i].email}</div>
+                    )}
+                    {markers[i].html && (
+                      <div
+                        className="prose prose-sm max-w-none mt-2 leading-tight italic"
+                        dangerouslySetInnerHTML={{ __html: markers[i].html }}
+                      />
+                    )}
+                  </div>
                 </TooltipContent>
               </Tooltip>
             ))}

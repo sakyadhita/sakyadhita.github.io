@@ -1,0 +1,42 @@
+---
+import { cn } from '../lib/utils'
+
+/**
+ * Component that renders a button that redirects to a new page
+ *
+ * @param {string} text  - The display name given to the button
+ * @param {string} redirect_link  - The redirect url once the button is clicked
+ * @param {boolean} openInSameTab  - True if redirect_link is open in same tab, false if it is opened in new tab
+ */
+interface Props {
+  text: string
+  redirect_link?: string
+  openInSameTab?: boolean
+  onClickCallback?: (event: any) => void
+  className?: string
+}
+
+const { text, redirect_link, openInSameTab = false, className = '' } = Astro.props
+
+const classes = cn(
+  'w-44 bg-brand-orange hover:bg-brand-dark-orange rounded-full shadow-[2px_2px_2px_rgb(63,62,62)] text-white uppercase font-bold h-auto py-2 text-sm font-body transition-transform active:scale-95 border-none inline-flex items-center justify-center no-underline hover:no-underline',
+  className
+)
+---
+
+{
+  redirect_link ? (
+    <a
+      href={redirect_link}
+      target={openInSameTab ? null : '_blank'}
+      rel="noreferrer"
+      class={classes}
+    >
+      {text}
+    </a>
+  ) : (
+    <button type="button" class={classes}>
+      {text}
+    </button>
+  )
+}

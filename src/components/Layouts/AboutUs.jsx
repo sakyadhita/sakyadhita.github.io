@@ -8,7 +8,6 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import Markdown from 'react-markdown'
 import ResourcesHeader from '../ResourcesHeader'
 import { cn } from '../../lib/utils'
 
@@ -69,7 +68,7 @@ const CommitteeProfiles = ({ committees, year }) => {
         >
           <img
             className="h-64 w-64 object-cover rounded-full mb-4 mt-20 border-[15px] border-[#f7f7f7]"
-            src={member.data.imageLink}
+            src={member.data.optimizedImage || member.data.imageLink}
             alt="Exec Headshot"
           />
           <h2 className="my-1 font-heading text-3xl font-bold text-center md:text-left">
@@ -98,9 +97,10 @@ const CommitteeProfiles = ({ committees, year }) => {
               {member.data.position}
             </h3>
           </div>
-          <div className="prose prose-sm max-w-none font-body py-5 px-2.5">
-            <Markdown>{member.body}</Markdown>
-          </div>
+          <div
+            className="prose prose-sm max-w-none font-body py-5 px-2.5"
+            dangerouslySetInnerHTML={{ __html: member.data.htmlBody }}
+          />
         </div>
       ))}
     </div>
@@ -209,7 +209,7 @@ export default function AboutUs({ frontmatter, committees, sections, children })
     <div className="relative w-full">
       {isMobile || (typeof window !== 'undefined' && window.innerHeight <= 500) ? (
         <ResourcesHeader
-          image={frontmatter.image}
+          image={frontmatter.optimizedImage || frontmatter.image}
           title={frontmatter.title}
           height="max(40vh, 300px)"
           width="100%"
@@ -218,7 +218,7 @@ export default function AboutUs({ frontmatter, committees, sections, children })
         />
       ) : (
         <ResourcesHeader
-          image={frontmatter.image}
+          image={frontmatter.optimizedImage || frontmatter.image}
           title={frontmatter.title}
           text={frontmatter.description}
           height="max(75vh, 400px)"

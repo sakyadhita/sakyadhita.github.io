@@ -6,9 +6,8 @@ import { Textarea } from '../ui/textarea'
 import { Label } from '../ui/label'
 
 import { CountryDropdown } from 'react-country-region-selector'
-import ResourcesHeader from '../ResourcesHeader'
 
-import CustomButton from '../CustomButton'
+import CustomButton from '../CustomButtonReact'
 import PayPalModal from '../PayPalModal'
 import Modal from '../Modal'
 import { cn } from '../../lib/utils'
@@ -21,10 +20,6 @@ function displayAsterisk() {
 }
 
 export default function JoinUs({ frontmatter, memberships }) {
-  // tracks window width changes
-  const [isMobile, setIsMobile] = useState(false)
-  const arrowScrollToRef = React.createRef()
-
   const [membershipCheck, setMembershipCheck] = useState(false)
   // tracks whether donation field should be displayed
   const [donateCheck, setDonateCheck] = useState(false)
@@ -101,20 +96,6 @@ export default function JoinUs({ frontmatter, memberships }) {
     open: false,
     message: ''
   })
-
-  // modifies isMobile state when window resizes
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth <= 600)
-    }
-
-    // event listener for resize
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    // Removes event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // paypal buttons are rendered if all fields are filled
   useEffect(() => {
@@ -230,17 +211,6 @@ export default function JoinUs({ frontmatter, memberships }) {
     setDonateCheck(false)
   }
 
-  // called when submit button is clicked
-  const scrollToRef = () => {
-    // only scrolls if element has been rendered on the screen by DOM first
-    if (arrowScrollToRef.current) {
-      arrowScrollToRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      })
-    }
-  }
-
   const encode = (data) => {
     return Object.keys(data)
       .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
@@ -343,81 +313,34 @@ export default function JoinUs({ frontmatter, memberships }) {
 
   return (
     <div className="font-body">
-      {isMobile || window.innerHeight <= 500 ? (
-        <ResourcesHeader
-          title={frontmatter.title}
-          image={frontmatter.image}
-          height="max(40vh, 300px)"
-          width="100%"
-          showArrow={false}
-        />
-      ) : (
-        <ResourcesHeader
-          title={frontmatter.title}
-          text={frontmatter.description}
-          image={frontmatter.image}
-          height="max(75vh, 400px)"
-          width="100%"
-          arrowClickCallback={scrollToRef}
-        />
-      )}
+      <div className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-12 text-black">
+        <div className="space-y-6">
+          <h1 className="text-4xl font-heading text-brand-dark-purple lowercase">
+            Thank you for your interest!
+          </h1>
+          <p className="text-lg leading-relaxed text-gray-700">
+            By filling out this form, you will be added to the email list. If you wish to also have
+            a membership with Sakyadhita, you will be asked to pay a membership fee through PayPal
+            once all required fields are filled out. If you wish to only be on the email list,
+            please check the “Not interested in membership” box below.
+          </p>
+          {/* checkbox to only join email list */}
+          <div className="flex items-center space-x-3 bg-brand-orange/10 p-4 rounded-lg border border-brand-orange/20">
+            <Checkbox
+              id="membershipCheck"
+              checked={membershipCheck}
+              onCheckedChange={handleMembershipChange}
+              className="border-black data-checked:bg-brand-orange"
+            />
+            <Label
+              htmlFor="membershipCheck"
+              className="cursor-pointer text-lg font-bold text-black"
+            >
+              Not interested in membership, but want to be on the email list.
+            </Label>
+          </div>
+        </div>
 
-      <div className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-12">
-        {/* displays info based on if device is mobile or not */}
-        {isMobile ? (
-          <div className="space-y-6">
-            <h1
-              ref={arrowScrollToRef}
-              className="text-3xl font-heading text-brand-dark-purple lowercase"
-            >
-              Thank you for your interest in Sakyadhita!
-            </h1>
-            <p className="text-lg leading-relaxed text-gray-700">
-              By filling out this form, you will be added to the email list and be asked to pay a
-              membership fee. Once all required fields are filled out, you may proceed to payment
-              through PayPal.
-            </p>
-            {/* checkbox to only join email list */}
-            <div className="flex items-center space-x-3 bg-brand-orange/10 p-4 rounded-lg">
-              <Checkbox
-                id="membershipCheck"
-                checked={membershipCheck}
-                onCheckedChange={handleMembershipChange}
-                className="border-black data-checked:bg-brand-orange"
-              />
-              <Label htmlFor="membershipCheck" className="cursor-pointer text-lg font-bold">
-                Want to join email list only.
-              </Label>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            <h1
-              ref={arrowScrollToRef}
-              className="text-4xl font-heading text-brand-dark-purple lowercase"
-            >
-              Thank you for your interest!
-            </h1>
-            <p className="text-lg leading-relaxed text-gray-700">
-              By filling out this form, you will be added to the email list. If you wish to also
-              have a membership with Sakyadhita, you will be asked to pay a membership fee through
-              PayPal once all required fields are filled out. If you wish to only be on the email
-              list, please check the “Not interested in membership” box below.
-            </p>
-            {/* checkbox to only join email list */}
-            <div className="flex items-center space-x-3 bg-brand-orange/10 p-4 rounded-lg border border-brand-orange/20">
-              <Checkbox
-                id="membershipCheck"
-                checked={membershipCheck}
-                onCheckedChange={handleMembershipChange}
-                className="border-black data-checked:bg-brand-orange"
-              />
-              <Label htmlFor="membershipCheck" className="cursor-pointer text-lg font-bold">
-                Not interested in membership, but want to be on the email list.
-              </Label>
-            </div>
-          </div>
-        )}
         <form autoComplete="off" className="space-y-4 max-w-2xl mx-auto">
           <section className="space-y-4">
             <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-12">
@@ -609,7 +532,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                       <SelectTrigger className={selectTriggerClasses}>
                         <SelectValue placeholder="New or Renewing Member?" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white font-body">
+                      <SelectContent className="bg-white font-body text-black">
                         <SelectItem value="new">New</SelectItem>
                         <SelectItem value="renew">Renewing</SelectItem>
                       </SelectContent>
@@ -646,7 +569,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                       <SelectTrigger className={selectTriggerClasses}>
                         <SelectValue placeholder="Select Membership" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white font-body">
+                      <SelectContent className="bg-white font-body text-black">
                         {memberships.map((membershipItem, index) => (
                           <SelectItem value={index.toString()} key={index}>
                             {membershipItem.title} ${membershipItem.cost} USD
@@ -663,11 +586,11 @@ export default function JoinUs({ frontmatter, memberships }) {
                     id="donateCheck"
                     checked={donateCheck}
                     onCheckedChange={handleDonateChange}
-                    className="border-black data-checked:bg-brand-orange w-6 h-6 rounded-md shrink-0"
+                    className="border-black data-checked:bg-brand-orange"
                   />
                   <Label
                     htmlFor="donateCheck"
-                    className="cursor-pointer font-bold text-lg leading-tight"
+                    className="cursor-pointer font-bold text-lg leading-tight text-black"
                   >
                     I would like to donate in addition to membership fees
                   </Label>
@@ -677,7 +600,7 @@ export default function JoinUs({ frontmatter, memberships }) {
                 {donateCheck ? (
                   <div className="flex items-center relative !mt-4">
                     <div className="relative w-full">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold z-10">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold z-10 text-black">
                         $
                       </span>
                       <Input

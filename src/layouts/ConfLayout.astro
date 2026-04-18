@@ -1,14 +1,36 @@
 ---
 import { getCollection } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
+import { marked } from 'marked'
 
 import PageLayout from './PageLayout.astro'
 import Conferences from '../components/Layouts/Conferences'
 
-const conferences = await getCollection('conference')
+const conferencesRaw = await getCollection('conference')
+const conferences = await Promise.all(
+  conferencesRaw.map(async (c) => {
+    const htmlBody = await marked.parse(c.body || '')
+    let optimizedImages = null
+    if (c.data.slideShowImages) {
+      optimizedImages = await Promise.all(
+        c.data.slideShowImages.map(async (img) => {
+          const raw = getRawImage(img)
+          if (raw) {
+            const opt = await getImage({ src: raw, format: 'webp', width: 1200 })
+            return opt.src
+          }
+          return img
+        })
+      )
+    }
+    return { ...c, data: { ...c.data, optimizedImages, htmlBody } }
+  })
+)
 ---
 
 <PageLayout>
-  <Conferences client:only="react" conferences={conferences.reverse()}>
+  <Conferences client:load conferences={conferences.reverse()}>
     <slot />
   </Conferences>
 </PageLayout>

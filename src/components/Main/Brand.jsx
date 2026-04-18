@@ -1,12 +1,10 @@
 /**
  * Contains the Sakyadhita logo, name, and subtitle for navbar and footer.
- * By default renders starting from the left for the navbar. If "footer" is
- * passed in for props.location, renders from the right for the footer.
+ * React version for compatibility with legacy React layouts.
  *
- * @summary     Contains the Sakyadhita logo, name, and subtitle.
- * @author      Aaron Kirk
+ * @summary     Brand component
  */
-
+import Logo from '../../media/logo.svg'
 import { SITE_PAGES } from '../../constants/links'
 import { cn } from '../../lib/utils'
 
@@ -24,7 +22,7 @@ export default function Brand({ location }) {
       )}
     >
       <img
-        src="/logo.svg"
+        src={Logo.src}
         alt="Logo"
         className={cn(isFooter ? 'h-12 md:h-20' : 'h-9 md:h-full max-h-full w-auto object-contain')}
       />

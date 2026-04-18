@@ -7,7 +7,8 @@
  */
 import React from 'react'
 
-export default function NewsletterCard({ title, year, image_url, redirect_link, isMobile }) {
+export default function NewsletterCard({ title, year, image_url, optimized_url, redirect_link, isMobile }) {
+  const displayImage = optimized_url || image_url
   // props title, year, image_url, redirect link
   if (!isMobile) {
     // desktop styles

@@ -7,7 +7,8 @@
 import React from 'react'
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '../ui/tooltip'
 
-export default function EPubCard({ title, author, image_url, redirect_link, isMobile }) {
+export default function EPubCard({ title, author, image_url, optimized_url, redirect_link, isMobile }) {
+  const displayImage = optimized_url || image_url
   // props title, author name, image_url, redirect link, isMobile
   return (
     <TooltipProvider>
@@ -20,7 +21,7 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
               <a href={redirect_link} target="_blank" rel="noreferrer noopener">
                 <img
                   alt={title}
-                  src={image_url}
+                  src={displayImage}
                   className="w-48 h-64 object-cover shadow-[0px_0px_12px_3px_rgba(0,0,0,0.25)] mb-5 transition-all hover:scale-105 hover:shadow-[0px_0px_12px_3px_var(--color-brand-dark-orange)]"
                 />
               </a>
@@ -49,7 +50,7 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
               <a href={redirect_link} target="_blank" rel="noreferrer noopener">
                 <img
                   alt={title}
-                  src={image_url}
+                  src={displayImage}
                   className="w-40 h-56 object-cover shadow-[0px_0px_3px_0.75px_rgba(0,0,0,0.25)] mb-4"
                 />
               </a>

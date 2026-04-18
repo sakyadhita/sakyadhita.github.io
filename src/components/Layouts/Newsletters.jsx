@@ -35,6 +35,7 @@ const PublicationGrid = ({ displayedNewsletters, isMobile }) => {
           title={`Volume ${newsletter.data.volume}, Number ${newsletter.data.number}`}
           year={newsletter.data.year}
           image_url={newsletter.data.imageLink}
+          optimized_url={newsletter.data.optimizedImage}
           redirect_link={newsletter.data.pdfLink}
           isMobile={isMobile}
         />

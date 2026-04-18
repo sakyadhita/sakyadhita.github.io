@@ -13,7 +13,7 @@
  * @author      Amitesh Sharma
  */
 
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ReactPlayer from 'react-player'
 import { ErrorLoadingContent } from '../Main/ErrorLoadingContent'
 import VerticalStepper from './VerticalStepper'
@@ -26,35 +26,19 @@ export default function ConferencesDesktop(props) {
   // switch used to toggle theme and overview state
   const [isInfo, setIsInfo] = useState(true)
   // keep track of the conference
-  const [index, setIndex] = useState(0)
-  // update screen with spceific conference information
-  const [item, setItem] = useState(props.data[index])
-  // list of all conferences
-  const [itemList] = useState(props.data)
+  const [index, setIndex] = useState(() => {
+    if (props.id) {
+      const ind = props.data.findIndex((x) => x.id === props.id)
+      return ind !== -1 ? ind : 0
+    }
+    return 0
+  })
+
+  // update screen with specific conference information
+  const item = props.data[index]
+
   // determine if video has an error
   const [videoError, setVideoError] = useState(false)
-
-  /**
-   * On rendering of page, set the current item to be the first item on stepper
-   */
-  useEffect(() => {
-    // initalially set the page to render the first conference
-    if (props.id) {
-      // find the index of the conference in the items list
-      const ind = itemList.findIndex((x) => x.id === props.id)
-      if (ind !== -1) {
-        setIndex(ind)
-        setItem(itemList[ind])
-      }
-    } else setItem(itemList[index])
-  }, [])
-
-  /**
-   * Switch between the theme and overview tabs depending on the previous state
-   */
-  const updateInformation = () => {
-    setIsInfo(!isInfo)
-  }
 
   /**
    * Updates the current index and information rendered
@@ -63,7 +47,6 @@ export default function ConferencesDesktop(props) {
    */
   const setParentIndex = (step) => {
     setIndex(step)
-    setItem(itemList[step])
   }
 
   const tabs = () => (
@@ -99,18 +82,19 @@ export default function ConferencesDesktop(props) {
    * @returns Node - component to render
    */
   const slideshowVideo = () => {
+    const displayImages = item.data.optimizedImages || item.data.slideShowImages
     if (isInfo || !item.data.video) {
       return (
         <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-50 h-112">
-          {item.data.slideShowImages.length === 1 ? (
+          {displayImages.length === 1 ? (
             <img
               className="w-full h-full object-cover"
               alt="Event Visual"
-              src={item.data.slideShowImages[0]}
+              src={displayImages[0]}
             />
           ) : (
             <Slideshow height="100%" width="100%" isMobile={false}>
-              {item.data.slideShowImages.map((image) => (
+              {displayImages.map((image) => (
                 <div key={image} className="w-full h-full">
                   <img className="w-full h-full object-cover" alt="Event Visual" src={image} />
                 </div>
@@ -155,7 +139,7 @@ export default function ConferencesDesktop(props) {
           title={item.data.title}
           location={item.data.location}
           redirect={item.data.signUpLink}
-          theme={item.body}
+          theme={item.data.htmlBody}
           signup={item.data.signUpLink}
           isMobile={false}
           slideShow={slideshowVideo}

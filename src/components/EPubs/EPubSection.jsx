@@ -52,6 +52,7 @@ const EPubSectionMobile = (
           title={currentPub.data.title}
           author={currentPub.data.author}
           image_url={currentPub.data.imageLink}
+          optimized_url={currentPub.data.optimizedImage}
           redirect_link={currentPub.data.pdfLink}
           isMobile={isMobile}
         />
@@ -97,6 +98,7 @@ const EPubSectionDesktop = (publication_section, setSelectedSection, isMobile) =
           title={pub.data.title}
           author={pub.data.author}
           image_url={pub.data.imageLink}
+          optimized_url={pub.data.optimizedImage}
           redirect_link={pub.data.pdfLink}
           isMobile={isMobile}
         />

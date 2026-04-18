@@ -1,10 +1,25 @@
 ---
 import { getCollection, render } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
+import { marked } from 'marked'
 
 import PageLayout from './PageLayout.astro'
 import AboutUs from '../components/Layouts/AboutUs'
 
-const committees = await getCollection('exco')
+const committeesRaw = await getCollection('exco')
+const committees = await Promise.all(
+  committeesRaw.map(async (c) => {
+    const raw = getRawImage(c.data.imageLink)
+    const htmlBody = await marked.parse(c.body || '')
+    let optimizedImage = null
+    if (raw) {
+      const optimized = await getImage({ src: raw, format: 'webp', width: 400 })
+      optimizedImage = optimized.src
+    }
+    return { ...c, data: { ...c.data, optimizedImage, htmlBody } }
+  })
+)
 const sections = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'AboutUs'
 })
@@ -16,6 +31,10 @@ const contents = await Promise.all(
 )
 
 const { frontmatter } = Astro.props
+const rawHeader = getRawImage(frontmatter.image)
+const optimizedHeader = rawHeader
+  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
+  : null
 
 function makeIdURLFriendly(idString: string) {
   return idString
@@ -28,8 +47,8 @@ function makeIdURLFriendly(idString: string) {
 
 <PageLayout>
   <AboutUs
-    client:only="react"
-    frontmatter={frontmatter}
+    client:load
+    frontmatter={{ ...frontmatter, optimizedImage: optimizedHeader?.src || frontmatter.image }}
     committees={committees}
     sections={sections}
   >

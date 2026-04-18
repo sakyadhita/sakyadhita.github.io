@@ -1,0 +1,43 @@
+---
+/**
+ * Renders News Flash Section of the Home page.
+ *
+ * @summary Displays latest news on the Home Page.
+ * @author Jitendra Joshi
+ */
+import CustomButton from '../CustomButton.astro'
+import { getOptimizedImage } from '../../lib/images'
+
+interface Props {
+  article: {
+    data: { title: string; subtitle: string; image: string; redirectLink: string }
+  }
+}
+
+const { article } = Astro.props
+const optimizedImage = await getOptimizedImage(article.data.image, 800)
+---
+
+<div id="news-flash" class="prose max-w-none mb-6">
+  <h1 class="font-heading font-bold mb-8">{article.data.title}</h1>
+
+  <div id="news-flash-wrapper" class="flex flex-col lg:flex-row gap-8 items-stretch">
+    <div class="flex-1 pb-2">
+      <p class="italic font-bold text-brand-dark-purple mb-4">{article.data.subtitle}</p>
+      <div class="mb-6">
+        <slot />
+      </div>
+      <div class="flex items-center justify-center">
+        <CustomButton text="Learn More" redirect_link={article.data.redirectLink} />
+      </div>
+    </div>
+    <div class="flex-1">
+      <img
+        id="news-flash-img"
+        class="w-full h-full object-contain rounded-lg shadow-md"
+        src={optimizedImage?.src || article.data.image}
+        alt={article.data.title}
+      />
+    </div>
+  </div>
+</div>

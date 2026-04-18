@@ -13,39 +13,29 @@
  * @author      Amitesh Sharma
  */
 
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ReactPlayer from 'react-player'
 import { ErrorLoadingContent } from '../Main/ErrorLoadingContent'
 import HorizontalStepper from './HorizontalStepper'
 import ConferenceOverview from './ConferenceOverview'
 import ConferenceTheme from './ConferenceTheme'
 import Slideshow from '../Slideshow'
-import { cn } from '../../lib/utils'
 
 export default function MobileConferences(props) {
   // keep track of the conference
-  const [index, setIndex] = useState(0)
-  // update screen with spceific conference information
-  const [item, setItem] = useState(props.data[index])
-  // list of all conferences
-  const [itemList] = useState(props.data)
+  const [index, setIndex] = useState(() => {
+    if (props.id) {
+      const ind = props.data.findIndex((x) => x.id === props.id)
+      return ind !== -1 ? ind : 0
+    }
+    return 0
+  })
+
+  // update screen with specific conference information
+  const item = props.data[index]
+
   // determine if video has an error
   const [videoError, setVideoError] = useState(false)
-
-  /**
-   * On rendering of page, set the current item to be the first item on stepper
-   */
-  useEffect(() => {
-    // initalially set the page to render the first conference
-    if (props.id) {
-      // find the index of the conference in the items list
-      const ind = itemList.findIndex((x) => x.id === props.id)
-      if (ind !== -1) {
-        setIndex(ind)
-        setItem(itemList[ind])
-      }
-    } else setItem(itemList[index])
-  }, [])
 
   /**
    * Updates the current index and information rendered
@@ -54,7 +44,6 @@ export default function MobileConferences(props) {
    */
   const setParentIndex = (step) => {
     setIndex(step)
-    setItem(itemList[step])
   }
 
   /**
@@ -64,10 +53,11 @@ export default function MobileConferences(props) {
    * @returns Node - component to render
    */
   const slideshowVideo = (isInfo) => {
+    const displayImages = item.data.optimizedImages || item.data.slideShowImages
     if (isInfo) {
       return (
         <div className="relative h-72 sm:h-96 w-full rounded-b-3xl overflow-hidden shadow-xl">
-          {item.data.slideShowImages.length === 1 ? (
+          {displayImages.length === 1 ? (
             <div className="w-full h-full relative">
               <div className="absolute bottom-10 left-6 z-10 text-white drop-shadow-md pr-12">
                 <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">
@@ -80,13 +70,13 @@ export default function MobileConferences(props) {
               <img
                 className="w-full h-full object-cover"
                 alt="Event"
-                src={item.data.slideShowImages[0]}
+                src={displayImages[0]}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
             </div>
           ) : (
             <Slideshow height="100%" width="100%" isMobile>
-              {item.data.slideShowImages.map((image) => (
+              {displayImages.map((image) => (
                 <div key={image} className="w-full h-full relative">
                   <div className="absolute bottom-12 left-6 z-10 text-white drop-shadow-md pr-12">
                     <h1 className="font-heading font-bold text-2xl lowercase tracking-tight">
@@ -132,7 +122,7 @@ export default function MobileConferences(props) {
         </h2>
         <ConferenceTheme
           redirect={item.data.signUpLink}
-          theme={item.body}
+          theme={item.data.htmlBody}
           signup={item.data.signUpLink}
           location={item.data.location}
           isMobile

@@ -1,5 +1,6 @@
 /**
  * This file creates a component for the resources header with an image, title, and description text.
+ * React version for compatibility with legacy React layouts.
  *
  * @summary Creates a component for resources header
  * @author Dhanush Nanjunda Reddy, Amrit Kaur Singh
@@ -19,15 +20,7 @@ import React from 'react'
  * @param {bool} showArrow - Default true. Indicates whether to show white arrow on bottom right
  * @param {function} arrowClickCallback - Only applicable if showArrow is also set to true. Callback used when arrow is clicked by user.
  */
-export default function ResourcesHeader({
-  image,
-  height,
-  width,
-  title,
-  text,
-  showArrow = true,
-  arrowClickCallback = null
-}) {
+export default function ResourcesHeader({ image, height, width, title, text }) {
   return (
     <div
       className="relative bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat]"

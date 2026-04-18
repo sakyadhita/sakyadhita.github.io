@@ -1,0 +1,41 @@
+---
+/**
+ * Renders one tile for the Be Involved Section of the Home page.
+ *
+ * @summary Displays one tile for Home Page's Be Involved sub-section.
+ * @author Amrit Kaur Singh
+ */
+import CustomButton from '../CustomButton.astro'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../../lib/images'
+
+interface Props {
+  description: string
+  image_url: string
+  button_title: string
+  redirect_link: string
+  openInSameTab?: boolean | string
+}
+
+const { description, image_url, button_title, redirect_link, openInSameTab } = Astro.props
+
+const rawImage = getRawImage(image_url)
+const optimizedImage = rawImage ? await getImage({ src: rawImage, format: 'webp', width: 800 }) : null
+---
+
+<div
+  id={button_title}
+  class="flex-1 w-full h-[450px] bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat] font-body text-white text-2xl shadow-[0px_0px_4px_2px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 group"
+  style={{ backgroundImage: `url(${optimizedImage?.src || image_url})` }}
+>
+  <div
+    class="w-full h-full bg-black/40 group-hover:bg-transparent flex flex-col justify-end items-center p-[10vw_20vw] md:p-[4vw_6vw] lg:p-[4vw_7vw] transition-colors"
+  >
+    <p class="text-center mb-6">{description}</p>
+    <CustomButton
+      openInSameTab={openInSameTab === 'true' || openInSameTab === true}
+      redirect_link={redirect_link}
+      text={button_title}
+    />
+  </div>
+</div>

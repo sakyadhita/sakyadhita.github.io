@@ -1,0 +1,140 @@
+---
+import BeInvolved from './BeInvolved.astro'
+import Introduction from './Introduction.astro'
+import NewsFlash from './NewsFlash.astro'
+import HomeGallery from './HomeGallery'
+import InteractiveMap from './InteractiveMap'
+import { SITE_PAGES } from '../../constants/links'
+
+interface Props {
+  IntroContent: any
+  newsflash: any
+  NewsFlashContent: any
+  additionalSections: any[]
+  images: any[]
+  branches: any[]
+}
+
+const {
+  IntroContent,
+  newsflash,
+  NewsFlashContent,
+  additionalSections,
+  images,
+  branches,
+} = Astro.props
+---
+
+<section
+  class="w-full px-4 md:px-12 py-12 md:py-24 flex flex-col items-center font-body text-black"
+>
+  <section id="home-intro" class="w-full whitespace-pre-line text-black">
+    <Introduction>
+      <IntroContent />
+    </Introduction>
+  </section>
+
+  <div class="w-1/2 h-0.5 bg-brand-orange my-16 md:my-20"></div>
+
+  {
+    newsflash && newsflash.data.isPublished && (
+      <section id="latest-news" class="w-full">
+        <NewsFlash article={newsflash}>
+          <NewsFlashContent />
+        </NewsFlash>
+      </section>
+    )
+  }
+
+  {
+    additionalSections.map((section) => (
+      <div class="w-full">
+        <div class="w-1/2 h-0.5 bg-brand-orange my-16 mx-auto" />
+        <section class="w-full flex flex-col gap-8 text-left whitespace-pre-line">
+          <h1 class="font-heading font-bold text-2xl md:text-3xl mb-8 mt-5 text-black">
+            {section.data.title}
+          </h1>
+          <div class="prose max-w-none flex flex-col items-center justify-center text-black">
+            <section.Content />
+          </div>
+        </section>
+      </div>
+    ))
+  }
+
+  {images.length > 0 && <HomeGallery client:visible images={images} />}
+
+  <section
+    id="branches-and-chapters"
+    class="w-full flex flex-col-reverse lg:flex-row-reverse items-center justify-center mt-8 gap-8 lg:gap-0"
+  >
+    <div class="w-full lg:w-1/2 h-96 md:h-[600px]">
+      <InteractiveMap
+        client:visible
+        disableZooming={false}
+        markers={branches.map((m) => ({ ...m.data, html: m.html }))}
+      />
+    </div>
+
+    <div class="w-full lg:w-1/2 lg:pr-12 prose max-w-none mt-6 lg:mt-0">
+      <h1 class="font-heading font-bold mb-8 text-2xl md:text-3xl text-black">Branches</h1>
+      <p class="text-gray-700">
+        Buddhist women and their allies gather at the Sakyadhita International Conferences every two
+        years and also organize national branches and local chapters to facilitate networking and
+        events closer to home. These branches and chapters help bring awareness of Sakyadhita’s
+        goals and activities to large numbers of people in their vicinity. Some help plan the
+        international conferences, developing leadership skills on the ground. Others are active in
+        translation activities and have done excellent work in training translators who are
+        qualified to translate materials on Buddhism and issues of interest to Buddhist women.
+        <br /><br />
+        Click on a pin for more information about the branch!
+      </p>
+      <section class="flex flex-row justify-evenly items-start mt-8 text-black font-bold">
+        <div class="flex flex-row items-center justify-center text-center">
+          <div class="w-6 h-6 mr-2 bg-[#EA8644]"></div>
+          <div class="lowercase">Branch</div>
+        </div>
+
+        <div class="flex flex-row items-center justify-center text-center">
+          <div class="w-6 h-6 mr-2 bg-[#8477B9]"></div>
+          <div class="lowercase">Chapter</div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <div class="w-1/2 h-0.5 bg-brand-orange my-16 md:my-20"></div>
+
+  <section id="home-be-involved" class="w-full prose max-w-none mt-8">
+    <h1
+      class="font-heading font-bold mb-8 text-2xl md:text-3xl text-center md:text-left text-black"
+    >
+      Be Involved{' '}
+    </h1>
+    <div
+      class="flex flex-col md:flex-row gap-5 md:gap-10 lg:gap-12 justify-between items-center mt-8"
+    >
+      <BeInvolved
+        description="Become a member of Sakyadhita!"
+        image_url="/assets/Join Us Page/JoinUs.jpg"
+        openInSameTab="true"
+        redirect_link={SITE_PAGES.JOIN_US}
+        button_title="Join Us"
+      />
+      <BeInvolved
+        description="Interested in helping us with anything from writing content to building?"
+        image_url="/assets/Join Us Page/Volunteer.jpg"
+        openInSameTab="true"
+        redirect_link={SITE_PAGES.VOLUNTEER}
+        button_title="Volunteer"
+      />
+      <BeInvolved
+        description="Help us grow and continue to connect by donating in any amount"
+        image_url="/assets/Donate Page/Donate.jpg"
+        openInSameTab="true"
+        redirect_link={SITE_PAGES.DONATE}
+        button_title="Donate"
+      />
+    </div>
+  </section>
+</section>

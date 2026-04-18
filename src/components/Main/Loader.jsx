@@ -4,8 +4,6 @@
     @author PatrickBrown1
  */
 
-import React from 'react'
-
 const Loader = () => (
   <div className="flex justify-center items-center my-36">
     <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-light-purple"></div>

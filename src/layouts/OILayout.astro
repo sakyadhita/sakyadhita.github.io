@@ -1,39 +1,71 @@
 ---
 import { getCollection, render } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
 
 import PageLayout from './PageLayout.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar'
-import OrdinationIssue from '../components/Layouts/OrdinationIssue'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
 
-const sections = await getCollection('section', ({ data }) => {
+const sectionsRaw = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'OrdinationIssue'
 })
-const contents = await Promise.all(
-  sections.map(async (s) => {
+const sections = await Promise.all(
+  sectionsRaw.map(async (s) => {
     const { Content } = await render(s)
-    return Content
+    return { ...s, Content }
   })
 )
 
 const { frontmatter } = Astro.props
+const rawHeader = getRawImage(frontmatter.image)
+const optimizedHeader = rawHeader
+  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
+  : null
 ---
 
 <PageLayout>
-  <ResourcesNavBar client:only="react">
-    <OrdinationIssue client:only="react" frontmatter={frontmatter} ordinationIssues={sections}>
-      {
-        sections.map((section, i) => {
-          const Content = contents[i]
+  <ResourcesNavBar client:load>
+    <div class="relative w-full">
+      {/* Responsive Headers */}
+      <div class="sm:hidden">
+        <ResourcesHeader
+          image={optimizedHeader?.src || frontmatter.image}
+          title={frontmatter.title}
+          height="max(40vh, 300px)"
+          width="100%"
+          showArrow={false}
+        />
+      </div>
+      <div class="hidden sm:block">
+        <ResourcesHeader
+          image={optimizedHeader?.src || frontmatter.image}
+          title={frontmatter.title}
+          text={frontmatter.description}
+          height="max(75vh, 400px)"
+          width="100%"
+        />
+      </div>
 
-          return (
-            <div class="page-content prose max-w-none">
-              <h2>{section.data.title}</h2>
-              <Content />
+      <div class="w-full max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-24 font-body">
+        {
+          sections.length === 0 ? (
+            <div class="h-64 flex items-center justify-center">
+              <h1 class="text-center font-heading font-bold text-3xl">Coming soon</h1>
+            </div>
+          ) : (
+            <div class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:mb-8 prose-img:mt-12 prose-img:w-full prose-img:rounded-lg prose-img:shadow-lg prose-img:mx-auto">
+              {sections.map((section) => (
+                <div class="mb-12">
+                  <h2 id={section.data.title.replaceAll(' ', '')}>{section.data.title}</h2>
+                  <section.Content />
+                </div>
+              ))}
+              <slot />
             </div>
           )
-        })
-      }
-      <slot />
-    </OrdinationIssue>
+        }
+      </div>
+    </div>
   </ResourcesNavBar>
 </PageLayout>

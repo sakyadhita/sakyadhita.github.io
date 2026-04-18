@@ -12,7 +12,6 @@
  * @author      Amitesh Sharma
  */
 
-import React from 'react'
 import { Download } from 'lucide-react'
 
 export default function ConferenceOverview(props) {

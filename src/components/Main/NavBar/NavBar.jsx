@@ -7,7 +7,7 @@
  * @author      Aaron Kirk
  */
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Hamburger from '../../../media/hamburger.svg'
 import Nav from './Nav'
 import Brand from '../Brand'
@@ -60,11 +60,19 @@ export default function NavBar() {
 
       {/* Overlay to darken website content when toggled */}
       <div
+        role="button"
+        tabIndex={0}
         className={cn(
           'fixed inset-0 bg-black/30 backdrop-blur-[2px] transition-opacity duration-500 z-[999] pointer-events-none opacity-0 md:block hidden',
           navToggled && 'opacity-100 pointer-events-auto'
         )}
         onClick={toggleNav}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            toggleNav()
+          }
+        }}
+        aria-label="Close navigation overlay"
       />
     </div>
   )

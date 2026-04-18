@@ -1,14 +1,47 @@
 ---
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
+
 import PageLayout from './PageLayout.astro'
 import ContactUs from '../components/Layouts/ContactUs'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
+import ImageHeader from '../components/Contact/ImageHeader'
 
 const { frontmatter } = Astro.props
+
+const rawHeader = getRawImage(frontmatter.image)
+const optimizedHeader = rawHeader
+  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
+  : null
 ---
 
 <PageLayout>
-  <ContactUs client:only="react" frontmatter={frontmatter}>
-    <slot />
-  </ContactUs>
+  <div class="w-full flex flex-col lg:flex-row">
+    {/* Responsive Header for Mobile - Astro */}
+    <div class="lg:hidden w-full">
+      <ResourcesHeader
+        image={optimizedHeader?.src || frontmatter.image}
+        title="Contact Us"
+        height="max(40vh, 300px)"
+        width="100%"
+        showArrow={false}
+      />
+    </div>
+
+    {/* The Interactive Form - React Island */}
+    <div class="flex-1">
+      <ContactUs client:load frontmatter={frontmatter}>
+        <slot />
+      </ContactUs>
+    </div>
+
+    {/* The Side Image for Desktop - React/Static Component */}
+    <div class="hidden lg:block flex-1 min-h-[500px]">
+      <ImageHeader image={optimizedHeader?.src || frontmatter.image} width="100%" height="100%" />
+    </div>
+  </div>
+
+  {/* Hidden form for Netlify detection */}
   <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
     <input type="text" name="name" />
     <input type="email" name="email" />

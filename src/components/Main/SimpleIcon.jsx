@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SimpleIcon = ({ icon, className, size = 24 }) => {
   return (
     <svg

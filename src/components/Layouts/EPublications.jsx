@@ -46,6 +46,7 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
                 title={pub.data.title}
                 author={pub.data.author}
                 image_url={pub.data.imageLink}
+                optimized_url={pub.data.optimizedImage}
                 redirect_link={pub.data.pdfLink}
                 isMobile={isMobile}
               />
@@ -81,6 +82,7 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
                 title={pub.data.title}
                 author={pub.data.author}
                 image_url={pub.data.imageLink}
+                optimized_url={pub.data.optimizedImage}
                 redirect_link={pub.data.pdfLink}
                 isMobile={isMobile}
               />
@@ -172,7 +174,7 @@ export default function EPublications({ sections, featuredEpubs }) {
                 </div>
                 <img
                   className="absolute top-0 right-0 w-[700px] max-md:w-full m-0 p-0 bg-brand-dark-purple object-cover h-full"
-                  src={epub.data.imageLink}
+                  src={epub.data.optimizedImage || epub.data.imageLink}
                   alt=""
                 />
               </div>

@@ -5,11 +5,15 @@ test.describe('Navigation', () => {
     await page.goto('/');
   });
 
-  async function openNav(page) {
+  async function openNav(page: any) {
     const hamburger = page.getByRole('button', { name: 'Toggle Navigation' });
     await hamburger.click();
-    // Wait for nav to be visible (right-0 class or just wait for a link in it)
-    await expect(page.locator('div.fixed.bg-brand-orange')).toBeVisible();
+    const navPanel = page.locator('div.fixed.bg-brand-orange')
+    await expect(navPanel).toBeVisible();
+    await navPanel.evaluate((element) => {
+      element.scrollTop = element.scrollHeight
+    })
+    await expect(navPanel.getByRole('link', { name: 'Contact Us' })).toBeInViewport();
   }
 
   test('homepage should load and have correct title', async ({ page }) => {
@@ -39,7 +43,12 @@ test.describe('Navigation', () => {
 
   test('should navigate to Contact page', async ({ page }) => {
     await openNav(page);
-    await page.locator('div.fixed.bg-brand-orange').getByRole('link', { name: 'Contact Us' }).click();
+    const contactLink = page
+      .locator('div.fixed.bg-brand-orange')
+      .getByRole('link', { name: 'Contact Us' })
+
+    await contactLink.scrollIntoViewIfNeeded()
+    await contactLink.click()
     await expect(page).toHaveURL(/\/contact/);
     // The contact page might not have a traditional H1, but check if any H1 is visible or just use text
     await expect(page.locator('body')).toContainText(/Contact/i);

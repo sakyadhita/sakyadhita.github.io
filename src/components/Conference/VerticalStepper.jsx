@@ -178,16 +178,17 @@ export default function VerticalStepper(props) {
               </button>
 
               {/* Label */}
-              <span
+              <button
+                type="button"
                 className={cn(
-                  'ml-4 text-base text-left max-w-40 truncate cursor-pointer hover:underline font-body transition-colors',
+                  'ml-4 text-base text-left max-w-40 truncate cursor-pointer hover:underline font-body transition-colors border-none bg-transparent p-0',
                   activeIndex === index ? 'font-bold opacity-100' : 'opacity-80'
                 )}
                 style={{ color: props.color }}
                 onClick={() => handleStep(index)}
               >
                 {determineLocationLabel(step.location)}
-              </span>
+              </button>
             </div>
 
             {/* Connector below */}

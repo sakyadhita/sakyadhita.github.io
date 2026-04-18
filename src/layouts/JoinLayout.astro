@@ -1,19 +1,48 @@
 ---
 import { getCollection } from 'astro:content'
+import { getImage } from 'astro:assets'
+import { getRawImage } from '../lib/images'
 
 import PageLayout from './PageLayout.astro'
 import JoinUs from '../components/Layouts/JoinUs'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
 
 const membertypes = await getCollection('membertype')
 const memberships = membertypes.map((m) => m.data)
 
 const { frontmatter } = Astro.props
+const rawHeader = getRawImage(frontmatter.image)
+const optimizedHeader = rawHeader
+  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
+  : null
 ---
 
 <PageLayout>
-  <JoinUs client:only="react" frontmatter={frontmatter} memberships={memberships}>
+  {/* Responsive Headers - Astro */}
+  <div class="sm:hidden">
+    <ResourcesHeader
+      title={frontmatter.title}
+      image={optimizedHeader?.src || frontmatter.image}
+      height="max(40vh, 300px)"
+      width="100%"
+      showArrow={false}
+    />
+  </div>
+  <div class="hidden sm:block">
+    <ResourcesHeader
+      title={frontmatter.title}
+      text={frontmatter.description}
+      image={optimizedHeader?.src || frontmatter.image}
+      height="max(75vh, 400px)"
+      width="100%"
+    />
+  </div>
+
+  <JoinUs client:load frontmatter={frontmatter} memberships={memberships}>
     <slot />
   </JoinUs>
+
+  {/* Hidden forms for Netlify detection */}
   <form name="membership" data-netlify="true" netlify-honeypot="bot-field" hidden>
     <input type="text" name="fName" />
     <input type="text" name="mName" />

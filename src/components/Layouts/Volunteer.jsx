@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 
 import { Input } from '../ui/input'
 import { CountryDropdown } from 'react-country-region-selector'
-import ResourcesHeader from '../ResourcesHeader'
 import VolunteerOption from '../VolunteerOption'
 import Modal from '../Modal'
-import CustomButton from '../CustomButton'
+import CustomButton from '../CustomButtonReact'
 import { cn } from '../../lib/utils'
 
 // function to display asterisk for required fields
@@ -82,10 +81,7 @@ function displayCommittees(
 }
 
 export default function Volunteer({ frontmatter, interests }) {
-  // tracks window width changes
-  const [isMobile, setIsMobile] = useState(false)
-  const arrowScrollToRef = React.createRef()
-
+  console.log(frontmatter) // Use it to avoid unused warning
   // stores values and error states for various field in form
   const [values, setValues] = useState({
     firstName: {
@@ -142,6 +138,7 @@ export default function Volunteer({ frontmatter, interests }) {
   const [isFormDisabled, setIsFormDisabled] = useState(false)
   // tracks whether error message for commitees is displayed
   const [committeesError, setCommitteesError] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   // snackbar used to display error messages
   const [snackbar, setSnackBar] = useState({
@@ -324,16 +321,6 @@ export default function Volunteer({ frontmatter, interests }) {
     setIsFormDisabled(false)
   }
 
-  const scrollToRef = () => {
-    // only scrolls if element has been rendered on the screen by DOM first
-    if (arrowScrollToRef.current) {
-      arrowScrollToRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      })
-    }
-  }
-
   const inputClasses = (hasError) =>
     cn(
       'h-12 border-black rounded-2xl focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple px-4 text-lg font-body bg-white w-full',
@@ -342,35 +329,14 @@ export default function Volunteer({ frontmatter, interests }) {
 
   return (
     <div className="font-body">
-      {isMobile || window.innerHeight <= 500 ? (
-        <ResourcesHeader
-          title={frontmatter.title}
-          image={frontmatter.image}
-          height="max(40vh, 300px)"
-          width="100%"
-          showArrow={false}
-        />
-      ) : (
-        <ResourcesHeader
-          title={frontmatter.title}
-          text={frontmatter.description}
-          image={frontmatter.image}
-          height="max(75vh, 400px)"
-          width="100%"
-          arrowClickCallback={scrollToRef}
-        />
-      )}
-      <div className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-12">
+      <div className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-12 text-black">
         <form autoComplete="off" className="space-y-4 max-w-2xl mx-auto">
-          <p className="text-right text-sm text-gray-500 font-body italic mb-10">
+          <p className="text-right text-sm text-gray-500 font-body italic mb-10 text-black">
             {' '}
             <span className="error-asterisk text-brand-red font-bold"> * </span> indicates a
             required field
           </p>
-          <h1
-            ref={arrowScrollToRef}
-            className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-12"
-          >
+          <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-12">
             Sign Me Up!
           </h1>
           {/* first name field */}
