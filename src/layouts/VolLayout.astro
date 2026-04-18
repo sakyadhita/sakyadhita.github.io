@@ -29,7 +29,7 @@ const interests = volinterests.map((interest) => {
     image={optimizedHeader?.src || frontmatter.image}
   />
 
-  <Volunteer client:load frontmatter={frontmatter} interests={interests}>
+  <Volunteer client:load interests={interests}>
     <slot />
   </Volunteer>
 

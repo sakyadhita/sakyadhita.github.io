@@ -35,11 +35,17 @@ const optimizedImage = rawImage
   <div
     class="absolute ml-[7vw] sm:ml-[10%] mt-[10%] top-8 sm:top-0 bg-brand-dark-purple/90 w-2/3 sm:w-128 h-fit p-8 text-white"
   >
-    {title && (
-      <h1 class="font-heading font-bold text-2xl sm:text-4xl leading-relaxed w-full ml-6 sm:ml-0 mt-4 sm:mt-0">
-        {title}
-      </h1>
-    )}
-    {text && <p class="hidden sm:block font-body font-normal text-lg leading-relaxed mt-4">{text}</p>}
+    {
+      title && (
+        <h1 class="font-heading font-bold text-2xl sm:text-4xl leading-relaxed w-full ml-6 sm:ml-0 mt-4 sm:mt-0">
+          {title}
+        </h1>
+      )
+    }
+    {
+      text && (
+        <p class="hidden sm:block font-body font-normal text-lg leading-relaxed mt-4">{text}</p>
+      )
+    }
   </div>
 </div>

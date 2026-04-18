@@ -18,10 +18,7 @@ const optimizedHeader = rawHeader
   <div class="w-full flex flex-col lg:flex-row">
     {/* Responsive Header for Mobile - Astro */}
     <div class="lg:hidden w-full">
-      <ResourcesHeader
-        image={optimizedHeader?.src || frontmatter.image}
-        title="Contact Us"
-      />
+      <ResourcesHeader image={optimizedHeader?.src || frontmatter.image} title="Contact Us" />
     </div>
 
     {/* The Interactive Form - React Island */}
@@ -35,7 +32,8 @@ const optimizedHeader = rawHeader
     <div
       class="hidden lg:block flex-1 min-h-[500px] bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url("${optimizedHeader?.src || frontmatter.image}")` }}
-    />
+    >
+    </div>
   </div>
 
   {/* Hidden form for Netlify detection */}

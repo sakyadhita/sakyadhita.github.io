@@ -197,24 +197,24 @@ export default function AboutUs({ committees, sections, children }) {
                   >
                     {section.data.title}
                   </a>
-                  </li>
-                ))}
-                <li className="py-2">
-                  <a
-                    href="#exec"
-                    className={cn(
-                      'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
-                      scrollLocation === 'Executive Committee'
-                        ? 'text-brand-orange border-b-2 border-brand-orange'
-                        : 'border-b-2 border-transparent'
-                    )}
-                  >
-                    Executive Committee
-                  </a>
                 </li>
-              </ul>
-            </nav>
-          </aside>
+              ))}
+              <li className="py-2">
+                <a
+                  href="#exec"
+                  className={cn(
+                    'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
+                    scrollLocation === 'Executive Committee'
+                      ? 'text-brand-orange border-b-2 border-brand-orange'
+                      : 'border-b-2 border-transparent'
+                  )}
+                >
+                  Executive Committee
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
 
         {/* Contents of page */}
         <div className="flex-1 w-full max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-24 font-body">

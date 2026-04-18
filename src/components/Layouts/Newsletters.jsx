@@ -159,9 +159,7 @@ export default function Newsletters({ newsletters }) {
                 }}
                 href="#"
                 className={
-                  currentPage === maxPages - 1
-                    ? 'pointer-events-none opacity-50'
-                    : 'cursor-pointer'
+                  currentPage === maxPages - 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'
                 }
               />
             </PaginationItem>

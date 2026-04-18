@@ -80,7 +80,7 @@ function displayCommittees(
   )
 }
 
-export default function Volunteer({ frontmatter, interests }) {
+export default function Volunteer({ interests }) {
   // stores values and error states for various field in form
   const [values, setValues] = useState({
     firstName: {

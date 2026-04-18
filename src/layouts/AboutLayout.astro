@@ -52,11 +52,7 @@ function makeIdURLFriendly(idString: string) {
     text={frontmatter.description}
     image={optimizedHeader?.src || frontmatter.image}
   />
-  <AboutUs
-    client:load
-    committees={committees}
-    sections={sections}
-  >
+  <AboutUs client:load committees={committees} sections={sections}>
     {
       sections.map((section, i) => {
         const Content = contents[i]
