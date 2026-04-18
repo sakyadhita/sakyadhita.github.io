@@ -16,8 +16,10 @@ This project is the official website for **Sakyadhita International Association 
 ## 🏗️ Architectural Decisions
 
 - **Astro**: The project is committed to using Astro as the core meta-framework for static site generation and modern routing.
+- **Content Collections**: The migration to the Astro 6 **`glob` loader API** (in `src/content.config.ts`) is complete and mandatory for all new collections.
 - **shadcn/ui (Base UI Native)**: All new UI components should be built using shadcn/ui. The project specifically uses the **Base UI** native version of shadcn components to ensure a headless, accessible, and highly customizable UI layer without the bloat of traditional component libraries.
 - **Tailwind CSS v4**: Tailwind CSS is the primary utility for styling, used in conjunction with shadcn/ui.
+- **Type Safety & Linting**: Strict TypeScript definitions and ESLint rules are enforced across the codebase. All Astro components must have well-defined prop interfaces (e.g., using `RenderableComponent`, `NewsflashLike`) to pass type checking.
 - **E2E Testing**: Playwright is used to ensure stability across browsers and devices, with automated checks on PRs and pushes.
 
 ## 🛠️ Getting Started
@@ -66,5 +68,6 @@ To update content, modify the Markdown files in `src/content/`.
 Pushes to the `main` branch automatically trigger a deploy on Netlify and run the Playwright test suite via GitHub Actions. Always verify your changes with `pnpm build` and `pnpm test:e2e` before pushing.
 
 ## 📝 TODOs / Future Work
-- [ ] Complete the migration of `src/content/config.ts` to the latest Astro loader API (e.g., using `glob` loader).
+- [ ] Maintain and expand the strict type safety standards established in v2.0.1 across all new features.
+- [ ] Increase E2E test coverage for interactive components like the PayPal modal and map sections.
 - [ ] Ensure all images in `public/assets` are optimized where possible.

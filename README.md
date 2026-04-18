@@ -15,6 +15,24 @@ The website has undergone a complete architectural overhaul to ensure long-term 
 - **Testing**: Integrated **Playwright** for comprehensive End-to-End (E2E) testing across browsers.
 - **Maintainability**: Consolidated CSS, removed legacy code, and optimized the content collection structure.
 
+## 🏗️ Extensive Implementation Notes
+
+The v2.0 refactor represents a major shift in the project's architecture, focusing on modern web standards, type safety, and developer experience.
+
+### Framework & Tooling
+The site has been upgraded to **Astro 6** and **React 19**. This upgrade introduced stricter type-checking requirements, particularly for component props and content collections. The project now leverages modern TypeScript features and stricter ESLint rules to prevent common errors and ensure a more predictable development cycle.
+
+### Content Collections Migration
+A critical part of the modernization was the migration of the content management system to the new **Astro 6 `glob` loader API**. All collections defined in `src/content.config.ts` now use the more performant and flexible `glob` loader instead of the legacy content API. This change allows for better integration with modern build tools and improved performance during static site generation.
+
+### Styling & UI Architecture
+The project has moved away from heavy UI frameworks like Material UI and Bootstrap. Styling is now handled exclusively by **Tailwind CSS v4**, which provides a streamlined and utility-first approach. 
+- **Headless UI**: Interactive components (like Modals and Menus) are built using **Base UI (headless)**. This ensures that the UI is fully accessible (ARIA compliant) and highly customizable without the overhead of pre-styled components.
+- **Performance-Focused Components**: Heavy slideshow and carousel dependencies have been replaced with **Embla Carousel**, providing a much lighter and smoother user experience.
+
+### Testing & Stability
+To ensure long-term stability and prevent regressions, the project now includes a comprehensive **Playwright E2E testing suite**. These tests cover critical user paths including navigation, home page interactivity, and site footer functionality. The development workflow has also been hardened with improved prop guards and refined ESLint configurations to ensure that every build is robust and type-safe.
+
 ## Releases
 
 * 2.0.1: **Stability, Lint, and Typecheck Improvements**
