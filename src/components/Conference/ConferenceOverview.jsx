@@ -84,9 +84,7 @@ export default function ConferenceOverview(props) {
           {itemList(items.data.presentations)}
         </div>
 
-        <div className="lg:w-[50%] shrink-0">
-          {props.slideShow ? props.slideShow() : null}
-        </div>
+        <div className="lg:w-1/2 shrink-0">{props.slideShow ? props.slideShow() : null}</div>
       </div>
     </div>
   )

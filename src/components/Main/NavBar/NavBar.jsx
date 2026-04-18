@@ -40,14 +40,14 @@ export default function NavBar() {
   return (
     <div className="sticky top-0 w-full z-[1000]">
       {/* The actual Navigation Bar */}
-      <div className="h-[50px] md:h-[120px] w-full px-6 md:px-[55px] py-2 md:py-4 flex justify-between items-center bg-brand-light-purple text-white shadow-none md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]">
+      <div className="h-12 md:h-32 w-full px-6 md:px-14 py-2 md:py-4 flex justify-between items-center bg-brand-light-purple text-white shadow-none md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]">
         {/* Logo and Branding */}
         <Brand />
 
         {/* Hamburger Button to Toggle Navigation */}
         <button
           type="button"
-          className="relative w-5 h-5 md:w-[50px] md:h-[50px] cursor-pointer border-none bg-transparent"
+          className="relative w-5 h-5 md:w-12 md:h-12 cursor-pointer border-none bg-transparent"
           onClick={toggleNav}
           onKeyDown={toggleNav}
         >

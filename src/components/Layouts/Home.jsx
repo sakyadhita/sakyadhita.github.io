@@ -192,7 +192,9 @@ export default function Home({
             <section className="w-full flex flex-col gap-8">
               {additionalSections.map((section) => (
                 <div key={section.id} className="flex flex-col text-left whitespace-pre-line">
-                  <h1 className="font-heading font-bold text-2xl md:text-3xl mb-8 mt-5">{section.data.title}</h1>
+                  <h1 className="font-heading font-bold text-2xl md:text-3xl mb-8 mt-5">
+                    {section.data.title}
+                  </h1>
                   <div
                     className="prose max-w-none flex flex-col items-center justify-center"
                     dangerouslySetInnerHTML={{ __html: `${section.body}` }}
@@ -204,7 +206,10 @@ export default function Home({
         )}
         {images.length > 0 && (
           <Gallery>
-            <section className="w-full mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" aria-label="Gallery">
+            <section
+              className="w-full mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+              aria-label="Gallery"
+            >
               {images.map((image, index) => (
                 <Item
                   key={`${image.default.src}-${index}`}
@@ -232,7 +237,10 @@ export default function Home({
         )}
 
         {/* Branches & Chapters Section */}
-        <section id="branches-and-chapters" className="w-full flex flex-col-reverse lg:flex-row-reverse items-center justify-center mt-[30px]">
+        <section
+          id="branches-and-chapters"
+          className="w-full flex flex-col-reverse lg:flex-row-reverse items-center justify-center mt-8"
+        >
           {/* Interactive Map */}
           {isPageLoading ? (
             formatLoader
@@ -248,7 +256,7 @@ export default function Home({
 
           {/* Branch/Chapter Information  */}
           <div className="w-full lg:w-1/2 lg:pr-12 prose max-w-none mt-6 lg:mt-0 whitespace-pre-wrap">
-            <h1 className="font-heading font-bold mb-[30px] text-2xl md:text-3xl">Branches </h1>
+            <h1 className="font-heading font-bold mb-8 text-2xl md:text-3xl">Branches </h1>
             <p className="text-gray-700">
               Buddhist women and their allies gather at the Sakyadhita International Conferences
               every two years and also organize national branches and local chapters to facilitate
@@ -283,8 +291,10 @@ export default function Home({
 
         {/* Be Involved Section  */}
         <section id="home-be-involved" className="w-full prose max-w-none mt-8">
-          <h1 className="font-heading font-bold mb-[30px] text-2xl md:text-3xl text-center md:text-left">Be Involved </h1>
-          <div className="flex flex-col md:flex-row gap-5 md:gap-10 lg:gap-12 justify-between items-center mt-[30px]">
+          <h1 className="font-heading font-bold mb-8 text-2xl md:text-3xl text-center md:text-left">
+            Be Involved{' '}
+          </h1>
+          <div className="flex flex-col md:flex-row gap-5 md:gap-10 lg:gap-12 justify-between items-center mt-8">
             {/* Join Us  */}
             <BeInvolved
               description="Become a member of Sakyadhita!"

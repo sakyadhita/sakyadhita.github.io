@@ -75,7 +75,7 @@ export default function OrdinationIssue({ frontmatter, ordinationIssues, childre
           />
           <div className="w-full max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-24 font-body">
             {ordinationIssues.length === 0 ? (
-              <div className="h-[250px] flex items-center justify-center">
+              <div className="h-64 flex items-center justify-center">
                 <h1 className="text-center font-heading font-bold text-3xl">Coming soon</h1>
               </div>
             ) : (

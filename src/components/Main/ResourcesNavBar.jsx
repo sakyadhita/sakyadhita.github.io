@@ -99,7 +99,7 @@ export default function ResourcesNavBar(props) {
   ]
 
   const mobileLinkClasses =
-    'w-full h-[60px] flex justify-start items-center px-8 sm:px-[15vw] md:px-[25vw] hover:bg-brand-dark-orange transition-colors group no-underline hover:no-underline'
+    'w-full h-16 flex justify-start items-center px-10 sm:px-20 md:px-32 hover:bg-brand-dark-orange transition-colors group no-underline hover:no-underline'
   const textClasses = 'font-heading text-white text-lg lowercase'
 
   return (
@@ -109,7 +109,7 @@ export default function ResourcesNavBar(props) {
         id="resources-menu-toggle"
         onClick={toggleNav}
         type="button"
-        className="fixed top-[70px] left-[20px] z-[1001] md:hidden w-[40px] h-[40px] bg-brand-orange rounded-full flex items-center justify-center shadow-lg cursor-pointer border-none"
+        className="fixed top-20 left-5 z-[1001] md:hidden w-10 h-10 bg-brand-orange rounded-full flex items-center justify-center shadow-lg cursor-pointer border-none"
         aria-label="Toggle Resources Menu"
       >
         <span className="text-white text-xs font-bold uppercase">Menu</span>
@@ -127,7 +127,7 @@ export default function ResourcesNavBar(props) {
           id="cross"
           onClick={toggleNav}
           type="button"
-          className="absolute top-[25px] right-[25px] w-[25px] h-[25px] bg-transparent border-none cursor-pointer"
+          className="absolute top-6 right-6 w-6 h-6 bg-transparent border-none cursor-pointer"
         >
           <img
             src={typeof Cross === 'string' ? Cross : Cross.src}
@@ -152,14 +152,14 @@ export default function ResourcesNavBar(props) {
       </div>
 
       {/* Desktop Horizontal Navbar */}
-      <nav className="hidden md:flex sticky top-[120px] z-[999] w-full bg-brand-orange h-[70px] items-center justify-center shadow-md">
+      <nav className="hidden md:flex sticky top-32 z-[999] w-full bg-brand-orange h-20 items-center justify-center shadow-md">
         {navItems.map((item) => (
           <a
             key={item.label}
             href={item.link}
             onClick={(event) => handleNavClick(event, item.link)}
             className={cn(
-              'w-[200px] h-full flex items-center justify-center text-white font-body text-[1.125em] hover:bg-brand-dark-orange transition-colors no-underline hover:no-underline lowercase',
+              'w-48 h-full flex items-center justify-center text-white font-body text-lg hover:bg-brand-dark-orange transition-colors no-underline hover:no-underline lowercase',
               isPageActive(item.link)
             )}
           >

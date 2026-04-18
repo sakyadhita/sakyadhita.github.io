@@ -210,7 +210,9 @@ export default function ContactUs({ frontmatter, children }) {
         </div>
 
         {/* Renders Form */}
-        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6 font-semibold">Send us a message!</h4>
+        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6 font-semibold">
+          Send us a message!
+        </h4>
         <form autoComplete="off" name="contact" className="space-y-4">
           {/* Full Name Field */}
           <div className="flex">
@@ -259,7 +261,7 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={cn(
                 inputClasses(values.message.error),
-                'h-48 rounded-[20px] py-4 resize-none'
+                'h-48 rounded-2xl py-4 resize-none'
               )}
               rows={8}
             />
@@ -268,8 +270,7 @@ export default function ContactUs({ frontmatter, children }) {
           {/* Note on required fields  */}
           <p className="text-center font-body text-sm text-gray-500 m-0">
             {' '}
-            <span className="text-brand-red font-bold"> * </span> indicates a
-            required field
+            <span className="text-brand-red font-bold"> * </span> indicates a required field
           </p>
           {/* Submit Button */}
           <div className="flex justify-center py-4 mt-5">

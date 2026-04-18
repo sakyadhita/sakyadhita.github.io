@@ -32,21 +32,21 @@ export default function Nav({ visible, transition, toggle }) {
   }
 
   const navOptionClasses =
-    'w-full h-[60px] md:h-[calc((100vh-120px)/5)] flex justify-start items-center pl-[25vw] md:pl-[calc(1.9vw+2px)] md:pr-0 hover:bg-brand-dark-orange hover:no-underline transition-colors group'
-  const navTextClasses = 'font-heading text-lg md:text-[min(1.25em,2.5vw)] text-white lowercase'
+    'w-full h-16 md:h-32 flex justify-start items-center pl-10 md:pl-8 hover:bg-brand-dark-orange hover:no-underline transition-colors group'
+  const navTextClasses = 'font-heading text-lg md:text-xl text-white lowercase'
 
   return (
     <div
       className={cn(
-        'fixed top-0 md:top-[120px] h-full md:h-[calc(100vh-120px)] w-full md:w-[min(350px,22vw)] bg-brand-orange flex flex-col justify-start md:justify-between z-[1001] pt-[60px] md:pt-0',
+        'fixed top-0 md:top-32 h-full md:h-[calc(100vh-128px)] w-full md:w-80 bg-brand-orange flex flex-col justify-start md:justify-between z-[1001] pt-16 md:pt-0',
         transition && 'transition-[right] duration-500 ease-in-out',
-        visible === 'visible' ? 'right-0' : 'right-[-100vw] md:right-[max(-350px,-22vw)]'
+        visible === 'visible' ? 'right-0' : 'right-[-100vw] md:right-[-320px]'
       )}
     >
       {/* Cross icon to close panel on mobile */}
       <button
         type="button"
-        className="absolute top-[25px] right-[25px] w-[25px] h-[25px] md:hidden cursor-pointer bg-transparent border-none"
+        className="absolute top-6 right-6 w-6 h-6 md:hidden cursor-pointer bg-transparent border-none"
         onClick={toggle}
         onKeyDown={toggle}
       >

@@ -17,16 +17,12 @@ export default function ResourcesLandingPageHeader({ image, height, width, title
       }}
     >
       {/* Purple box with a title and description */}
-      <div className="absolute left-[10%] md:left-[15%] top-[30%] md:top-[40%] -translate-x-[50%] -translate-y-[50%] bg-brand-dark-purple/85 w-[min(fit-content,56%)] md:w-[min(fit-content,66%)] h-fit p-[4vw] md:p-[2.67vw_2.34vw_1.67vw_2.34vw] text-white">
+      <div className="absolute left-[10%] md:left-[15%] top-1/3 md:top-[40%] -translate-y-1/2 bg-brand-dark-purple/90 w-2/3 md:w-auto h-auto p-8 md:p-10 text-white">
         {title ? (
-          <h1 className="font-heading font-bold text-[6.63vw] md:text-[36px] leading-[170%] md:leading-[45px]">
-            {title}
-          </h1>
+          <h1 className="font-heading font-bold text-3xl md:text-4xl leading-tight">{title}</h1>
         ) : null}
         {text ? (
-          <p className="font-body font-normal text-[5vw] min-[450px]:text-[3vw] md:text-[18px] leading-[6.88vw] min-[450px]:leading-[5vw] md:leading-[25px]">
-            {text}
-          </p>
+          <p className="font-body font-normal text-lg md:text-xl leading-relaxed mt-4">{text}</p>
         ) : null}
       </div>
     </div>

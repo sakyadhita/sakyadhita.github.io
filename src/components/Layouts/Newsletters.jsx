@@ -181,7 +181,9 @@ export default function Newsletters({ frontmatter, newsletters }) {
                     if (currentPage > 0) handlePageChange(currentPage - 1)
                   }}
                   href="#"
-                  className={currentPage === 0 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                  className={
+                    currentPage === 0 ? 'pointer-events-none opacity-50' : 'cursor-pointer'
+                  }
                 />
               </PaginationItem>
 
@@ -194,7 +196,11 @@ export default function Newsletters({ frontmatter, newsletters }) {
                     if (currentPage < maxPages - 1) handlePageChange(currentPage + 1)
                   }}
                   href="#"
-                  className={currentPage === maxPages - 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                  className={
+                    currentPage === maxPages - 1
+                      ? 'pointer-events-none opacity-50'
+                      : 'cursor-pointer'
+                  }
                 />
               </PaginationItem>
             </PaginationContent>

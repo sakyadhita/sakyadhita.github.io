@@ -125,7 +125,7 @@ export default function BuddhistCulture({ frontmatter, sections, children }) {
       <div className="w-full flex flex-col md:flex-row">
         {/* Sticky Nav */}
         {!isMobile && sections.length > 0 && (
-          <aside className="hidden md:block w-[250px] shrink-0 h-fit sticky top-32 mt-24 ml-8 lg:ml-16">
+          <aside className="hidden md:block w-64 shrink-0 h-fit sticky top-32 mt-24 ml-8 lg:ml-16">
             <nav className="relative flex border-r border-gray-300 pr-8">
               <ul className="flex flex-col list-none p-0 m-0 space-y-4 w-full">
                 {sections.map((item) => (

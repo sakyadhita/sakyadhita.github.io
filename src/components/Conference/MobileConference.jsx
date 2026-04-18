@@ -66,7 +66,7 @@ export default function MobileConferences(props) {
   const slideshowVideo = (isInfo) => {
     if (isInfo) {
       return (
-        <div className="relative h-[300px] sm:h-[400px] w-full rounded-b-3xl overflow-hidden shadow-xl">
+        <div className="relative h-72 sm:h-96 w-full rounded-b-3xl overflow-hidden shadow-xl">
           {item.data.slideShowImages.length === 1 ? (
             <div className="w-full h-full relative">
               <div className="absolute bottom-10 left-6 z-10 text-white drop-shadow-md pr-12">

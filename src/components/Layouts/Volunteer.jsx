@@ -336,7 +336,7 @@ export default function Volunteer({ frontmatter, interests }) {
 
   const inputClasses = (hasError) =>
     cn(
-      'h-12 border-black rounded-[15px] focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple px-4 text-[18px] font-body bg-white w-full',
+      'h-12 border-black rounded-2xl focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple px-4 text-lg font-body bg-white w-full',
       hasError && 'border-brand-red'
     )
 
@@ -438,7 +438,7 @@ export default function Volunteer({ frontmatter, interests }) {
           <div className="flex items-center !mt-1">
             <div className="flex-1">
               <CountryDropdown
-                className="input-field country-dropdown h-12 border-black rounded-[15px] px-4 text-[18px] font-body w-full bg-white transition-all focus:ring-2 focus:ring-brand-dark-purple outline-none"
+                className="input-field country-dropdown h-12 border-black rounded-2xl px-4 text-lg font-body w-full bg-white transition-all focus:ring-2 focus:ring-brand-dark-purple outline-none"
                 style={
                   values.country.error
                     ? { border: '1px solid #ea4444' }

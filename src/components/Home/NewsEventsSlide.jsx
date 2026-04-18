@@ -42,7 +42,7 @@ export default function NewsEventsSlide({
       style={{ backgroundImage: `url("${image_url}")`, height }}
     >
       {/* Displays all slide information in rectangular box */}
-      <div className="absolute top-[7%] left-[15%] lg:left-[15%] lg:ml-0 md:left-1/2 md:-translate-x-1/2 md:ml-0 bg-brand-dark-purple/20 w-[70.5vw] md:w-[500px] min-[350px]:w-[70.5vw] max-[350px]:w-[75%] h-fit p-5 min-[350px]:p-[30px] lg:p-[50px] text-white">
+      <div className="absolute top-[7%] left-[15%] md:left-1/2 md:-translate-x-1/2 lg:left-[15%] lg:translate-x-0 bg-brand-dark-purple/20 w-[75%] min-[350px]:w-[70.5vw] md:w-128 h-fit p-5 min-[350px]:p-8 lg:p-12 text-white">
         {/* Title */}
         {title ? (
           <h1 className="font-heading font-bold text-2xl lg:text-3xl mb-5"> {title} </h1>

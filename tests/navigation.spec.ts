@@ -20,21 +20,21 @@ test.describe('Navigation', () => {
     await openNav(page);
     await page.locator('div.fixed.bg-brand-orange').getByRole('link', { name: 'About Us' }).click();
     await expect(page).toHaveURL(/\/about/);
-    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 }).filter({ visible: true }).first()).toBeVisible();
   });
 
   test('should navigate to Conferences page', async ({ page }) => {
     await openNav(page);
     await page.locator('div.fixed.bg-brand-orange').getByRole('link', { name: 'Conferences' }).click();
     await expect(page).toHaveURL(/\/conferences/);
-    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 }).filter({ visible: true }).first()).toBeVisible();
   });
 
   test('should navigate to Resources page', async ({ page }) => {
     await openNav(page);
     await page.locator('div.fixed.bg-brand-orange').getByRole('link', { name: 'Resources' }).click();
     await expect(page).toHaveURL(/\/resources/);
-    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 }).filter({ visible: true }).first()).toBeVisible();
   });
 
   test('should navigate to Contact page', async ({ page }) => {
@@ -49,6 +49,6 @@ test.describe('Navigation', () => {
     // Navigate via the button on the home page instead of the top nav to test both
     await page.locator('#home-be-involved').getByRole('link', { name: 'Join Us', exact: true }).click();
     await expect(page).toHaveURL(/\/join/);
-    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 }).filter({ visible: true }).first()).toBeVisible();
   });
 });

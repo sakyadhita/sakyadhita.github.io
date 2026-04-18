@@ -105,6 +105,12 @@ export default function HorizontalStepper(props) {
     props.setParentIndex((index - 1) * size)
   }
 
+  const updateSize = () => {
+    if (listener.width < 601) return 4
+    if (listener.width < 900) return 6
+    return 10
+  }
+
   // render items
   useEffect(() => {
     setSplitSteps(steps.slice(indices[0], indices[1]))
@@ -149,12 +155,6 @@ export default function HorizontalStepper(props) {
     props.setParentIndex(indices[0] + step)
   }
 
-  const updateSize = () => {
-    if (listener.width < 601) return 4
-    if (listener.width < 900) return 6
-    return 10
-  }
-
   return (
     <div className="min-h-[10.5px]">
       <div className="flex items-center justify-center py-4">
@@ -164,7 +164,7 @@ export default function HorizontalStepper(props) {
             <button
               onClick={() => handleStep(index)}
               className={cn(
-                'relative z-10 w-[45px] h-[45px] rounded-full border-2 flex items-center justify-center transition-all duration-300',
+                'relative z-10 w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 cursor-pointer',
                 activeIndex === index ? 'text-white shadow-md' : 'bg-white hover:bg-gray-50'
               )}
               style={
@@ -173,24 +173,19 @@ export default function HorizontalStepper(props) {
                   : { color: props.color, borderColor: props.color }
               }
             >
-              <span className="text-[14px] font-bold lowercase">
-                {ordinal_suffix_of(step.confNum)}
-              </span>
+              <span className="text-sm font-bold lowercase">{ordinal_suffix_of(step.confNum)}</span>
             </button>
 
             {/* Connector */}
             {index < splitSteps.length - 1 && (
-              <div
-                className="h-[2px] w-[55px] -ml-[1.6px]"
-                style={{ backgroundColor: props.color }}
-              />
+              <div className="h-0.5 w-14 -ml-0.5" style={{ backgroundColor: props.color }} />
             )}
           </React.Fragment>
         ))}
       </div>
 
       {/* pagination allows user to see more conferences */}
-      <div className="pagination-stepper flex justify-center mt-2">
+      <div className="flex justify-center mt-2">
         <CustomPagination count={steps.length} updatePage={updatePage} size={updateSize()} />
       </div>
     </div>

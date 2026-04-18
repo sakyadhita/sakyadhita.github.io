@@ -20,32 +20,33 @@ const EPubSectionMobile = (
 ) => {
   const currentPub = publication_section.section_list[currentIndex]
   return (
-    <div className="block relative py-[44px] px-0 mx-[10vw]">
-      <div className="flex flex-col relative top-0 left-0 w-full h-[64px]">
-        <h1 className="w-full font-heading text-[24px] font-bold leading-[31px] text-center">
+    <div className="block relative py-11 px-0 mx-[10vw]">
+      <div className="flex flex-col relative top-0 left-0 w-full h-16">
+        <h1 className="w-full font-heading text-2xl font-bold leading-tight text-center">
           {publication_section.section_title}
         </h1>
         <button
           type="button"
-          className="w-fit z-100 p-0 m-auto mb-[16px] border-none bg-inherit no-underline font-body text-[16px] leading-[16px] text-center hover:underline cursor-pointer"
+          className="w-fit z-100 p-0 m-auto mb-4 border-none bg-inherit no-underline font-body text-base leading-tight text-center hover:underline cursor-pointer"
           onClick={() => {
             setSelectedSection(publication_section.section_title)
           }}
         >
-          All <span className="text-brand-orange">({publication_section.section_list.length})</span> &gt;
+          All <span className="text-brand-orange">({publication_section.section_list.length})</span>{' '}
+          &gt;
         </button>
       </div>
       <div className="flex flex-wrap items-start justify-center relative text-center mx-[-25px] overflow-hidden">
         {currentIndex > 0 ? (
           <button
             type="button"
-            className="inline-block relative min-w-[30px] max-w-[30px] h-[30px] m-0 bottom-[200px] border-none bg-inherit cursor-pointer"
+            className="inline-block relative min-w-8 max-w-8 h-8 m-0 bottom-48 border-none bg-inherit cursor-pointer"
             onClick={() => setCurrentIndex(currentIndex - 1)}
           >
             <img src={LeftArrowBlack.src} alt="left arrow" />
           </button>
         ) : (
-          <span className="inline-block relative min-w-[30px] max-w-[30px] h-[30px] m-0 bottom-[200px]" />
+          <span className="inline-block relative min-w-8 max-w-8 h-8 m-0 bottom-48" />
         )}
         <EPubCard
           title={currentPub.data.title}
@@ -57,13 +58,13 @@ const EPubSectionMobile = (
         {currentIndex < publication_section.section_list.length - 1 ? (
           <button
             type="button"
-            className="inline-block relative min-w-[30px] max-w-[30px] h-[30px] m-0 bottom-[200px] border-none bg-inherit cursor-pointer"
+            className="inline-block relative min-w-8 max-w-8 h-8 m-0 bottom-48 border-none bg-inherit cursor-pointer"
             onClick={() => setCurrentIndex(currentIndex + 1)}
           >
             <img src={RightArrowBlack.src} alt="right arrow" />
           </button>
         ) : (
-          <span className="inline-block relative min-w-[30px] max-w-[30px] h-[30px] m-0 bottom-[200px]" />
+          <span className="inline-block relative min-w-8 max-w-8 h-8 m-0 bottom-48" />
         )}
         <div className="absolute bottom-0 h-[1px] w-full bg-brand-orange" />
       </div>
@@ -73,19 +74,20 @@ const EPubSectionMobile = (
 
 // desktop render
 const EPubSectionDesktop = (publication_section, setSelectedSection, isMobile) => (
-  <div className="block relative py-[44px] px-0 mx-[10vw]">
-    <div className="block relative top-0 left-0 w-full h-[50px]">
-      <h1 className="w-full font-heading text-[36px] leading-[45px] text-center">
+  <div className="block relative py-11 px-0 mx-[10vw]">
+    <div className="block relative top-0 left-0 w-full h-12">
+      <h1 className="w-full font-heading text-4xl leading-relaxed text-center">
         {publication_section.section_title}
       </h1>
       <button
         type="button"
-        className="absolute right-[25px] bottom-0 w-fit z-100 p-0 mb-[16px] border-none bg-inherit font-body text-[18px] leading-[25px] no-underline hover:underline cursor-pointer"
+        className="absolute right-6 bottom-0 w-fit z-100 p-0 mb-4 border-none bg-inherit font-body text-lg leading-relaxed no-underline hover:underline cursor-pointer"
         onClick={() => {
           setSelectedSection(publication_section.section_title)
         }}
       >
-        All <span className="text-brand-orange">({publication_section.section_list.length})</span> &gt;
+        All <span className="text-brand-orange">({publication_section.section_list.length})</span>{' '}
+        &gt;
       </button>
     </div>
     <div className="flex flex-wrap justify-center items-start relative text-center mx-[-25px]">
@@ -100,7 +102,7 @@ const EPubSectionDesktop = (publication_section, setSelectedSection, isMobile) =
         />
       ))}
     </div>
-    <div className="absolute bottom-0 h-[8px] w-full px-[25px] box-border bg-brand-orange" />
+    <div className="absolute bottom-0 h-2 w-full px-6 box-border bg-brand-orange" />
   </div>
 )
 export default function EPubSection({ publication_section, setSelectedSection, isMobile }) {

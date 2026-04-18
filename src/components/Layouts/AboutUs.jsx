@@ -61,15 +61,18 @@ const CommitteeProfiles = ({ committees, year }) => {
   const committee = committees.filter((x) => x.data.startYear === parseInt(year)).reverse()
   if (committee === undefined) return null
   return (
-    <div className="relative w-full max-w-[800px] flex flex-row-reverse flex-wrap-reverse justify-evenly gap-y-12">
+    <div className="relative w-full max-w-4xl flex flex-row-reverse flex-wrap-reverse justify-evenly gap-y-12">
       {committee.map((member) => (
-        <div className="relative w-full md:w-[350px] mx-5 flex flex-col items-center md:items-start" key={member.id}>
+        <div
+          className="relative w-full md:w-80 mx-5 flex flex-col items-center md:items-start"
+          key={member.id}
+        >
           <img
-            className="h-[250px] w-[250px] object-cover rounded-full mb-4 mt-[85px] border-[15px] border-[#f7f7f7]"
+            className="h-64 w-64 object-cover rounded-full mb-4 mt-20 border-[15px] border-[#f7f7f7]"
             src={member.data.imageLink}
             alt="Exec Headshot"
           />
-          <h2 className="my-1 font-heading text-[1.875em] font-bold text-center md:text-left">
+          <h2 className="my-1 font-heading text-3xl font-bold text-center md:text-left">
             {member.data.name}
           </h2>
           <div className="relative flex flex-row justify-center md:justify-start items-center">
@@ -272,7 +275,9 @@ export default function AboutUs({ frontmatter, committees, sections, children })
 
           {/* Executive Committee Section */}
           <div className="flex flex-col items-center mt-12 md:mt-0" id="exec">
-            <h1 className="font-heading font-bold text-3xl md:text-5xl mb-8">Executive Committee</h1>
+            <h1 className="font-heading font-bold text-3xl md:text-5xl mb-8">
+              Executive Committee
+            </h1>
 
             <CommitteeSelector
               years={years}

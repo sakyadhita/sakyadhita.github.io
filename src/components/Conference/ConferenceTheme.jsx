@@ -64,11 +64,11 @@ export default function ConferenceTheme(props) {
       ) : null}
 
       {/* The text describing the specific conference */}
-      <div className="flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 mr-[3.5vw]">
+      <div className="flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 mr-8">
         <div className="flex-1 prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic lowercase">
           <Markdown>{props.theme}</Markdown>
         </div>
-        <div className="lg:w-[55%] shrink-0">{props.slideShow ? props.slideShow() : null}</div>
+        <div className="lg:w-1/2 shrink-0">{props.slideShow ? props.slideShow() : null}</div>
       </div>
 
       <Modal

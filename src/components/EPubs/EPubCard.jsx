@@ -12,7 +12,7 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
   return (
     <TooltipProvider>
       {!isMobile ? (
-        <div className="inline-block w-[184px] m-[25px]">
+        <div className="inline-block w-48 m-6">
           {redirect_link === null ? (
             ''
           ) : (
@@ -21,17 +21,17 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
                 <img
                   alt={title}
                   src={image_url}
-                  className="w-[184px] h-[271px] object-cover shadow-[0px_0px_12px_3px_rgba(0,0,0,0.25)] mb-[20px] transition-all hover:scale-105 hover:shadow-[0px_0px_12px_3px_var(--color-brand-dark-orange)]"
+                  className="w-48 h-64 object-cover shadow-[0px_0px_12px_3px_rgba(0,0,0,0.25)] mb-5 transition-all hover:scale-105 hover:shadow-[0px_0px_12px_3px_var(--color-brand-dark-orange)]"
                 />
               </a>
             </>
           )}
-          <div className="block font-heading text-[18px] font-bold leading-[31px] text-left text-wrap">
+          <div className="block font-heading text-lg font-bold leading-relaxed text-left text-wrap">
             {title}
           </div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="block font-body text-[18px] font-normal leading-[25px] text-left pt-[5px] overflow-hidden whitespace-nowrap text-ellipsis cursor-default">
+              <div className="block font-body text-lg font-normal leading-relaxed text-left pt-1.5 overflow-hidden whitespace-nowrap text-ellipsis cursor-default">
                 {author}
               </div>
             </TooltipTrigger>
@@ -41,7 +41,7 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
           </Tooltip>
         </div>
       ) : (
-        <div className="relative inline-block w-[152px] m-[25px]">
+        <div className="relative inline-block w-40 m-6">
           {redirect_link === null ? (
             ''
           ) : (
@@ -50,17 +50,17 @@ export default function EPubCard({ title, author, image_url, redirect_link, isMo
                 <img
                   alt={title}
                   src={image_url}
-                  className="w-[152px] h-[221px] object-cover shadow-[0px_0px_3px_0.75px_rgba(0,0,0,0.25)] mb-[17px]"
+                  className="w-40 h-56 object-cover shadow-[0px_0px_3px_0.75px_rgba(0,0,0,0.25)] mb-4"
                 />
               </a>
             </>
           )}
-          <div className="max-h-[48px] block font-heading text-[18px] font-bold leading-[24px] text-center text-wrap overflow-hidden">
+          <div className="max-h-12 block font-heading text-lg font-bold leading-6 text-center text-wrap overflow-hidden">
             {title}
           </div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="max-h-[21px] block font-body text-[14px] leading-[16px] text-center pt-[5px] overflow-hidden whitespace-nowrap text-ellipsis cursor-default">
+              <div className="max-h-5 block font-body text-sm leading-tight text-center pt-1.5 overflow-hidden whitespace-nowrap text-ellipsis cursor-default">
                 By {author}
               </div>
             </TooltipTrigger>

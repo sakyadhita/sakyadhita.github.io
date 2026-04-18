@@ -26,27 +26,20 @@ export default function Brand({ location }) {
       <img
         src="/logo.svg"
         alt="Logo"
-        className={cn(
-          isFooter ? 'h-12 md:h-[max(80px,10vw)]' : 'h-9 md:h-full max-h-full w-auto object-contain'
-        )}
+        className={cn(isFooter ? 'h-12 md:h-20' : 'h-9 md:h-full max-h-full w-auto object-contain')}
       />
-      <div
-        className={cn(
-          'branding flex flex-col',
-          isFooter ? 'mr-2 md:mr-[10px]' : 'ml-[5px] md:ml-[10px]'
-        )}
-      >
+      <div className={cn('branding flex flex-col', isFooter ? 'mr-2 md:mr-2.5' : 'ml-1 md:ml-2.5')}>
         <h3
           className={cn(
             'font-heading mb-0 lowercase',
-            isFooter ? 'text-[1.35em] md:text-[2.2em]' : 'text-[1.125em] md:text-[1.8em]'
+            isFooter ? 'text-xl md:text-4xl' : 'text-lg md:text-3xl'
           )}
         >
           sakyadhita
         </h3>
         <span
           className={cn(
-            'font-body text-[1.125em] lowercase opacity-90',
+            'font-body text-lg lowercase opacity-90',
             isFooter ? 'hidden sm:block' : 'hidden md:block'
           )}
         >

@@ -19,21 +19,21 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
   if (!isMobile) {
     // render desktop version
     return (
-      <div className="block relative m-[130px_10vw]">
-        <div className="block relative top-0 left-0 w-full h-[50px]">
-          <h1 className="w-full font-heading text-[36px] leading-[45px] text-center">
+      <div className="block relative mt-32 mx-[10vw] mb-24">
+        <div className="block relative top-0 left-0 w-full h-12">
+          <h1 className="w-full font-heading text-4xl leading-relaxed text-center">
             {selectedSection.section_title}
           </h1>
           <button
             type="button"
-            className="absolute left-[25px] bottom-0 w-fit z-100 p-0 mb-[16px] border-none bg-inherit font-body text-[18px] leading-[25px] no-underline hover:underline cursor-pointer"
+            className="absolute left-6 bottom-0 w-fit z-100 p-0 mb-4 border-none bg-inherit font-body text-lg leading-relaxed no-underline hover:underline cursor-pointer"
             onClick={() => {
               setSelectedSection('')
             }}
           >
             &lt; Back
           </button>
-          <p className="z-100 absolute right-[25px] bottom-0 w-fit font-body text-[18px] leading-[25px] no-underline">
+          <p className="z-100 absolute right-6 bottom-0 w-fit font-body text-lg leading-relaxed no-underline">
             All <span className="text-brand-orange">({selectedSection.section_list.length})</span>
           </p>
         </div>
@@ -57,14 +57,14 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
   }
   return (
     // render mobile version
-    <div className="block relative m-[50px_10vw]">
-      <div className="block relative top-[-50px] left-[-10vw] pt-[20px] w-[calc(100%+20vw)] h-[88px] shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]">
-        <h1 className="w-full font-heading text-[24px] font-bold leading-[31px] text-center">
+    <div className="block relative my-12 mx-[10vw]">
+      <div className="block relative -top-12 -ml-[10vw] pt-5 w-[calc(100%+20vw)] h-24 shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]">
+        <h1 className="w-full font-heading text-2xl font-bold leading-tight text-center">
           {selectedSection.section_title}
         </h1>
         <button
           type="button"
-          className="block relative w-fit p-0 m-[11px_auto_20px_auto] border-none bg-inherit font-body text-[16px] leading-[16px] text-center hover:underline cursor-pointer"
+          className="block relative w-fit p-0 mx-auto mt-3 mb-5 border-none bg-inherit font-body text-base leading-tight text-center hover:underline cursor-pointer"
           onClick={() => {
             setSelectedSection('')
           }}
@@ -87,7 +87,7 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
               <button
                 type="button"
                 onClick={() => window.open(pub.data.pdfLink, '_blank', 'norefferer')}
-                className="h-[37px] w-[158px] rounded-[40px] bg-brand-orange border-none text-white mb-[20px] cursor-pointer"
+                className="h-9 w-40 rounded-full bg-brand-orange border-none text-white mb-5 cursor-pointer"
               >
                 Read
               </button>
@@ -150,19 +150,19 @@ export default function EPublications({ sections, featuredEpubs }) {
                 className="relative flex w-full h-full bg-brand-dark-purple text-white items-center justify-center lg:items-stretch lg:justify-start"
                 key={epub.id}
               >
-                <div className="absolute top-0 left-0 z-10 bg-brand-dark-purple lg:m-[30px_100px_0px_160px] p-[10px] lg:w-[350px] md:w-[300px] max-[600px]:w-[210px] max-[600px]:h-[430px] max-[600px]:m-[40px_auto] block font-heading text-left h-fit max-[750px]:bg-brand-dark-purple/85 max-[750px]:p-5">
-                  <h1 className="text-[36px] font-bold leading-[45px] max-[750px]:text-[18px] max-[750px]:leading-[30px]">
+                <div className="absolute top-0 left-0 z-10 bg-brand-dark-purple lg:m-8 lg:ml-40 lg:mt-8 p-2.5 lg:w-[350px] md:w-72 max-sm:w-52 max-sm:h-[430px] max-sm:mx-auto max-sm:mt-10 block font-heading text-left h-fit max-md:bg-brand-dark-purple/90 max-md:p-5">
+                  <h1 className="text-4xl font-bold leading-tight max-sm:text-lg max-sm:leading-relaxed">
                     {epub.data.title}
                   </h1>
-                  <h2 className="text-[18px] font-bold leading-[31px] max-[750px]:hidden">
+                  <h2 className="text-lg font-bold leading-relaxed max-md:hidden">
                     {epub.data.author}
                   </h2>
-                  <p className="font-body text-[16px] font-normal leading-[27px] max-[750px]:leading-[21px]">
+                  <p className="font-body text-base font-normal leading-relaxed max-sm:leading-normal">
                     {epub.data.description}
                   </p>
                   <button
                     type="button"
-                    className="font-body text-[20px] leading-[27px] text-center text-white bg-brand-orange rounded-[40px] w-[200px] h-[55px] border-none mt-4 max-[750px]:w-[150px] max-[750px]:h-[35px] max-[750px]:text-[14px] cursor-pointer"
+                    className="font-body text-xl leading-relaxed text-center text-white bg-brand-orange rounded-full w-48 h-14 border-none mt-4 max-sm:w-36 max-sm:h-9 max-sm:text-sm cursor-pointer"
                     onClick={() => {
                       window.location.href = epub.data.pdfLink
                     }}
@@ -171,7 +171,7 @@ export default function EPublications({ sections, featuredEpubs }) {
                   </button>
                 </div>
                 <img
-                  className="absolute top-0 right-0 w-[700px] max-[750px]:w-full m-0 p-0 bg-brand-dark-purple object-cover h-full"
+                  className="absolute top-0 right-0 w-[700px] max-md:w-full m-0 p-0 bg-brand-dark-purple object-cover h-full"
                   src={epub.data.imageLink}
                   alt=""
                 />
@@ -179,7 +179,7 @@ export default function EPublications({ sections, featuredEpubs }) {
             ))}
           </Slideshow>
           {/* Render a new publications section for each section in data, pass in each card */}
-          <div className={!isMobile ? 'm-[56px_0px_100px_0px]' : 'm-0'}>
+          <div className={!isMobile ? 'mt-14 mb-24' : 'm-0'}>
             {sections.map((section) => (
               <EPubSection
                 key={section.section_title}

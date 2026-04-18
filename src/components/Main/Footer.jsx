@@ -26,9 +26,9 @@ export default function Footer() {
   const subitem = (text, redirect_link) => (
     <a
       href={redirect_link}
-      className="text-[12px] md:text-[14px] text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+      className="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
     >
-      <img width="20px" height="auto" src={Logo.src} alt="Logo" className="mr-2" />
+      <img src={Logo.src} alt="Logo" className="w-5 h-auto mr-2" />
       {text}
     </a>
   )
@@ -52,20 +52,20 @@ export default function Footer() {
   )
 
   const headingClasses =
-    'font-heading font-bold text-[18px] md:text-[24px] text-white capitalize hover:no-underline mb-2 block'
+    'font-heading font-bold text-lg md:text-2xl text-white capitalize hover:no-underline mb-2 block'
 
   return (
     <div className="relative mt-auto">
       {/* Background Image Layer */}
       <div
-        className="absolute inset-0 z-[-1] w-full h-full bg-cover bg-[position:center,top] bg-no-repeat blur-[5px] rounded-[5px] shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)]"
+        className="absolute inset-0 z-[-1] w-full h-full bg-cover bg-[position:center,top] bg-no-repeat blur-[5px] rounded-md shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)]"
         style={{
           backgroundImage:
             'url("https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2996&q=80")'
         }}
       ></div>
 
-      <div className="relative z-0 bg-brand-light-purple/90 w-full min-h-[550px] flex flex-col justify-center items-center px-6 md:px-20 py-10 md:py-[60px] overflow-hidden font-body">
+      <div className="relative z-0 bg-brand-light-purple/90 w-full min-h-[550px] flex flex-col justify-center items-center px-6 md:px-20 py-10 md:py-16 overflow-hidden font-body">
         {/* Pages Links */}
         <section className="w-full flex flex-col md:flex-row justify-between flex-1 space-y-8 md:space-y-0">
           <div className="flex flex-col">
@@ -119,7 +119,7 @@ export default function Footer() {
         {/* Bottom Section: Social Media & Brand */}
         <section className="w-full flex flex-col md:flex-row justify-between items-center mt-12 space-y-8 md:space-y-0">
           <div className="flex flex-col items-center md:items-start text-white">
-            <span className="mb-4 text-[18px] md:text-[20px] font-bold">
+            <span className="mb-4 text-lg md:text-xl font-bold">
               Check us out on these platforms!
             </span>
             <div className="flex flex-row space-x-6">
@@ -144,7 +144,7 @@ export default function Footer() {
                   icon={siYoutube}
                   className={cn(
                     socialIconClasses,
-                    'text-white group-hover:bg-[#c4302b] rounded-[10px] p-1'
+                    'text-white group-hover:bg-[#c4302b] rounded-xl p-1'
                   )}
                 />
               </a>
@@ -158,7 +158,7 @@ export default function Footer() {
                   icon={siPinterest}
                   className={cn(
                     socialIconClasses,
-                    'text-white group-hover:bg-[#E60023] rounded-[20px] p-2'
+                    'text-white group-hover:bg-[#E60023] rounded-2xl p-2'
                   )}
                 />
               </a>

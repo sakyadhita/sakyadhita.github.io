@@ -101,7 +101,7 @@ export default function ConferencesDesktop(props) {
   const slideshowVideo = () => {
     if (isInfo || !item.data.video) {
       return (
-        <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-50 h-[430px]">
+        <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-50 h-112">
           {item.data.slideShowImages.length === 1 ? (
             <img
               className="w-full h-full object-cover"
@@ -123,7 +123,7 @@ export default function ConferencesDesktop(props) {
 
     // if it is the overivew tab, render the associated video
     return (
-      <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-black h-[430px]">
+      <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-black h-112">
         {videoError ? (
           <ErrorLoadingContent height="100%" width="100%" />
         ) : (
@@ -188,7 +188,7 @@ export default function ConferencesDesktop(props) {
     <div className="w-full px-4 md:px-12 py-12">
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 relative">
         {/* The vertical stepper */}
-        <aside className="w-full lg:w-[200px] lg:shrink-0">
+        <aside className="w-full lg:w-48 lg:shrink-0">
           <div className="lg:sticky lg:top-32">
             <VerticalStepper
               items={props.data}

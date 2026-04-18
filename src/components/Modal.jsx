@@ -33,7 +33,7 @@ export default function CustomModal({
       <DialogContent className="max-w-md border-2 border-brand-orange p-4 rounded-lg bg-white">
         <DialogHeader>
           <DialogTitle className="sr-only">Notification</DialogTitle>
-          <DialogDescription className="text-center text-[23px] text-black pt-4 px-4 font-body">
+          <DialogDescription className="text-center text-2xl text-black pt-4 px-4 font-body">
             {text}
           </DialogDescription>
         </DialogHeader>
@@ -43,7 +43,7 @@ export default function CustomModal({
             <Button
               variant="outline"
               onClick={() => hide(false)}
-              className="border-[1.2px] border-black bg-transparent text-black text-[18px] min-w-[120px] rounded-[3vw] font-bold font-body h-10"
+              className="border-[1.2px] border-black bg-transparent text-black text-lg min-w-32 rounded-full font-bold font-body h-10"
             >
               {negativeButtonText}
             </Button>
@@ -52,7 +52,7 @@ export default function CustomModal({
           {positiveButtonText && (
             <Button
               onClick={redirectLink}
-              className="bg-brand-orange text-white text-[18px] min-w-[120px] rounded-[3vw] font-bold hover:bg-brand-dark-orange font-body h-10"
+              className="bg-brand-orange text-white text-lg min-w-32 rounded-full font-bold hover:bg-brand-dark-orange font-body h-10"
             >
               {positiveButtonText}
             </Button>

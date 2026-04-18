@@ -161,7 +161,7 @@ export default function VerticalStepper(props) {
               <button
                 onClick={() => handleStep(index)}
                 className={cn(
-                  'relative z-10 w-[36px] h-[36px] rounded-full border-2 flex items-center justify-center transition-all duration-300 shrink-0',
+                  'relative z-10 w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-300 shrink-0 cursor-pointer',
                   activeIndex === index
                     ? 'bg-brand-dark-purple text-white border-brand-dark-purple shadow-lg scale-105'
                     : 'bg-white text-brand-dark-purple border-brand-dark-purple hover:bg-brand-dark-purple hover:text-white'
@@ -172,7 +172,7 @@ export default function VerticalStepper(props) {
                     : { color: props.color, borderColor: props.color }
                 }
               >
-                <span className="text-[12px] font-bold pointer-events-none lowercase">
+                <span className="text-xs font-bold pointer-events-none lowercase">
                   {ordinal_suffix_of(step.confNum)}
                 </span>
               </button>
@@ -180,7 +180,7 @@ export default function VerticalStepper(props) {
               {/* Label */}
               <span
                 className={cn(
-                  'ml-4 text-[16px] text-left max-w-[150px] truncate cursor-pointer hover:underline font-body transition-colors',
+                  'ml-4 text-base text-left max-w-40 truncate cursor-pointer hover:underline font-body transition-colors',
                   activeIndex === index ? 'font-bold opacity-100' : 'opacity-80'
                 )}
                 style={{ color: props.color }}
@@ -193,7 +193,7 @@ export default function VerticalStepper(props) {
             {/* Connector below */}
             {index < splitSteps.length - 1 && (
               <div
-                className="w-[2px] min-h-[30px] ml-[17px] my-1 opacity-40"
+                className="w-0.5 min-h-8 ml-4 my-1 opacity-40"
                 style={{ backgroundColor: props.color }}
               />
             )}
@@ -202,7 +202,7 @@ export default function VerticalStepper(props) {
       </div>
 
       {/* This pagination allows user to change pages and view more conferences */}
-      <div className="pagination-stepper mt-4">
+      <div className="mt-4">
         <CustomPagination count={steps.length} page={activePage} updatePage={updatePage} size={9} />
       </div>
     </div>

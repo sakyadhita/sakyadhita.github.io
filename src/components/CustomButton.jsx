@@ -19,7 +19,7 @@ export default function CustomButton({
   className = ''
 }) {
   const classes = cn(
-    'w-[175px] bg-brand-orange hover:bg-brand-dark-orange rounded-[30px] shadow-[2px_2px_2px_rgb(63,62,62)] text-white uppercase font-bold h-auto py-2 text-[0.9375rem] font-body transition-transform active:scale-95 border-none inline-flex items-center justify-center no-underline hover:no-underline',
+    'w-44 bg-brand-orange hover:bg-brand-dark-orange rounded-full shadow-[2px_2px_2px_rgb(63,62,62)] text-white uppercase font-bold h-auto py-2 text-sm font-body transition-transform active:scale-95 border-none inline-flex items-center justify-center no-underline hover:no-underline',
     className
   )
 

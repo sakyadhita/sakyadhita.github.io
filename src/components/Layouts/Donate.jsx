@@ -69,8 +69,11 @@ export default function Donate({ frontmatter }) {
       <div className="flex flex-col px-4 md:px-12 py-12 md:py-24">
         <div className="flex flex-col lg:flex-row justify-center items-start gap-8 lg:gap-0">
           {/* PayPal Info */}
-          <section className="flex-1 flex flex-col items-center mx-0 lg:mx-[30px] text-center lg:text-left">
-            <h1 ref={arrowScrollToRef} className="font-heading font-bold text-3xl md:text-5xl mb-4"> PayPal </h1>
+          <section className="flex-1 flex flex-col items-center mx-0 lg:mx-8 text-center lg:text-left">
+            <h1 ref={arrowScrollToRef} className="font-heading font-bold text-3xl md:text-5xl mb-4">
+              {' '}
+              PayPal{' '}
+            </h1>
             <hr className="w-1/2 h-1.5 bg-brand-orange border-none mb-8" />
             <p className="max-w-2xl text-gray-700 leading-relaxed">
               Your donation makes a difference. In the tradition of the Buddha our work is offered
@@ -82,7 +85,7 @@ export default function Donate({ frontmatter }) {
             </p>
             <p className="mt-6 font-bold"> Make a One-Time or Reoccuring Donation </p>
             {/* PayPal Donate Button */}
-            <div className="mt-8 flex justify-center h-[50px]">
+            <div className="mt-8 flex justify-center h-12">
               <form action="https://www.paypal.com/donate" method="post" target="_blank">
                 <input type="hidden" name="hosted_button_id" value="78ZSMXL4ZSYJQ" />
                 <input
@@ -110,7 +113,7 @@ export default function Donate({ frontmatter }) {
             />
           </section>
           {/* AmazonSmile Info */}
-          <section className="flex-1 flex flex-col items-center mx-0 lg:mx-[30px] text-center lg:text-left mt-12 lg:mt-0">
+          <section className="flex-1 flex flex-col items-center mx-0 lg:mx-8 text-center lg:text-left mt-12 lg:mt-0">
             <h1 className="font-heading font-bold text-3xl md:text-5xl mb-4"> AmazonSmile </h1>
             <hr className="w-1/2 h-1.5 bg-brand-orange border-none mb-8" />
             <p className="max-w-2xl text-gray-700 leading-relaxed">
@@ -130,14 +133,17 @@ export default function Donate({ frontmatter }) {
             </div>
           </section>
         </div>
-        
+
         <div className="flex justify-center hidden md:flex">
           <hr className="w-1/2 h-2.5 bg-brand-orange border-none my-24" />
         </div>
 
         {/* Support Us Section */}
         <section className="mt-12 md:mt-0 flex flex-col items-center md:items-start">
-          <h1 className="font-heading font-bold text-3xl md:text-5xl mb-8"> Support Us via Involvement </h1>
+          <h1 className="font-heading font-bold text-3xl md:text-5xl mb-8">
+            {' '}
+            Support Us via Involvement{' '}
+          </h1>
           <p className="mb-8 text-gray-700">Get involved and support us!</p>
           <div className="w-full flex flex-col md:flex-row gap-8 lg:gap-12 justify-evenly items-center">
             {/* Join Us  */}
