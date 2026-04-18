@@ -1,33 +1,21 @@
 ---
 import PageLayout from './PageLayout.astro'
-import ResourcesNavBar from '../components/Main/ResourcesNavBar'
+import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import ResourcesHeader from '../components/ResourcesLanding/ResourcesLandingPageHeader.astro'
 
 const { frontmatter } = Astro.props
 ---
 
 <PageLayout hideFooter={true}>
-  <ResourcesNavBar client:idle>
+  <ResourcesNavBar>
     <div class="w-full">
-      {/* Responsive Headers - Astro */}
-      <div class="md:hidden">
-        <ResourcesHeader
-          image={frontmatter.image}
-          title={frontmatter.title}
-          text={frontmatter.description}
-          height="calc(100vh - 128px)"
-          width="100%"
-        />
-      </div>
-      <div class="hidden md:block">
-        <ResourcesHeader
-          image={frontmatter.image}
-          title={frontmatter.title}
-          text={frontmatter.description}
-          height="calc(100vh - 208px)"
-          width="100%"
-        />
-      </div>
+      <ResourcesHeader
+        image={frontmatter.image}
+        title={frontmatter.title}
+        text={frontmatter.description}
+        height="calc(100vh - 128px)"
+        width="100%"
+      />
     </div>
     <slot />
   </ResourcesNavBar>

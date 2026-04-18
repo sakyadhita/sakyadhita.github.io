@@ -5,6 +5,7 @@ import { getRawImage } from '../lib/images'
 import { marked } from 'marked'
 
 import PageLayout from './PageLayout.astro'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
 import AboutUs from '../components/Layouts/AboutUs'
 
 const committeesRaw = await getCollection('exco')
@@ -46,9 +47,13 @@ function makeIdURLFriendly(idString: string) {
 ---
 
 <PageLayout>
+  <ResourcesHeader
+    title={frontmatter.title}
+    text={frontmatter.description}
+    image={optimizedHeader?.src || frontmatter.image}
+  />
   <AboutUs
     client:load
-    frontmatter={{ ...frontmatter, optimizedImage: optimizedHeader?.src || frontmatter.image }}
     committees={committees}
     sections={sections}
   >

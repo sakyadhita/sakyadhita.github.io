@@ -8,7 +8,6 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import ResourcesHeader from '../ResourcesHeader'
 import { cn } from '../../lib/utils'
 
 import DownArrow from '../../media/down-arrow.svg'
@@ -107,14 +106,12 @@ const CommitteeProfiles = ({ committees, year }) => {
   )
 }
 
-export default function AboutUs({ frontmatter, committees, sections, children }) {
+export default function AboutUs({ committees, sections, children }) {
   // Keeps track of the current location for the sticky navbar
   const [scrollLocation, setScrollLocation] = useState('mission')
   // Toggles the dropdown menu for different executive committees
   const [dropdownOn, setDropdownOn] = useState(false)
   // Currently viewed year's executive committee
-  const [isMobile, setIsMobile] = useState(false)
-  const introSection = React.createRef()
   const [year, setYear] = useState(
     committees[0].data.startYear.toString() + '-' + committees[0].data.endYear.toString()
   )
@@ -126,21 +123,9 @@ export default function AboutUs({ frontmatter, committees, sections, children })
 
   // Effect to update the sticky nav on scroll
   useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth <= 800)
-    }
-
-    // Add event listener
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
     const scrollHandler = () => {
       for (let i = 0; i < sections.length; i++) {
-        const idString = sections[i].data.title
-          .replace(/\s+/g, '-')
-          .replace(/:/g, '')
-          .replace(/[^a-z0-9]/gi, '')
-          .toLowerCase()
+        const idString = makeIdURLFriendly(sections[i].data.title)
         const selected = document.querySelector(`#${idString}`)
         if (selected) {
           const rect = selected.getBoundingClientRect()
@@ -157,7 +142,6 @@ export default function AboutUs({ frontmatter, committees, sections, children })
     }
 
     return () => {
-      window.removeEventListener('resize', handleResize)
       if (scrollContainer) {
         scrollContainer.removeEventListener('scroll', scrollHandler)
       }
@@ -175,16 +159,6 @@ export default function AboutUs({ frontmatter, committees, sections, children })
     )
       return 'text-brand-orange border-b-2 border-brand-orange'
     return 'border-b-2 border-transparent'
-  }
-
-  // Scroll to the first section when clicking arrow button on resource header
-  const scrollToSection = () => {
-    if (introSection.current) {
-      introSection.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      })
-    }
   }
 
   function toggleDropdown() {
@@ -207,43 +181,22 @@ export default function AboutUs({ frontmatter, committees, sections, children })
 
   return (
     <div className="relative w-full">
-      {isMobile || (typeof window !== 'undefined' && window.innerHeight <= 500) ? (
-        <ResourcesHeader
-          image={frontmatter.optimizedImage || frontmatter.image}
-          title={frontmatter.title}
-          height="max(40vh, 300px)"
-          width="100%"
-          showArrow={false}
-          arrowClickCallback={scrollToSection}
-        />
-      ) : (
-        <ResourcesHeader
-          image={frontmatter.optimizedImage || frontmatter.image}
-          title={frontmatter.title}
-          text={frontmatter.description}
-          height="max(75vh, 400px)"
-          width="100%"
-          arrowClickCallback={scrollToSection}
-        />
-      )}
-
       <div className="w-full flex flex-col md:flex-row">
         {/* Sticky Nav */}
-        {!isMobile && (
-          <aside className="hidden md:block w-[250px] shrink-0 h-fit sticky top-32 mt-24 ml-8 lg:ml-16">
-            <nav className="relative flex border-r border-gray-300 pr-8">
-              <ul className="flex flex-col list-none p-0 m-0 space-y-4">
-                {sections.map((section) => (
-                  <li key={section.id} className="py-2">
-                    <a
-                      href={`#${makeIdURLFriendly(section.data.title)}`}
-                      className={cn(
-                        'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
-                        computeNavUnderline(makeIdURLFriendly(section.data.title))
-                      )}
-                    >
-                      {section.data.title}
-                    </a>
+        <aside className="hidden md:block w-[250px] shrink-0 h-fit sticky top-32 mt-24 ml-8 lg:ml-16">
+          <nav className="relative flex border-r border-gray-300 pr-8">
+            <ul className="flex flex-col list-none p-0 m-0 space-y-4">
+              {sections.map((section) => (
+                <li key={section.id} className="py-2">
+                  <a
+                    href={`#${makeIdURLFriendly(section.data.title)}`}
+                    className={cn(
+                      'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
+                      computeNavUnderline(makeIdURLFriendly(section.data.title))
+                    )}
+                  >
+                    {section.data.title}
+                  </a>
                   </li>
                 ))}
                 <li className="py-2">
@@ -262,7 +215,6 @@ export default function AboutUs({ frontmatter, committees, sections, children })
               </ul>
             </nav>
           </aside>
-        )}
 
         {/* Contents of page */}
         <div className="flex-1 w-full max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-24 font-body">

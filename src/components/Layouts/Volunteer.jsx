@@ -81,7 +81,6 @@ function displayCommittees(
 }
 
 export default function Volunteer({ frontmatter, interests }) {
-  console.log(frontmatter) // Use it to avoid unused warning
   // stores values and error states for various field in form
   const [values, setValues] = useState({
     firstName: {

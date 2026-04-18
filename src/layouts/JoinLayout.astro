@@ -4,8 +4,8 @@ import { getImage } from 'astro:assets'
 import { getRawImage } from '../lib/images'
 
 import PageLayout from './PageLayout.astro'
-import JoinUs from '../components/Layouts/JoinUs'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
+import JoinUs from '../components/Layouts/JoinUs'
 
 const membertypes = await getCollection('membertype')
 const memberships = membertypes.map((m) => ({
@@ -22,25 +22,11 @@ const optimizedHeader = rawHeader
 ---
 
 <PageLayout>
-  {/* Responsive Headers - Astro */}
-  <div class="sm:hidden">
-    <ResourcesHeader
-      title={frontmatter.title}
-      image={optimizedHeader?.src || frontmatter.image}
-      height="max(40vh, 300px)"
-      width="100%"
-      showArrow={false}
-    />
-  </div>
-  <div class="hidden sm:block">
-    <ResourcesHeader
-      title={frontmatter.title}
-      text={frontmatter.description}
-      image={optimizedHeader?.src || frontmatter.image}
-      height="max(75vh, 400px)"
-      width="100%"
-    />
-  </div>
+  <ResourcesHeader
+    title={frontmatter.title}
+    text={frontmatter.description}
+    image={optimizedHeader?.src || frontmatter.image}
+  />
 
   <JoinUs client:load frontmatter={frontmatter} memberships={memberships}>
     <slot />

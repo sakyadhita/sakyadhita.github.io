@@ -1,0 +1,108 @@
+---
+/**
+ * Additional Navbar rendered only for the Resources page.
+ * Active link detection uses Astro.url.pathname (server-rendered).
+ * Mobile drawer toggle handled via a lightweight inline script.
+ *
+ * @summary     Additional Navbar for the Resources page.
+ * @author      Aaron Kirk
+ */
+import { SITE_PAGES } from '../../constants/links'
+import Cross from '../../media/cross.svg'
+
+const navItems = [
+  { label: 'resources', link: SITE_PAGES.RESOURCES_LANDING },
+  { label: 'newsletters', link: SITE_PAGES.RESOURCES_NEWSLETTERS },
+  { label: 'publications', link: SITE_PAGES.RESOURCES_EPUBS },
+  { label: 'buddhist culture', link: SITE_PAGES.RESOURCES_BUDDHIST_CULTURE },
+  { label: 'ordination issue', link: SITE_PAGES.RESOURCES_ORDINATION_ISSUE }
+]
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/'
+
+function isActive(link: string) {
+  return (link.replace(/\/+$/, '') || '/') === currentPath
+}
+
+const mobileItemClasses =
+  'w-full h-16 flex justify-start items-center px-10 sm:px-20 hover:bg-brand-dark-orange transition-colors no-underline hover:no-underline'
+const desktopItemClasses =
+  'w-48 h-full flex items-center justify-center text-white font-body text-lg hover:bg-brand-dark-orange transition-colors no-underline hover:no-underline lowercase'
+const textClasses = 'font-heading text-white text-lg lowercase'
+---
+
+{/* Button to toggle mobile drawer */}
+<button
+  id="resources-menu-toggle"
+  type="button"
+  class="fixed top-20 left-5 z-[1001] md:hidden w-10 h-10 bg-brand-orange rounded-full flex items-center justify-center shadow-lg cursor-pointer border-none"
+  aria-label="Toggle Resources Menu"
+>
+  <span class="text-white text-xs font-bold uppercase">Menu</span>
+</button>
+
+{/* Mobile Drawer */}
+<div
+  id="resources-mobile-drawer"
+  class="fixed top-0 right-0 w-full h-full z-[1002] bg-brand-orange transition-transform duration-500 md:hidden flex flex-col pt-20 translate-x-full"
+>
+  <button
+    id="resources-drawer-close"
+    type="button"
+    class="absolute top-6 right-6 w-6 h-6 bg-transparent border-none cursor-pointer"
+    aria-label="Close Resources Navigation"
+  >
+    <img src={Cross.src} alt="Close Resources Navigation" class="w-full h-full" />
+  </button>
+
+  <nav class="flex flex-col">
+    {
+      navItems.map((item) => (
+        <a
+          href={item.link}
+          class:list={[mobileItemClasses, { 'bg-brand-dark-orange': isActive(item.link) }]}
+        >
+          <span class={textClasses}>{item.label}</span>
+        </a>
+      ))
+    }
+  </nav>
+</div>
+
+{/* Desktop Horizontal Navbar */}
+<nav
+  class="hidden md:flex sticky top-32 z-[999] w-full bg-brand-orange h-20 items-center justify-center shadow-md"
+>
+  {
+    navItems.map((item) => (
+      <a
+        href={item.link}
+        class:list={[desktopItemClasses, { 'bg-brand-dark-orange': isActive(item.link) }]}
+      >
+        {item.label}
+      </a>
+    ))
+  }
+</nav>
+
+{/* Page content */}
+<main class="relative z-0">
+  <slot />
+</main>
+
+<script>
+  const toggleBtn = document.getElementById('resources-menu-toggle')
+  const closeBtn = document.getElementById('resources-drawer-close')
+  const drawer = document.getElementById('resources-mobile-drawer')
+
+  function openDrawer() {
+    drawer?.classList.replace('translate-x-full', 'translate-x-0')
+  }
+
+  function closeDrawer() {
+    drawer?.classList.replace('translate-x-0', 'translate-x-full')
+  }
+
+  toggleBtn?.addEventListener('click', openDrawer)
+  closeBtn?.addEventListener('click', closeDrawer)
+</script>
