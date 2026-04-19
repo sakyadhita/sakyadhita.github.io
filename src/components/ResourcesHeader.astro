@@ -7,18 +7,16 @@
  */
 import { getImage } from 'astro:assets'
 import { getRawImage } from '../lib/images'
+import { cn } from '../lib/utils'
 
 interface Props {
   image: string
-  height?: string
-  width?: string
   title?: string
   text?: string
-  showArrow?: boolean
-  arrowClickCallback?: (event: Event) => void
+  class?: string
 }
 
-const { image, height, width, title, text } = Astro.props
+const { image, title, text, class: className } = Astro.props
 
 const rawImage = getRawImage(image)
 const optimizedImage = rawImage
@@ -27,24 +25,27 @@ const optimizedImage = rawImage
 ---
 
 <div
-  class="relative bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat]"
-  style={{
-    backgroundImage: `url("${optimizedImage?.src || image}")`,
-    height,
-    width
-  }}
+  class={cn(
+    'relative bg-cover bg-[position:center,top] bg-no-repeat min-h-[max(40vh,300px)] sm:min-h-[max(75vh,400px)] w-full',
+    className
+  )}
+  style={{ backgroundImage: `url("${optimizedImage?.src || image}")` }}
 >
   {/* Purple box with a title and description */}
   <div
     class="absolute ml-[7vw] sm:ml-[10%] mt-[10%] top-8 sm:top-0 bg-brand-dark-purple/90 w-2/3 sm:w-128 h-fit p-8 text-white"
   >
     {
-      title ? (
+      title && (
         <h1 class="font-heading font-bold text-2xl sm:text-4xl leading-relaxed w-full ml-6 sm:ml-0 mt-4 sm:mt-0">
           {title}
         </h1>
-      ) : null
+      )
     }
-    {text ? <p class="font-body font-normal text-lg leading-relaxed mt-4">{text}</p> : null}
+    {
+      text && (
+        <p class="hidden sm:block font-body font-normal text-lg leading-relaxed mt-4">{text}</p>
+      )
+    }
   </div>
 </div>

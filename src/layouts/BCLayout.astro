@@ -4,8 +4,8 @@ import { getImage } from 'astro:assets'
 import { getRawImage } from '../lib/images'
 
 import PageLayout from './PageLayout.astro'
-import ResourcesNavBar from '../components/Main/ResourcesNavBar'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
+import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 
 const sectionsRaw = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'BuddhistCulture'
@@ -25,27 +25,13 @@ const optimizedHeader = rawHeader
 ---
 
 <PageLayout>
-  <ResourcesNavBar client:idle>
+  <ResourcesNavBar>
     <div class="relative w-full">
-      {/* Responsive Headers */}
-      <div class="sm:hidden">
-        <ResourcesHeader
-          image={optimizedHeader?.src || frontmatter.image}
-          title={frontmatter.title}
-          height="max(40vh, 300px)"
-          width="100%"
-          showArrow={false}
-        />
-      </div>
-      <div class="hidden sm:block">
-        <ResourcesHeader
-          image={optimizedHeader?.src || frontmatter.image}
-          title={frontmatter.title}
-          text={frontmatter.description}
-          height="max(75vh, 400px)"
-          width="100%"
-        />
-      </div>
+      <ResourcesHeader
+        image={optimizedHeader?.src || frontmatter.image}
+        title={frontmatter.title}
+        text={frontmatter.description}
+      />
 
       <div class="w-full max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-24 font-body">
         {

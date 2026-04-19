@@ -5,7 +5,8 @@ import { getRawImage } from '../lib/images'
 import { marked } from 'marked'
 
 import PageLayout from './PageLayout.astro'
-import Conferences from '../components/Layouts/Conferences'
+import ConferenceDesktop from '../components/Conference/ConferenceDesktop'
+import MobileConference from '../components/Conference/MobileConference'
 
 const conferencesRaw = await getCollection('conference')
 const conferences = await Promise.all(
@@ -27,10 +28,14 @@ const conferences = await Promise.all(
     return { ...c, data: { ...c.data, optimizedImages, htmlBody } }
   })
 )
+const data = conferences.reverse()
 ---
 
 <PageLayout>
-  <Conferences client:idle conferences={conferences.reverse()}>
-    <slot />
-  </Conferences>
+  <div class="hidden lg:block">
+    <ConferenceDesktop client:idle data={data} />
+  </div>
+  <div class="block lg:hidden">
+    <MobileConference client:idle data={data} />
+  </div>
 </PageLayout>

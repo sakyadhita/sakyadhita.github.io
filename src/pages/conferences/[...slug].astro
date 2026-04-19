@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content'
+import { type CollectionEntry, getCollection } from 'astro:content'
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
@@ -15,16 +15,20 @@ interface Props {
   conference: CollectionEntry<'conference'>
 }
 const { conference } = Astro.props
-const { Content } = await render(conference)
 
 import PageLayout from '../../layouts/PageLayout.astro'
-import Conferences from '../../components/Layouts/Conferences'
+import ConferenceDesktop from '../../components/Conference/ConferenceDesktop'
+import MobileConference from '../../components/Conference/MobileConference'
 
 const conferences = await getCollection('conference')
+const data = [...conferences].reverse()
 ---
 
 <PageLayout>
-  <Conferences client:only="react" conferences={[...conferences].reverse()} id={conference.id}>
-    <Content />
-  </Conferences>
+  <div class="hidden lg:block">
+    <ConferenceDesktop client:only="react" data={data} id={conference.id} />
+  </div>
+  <div class="block lg:hidden">
+    <MobileConference client:only="react" data={data} id={conference.id} />
+  </div>
 </PageLayout>
