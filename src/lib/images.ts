@@ -7,59 +7,28 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   }
 )
 
-const docs = import.meta.glob<string>(
-  '/src/assets/**/*.{pdf,doc,docx,zip,txt,PDF,DOC,DOCX,ZIP,TXT}',
-  {
-    query: '?url',
-    import: 'default',
-    eager: true
-  }
-)
-
 /**
- * Returns the resolved URL for any asset (image or document) in src/assets.
- * Useful for resolving links in frontmatter that point to /assets/...
+ * Returns the resolved URL for any asset (image or document).
+ * Documents (PDF, DOC, etc.) are served from public/assets for stability.
+ * Images are resolved from src/assets for Astro optimization.
  */
 export function getAssetUrl(publicPath: string) {
   if (!publicPath) return null
   if (publicPath.startsWith('http') || publicPath.startsWith('mailto:')) return publicPath
 
   const decodedPath = decodeURIComponent(publicPath)
-  const pathsToTest = [
-    publicPath.startsWith('/') ? publicPath : `/${publicPath}`,
-    decodedPath.startsWith('/') ? decodedPath : `/${decodedPath}`
-  ]
+  const cleanPath = decodedPath.startsWith('/') ? decodedPath : `/${decodedPath}`
 
-  for (const path of pathsToTest) {
-    const cleanPath = path.replace(/\/$/, '')
-    const srcPath = cleanPath.startsWith('/assets') ? `/src${cleanPath}` : `/src/assets${cleanPath}`
-    const noSlash = srcPath.startsWith('/') ? srcPath.slice(1) : srcPath
+  // Check if it's an image first (for optimization/hashing)
+  const srcPath = cleanPath.startsWith('/assets') ? `/src${cleanPath}` : `/src/assets${cleanPath}`
+  const noSlash = srcPath.startsWith('/') ? srcPath.slice(1) : srcPath
 
-    const resolve = (map: Record<string, any>) => map[srcPath] || map[noSlash]
+  const img = images[srcPath] || images[noSlash]
+  if (img) return img.default.src
 
-    const img = resolve(images)
-    if (img) return img.default.src
-
-    const doc = resolve(docs)
-    if (doc) return doc
-  }
-
-  // Fallback: filename alone
-  const fileName = decodedPath.split('/').pop()
-  if (fileName) {
-    const findByFileName = (map: Record<string, any>) => {
-      const foundKey = Object.keys(map).find((key) => key.endsWith(`/${fileName}`))
-      return foundKey ? map[foundKey] : null
-    }
-
-    const fallbackImg = findByFileName(images)
-    if (fallbackImg) return fallbackImg.default.src
-
-    const fallbackDoc = findByFileName(docs)
-    if (fallbackDoc) return fallbackDoc
-  }
-
-  return publicPath
+  // For non-images, we assume they are in public/assets
+  // Return the encoded public path for browser compatibility
+  return encodeURI(cleanPath).replace(/%25/g, '%') // Fix double encoding if any
 }
 
 export async function getOptimizedImage(
