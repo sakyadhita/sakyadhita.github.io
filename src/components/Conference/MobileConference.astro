@@ -32,8 +32,8 @@ const index = initialIndex === -1 ? 0 : initialIndex
                 <div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
               </div>
            ) : (
-             <Slideshow height="100%" width="100%" isMobile>
-               {item.data.optimizedImages?.map((image) => (
+             <Slideshow height="100%" width="100%" >
+               {item.data.optimizedImages?.map((image: any) => (
                  <div class="embla__slide relative size-full">
                     <div class="absolute bottom-12 left-6 z-10 pr-12 text-white drop-shadow-md">
                       <h1 class="font-heading text-2xl font-bold tracking-tight lowercase">{item.data.title}</h1>
@@ -56,7 +56,7 @@ const index = initialIndex === -1 ? 0 : initialIndex
               theme={item.data.htmlBody}
               signup={item.data.signUpLink}
               location={item.data.location}
-              isMobile
+              
             />
           </section>
           <section class="fade-in slide-in-from-bottom-4 animate-in delay-200">
@@ -71,7 +71,7 @@ const index = initialIndex === -1 ? 0 : initialIndex
              <iframe
                 src={item.data.video.replace('watch?v=', 'embed/')}
                 class="size-full"
-                frameborder="0"
+                
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>

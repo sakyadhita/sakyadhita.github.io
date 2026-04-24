@@ -43,14 +43,14 @@ const index = initialIndex === -1 ? 0 : initialIndex
                     redirect={item.data.signUpLink}
                     theme={item.data.htmlBody}
                     signup={item.data.signUpLink}
-                    isMobile={false}
+                    
                   >
                     <div slot="slideshow" class="h-112 overflow-hidden rounded-3xl border border-gray-100 bg-gray-50 shadow-2xl">
                        {item.data.optimizedImages?.length === 1 ? (
                          <img class="size-full object-cover" alt="Event Visual" src={item.data.optimizedImages[0]} />
                        ) : (
-                         <Slideshow height="100%" width="100%" isMobile={false}>
-                           {item.data.optimizedImages?.map((image) => (
+                         <Slideshow height="100%" width="100%" >
+                           {item.data.optimizedImages?.map((image: any) => (
                              <div class="embla__slide size-full">
                                <img class="size-full object-cover" alt="Event Visual" src={image} />
                              </div>
@@ -73,7 +73,7 @@ const index = initialIndex === -1 ? 0 : initialIndex
                             <iframe
                               src={item.data.video.replace('watch?v=', 'embed/')}
                               class="size-full"
-                              frameborder="0"
+                              
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                               allowfullscreen
                             ></iframe>
@@ -82,8 +82,8 @@ const index = initialIndex === -1 ? 0 : initialIndex
                          item.data.optimizedImages?.length === 1 ? (
                            <img class="size-full object-cover" alt="Event Visual" src={item.data.optimizedImages[0]} />
                          ) : (
-                           <Slideshow height="100%" width="100%" isMobile={false}>
-                             {item.data.optimizedImages?.map((image) => (
+                           <Slideshow height="100%" width="100%" >
+                             {item.data.optimizedImages?.map((image: any) => (
                                <div class="embla__slide size-full">
                                  <img class="size-full object-cover" alt="Event Visual" src={image} />
                                </div>

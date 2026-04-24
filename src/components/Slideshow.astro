@@ -10,17 +10,15 @@ import { cn } from '../lib/utils'
 interface Props {
   height?: string
   width?: string
-  isMobile?: boolean
   className?: string
 }
 
-const { height = '100%', width = '100%', isMobile = false, className = '' } = Astro.props
+const { height = '100%', width = '100%', className = '' } = Astro.props
 ---
 
 <div
   class={cn('Slideshow group relative block overflow-hidden', className)}
   style={{ width }}
-  data-is-mobile={isMobile}
 >
   <div class="embla h-full" style={{ height }}>
     <div class="embla__container flex h-full">
@@ -28,35 +26,31 @@ const { height = '100%', width = '100%', isMobile = false, className = '' } = As
     </div>
   </div>
 
-  {/* Custom Arrows - Only on desktop as per original implementation */}
-  {
-    !isMobile && (
-      <>
-        <button
-          type="button"
-          class="
-            embla__prev absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer
-            border-none bg-transparent opacity-0 transition-opacity
-            group-hover:opacity-100
-          "
-          aria-label="Previous slide"
-        >
-          <Icon name="lucide:chevron-left" class="z-20 size-12 text-white" />
-        </button>
-        <button
-          type="button"
-          class="
-            embla__next absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer
-            border-none bg-transparent opacity-0 transition-opacity
-            group-hover:opacity-100
-          "
-          aria-label="Next slide"
-        >
-          <Icon name="lucide:chevron-right" class="z-20 size-12 text-white" />
-        </button>
-      </>
-    )
-  }
+  {/* Custom Arrows - Only on desktop */}
+  <button
+    type="button"
+    class="
+      embla__prev absolute top-1/2 left-4 z-10 hidden -translate-y-1/2
+      cursor-pointer border-none bg-transparent opacity-0 transition-opacity
+      group-hover:opacity-100
+      lg:block
+    "
+    aria-label="Previous slide"
+  >
+    <Icon name="lucide:chevron-left" class="z-20 size-12 text-white" />
+  </button>
+  <button
+    type="button"
+    class="
+      embla__next absolute top-1/2 right-4 z-10 hidden -translate-y-1/2
+      cursor-pointer border-none bg-transparent opacity-0 transition-opacity
+      group-hover:opacity-100
+      lg:block
+    "
+    aria-label="Next slide"
+  >
+    <Icon name="lucide:chevron-right" class="z-20 size-12 text-white" />
+  </button>
 
   {/* Indicators */}
   <div

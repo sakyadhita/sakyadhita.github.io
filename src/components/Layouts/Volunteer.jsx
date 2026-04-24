@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { CountryDropdown } from 'react-country-region-selector'
 
 import { cn } from '../../lib/utils'
@@ -16,71 +16,27 @@ function displayAsterisk() {
 
 // funcion to render all volunteer committees
 function displayCommittees(
-  isMobile,
   volunteerCommittees,
   selectedCommittees,
   handleCommitteesChange
 ) {
-  const mid = Math.floor(volunteerCommittees.length / 2)
-
-  if (isMobile) {
-    // renders a single column if device is mobile
-    return (
-      <div className="volunteer-options flex flex-col space-y-4">
-        {volunteerCommittees.map((committee) => (
-          <VolunteerOption
-            key={committee.id}
-            value={committee.id}
-            checked={selectedCommittees.includes(committee.id)}
-            handleChange={handleCommitteesChange}
-            title={committee.data.title}
-            description={committee.data.description}
-          />
-        ))}
-      </div>
-    )
-  }
-
-  const volunteerOptionsLeft = []
-  const volunteerOptionsRight = []
-
-  // separates committees into two lists to display in two columns
-  for (let ind = 0; ind <= mid; ind++) {
-    volunteerOptionsLeft.push(
-      <VolunteerOption
-        key={volunteerCommittees[ind].id}
-        value={volunteerCommittees[ind].id}
-        checked={selectedCommittees.includes(volunteerCommittees[ind].id)}
-        handleChange={handleCommitteesChange}
-        title={volunteerCommittees[ind].data.title}
-        description={volunteerCommittees[ind].data.description}
-      />
-    )
-  }
-
-  for (let i = mid + 1; i < volunteerCommittees.length; i++) {
-    volunteerOptionsRight.push(
-      <VolunteerOption
-        key={volunteerCommittees[i].id}
-        value={volunteerCommittees[i].id}
-        checked={selectedCommittees.includes(volunteerCommittees[i].id)}
-        handleChange={handleCommitteesChange}
-        title={volunteerCommittees[i].data.title}
-        description={volunteerCommittees[i].data.description}
-      />
-    )
-  }
-
-  // renders committees in two columns
   return (
     <div
       className="
-        volunteer-options grid grid-cols-1 gap-12
-        md:grid-cols-2
+        volunteer-options grid grid-cols-1 gap-6
+        md:grid-cols-2 md:gap-12
       "
     >
-      <div className="left-options-column flex flex-col space-y-6">{volunteerOptionsLeft}</div>
-      <div className="right-options-column flex flex-col space-y-6">{volunteerOptionsRight}</div>
+      {volunteerCommittees.map((committee) => (
+        <VolunteerOption
+          key={committee.id}
+          value={committee.id}
+          checked={selectedCommittees.includes(committee.id)}
+          handleChange={handleCommitteesChange}
+          title={committee.data.title}
+          description={committee.data.description}
+        />
+      ))}
     </div>
   )
 }
@@ -142,27 +98,12 @@ export default function Volunteer({ interests }) {
   const [isFormDisabled, setIsFormDisabled] = useState(false)
   // tracks whether error message for commitees is displayed
   const [committeesError, setCommitteesError] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
 
   // snackbar used to display error messages
   const [snackbar, setSnackBar] = useState({
     open: false,
     message: ''
   })
-
-  // modifies isMobile state when window resizes
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth <= 600)
-    }
-
-    // event listener for resize
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    // Removes event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // handles user input to any form field
   const handleChange = (event) => {
@@ -564,7 +505,7 @@ export default function Volunteer({ interests }) {
                 rounded-2xl border border-gray-100 bg-gray-50 p-8 shadow-inner
               "
             >
-              {displayCommittees(isMobile, interests, selectedCommittees, handleCommitteesChange)}
+              {displayCommittees(interests, selectedCommittees, handleCommitteesChange)}
             </div>
           </div>
           {/* submit button */}

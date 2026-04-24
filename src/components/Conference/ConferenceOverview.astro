@@ -59,7 +59,7 @@ const items = info.data
               No info available
             </div>
           ) : (
-            items.brochures.map((program) => (
+            items.brochures.map((program: any) => (
               <a
                 href={program.url}
                 download
@@ -101,7 +101,7 @@ const items = info.data
               No info available
             </div>
           ) : (
-            items.programs.map((program) => (
+            items.programs.map((program: any) => (
               <a
                 href={program.url}
                 download
@@ -143,7 +143,7 @@ const items = info.data
               No info available
             </div>
           ) : (
-            items.abstracts.map((program) => (
+            items.abstracts.map((program: any) => (
               <a
                 href={program.url}
                 download
@@ -185,7 +185,7 @@ const items = info.data
               No info available
             </div>
           ) : (
-            items.presentations.map((program) => (
+            items.presentations.map((program: any) => (
               <a
                 href={program.url}
                 download

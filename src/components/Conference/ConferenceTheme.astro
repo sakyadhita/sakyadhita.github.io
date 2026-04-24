@@ -7,11 +7,9 @@ interface Props {
   redirect?: string
   theme: string
   signup?: string
-  isMobile?: boolean
-  tabs?: any // Not used in Astro version as tabs are handled in parent
 }
 
-const { title, location, redirect, theme, signup, isMobile = false } = Astro.props
+const { title, location, redirect, theme, signup } = Astro.props
 ---
 
 <div class="fade-in slide-in-from-bottom-4 animate-in space-y-10">
@@ -44,10 +42,10 @@ const { title, location, redirect, theme, signup, isMobile = false } = Astro.pro
     </h3>
   </section>
 
-  {/* Button that opens the modal */}
+  {/* Button that opens the modal - Only on desktop */}
   {
-    signup && !isMobile && (
-      <section>
+    signup && (
+      <section class="hidden lg:block">
         <button
           type="button"
           class="
@@ -96,21 +94,5 @@ const { title, location, redirect, theme, signup, isMobile = false } = Astro.pro
     positiveUrl={redirect}
     positiveButtonText="Yes"
     negativeButtonText="No"
-    id="signup-modal"
   />
 </div>
-
-<script>
-  function initConferenceTheme() {
-    const signupBtns = document.querySelectorAll('.signup-btn');
-    signupBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Find the modal - this might be tricky with shadcn/ui React Modal.
-        // We might need a more global way to trigger it.
-        // For now, let's just use window.location if we can't easily trigger the React modal.
-        // Actually, if we use client:load on Modal, we might need a store.
-      });
-    });
-  }
-  // ...
-</script>

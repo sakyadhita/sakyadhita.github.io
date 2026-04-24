@@ -32,7 +32,7 @@ const redirectLink = getAssetUrl(article.data.redirectLink)
         <slot />
       </div>
       <div class="flex items-center justify-center">
-        <CustomButton text="Learn More" redirect_link={redirectLink} />
+        <CustomButton text="Learn More" redirect_link={redirectLink ?? undefined} />
       </div>
     </div>
     <div class="flex-1">

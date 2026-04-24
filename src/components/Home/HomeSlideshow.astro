@@ -11,7 +11,7 @@ const { newsAndEvents } = Astro.props
 if (!newsAndEvents || newsAndEvents.length === 0) return null
 ---
 
-<Slideshow height="85vh" width="100%" isMobile={false}>
+<Slideshow height="85vh" width="100%">
   {
     newsAndEvents.map((slideInfo) => (
       <NewsSlide
