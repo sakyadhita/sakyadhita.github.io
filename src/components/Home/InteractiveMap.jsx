@@ -16,6 +16,7 @@ import {
   ZoomableGroup,
   Graticule
 } from 'react-simple-maps'
+
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '../ui/tooltip'
 
 // loads topological map information (continents/countries, general outline) using json request
@@ -27,7 +28,7 @@ const mapHeight = 600
 
 export default function InteractiveMap({ markers, disableZooming = false }) {
   return (
-    <div className="w-full h-full">
+    <div className="size-full">
       <TooltipProvider>
         <ComposableMap>
           {/* Makes map zoomable/pannable, with default zoom set as zoomed out as possible */}
@@ -93,17 +94,22 @@ export default function InteractiveMap({ markers, disableZooming = false }) {
                         href={markers[i].siteLink}
                         target="_blank"
                         rel="noreferrer"
-                        className="font-bold text-brand-orange hover:underline"
+                        className="
+                          font-bold text-brand-orange
+                          hover:underline
+                        "
                       >
                         {markers[i].name}
                       </a>
                     ) : (
                       <span className="font-bold text-brand-dark-purple">{markers[i].name}</span>
                     )}
-                    {markers[i].email && <div className="text-sm mt-1">{markers[i].email}</div>}
+                    {markers[i].email && <div className="mt-1 text-sm">{markers[i].email}</div>}
                     {markers[i].html && (
                       <div
-                        className="prose prose-sm max-w-none mt-2 leading-tight italic"
+                        className="
+                          prose prose-sm mt-2 max-w-none leading-tight italic
+                        "
                         dangerouslySetInnerHTML={{ __html: markers[i].html }}
                       />
                     )}

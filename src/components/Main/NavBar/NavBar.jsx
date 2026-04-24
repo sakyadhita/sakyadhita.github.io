@@ -8,10 +8,11 @@
  */
 
 import { useState } from 'react'
-import Hamburger from '../../../media/hamburger.svg'
+
 import Nav from './Nav'
-import Brand from '../Brand'
 import { cn } from '../../../lib/utils'
+import Hamburger from '../../../media/hamburger.svg'
+import Brand from '../Brand'
 
 export default function NavBar() {
   // Tells the navigation panel whether or not to render
@@ -29,29 +30,41 @@ export default function NavBar() {
 
     // Removes transition time when not necessary so that changing
     // view width does not cause the nav to glitch
-    if (!navTransition) setNavTransition('transition')
-    // If closing navbar, wait for animation to finish
-    else
+    if (navTransition) {
       setTimeout(() => {
         setNavTransition('')
       }, 500)
+    }
+    // If closing navbar, wait for animation to finish
+    else {
+      setNavTransition('transition')
+    }
   }
 
   return (
-    <div className="sticky top-0 w-full z-[1000]">
+    <div className="sticky top-0 z-1000 w-full">
       {/* The actual Navigation Bar */}
-      <div className="h-12 md:h-32 w-full px-6 md:px-14 py-2 md:py-4 flex justify-between items-center bg-brand-light-purple text-white shadow-none md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]">
+      <div
+        className="
+          flex h-12 w-full items-center justify-between bg-brand-light-purple
+          px-6 py-2 text-white shadow-none
+          md:h-32 md:px-14 md:py-4 md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]
+        "
+      >
         {/* Logo and Branding */}
         <Brand />
 
         {/* Hamburger Button to Toggle Navigation */}
         <button
           type="button"
-          className="relative w-5 h-5 md:w-12 md:h-12 cursor-pointer border-none bg-transparent"
+          className="
+            relative size-5 cursor-pointer border-none bg-transparent
+            md:size-12
+          "
           onClick={toggleNav}
           onKeyDown={toggleNav}
         >
-          <img src={Hamburger.src} alt="Toggle Navigation" className="w-full h-full" />
+          <img src={Hamburger.src} alt="Toggle Navigation" className="size-full" />
         </button>
       </div>
 
@@ -63,8 +76,12 @@ export default function NavBar() {
         role="button"
         tabIndex={0}
         className={cn(
-          'fixed inset-0 bg-black/30 backdrop-blur-[2px] transition-opacity duration-500 z-[999] pointer-events-none opacity-0 md:block hidden',
-          navToggled && 'opacity-100 pointer-events-auto'
+          `
+            pointer-events-none fixed inset-0 z-999 hidden bg-black/30 opacity-0
+            backdrop-blur-[2px] transition-opacity duration-500
+            md:block
+          `,
+          navToggled && 'pointer-events-auto opacity-100'
         )}
         onClick={toggleNav}
         onKeyDown={(e) => {

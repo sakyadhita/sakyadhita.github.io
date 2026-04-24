@@ -14,6 +14,7 @@
  */
 
 import { useState, useEffect } from 'react'
+
 import CustomPagination from './Pagination'
 import { cn } from '../../lib/utils'
 
@@ -50,11 +51,9 @@ export default function VerticalStepper(props) {
     const arr = []
     // loop through each item
     for (let i = 0; i < props.items.length; i++) {
-      const obj = {}
+      const obj = { location: props.items[i].data.location, confNum: props.items[i].data.confNum }
       // extract only the country/state, not city
-      obj.location = props.items[i].data.location
       // get the conference number
-      obj.confNum = props.items[i].data.confNum
 
       // push it to the array
       arr.push(obj)
@@ -153,18 +152,30 @@ export default function VerticalStepper(props) {
 
   return (
     <div className="w-fit">
-      <div className="min-h-[666.5px] flex flex-col items-start px-2">
+      <div className="flex min-h-[666.5px] flex-col items-start px-2">
         {splitSteps.map((step, index) => (
-          <div key={step.confNum} className="flex flex-col items-start group w-full">
-            <div className="flex items-center w-full">
+          <div key={step.confNum} className="
+            group flex w-full flex-col items-start
+          ">
+            <div className="flex w-full items-center">
               {/* Node Button */}
               <button
                 onClick={() => handleStep(index)}
                 className={cn(
-                  'relative z-10 w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-300 shrink-0 cursor-pointer',
+                  `
+                    relative z-10 flex size-9 shrink-0 cursor-pointer
+                    items-center justify-center rounded-full border-2
+                    transition-all duration-300
+                  `,
                   activeIndex === index
-                    ? 'bg-brand-dark-purple text-white border-brand-dark-purple shadow-lg scale-105'
-                    : 'bg-white text-brand-dark-purple border-brand-dark-purple hover:bg-brand-dark-purple hover:text-white'
+                    ? `
+                      scale-105 border-brand-dark-purple bg-brand-dark-purple
+                      text-white shadow-lg
+                    `
+                    : `
+                      border-brand-dark-purple bg-white text-brand-dark-purple
+                      hover:bg-brand-dark-purple hover:text-white
+                    `
                 )}
                 style={
                   activeIndex === index
@@ -172,7 +183,9 @@ export default function VerticalStepper(props) {
                     : { color: props.color, borderColor: props.color }
                 }
               >
-                <span className="text-xs font-bold pointer-events-none lowercase">
+                <span className="
+                  pointer-events-none text-xs font-bold lowercase
+                ">
                   {ordinal_suffix_of(step.confNum)}
                 </span>
               </button>
@@ -181,7 +194,12 @@ export default function VerticalStepper(props) {
               <button
                 type="button"
                 className={cn(
-                  'ml-4 text-base text-left max-w-40 truncate cursor-pointer hover:underline font-body transition-colors border-none bg-transparent p-0',
+                  `
+                    ml-4 max-w-40 cursor-pointer truncate border-none
+                    bg-transparent p-0 text-left font-body text-base
+                    transition-colors
+                    hover:underline
+                  `,
                   activeIndex === index ? 'font-bold opacity-100' : 'opacity-80'
                 )}
                 style={{ color: props.color }}
@@ -194,7 +212,7 @@ export default function VerticalStepper(props) {
             {/* Connector below */}
             {index < splitSteps.length - 1 && (
               <div
-                className="w-0.5 min-h-8 ml-4 my-1 opacity-40"
+                className="my-1 ml-4 min-h-8 w-0.5 opacity-40"
                 style={{ backgroundColor: props.color }}
               />
             )}

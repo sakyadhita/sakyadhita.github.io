@@ -5,8 +5,12 @@
  */
 
 const Loader = () => (
-  <div className="flex justify-center items-center my-36">
-    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-light-purple"></div>
+  <div className="my-36 flex items-center justify-center">
+    <div
+      className="
+        size-10 animate-spin rounded-full border-b-2 border-brand-light-purple
+      "
+    />
   </div>
 )
 

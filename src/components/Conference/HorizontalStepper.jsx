@@ -14,9 +14,10 @@
  */
 
 import React, { useState, useEffect } from 'react'
+
 import CustomPagination from './Pagination'
-import useWindowSize from '../../util/ScreenListener'
 import { cn } from '../../lib/utils'
+import useWindowSize from '../../util/ScreenListener'
 
 /**
  * Convert a given number into an ordinal number
@@ -54,11 +55,9 @@ export default function HorizontalStepper(props) {
     const arr = []
     // loop through each item
     for (let i = 0; i < props.items.length; i++) {
-      const obj = {}
+      const obj = { location: props.items[i].data.location, confNum: props.items[i].data.confNum }
       // extract only the country/state, not city
-      obj.location = props.items[i].data.location
       // get the conference number
-      obj.confNum = props.items[i].data.confNum
 
       // push it to the array
       arr.push(obj)
@@ -164,8 +163,17 @@ export default function HorizontalStepper(props) {
             <button
               onClick={() => handleStep(index)}
               className={cn(
-                'relative z-10 w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 cursor-pointer',
-                activeIndex === index ? 'text-white shadow-md' : 'bg-white hover:bg-gray-50'
+                `
+                  relative z-10 flex size-11 cursor-pointer items-center
+                  justify-center rounded-full border-2 transition-all
+                  duration-300
+                `,
+                activeIndex === index
+                  ? 'text-white shadow-md'
+                  : `
+                    bg-white
+                    hover:bg-gray-50
+                  `
               )}
               style={
                 activeIndex === index
@@ -178,14 +186,14 @@ export default function HorizontalStepper(props) {
 
             {/* Connector */}
             {index < splitSteps.length - 1 && (
-              <div className="h-0.5 w-14 -ml-0.5" style={{ backgroundColor: props.color }} />
+              <div className="-ml-0.5 h-0.5 w-14" style={{ backgroundColor: props.color }} />
             )}
           </React.Fragment>
         ))}
       </div>
 
       {/* pagination allows user to see more conferences */}
-      <div className="flex justify-center mt-2">
+      <div className="mt-2 flex justify-center">
         <CustomPagination count={steps.length} updatePage={updatePage} size={updateSize()} />
       </div>
     </div>

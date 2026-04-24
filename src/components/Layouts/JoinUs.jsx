@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Checkbox } from '../ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Input } from '../ui/input'
-import { Textarea } from '../ui/textarea'
-import { Label } from '../ui/label'
-
 import { CountryDropdown } from 'react-country-region-selector'
 
-import CustomButton from '../CustomButtonReact'
-import PayPalModal from '../PayPalModal'
-import Modal from '../Modal'
 import { cn } from '../../lib/utils'
+import CustomButton from '../CustomButtonReact'
+import Modal from '../Modal'
+import PayPalModal from '../PayPalModal'
+import { Checkbox } from '../ui/checkbox'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { Textarea } from '../ui/textarea'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return (
-    <span className="error-asterisk text-brand-red ml-2 font-bold text-xl flex-shrink-0">*</span>
-  )
+  return <span className="
+    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
+  ">*</span>
 }
 
 export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
@@ -267,7 +266,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
     }
 
     // defines address to pass to backend
-    const addressOpt = values.addressTwo.value !== '' ? `${values.addressTwo.value} ` : ''
+    const addressOpt = values.addressTwo.value === '' ? '' : `${values.addressTwo.value} `
     const givenAddress = `${values.addressOne.value} ${addressOpt}${values.city.value} ${values.stateLocation.value} ${values.country.value} ${values.zipcode.value}`
 
     await fetch('/', {
@@ -304,7 +303,11 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
 
   const inputClasses = (hasError) =>
     cn(
-      'h-12 border-black rounded-2xl focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple px-4 text-lg font-body bg-white w-full',
+      `
+        h-12 w-full rounded-2xl border-black bg-white px-4 font-body text-lg
+        focus-visible:border-brand-dark-purple
+        focus-visible:ring-brand-dark-purple
+      `,
       hasError && 'border-brand-red'
     )
 
@@ -313,24 +316,37 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
 
   return (
     <div className="font-body">
-      <div className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-12 text-black">
+      <div
+        className="
+          mx-auto max-w-7xl space-y-12 px-6 py-12 text-black
+          md:px-12
+        "
+      >
         <div className="space-y-6">
-          <h1 className="text-4xl font-heading text-brand-dark-purple lowercase">
+          <h1 className="font-heading text-4xl text-brand-dark-purple lowercase">
             Thank you for your interest!
           </h1>
-          <p className="text-lg leading-relaxed text-gray-700">
+          <p className="text-lg/relaxed text-gray-700">
             By filling out this form, you will be added to the email list. If you wish to also have
             a membership with Sakyadhita, you will be asked to pay a membership fee through PayPal
             once all required fields are filled out. If you wish to only be on the email list,
             please check the “Not interested in membership” box below.
           </p>
           {/* checkbox to only join email list */}
-          <div className="flex items-center space-x-3 bg-brand-orange/10 p-4 rounded-lg border border-brand-orange/20">
+          <div
+            className="
+              flex items-center space-x-3 rounded-lg border
+              border-brand-orange/20 bg-brand-orange/10 p-4
+            "
+          >
             <Checkbox
               id="membershipCheck"
               checked={membershipCheck}
               onCheckedChange={handleMembershipChange}
-              className="border-black data-checked:bg-brand-orange"
+              className="
+                border-black
+                data-checked:bg-brand-orange
+              "
             />
             <Label
               htmlFor="membershipCheck"
@@ -341,9 +357,14 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
           </div>
         </div>
 
-        <form autoComplete="off" className="space-y-4 max-w-2xl mx-auto">
+        <form autoComplete="off" className="mx-auto max-w-2xl space-y-4">
           <section className="space-y-4">
-            <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-12">
+            <h1
+              className="
+                mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1
+                font-heading text-3xl text-brand-dark-purple lowercase italic
+              "
+            >
               Sign Me Up!
             </h1>
             {/* first name field */}
@@ -372,7 +393,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                   name="middleName"
                 />
               </div>
-              <span className="ml-2 w-4 flex-shrink-0"></span>
+              <span className="ml-2 w-4 shrink-0" />
             </div>
             {/* last name field */}
             <div className="flex items-center">
@@ -391,7 +412,12 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
           </section>
 
           <section className="space-y-4">
-            <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mt-16 mb-8">
+            <h1
+              className="
+                mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1
+                font-heading text-3xl text-brand-dark-purple lowercase italic
+              "
+            >
               Contact Information
             </h1>
             {/* email address field */}
@@ -413,7 +439,12 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
             <div className="flex items-center">
               <div className="flex-1">
                 <CountryDropdown
-                  className="input-field country-dropdown h-12 border-black rounded-2xl px-4 text-lg font-body w-full bg-white transition-all focus:ring-2 focus:ring-brand-dark-purple outline-none"
+                  className="
+                    input-field country-dropdown h-12 w-full rounded-2xl
+                    border-black bg-white px-4 font-body text-lg transition-all
+                    outline-none
+                    focus:ring-2 focus:ring-brand-dark-purple
+                  "
                   style={
                     values.country.error
                       ? { border: '1px solid #ea4444' }
@@ -428,8 +459,13 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
             </div>
 
             {/* displays other address fields if country is selected */}
-            {values.country.value !== '' ? (
-              <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500 pt-2">
+            {values.country.value === '' ? null : (
+              <div
+                className="
+                  animate-in fade-in slide-in-from-top-4 space-y-4 pt-2
+                  duration-500
+                "
+              >
                 {/* address line 1 field */}
                 <div className="flex items-center">
                   <div className="flex-1">
@@ -456,7 +492,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                       name="addressTwo"
                     />
                   </div>
-                  <span className="ml-2 w-4 flex-shrink-0"></span>
+                  <span className="ml-2 w-4 shrink-0" />
                 </div>
                 {/* city field */}
                 <div className="flex items-center">
@@ -512,17 +548,37 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                       name="phoneNumber"
                     />
                   </div>
-                  <span className="ml-2 w-4 flex-shrink-0"></span>
+                  <span className="ml-2 w-4 shrink-0" />
                 </div>
               </div>
-            ) : null}
+            )}
           </section>
 
           {/* displays rest of the form if email list only isn't selected */}
-          {!membershipCheck ? (
-            <div className="space-y-8 animate-in fade-in duration-500 pt-8">
+          {membershipCheck ? (
+            <div className="space-y-10 pt-16">
+              <p className="text-center font-body text-lg text-gray-500 italic">
+                <span className="font-bold text-brand-red"> * </span> indicates a required field
+              </p>
+              {/* submit button for email list only form */}
+              <div className="flex justify-center pb-12">
+                <CustomButton
+                  className="h-16 w-auto rounded-full px-16 text-2xl"
+                  text="Submit"
+                  onClickCallback={handleSubmit}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="animate-in fade-in space-y-8 pt-8 duration-500">
               <section className="space-y-4">
-                <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-12">
+                <h1
+                  className="
+                    mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1
+                    font-heading text-3xl text-brand-dark-purple lowercase
+                    italic
+                  "
+                >
                   Additional Information
                 </h1>
                 {/* new member dropdown */}
@@ -544,7 +600,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                 <div className="flex items-start">
                   <div className="flex-1">
                     <Textarea
-                      className={cn(inputClasses(false), 'h-32 py-2 resize-none')}
+                      className={cn(inputClasses(false), 'h-32 resize-none py-2')}
                       placeholder="List any organizations you’re involved with"
                       required
                       value={organizations}
@@ -557,14 +613,20 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
               </section>
 
               <section className="space-y-4">
-                <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-16">
+                <h1
+                  className="
+                    mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1
+                    font-heading text-3xl text-brand-dark-purple lowercase
+                    italic
+                  "
+                >
                   Payment Options
                 </h1>
                 <div className="flex items-center">
                   <div className="flex-1">
                     <Select
                       value={selectedMembershipIndex.toString()}
-                      onValueChange={(val) => setSelectedMembershipIndex(parseInt(val))}
+                      onValueChange={(val) => setSelectedMembershipIndex(Number.parseInt(val))}
                     >
                       <SelectTrigger className={selectTriggerClasses}>
                         <SelectValue placeholder="Select Membership" />
@@ -581,16 +643,26 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                   {displayAsterisk()}
                 </div>
                 {/* checkbox to add a donation */}
-                <div className="flex items-center space-x-3 bg-brand-orange/5 p-5 rounded-xl border border-brand-orange/10 !mt-8">
+                <div
+                  className="
+                    mt-8! flex items-center space-x-3 rounded-xl border
+                    border-brand-orange/10 bg-brand-orange/5 p-5
+                  "
+                >
                   <Checkbox
                     id="donateCheck"
                     checked={donateCheck}
                     onCheckedChange={handleDonateChange}
-                    className="border-black data-checked:bg-brand-orange"
+                    className="
+                      border-black
+                      data-checked:bg-brand-orange
+                    "
                   />
                   <Label
                     htmlFor="donateCheck"
-                    className="cursor-pointer font-bold text-lg leading-tight text-black"
+                    className="
+                      cursor-pointer text-lg/tight font-bold text-black
+                    "
                   >
                     I would like to donate in addition to membership fees
                   </Label>
@@ -598,9 +670,14 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
 
                 {/* displays donation field if donate checkbox is checked */}
                 {donateCheck ? (
-                  <div className="flex items-center relative !mt-4">
+                  <div className="relative mt-4! flex items-center">
                     <div className="relative w-full">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold z-10 text-black">
+                      <span
+                        className="
+                          absolute top-1/2 left-4 z-10 -translate-y-1/2 text-lg
+                          font-bold text-black
+                        "
+                      >
                         $
                       </span>
                       <Input
@@ -608,7 +685,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                         placeholder="Insert Donation Amount"
                         required
                         value={donation}
-                        onChange={(e) => setDonation(parseFloat(e.target.value))}
+                        onChange={(e) => setDonation(Number.parseFloat(e.target.value))}
                         type="number"
                         step={0.01}
                       />
@@ -629,7 +706,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                   phoneNumber={values.phoneNumber.value}
                   membershipTitle={memberships[selectedMembershipIndex].title}
                   membershipID={memberships[selectedMembershipIndex].id}
-                  membershipCost={parseFloat(memberships[selectedMembershipIndex].cost)}
+                  membershipCost={Number.parseFloat(memberships[selectedMembershipIndex].cost)}
                   donationAmount={donation}
                   isNewMember={memberType}
                   affiliatedOrgs={organizations}
@@ -638,37 +715,30 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                   transactionCompleted={handleFormCompleted}
                 />
               ) : null}
-              <div className="pt-12 flex flex-col items-center space-y-6">
+              <div className="flex flex-col items-center space-y-6 pt-12">
                 {/* displays continue to payment button if all fields are filled */}
-                {!displayPayPal ? (
-                  <div className="bg-brand-red/5 p-4 rounded-lg border border-brand-red/20 text-center">
-                    <p className="text-brand-red font-bold text-lg animate-pulse">
-                      *Please fill out all required fields to proceed to payment.
-                    </p>
-                  </div>
-                ) : (
+                {displayPayPal ? (
                   <div className="continue-button text-center">
                     <CustomButton
-                      className="w-auto px-16 h-16 text-2xl rounded-full"
+                      className="h-16 w-auto rounded-full px-16 text-2xl"
                       text="Continue to Payment"
                       onClickCallback={openPaypalModal}
                     />
                   </div>
+                ) : (
+                  <div
+                    className="
+                      rounded-lg border border-brand-red/20 bg-brand-red/5 p-4
+                      text-center
+                    "
+                  >
+                    <p className="
+                      animate-pulse text-lg font-bold text-brand-red
+                    ">
+                      *Please fill out all required fields to proceed to payment.
+                    </p>
+                  </div>
                 )}
-              </div>
-            </div>
-          ) : (
-            <div className="pt-16 space-y-10">
-              <p className="text-center text-gray-500 font-body text-lg italic">
-                <span className="text-brand-red font-bold"> * </span> indicates a required field
-              </p>
-              {/* submit button for email list only form */}
-              <div className="flex justify-center pb-12">
-                <CustomButton
-                  className="w-auto px-16 h-16 text-2xl rounded-full"
-                  text="Submit"
-                  onClickCallback={handleSubmit}
-                />
               </div>
             </div>
           )}
@@ -676,7 +746,13 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
 
         {/* Simple Snackbar Replacement */}
         {snackbar.open && (
-          <div className="fixed bottom-5 left-5 bg-brand-red text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center justify-between min-w-[300px]">
+          <div
+            className="
+              fixed bottom-5 left-5 z-50 flex min-w-[300px] items-center
+              justify-between rounded-lg bg-brand-red px-6 py-3 text-white
+              shadow-lg
+            "
+          >
             <span>{snackbar.message}</span>
             <button
               onClick={() => setSnackBar({ open: false })}

@@ -13,6 +13,7 @@
  */
 
 import { useState } from 'react'
+
 import Modal from '../Modal'
 
 export default function ConferenceTheme(props) {
@@ -30,11 +31,17 @@ export default function ConferenceTheme(props) {
   const hide = () => setOpen(false)
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4">
+    <div className="animate-in fade-in slide-in-from-bottom-4 space-y-10">
       {/* The title of the conference */}
       {props.title ? (
         <section className="space-y-6">
-          <h1 className="text-3xl md:text-5xl font-bold font-heading text-brand-dark-purple lowercase tracking-tight">
+          <h1
+            className="
+              font-heading text-3xl font-bold tracking-tight
+              text-brand-dark-purple lowercase
+              md:text-5xl
+            "
+          >
             {props.title}
           </h1>
           {props.tabs ? props.tabs() : null}
@@ -43,7 +50,12 @@ export default function ConferenceTheme(props) {
 
       {/* The location of the conference */}
       <section>
-        <h3 className="text-xl md:text-2xl font-bold font-heading italic text-brand-orange lowercase">
+        <h3
+          className="
+            font-heading text-xl font-bold text-brand-orange lowercase italic
+            md:text-2xl
+          "
+        >
           {props.location}
         </h3>
       </section>
@@ -54,7 +66,13 @@ export default function ConferenceTheme(props) {
           <button
             onClick={() => redirect()}
             type="button"
-            className="px-8 py-3 bg-brand-orange text-white rounded-full font-bold font-body uppercase tracking-wider hover:bg-brand-dark-orange transition-all shadow-md active:scale-95 border-none"
+            className="
+              rounded-full border-none bg-brand-orange px-8 py-3 font-body
+              font-bold tracking-wider text-white uppercase shadow-md
+              transition-all
+              hover:bg-brand-dark-orange
+              active:scale-95
+            "
           >
             Sign Up
           </button>
@@ -62,12 +80,27 @@ export default function ConferenceTheme(props) {
       ) : null}
 
       {/* The text describing the specific conference */}
-      <div className="flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 mr-8">
+      <div
+        className="
+          mr-8 flex flex-col-reverse gap-8
+          lg:flex-row lg:gap-12
+        "
+      >
         <div
-          className="flex-1 prose prose-lg max-w-none font-body text-gray-700 leading-relaxed italic lowercase"
+          className="
+            prose prose-lg max-w-none flex-1 font-body leading-relaxed
+            text-gray-700 lowercase italic
+          "
           dangerouslySetInnerHTML={{ __html: props.theme }}
         />
-        <div className="lg:w-1/2 shrink-0">{props.slideShow ? props.slideShow() : null}</div>
+        <div
+          className="
+            shrink-0
+            lg:w-1/2
+          "
+        >
+          {props.slideShow ? props.slideShow() : null}
+        </div>
       </div>
 
       <Modal

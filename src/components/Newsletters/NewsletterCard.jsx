@@ -19,22 +19,33 @@ export default function NewsletterCard({
   if (!isMobile) {
     // desktop styles
     return (
-      <div className="group w-72 h-72 m-6">
+      <div className="group m-6 size-72">
         <a
           href={redirect_link}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-black no-underline hover:no-underline"
+          className="
+            text-black no-underline
+            hover:no-underline
+          "
         >
           <img
             alt={title}
             src={image_url}
-            className="w-full h-60 object-cover mb-2.5 shadow-[0px_0px_4px_2px_rgba(0,0,0,0.25)] transition-all group-hover:scale-105 group-hover:shadow-[0px_0px_6px_2px_var(--color-brand-dark-orange)]"
+            className="
+              mb-2.5 h-60 w-full object-cover
+              shadow-[0px_0px_4px_2px_rgba(0,0,0,0.25)] transition-all
+              group-hover:scale-105
+              group-hover:shadow-[0px_0px_6px_2px_var(--color-brand-dark-orange)]
+            "
           />
-          <span className="h-5 block font-body text-base leading-5 text-left text-black">
-            {year}
-          </span>
-          <span className="h-7 mt-1 block font-body text-xl leading-7 text-left text-black overflow-hidden">
+          <span className="block h-5 text-left font-body text-base/5 text-black">{year}</span>
+          <span
+            className="
+              mt-1 block h-7 overflow-hidden text-left font-body text-xl/7
+              text-black
+            "
+          >
             {title}
           </span>
         </a>
@@ -43,22 +54,46 @@ export default function NewsletterCard({
   }
   // mobile styles
   return (
-    <div className="relative inline-block w-60 sm:w-64 m-4 sm:m-5">
+    <div
+      className="
+        relative m-4 inline-block w-60
+        sm:m-5 sm:w-64
+      "
+    >
       <a
         href={redirect_link}
         target="_blank"
         rel="noreferrer noopener"
-        className="text-black no-underline hover:no-underline"
+        className="
+          text-black no-underline
+          hover:no-underline
+        "
       >
         <img
           alt={title}
           src={image_url}
-          className="w-full h-48 sm:h-52 object-cover shadow-[0px_0px_3px_0.75px_rgba(0,0,0,0.25)] mb-3 sm:mb-4"
+          className="
+            mb-3 h-48 w-full object-cover
+            shadow-[0px_0px_3px_0.75px_rgba(0,0,0,0.25)]
+            sm:mb-4 sm:h-52
+          "
         />
-        <span className="h-5 sm:h-6 block font-body text-sm sm:text-base leading-5 sm:leading-6 text-left overflow-hidden text-ellipsis text-black">
+        <span
+          className="
+            block h-5 overflow-hidden text-left font-body text-sm/5
+            text-ellipsis text-black
+            sm:h-6 sm:text-base/6
+          "
+        >
           {year}
         </span>
-        <span className="block font-body text-base sm:text-xl leading-6 sm:leading-7 text-left text-wrap overflow-hidden text-black">
+        <span
+          className="
+            block overflow-hidden text-left font-body text-base/6 text-wrap
+            text-black
+            sm:text-xl/7
+          "
+        >
           {title}
         </span>
       </a>

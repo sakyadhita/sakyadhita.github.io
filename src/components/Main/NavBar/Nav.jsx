@@ -7,8 +7,8 @@
  */
 
 import { SITE_PAGES } from '../../../constants/links'
-import Cross from '../../../media/cross.svg'
 import { cn } from '../../../lib/utils'
+import Cross from '../../../media/cross.svg'
 
 export default function Nav({ visible, transition, toggle }) {
   const home = SITE_PAGES.HOME
@@ -24,7 +24,7 @@ export default function Nav({ visible, transition, toggle }) {
    * @returns {string} - class name for current page
    */
   function isPageActive(pageToCheck) {
-    const path = typeof window !== 'undefined' ? window.location.pathname : ''
+    const path = globalThis.window === undefined ? '' : globalThis.location.pathname
     const normalizedPath = path.replace(/\/$/, '') || '/'
     const normalizedCheck = pageToCheck.replace(/\/$/, '') || '/'
     return normalizedPath === normalizedCheck ? 'bg-brand-dark-orange' : ''
@@ -37,15 +37,28 @@ export default function Nav({ visible, transition, toggle }) {
   return (
     <div
       className={cn(
-        'fixed top-0 md:top-32 h-full md:h-[calc(100vh-128px)] w-full md:w-80 bg-brand-orange flex flex-col justify-start md:justify-between z-[1001] pt-16 md:pt-0 overflow-y-auto',
+        `
+          fixed top-0 z-1001 flex size-full flex-col justify-start
+          overflow-y-auto bg-brand-orange pt-16
+          md:top-32 md:h-[calc(100vh-128px)] md:w-80 md:justify-between md:pt-0
+        `,
         transition && 'transition-[right] duration-500 ease-in-out',
-        visible === 'visible' ? 'right-0' : 'right-[-100vw] md:right-[-320px]'
+        visible === 'visible'
+          ? 'right-0'
+          : `
+            right-[-100vw]
+            md:right-[-320px]
+          `
       )}
     >
       {/* Cross icon to close panel on mobile */}
       <button
         type="button"
-        className="absolute top-6 right-6 w-6 h-6 md:hidden cursor-pointer bg-transparent border-none"
+        className="
+          absolute top-6 right-6 size-6 cursor-pointer border-none
+          bg-transparent
+          md:hidden
+        "
         onClick={toggle}
         onKeyDown={toggle}
       >
@@ -53,7 +66,12 @@ export default function Nav({ visible, transition, toggle }) {
       </button>
 
       {/* Nav Links */}
-      <div className="flex flex-col w-full h-full md:h-auto">
+      <div
+        className="
+          flex size-full flex-col
+          md:h-auto
+        "
+      >
         {[
           { label: 'Home', link: home },
           { label: 'Conferences', link: conferences },

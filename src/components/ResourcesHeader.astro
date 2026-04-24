@@ -6,6 +6,7 @@
  * @author Dhanush Nanjunda Reddy, Amrit Kaur Singh
  */
 import { getImage } from 'astro:assets'
+
 import { getRawImage } from '../lib/images'
 import { cn } from '../lib/utils'
 
@@ -26,25 +27,45 @@ const optimizedImage = rawImage
 
 <div
   class={cn(
-    'relative bg-cover bg-[position:center,top] bg-no-repeat min-h-[max(40vh,300px)] sm:min-h-[max(75vh,400px)] w-full',
+    `
+      relative min-h-[max(40vh,300px)] w-full bg-cover bg-position-[center,top]
+      bg-no-repeat
+      sm:min-h-[max(75vh,400px)]
+    `,
     className
   )}
   style={{ backgroundImage: `url("${optimizedImage?.src || image}")` }}
 >
   {/* Purple box with a title and description */}
   <div
-    class="absolute ml-[7vw] sm:ml-[10%] mt-[10%] top-8 sm:top-0 bg-brand-dark-purple/90 w-2/3 sm:w-128 h-fit p-8 text-white"
+    class="
+      absolute top-8 mt-[10%] ml-[7vw] h-fit w-2/3 bg-brand-dark-purple/90 p-8
+      text-white
+      sm:top-0 sm:ml-[10%] sm:w-lg
+    "
   >
     {
       title && (
-        <h1 class="font-heading font-bold text-2xl sm:text-4xl leading-relaxed w-full ml-6 sm:ml-0 mt-4 sm:mt-0">
+        <h1
+          class="
+            mt-4 ml-6 w-full font-heading text-2xl/relaxed font-bold
+            sm:mt-0 sm:ml-0 sm:text-4xl
+          "
+        >
           {title}
         </h1>
       )
     }
     {
       text && (
-        <p class="hidden sm:block font-body font-normal text-lg leading-relaxed mt-4">{text}</p>
+        <p
+          class="
+            mt-4 hidden font-body text-lg/relaxed font-normal
+            sm:block
+          "
+        >
+          {text}
+        </p>
       )
     }
   </div>

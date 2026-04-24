@@ -5,7 +5,11 @@ export default function HomeGallery({ images }) {
   return (
     <Gallery>
       <section
-        className="w-full mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+        className="
+          mt-4 grid w-full grid-cols-1 gap-4
+          sm:grid-cols-2
+          md:grid-cols-3
+        "
         aria-label="Gallery"
       >
         {images.map((image, index) => (
@@ -19,7 +23,12 @@ export default function HomeGallery({ images }) {
             {({ ref, open }) => (
               <button
                 type="button"
-                className="w-full h-56 md:h-64 rounded-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity border-none p-0"
+                className="
+                  h-56 w-full cursor-pointer overflow-hidden rounded-md
+                  border-none p-0 transition-opacity
+                  hover:opacity-90
+                  md:h-64
+                "
                 onClick={open}
               >
                 <img
@@ -29,7 +38,7 @@ export default function HomeGallery({ images }) {
                   height={image.height}
                   loading="lazy"
                   alt="Home gallery"
-                  className="w-full h-full object-cover"
+                  className="size-full object-cover"
                 />
               </button>
             )}

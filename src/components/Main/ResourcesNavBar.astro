@@ -35,24 +35,34 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 <button
   id="resources-menu-toggle"
   type="button"
-  class="fixed top-20 left-5 z-[1001] md:hidden w-10 h-10 bg-brand-orange rounded-full flex items-center justify-center shadow-lg cursor-pointer border-none"
+  class="
+    fixed top-20 left-5 z-1001 flex size-10 cursor-pointer items-center
+    justify-center rounded-full border-none bg-brand-orange shadow-lg
+    md:hidden
+  "
   aria-label="Toggle Resources Menu"
 >
-  <span class="text-white text-xs font-bold uppercase">Menu</span>
+  <span class="text-xs font-bold text-white uppercase">Menu</span>
 </button>
 
 {/* Mobile Drawer */}
 <div
   id="resources-mobile-drawer"
-  class="fixed top-0 right-0 w-full h-full z-[1002] bg-brand-orange transition-transform duration-500 md:hidden flex flex-col pt-20 translate-x-full"
+  class="
+    fixed top-0 right-0 z-1002 flex size-full translate-x-full flex-col
+    bg-brand-orange pt-20 transition-transform duration-500
+    md:hidden
+  "
 >
   <button
     id="resources-drawer-close"
     type="button"
-    class="absolute top-6 right-6 w-6 h-6 bg-transparent border-none cursor-pointer"
+    class="
+      absolute top-6 right-6 size-6 cursor-pointer border-none bg-transparent
+    "
     aria-label="Close Resources Navigation"
   >
-    <img src={Cross.src} alt="Close Resources Navigation" class="w-full h-full" />
+    <img src={Cross.src} alt="Close Resources Navigation" class="size-full" />
   </button>
 
   <nav class="flex flex-col">
@@ -71,7 +81,11 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 
 {/* Desktop Horizontal Navbar */}
 <nav
-  class="hidden md:flex sticky top-32 z-[999] w-full bg-brand-orange h-20 items-center justify-center shadow-md"
+  class="
+    sticky top-32 z-999 hidden h-20 w-full items-center justify-center
+    bg-brand-orange shadow-md
+    md:flex
+  "
 >
   {
     navItems.map((item) => (
@@ -91,9 +105,9 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 </main>
 
 <script>
-  const toggleBtn = document.getElementById('resources-menu-toggle')
-  const closeBtn = document.getElementById('resources-drawer-close')
-  const drawer = document.getElementById('resources-mobile-drawer')
+  const toggleBtn = document.querySelector('#resources-menu-toggle')
+  const closeBtn = document.querySelector('#resources-drawer-close')
+  const drawer = document.querySelector('#resources-mobile-drawer')
 
   function openDrawer() {
     drawer?.classList.replace('translate-x-full', 'translate-x-0')

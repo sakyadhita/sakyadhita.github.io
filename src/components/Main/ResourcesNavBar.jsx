@@ -6,9 +6,10 @@
  */
 
 import { useState, useEffect } from 'react'
+
 import { SITE_PAGES } from '../../constants/links'
-import Cross from '../../media/cross.svg'
 import { cn } from '../../lib/utils'
+import Cross from '../../media/cross.svg'
 
 export default function ResourcesNavBar(props) {
   const landing = SITE_PAGES.RESOURCES_LANDING
@@ -35,23 +36,23 @@ export default function ResourcesNavBar(props) {
   }
 
   const [currentPath, setCurrentPath] = useState(
-    typeof window !== 'undefined' ? normalizePath(window.location.pathname) : ''
+    globalThis.window === undefined ? '' : normalizePath(globalThis.location.pathname)
   )
 
   // Auto-close navigation and update path when it changes
   useEffect(() => {
     const handlePathChange = () => {
-      setCurrentPath(normalizePath(window.location.pathname))
+      setCurrentPath(normalizePath(globalThis.location.pathname))
       setNavToggled(false)
     }
 
     // This handles cases where the path changes without a full page reload (if any)
-    window.addEventListener('popstate', handlePathChange)
+    globalThis.addEventListener('popstate', handlePathChange)
 
     // Initial sync
     handlePathChange()
 
-    return () => window.removeEventListener('popstate', handlePathChange)
+    return () => globalThis.removeEventListener('popstate', handlePathChange)
   }, [])
 
   /**
@@ -71,12 +72,12 @@ export default function ResourcesNavBar(props) {
 
     const normalizedLink = normalizePath(link)
 
-    if (typeof window !== 'undefined') {
-      if (normalizePath(window.location.pathname) === normalizedLink) {
+    if (globalThis.window !== undefined) {
+      if (normalizePath(globalThis.location.pathname) === normalizedLink) {
         setNavToggled(false)
         return
       }
-      window.location.assign(normalizedLink)
+      globalThis.location.assign(normalizedLink)
     }
   }
 
@@ -109,16 +110,24 @@ export default function ResourcesNavBar(props) {
         id="resources-menu-toggle"
         onClick={toggleNav}
         type="button"
-        className="fixed top-20 left-5 z-[1001] md:hidden w-10 h-10 bg-brand-orange rounded-full flex items-center justify-center shadow-lg cursor-pointer border-none"
+        className="
+          fixed top-20 left-5 z-1001 flex size-10 cursor-pointer items-center
+          justify-center rounded-full border-none bg-brand-orange shadow-lg
+          md:hidden
+        "
         aria-label="Toggle Resources Menu"
       >
-        <span className="text-white text-xs font-bold uppercase">Menu</span>
+        <span className="text-xs font-bold text-white uppercase">Menu</span>
       </button>
 
       {/* Mobile Drawer */}
       <div
         className={cn(
-          'fixed top-0 right-0 w-full h-full z-[1002] bg-brand-orange transition-transform duration-500 md:hidden flex flex-col pt-20',
+          `
+            fixed top-0 right-0 z-1002 flex size-full flex-col bg-brand-orange
+            pt-20 transition-transform duration-500
+            md:hidden
+          `,
           navToggled ? 'translate-x-0' : 'translate-x-full'
         )}
       >
@@ -127,12 +136,15 @@ export default function ResourcesNavBar(props) {
           id="cross"
           onClick={toggleNav}
           type="button"
-          className="absolute top-6 right-6 w-6 h-6 bg-transparent border-none cursor-pointer"
+          className="
+            absolute top-6 right-6 size-6 cursor-pointer border-none
+            bg-transparent
+          "
         >
           <img
             src={typeof Cross === 'string' ? Cross : Cross.src}
             alt="Close Resources Navigation"
-            className="w-full h-full"
+            className="size-full"
           />
         </button>
 
@@ -152,14 +164,24 @@ export default function ResourcesNavBar(props) {
       </div>
 
       {/* Desktop Horizontal Navbar */}
-      <nav className="hidden md:flex sticky top-32 z-[999] w-full bg-brand-orange h-20 items-center justify-center shadow-md">
+      <nav
+        className="
+          sticky top-32 z-999 hidden h-20 w-full items-center justify-center
+          bg-brand-orange shadow-md
+          md:flex
+        "
+      >
         {navItems.map((item) => (
           <a
             key={item.label}
             href={item.link}
             onClick={(event) => handleNavClick(event, item.link)}
             className={cn(
-              'w-48 h-full flex items-center justify-center text-white font-body text-lg hover:bg-brand-dark-orange transition-colors no-underline hover:no-underline lowercase',
+              `
+                flex h-full w-48 items-center justify-center font-body text-lg
+                text-white lowercase no-underline transition-colors
+                hover:bg-brand-dark-orange hover:no-underline
+              `,
               isPageActive(item.link)
             )}
           >

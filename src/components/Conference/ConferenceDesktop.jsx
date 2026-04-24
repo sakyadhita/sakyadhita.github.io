@@ -15,12 +15,13 @@
 
 import { useState } from 'react'
 import ReactPlayer from 'react-player'
-import { ErrorLoadingContent } from '../Main/ErrorLoadingContent'
-import VerticalStepper from './VerticalStepper'
+
 import ConferenceOverview from './ConferenceOverview'
 import ConferenceTheme from './ConferenceTheme'
-import Slideshow from '../Slideshow'
+import VerticalStepper from './VerticalStepper'
 import { cn } from '../../lib/utils'
+import { ErrorLoadingContent } from '../Main/ErrorLoadingContent'
+import Slideshow from '../Slideshow'
 
 export default function ConferencesDesktop(props) {
   // switch used to toggle theme and overview state
@@ -29,7 +30,7 @@ export default function ConferencesDesktop(props) {
   const [index, setIndex] = useState(() => {
     if (props.id) {
       const ind = props.data.findIndex((x) => x.id === props.id)
-      return ind !== -1 ? ind : 0
+      return ind === -1 ? 0 : ind
     }
     return 0
   })
@@ -50,11 +51,18 @@ export default function ConferencesDesktop(props) {
   }
 
   const tabs = () => (
-    <div className="flex space-x-1 bg-gray-100 p-1 rounded-xl w-fit mb-8 font-body">
+    <div className="
+      mb-8 flex w-fit space-x-1 rounded-xl bg-gray-100 p-1 font-body
+    ">
       <button
         className={cn(
-          'px-6 py-2 rounded-lg font-bold transition-all',
-          isInfo ? 'bg-white text-brand-dark-purple shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          'rounded-lg px-6 py-2 font-bold transition-all',
+          isInfo
+            ? 'bg-white text-brand-dark-purple shadow-sm'
+            : `
+              text-gray-500
+              hover:text-gray-700
+            `
         )}
         onClick={() => setIsInfo(true)}
         type="button"
@@ -63,10 +71,13 @@ export default function ConferencesDesktop(props) {
       </button>
       <button
         className={cn(
-          'px-6 py-2 rounded-lg font-bold transition-all',
-          !isInfo
-            ? 'bg-white text-brand-dark-purple shadow-sm'
-            : 'text-gray-500 hover:text-gray-700'
+          'rounded-lg px-6 py-2 font-bold transition-all',
+          isInfo
+            ? `
+              text-gray-500
+              hover:text-gray-700
+            `
+            : 'bg-white text-brand-dark-purple shadow-sm'
         )}
         onClick={() => setIsInfo(false)}
         type="button"
@@ -85,14 +96,19 @@ export default function ConferencesDesktop(props) {
     const displayImages = item.data.optimizedImages || item.data.slideShowImages
     if (isInfo || !item.data.video) {
       return (
-        <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-50 h-112">
+        <div
+          className="
+            h-112 overflow-hidden rounded-3xl border border-gray-100 bg-gray-50
+            shadow-2xl
+          "
+        >
           {displayImages.length === 1 ? (
-            <img className="w-full h-full object-cover" alt="Event Visual" src={displayImages[0]} />
+            <img className="size-full object-cover" alt="Event Visual" src={displayImages[0]} />
           ) : (
             <Slideshow height="100%" width="100%" isMobile={false}>
               {displayImages.map((image) => (
-                <div key={image} className="w-full h-full">
-                  <img className="w-full h-full object-cover" alt="Event Visual" src={image} />
+                <div key={image} className="size-full">
+                  <img className="size-full object-cover" alt="Event Visual" src={image} />
                 </div>
               ))}
             </Slideshow>
@@ -103,7 +119,12 @@ export default function ConferencesDesktop(props) {
 
     // if it is the overivew tab, render the associated video
     return (
-      <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-black h-112">
+      <div
+        className="
+          h-112 overflow-hidden rounded-3xl border border-gray-100 bg-black
+          shadow-2xl
+        "
+      >
         {videoError ? (
           <ErrorLoadingContent height="100%" width="100%" />
         ) : (
@@ -158,17 +179,37 @@ export default function ConferencesDesktop(props) {
   // check to see if data exists
   if (props.data.length === 0) {
     return (
-      <div className="flex items-center justify-center py-24 italic text-gray-500 text-xl font-body">
+      <div
+        className="
+          flex items-center justify-center py-24 font-body text-xl text-gray-500
+          italic
+        "
+      >
         We have no conferences to show you at this time
       </div>
     )
   }
 
   return (
-    <div className="w-full px-4 md:px-12 py-12">
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 relative">
+    <div
+      className="
+        w-full px-4 py-12
+        md:px-12
+      "
+    >
+      <div
+        className="
+          relative flex flex-col gap-8
+          lg:flex-row lg:gap-16
+        "
+      >
         {/* The vertical stepper */}
-        <aside className="w-full lg:w-48 lg:shrink-0">
+        <aside
+          className="
+            w-full
+            lg:w-48 lg:shrink-0
+          "
+        >
           <div className="lg:sticky lg:top-32">
             <VerticalStepper
               items={props.data}
@@ -180,8 +221,10 @@ export default function ConferencesDesktop(props) {
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 min-w-0">
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <main className="min-w-0 flex-1">
+          <div className="
+            animate-in fade-in slide-in-from-bottom-4 duration-500
+          ">
             {displayInformation()}
           </div>
         </main>

@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from 'vitest'
 import { render } from '@testing-library/react'
+import { describe, it, expect, vi } from 'vitest'
+
 import CustomButton from './CustomButtonReact'
 
 describe('CustomButton Component', () => {
@@ -39,7 +40,9 @@ describe('CustomButton Component', () => {
   })
 
   it('applies custom className', () => {
-    const { container } = render(<CustomButton text="Custom class" className="custom-class" />)
+    const { container } = render(<CustomButton text="Custom class" className="
+      custom-class
+    " />)
     const button = container.querySelector('button')
     expect(button?.className).toContain('custom-class')
   })

@@ -18,9 +18,14 @@ export default function ConferenceOverview(props) {
   const items = props.info
 
   const itemList = (item) => (
-    <div className="flex flex-col space-y-2 mb-8">
+    <div className="mb-8 flex flex-col space-y-2">
       {!item || item.length === 0 ? (
-        <div className="text-gray-400 italic py-2 px-4 border border-dashed border-gray-200 rounded-lg">
+        <div
+          className="
+            rounded-lg border border-dashed border-gray-200 px-4 py-2
+            text-gray-400 italic
+          "
+        >
           No info available
         </div>
       ) : (
@@ -28,10 +33,21 @@ export default function ConferenceOverview(props) {
           <a
             href={program.url}
             download
-            className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 hover:bg-brand-orange/10 hover:text-brand-orange transition-all group border border-gray-100 no-underline hover:no-underline w-full md:w-[307.2px]"
+            className="
+              group flex w-full items-center space-x-3 rounded-xl border
+              border-gray-100 bg-gray-50 p-3 no-underline transition-all
+              hover:bg-brand-orange/10 hover:text-brand-orange
+              hover:no-underline
+              md:w-[307.2px]
+            "
             key={program.url}
           >
-            <Download className="w-5 h-5 text-brand-dark-purple group-hover:text-brand-orange" />
+            <Download
+              className="
+                size-5 text-brand-dark-purple
+                group-hover:text-brand-orange
+              "
+            />
             <span className="font-body font-medium">{program.description}</span>
           </a>
         ))
@@ -40,10 +56,16 @@ export default function ConferenceOverview(props) {
   )
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 w-full">
+    <div className="animate-in fade-in slide-in-from-bottom-4 w-full space-y-10">
       {/* The title of the conference */}
       <section className="space-y-6">
-        <h1 className="text-3xl md:text-5xl font-bold font-heading text-brand-dark-purple lowercase tracking-tight max-w-2xl">
+        <h1
+          className="
+            max-w-2xl font-heading text-3xl font-bold tracking-tight
+            text-brand-dark-purple lowercase
+            md:text-5xl
+          "
+        >
           {props.title}
         </h1>
         {props.tabs ? props.tabs() : null}
@@ -51,39 +73,76 @@ export default function ConferenceOverview(props) {
 
       {/* Header section for file downloads */}
       <section className="max-w-md">
-        <h4 className="text-xl font-bold font-heading italic text-gray-600 mb-8 border-l-4 border-brand-orange pl-4 lowercase leading-relaxed">
+        <h4
+          className="
+            mb-8 border-l-4 border-brand-orange pl-4 font-heading
+            text-xl/relaxed font-bold text-gray-600 lowercase italic
+          "
+        >
           Conference resources are available for download as a PDF.
         </h4>
       </section>
 
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-        <div className="flex-1 space-y-2 max-w-md">
+      <div
+        className="
+          flex flex-col gap-8
+          lg:flex-row lg:gap-12
+        "
+      >
+        <div className="max-w-md flex-1 space-y-2">
           {/* brochures */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+          <div
+            className="
+              mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+              tracking-widest text-white uppercase
+            "
+          >
             Brochures
           </div>
           {itemList(items.data.brochures)}
 
           {/* programs */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+          <div
+            className="
+              mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+              tracking-widest text-white uppercase
+            "
+          >
             Programs
           </div>
           {itemList(items.data.programs)}
 
           {/* abstracts */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+          <div
+            className="
+              mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+              tracking-widest text-white uppercase
+            "
+          >
             Abstracts
           </div>
           {itemList(items.data.abstracts)}
 
           {/* presentations */}
-          <div className="text-sm font-bold uppercase tracking-widest text-white bg-brand-orange mb-3 p-1 px-2 font-body">
+          <div
+            className="
+              mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+              tracking-widest text-white uppercase
+            "
+          >
             Presentations
           </div>
           {itemList(items.data.presentations)}
         </div>
 
-        <div className="lg:w-1/2 shrink-0">{props.slideShow ? props.slideShow() : null}</div>
+        <div
+          className="
+            shrink-0
+            lg:w-1/2
+          "
+        >
+          {props.slideShow ? props.slideShow() : null}
+        </div>
       </div>
     </div>
   )

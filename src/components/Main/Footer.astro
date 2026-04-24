@@ -8,10 +8,11 @@
  * @author Amrit Kaur Singh
  */
 import { Icon } from 'astro-icon/components'
+
 import Brand from './Brand.astro'
-import Logo from '../../media/logo.svg'
 import { SITE_PAGES } from '../../constants/links'
 import { cn } from '../../lib/utils'
+import Logo from '../../media/logo.svg'
 
 const FACEBOOK_LINK = 'https://www.facebook.com/sakyadhita.international'
 const YOUTUBE_LINK = 'https://www.youtube.com/channel/UCLOIc4vqaqPKcjaRqmn6-yg/playlists'
@@ -25,7 +26,11 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
 <div class="relative mt-auto">
   {/* Background Image Layer */}
   <div
-    class="absolute inset-0 z-[-1] w-full h-full bg-cover bg-[position:center,top] bg-no-repeat blur-[5px] rounded-md shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)]"
+    class="
+      absolute inset-0 z-[-1] size-full rounded-md bg-cover
+      bg-position-[center,top] bg-no-repeat
+      shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)] blur-[5px]
+    "
     style={{
       backgroundImage:
         'url("https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2996&q=80")'
@@ -34,37 +39,66 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
   </div>
 
   <div
-    class="relative z-0 bg-brand-light-purple/90 w-full min-h-[550px] flex flex-col justify-center items-center px-6 md:px-20 py-10 md:py-16 overflow-hidden font-body"
+    class="
+      relative z-0 flex min-h-[550px] w-full flex-col items-center
+      justify-center overflow-hidden bg-brand-light-purple/90 px-6 py-10
+      font-body
+      md:px-20 md:py-16
+    "
   >
     {/* Pages Links */}
-    <section class="w-full flex flex-col md:flex-row justify-between flex-1 space-y-8 md:space-y-0">
+    <section
+      class="
+        flex w-full flex-1 flex-col justify-between space-y-8
+        md:flex-row md:space-y-0
+      "
+    >
       <div class="flex flex-col">
         <a
           href={SITE_PAGES.HOME}
-          class="font-heading font-bold text-lg md:text-2xl text-white capitalize hover:no-underline mb-2 block"
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
+            hover:no-underline
+            md:text-2xl
+          "
         >
           Home
         </a>
-        <div class="flex flex-col ml-1 md:ml-0">
+        <div class="
+          ml-1 flex flex-col
+          md:ml-0
+        ">
           <a
             href={SITE_PAGES.JOIN_US}
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             Join Us
           </a>
           <a
             href={SITE_PAGES.VOLUNTEER}
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             Volunteer
           </a>
           <a
             href={SITE_PAGES.DONATE}
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             Donate
           </a>
         </div>
@@ -73,37 +107,60 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
       <div class="flex flex-col text-left">
         <a
           href={SITE_PAGES.CONFERENCES}
-          class="font-heading font-bold text-lg md:text-2xl text-white capitalize hover:no-underline mb-2 block"
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
+            hover:no-underline
+            md:text-2xl
+          "
         >
           Conferences
         </a>
-        <div class="flex flex-col ml-1 md:ml-0">
+        <div class="
+          ml-1 flex flex-col
+          md:ml-0
+        ">
           <a
             href="/conferences/19"
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             2025 19th conference, (Sarawak, Malaysia)
           </a>
           <a
             href="/conferences/18"
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             2023 18th conference, (Seoul, Korea)
           </a>
           <a
             href="/conferences/17"
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             2021 17th conference, (online)
           </a>
           <a
             href="/conferences/16"
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             2019 16th conference, (Blue Mountains, Australia)
           </a>
         </div>
@@ -112,37 +169,60 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
       <div class="flex flex-col">
         <a
           href={SITE_PAGES.RESOURCES_LANDING}
-          class="font-heading font-bold text-lg md:text-2xl text-white capitalize hover:no-underline mb-2 block"
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
+            hover:no-underline
+            md:text-2xl
+          "
         >
           Resources
         </a>
-        <div class="flex flex-col ml-1 md:ml-0">
+        <div class="
+          ml-1 flex flex-col
+          md:ml-0
+        ">
           <a
             href={SITE_PAGES.RESOURCES_NEWSLETTERS}
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             Newsletters
           </a>
           <a
             href={SITE_PAGES.RESOURCES_EPUBS}
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             Publications
           </a>
           <a
             href={SITE_PAGES.RESOURCES_BUDDHIST_CULTURE}
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             Buddhist Culture
           </a>
           <a
             href={SITE_PAGES.RESOURCES_ORDINATION_ISSUE}
-            class="text-xs md:text-sm text-[#cee5ec] hover:text-brand-orange transition-colors flex items-center mt-1"
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+              hover:text-brand-orange
+              md:text-sm
+            "
           >
-            <img src={Logo.src} alt="Logo" class="w-5 h-auto mr-2" />
+            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
             Ordination
           </a>
         </div>
@@ -151,7 +231,11 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
       <div>
         <a
           href={SITE_PAGES.ABOUT_US}
-          class="font-heading font-bold text-lg md:text-2xl text-white capitalize hover:no-underline mb-2 block"
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
+            hover:no-underline
+            md:text-2xl
+          "
         >
           About
         </a>
@@ -160,7 +244,11 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
       <div>
         <a
           href={SITE_PAGES.CONTACT_US}
-          class="font-heading font-bold text-lg md:text-2xl text-white capitalize hover:no-underline mb-2 block"
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
+            hover:no-underline
+            md:text-2xl
+          "
         >
           Contact
         </a>
@@ -169,64 +257,120 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
 
     {/* Bottom Section: Social Media & Brand */}
     <section
-      class="w-full flex flex-col md:flex-row justify-between items-center mt-12 space-y-8 md:space-y-0"
+      class="
+        mt-12 flex w-full flex-col items-center justify-between space-y-8
+        md:flex-row md:space-y-0
+      "
     >
-      <div class="flex flex-col items-center md:items-start text-white">
-        <span class="mb-4 text-lg md:text-xl font-bold"> Check us out on these platforms! </span>
+      <div class="
+        flex flex-col items-center text-white
+        md:items-start
+      ">
+        <span class="
+          mb-4 text-lg font-bold
+          md:text-xl
+        ">
+          Check us out on these platforms!
+        </span>
         <div class="flex flex-row space-x-6">
           <a
             href={FACEBOOK_LINK}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:facebook"
-              class={cn(socialIconClasses, 'text-white group-hover:bg-[#3b5998] p-1')}
+              class={cn(
+                socialIconClasses,
+                `
+                  p-1 text-white
+                  group-hover:bg-[#3b5998]
+                `
+              )}
             />
           </a>
           <a
             href={YOUTUBE_LINK}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:youtube"
-              class={cn(socialIconClasses, 'text-white group-hover:bg-[#c4302b] rounded-xl p-1')}
+              class={cn(
+                socialIconClasses,
+                `
+                  rounded-xl p-1 text-white
+                  group-hover:bg-[#c4302b]
+                `
+              )}
             />
           </a>
           <a
             href={PINTEREST_LINK}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:pinterest"
-              class={cn(socialIconClasses, 'text-white group-hover:bg-[#E60023] rounded-2xl p-2')}
+              class={cn(
+                socialIconClasses,
+                `
+                  rounded-2xl p-2 text-white
+                  group-hover:bg-[#E60023]
+                `
+              )}
             />
           </a>
           <a
             href={ABW_BLOG_LINK}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:rss"
-              class={cn(socialIconClasses, 'text-white group-hover:text-brand-orange p-1')}
+              class={cn(
+                socialIconClasses,
+                `
+                  p-1 text-white
+                  group-hover:text-brand-orange
+                `
+              )}
             />
           </a>
           <a
             href={GOODREADS_LINK}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:goodreads"
-              class={cn(socialIconClasses, 'text-white group-hover:text-[#e9e5cd] p-1')}
+              class={cn(
+                socialIconClasses,
+                `
+                  p-1 text-white
+                  group-hover:text-[#e9e5cd]
+                `
+              )}
             />
           </a>
         </div>
@@ -236,16 +380,29 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
     </section>
 
     <div
-      class="mt-12 w-full border-t border-white/20 pt-8 text-white text-center text-sm md:text-base font-body"
+      class="
+        mt-12 w-full border-t border-white/20 pt-8 text-center font-body text-sm
+        text-white
+        md:text-base
+      "
     >
-      <img width={64} src="/by-nc-nd.png" alt="license" class="inline-block mb-2 md:mb-0" />
-      <span class="block md:inline-block md:ml-2">
+      <img width={64} src="/by-nc-nd.png" alt="license" class="
+        mb-2 inline-block
+        md:mb-0
+      " />
+      <span class="
+        block
+        md:ml-2 md:inline-block
+      ">
         Website is licensed under a
         <a
           target="_blank"
           rel="noreferrer"
           href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
-          class="hover:text-brand-orange transition-colors mx-1"
+          class="
+            mx-1 transition-colors
+            hover:text-brand-orange
+          "
         >
           Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International License
         </a>

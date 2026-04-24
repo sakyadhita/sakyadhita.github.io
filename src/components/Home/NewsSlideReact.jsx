@@ -37,17 +37,46 @@ export default function NewsEventsSlide({
 }) {
   return (
     <div
-      className="w-full bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat]"
+      className="
+        w-full bg-[no-repeat,no-repeat] bg-size-[cover,contain]
+        bg-position-[center,top]
+      "
       style={{ backgroundImage: `url("${image_url}")`, height }}
     >
       {/* Displays all slide information in rectangular box */}
-      <div className="absolute top-[7%] left-[15%] md:left-1/2 md:-translate-x-1/2 lg:left-[15%] lg:translate-x-0 bg-brand-dark-purple/20 w-[75%] min-[350px]:w-[70.5vw] md:w-128 h-fit p-5 min-[350px]:p-8 lg:p-12 text-white">
+      <div
+        className="
+          absolute top-[7%] left-[15%] h-fit w-[75%] bg-brand-dark-purple/20 p-5
+          text-white
+          min-[350px]:w-[70.5vw] min-[350px]:p-8
+          md:left-1/2 md:w-lg md:-translate-x-1/2
+          lg:left-[15%] lg:translate-x-0 lg:p-12
+        "
+      >
         {/* Title */}
         {title ? (
-          <h1 className="font-heading font-bold text-2xl lg:text-3xl mb-5"> {title} </h1>
+          <h1
+            className="
+              mb-5 font-heading text-2xl font-bold
+              lg:text-3xl
+            "
+          >
+            {' '}
+            {title}{' '}
+          </h1>
         ) : null}
         {/* Description */}
-        {description ? <p className="mb-5 text-sm lg:text-base"> {description}</p> : null}
+        {description ? (
+          <p
+            className="
+              mb-5 text-sm
+              lg:text-base
+            "
+          >
+            {' '}
+            {description}
+          </p>
+        ) : null}
         {/* Button */}
         {showButton ? (
           <CustomButton

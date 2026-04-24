@@ -7,8 +7,8 @@
  * @author Dhanush Nanjunda Reddy
  */
 
-import PayPal from './PayPal'
 import CustomButton from './CustomButtonReact'
+import PayPal from './PayPal'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog'
 
 interface PayPalModalProps {
@@ -46,9 +46,18 @@ export default function PayPalModal({
 }: PayPalModalProps) {
   return (
     <Dialog open={true} onOpenChange={toggleModal}>
-      <DialogContent className="max-w-xl p-8 border-2 border-brand-orange bg-white rounded-lg">
+      <DialogContent
+        className="
+          max-w-xl rounded-lg border-2 border-brand-orange bg-white p-8
+        "
+      >
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold font-heading text-brand-dark-purple text-center lowercase">
+          <DialogTitle
+            className="
+              text-center font-heading text-2xl font-bold text-brand-dark-purple
+              lowercase
+            "
+          >
             Choose Your Payment Method
           </DialogTitle>
         </DialogHeader>

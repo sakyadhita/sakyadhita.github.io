@@ -1,7 +1,7 @@
-import { defineCollection } from 'astro:content'
-import { z } from 'astro/zod'
-import { glob } from 'astro/loaders'
 import { rssSchema } from '@astrojs/rss'
+import { glob } from 'astro/loaders'
+import { z } from 'astro/zod'
+import { defineCollection } from 'astro:content'
 
 const news = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/news' }),

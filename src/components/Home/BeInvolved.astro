@@ -5,9 +5,10 @@
  * @summary Displays one tile for Home Page's Be Involved sub-section.
  * @author Amrit Kaur Singh
  */
-import CustomButton from '../CustomButton.astro'
 import { getImage } from 'astro:assets'
+
 import { getRawImage } from '../../lib/images'
+import CustomButton from '../CustomButton.astro'
 
 interface Props {
   description: string
@@ -27,13 +28,24 @@ const optimizedImage = rawImage
 
 <div
   id={button_title}
-  class="flex-1 w-full h-[450px] bg-[length:cover,contain] bg-[position:center,top] bg-[repeat:no-repeat,no-repeat] font-body text-white text-2xl shadow-[0px_0px_4px_2px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 group"
+  class="
+    group h-[450px] w-full flex-1 bg-[no-repeat,no-repeat]
+    bg-size-[cover,contain] bg-position-[center,top] font-body text-2xl
+    text-white shadow-[0px_0px_4px_2px_rgba(0,0,0,0.25)] transition-transform
+    hover:scale-105
+  "
   style={{ backgroundImage: `url(${optimizedImage?.src || image_url})` }}
 >
   <div
-    class="w-full h-full bg-black/40 group-hover:bg-transparent flex flex-col justify-end items-center p-[10vw_20vw] md:p-[4vw_6vw] lg:p-[4vw_7vw] transition-colors"
+    class="
+      flex size-full flex-col items-center justify-end bg-black/40 p-[10vw_20vw]
+      transition-colors
+      group-hover:bg-transparent
+      md:p-[4vw_6vw]
+      lg:p-[4vw_7vw]
+    "
   >
-    <p class="text-center mb-6">{description}</p>
+    <p class="mb-6 text-center">{description}</p>
     <CustomButton
       openInSameTab={openInSameTab === 'true' || openInSameTab === true}
       redirect_link={redirect_link}

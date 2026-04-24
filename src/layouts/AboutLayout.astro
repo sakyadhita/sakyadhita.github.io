@@ -1,12 +1,12 @@
 ---
-import { getCollection, render } from 'astro:content'
 import { getImage } from 'astro:assets'
-import { getRawImage } from '../lib/images'
+import { getCollection, render } from 'astro:content'
 import { marked } from 'marked'
 
 import PageLayout from './PageLayout.astro'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
 import AboutUs from '../components/Layouts/AboutUs'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
+import { getRawImage } from '../lib/images'
 
 const committeesRaw = await getCollection('exco')
 const committees = await Promise.all(
@@ -39,9 +39,9 @@ const optimizedHeader = rawHeader
 
 function makeIdURLFriendly(idString: string) {
   return idString
-    .replace(/\s+/g, '-')
-    .replace(/:/g, '')
-    .replace(/[^a-z0-9-]/gi, '')
+    .replaceAll(/\s+/g, '-')
+    .replaceAll(':', '')
+    .replaceAll(/[^a-z0-9-]/gi, '')
     .toLowerCase()
 }
 ---

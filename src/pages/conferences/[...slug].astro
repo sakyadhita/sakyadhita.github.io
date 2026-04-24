@@ -16,19 +16,25 @@ interface Props {
 }
 const { conference } = Astro.props
 
-import PageLayout from '../../layouts/PageLayout.astro'
 import ConferenceDesktop from '../../components/Conference/ConferenceDesktop'
 import MobileConference from '../../components/Conference/MobileConference'
+import PageLayout from '../../layouts/PageLayout.astro'
 
 const conferences = await getCollection('conference')
 const data = [...conferences].reverse()
 ---
 
 <PageLayout>
-  <div class="hidden lg:block">
+  <div class="
+    hidden
+    lg:block
+  ">
     <ConferenceDesktop client:only="react" data={data} id={conference.id} />
   </div>
-  <div class="block lg:hidden">
+  <div class="
+    block
+    lg:hidden
+  ">
     <MobileConference client:only="react" data={data} id={conference.id} />
   </div>
 </PageLayout>

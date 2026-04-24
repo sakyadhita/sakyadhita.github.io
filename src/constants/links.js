@@ -1,20 +1,20 @@
 // url links for all website pages
-export class SITE_PAGES {
+export const SITE_PAGES = {
   // Main Pages
-  static HOME = '/'
-  static CONFERENCES = '/conferences'
-  static ABOUT_US = '/about'
-  static CONTACT_US = '/contact'
+  HOME: '/',
+  CONFERENCES: '/conferences',
+  ABOUT_US: '/about',
+  CONTACT_US: '/contact',
 
   // Side Pages
-  static VOLUNTEER = '/volunteer'
-  static JOIN_US = '/join'
-  static DONATE = '/donate'
+  VOLUNTEER: '/volunteer',
+  JOIN_US: '/join',
+  DONATE: '/donate',
 
   // Resource SubPages
-  static RESOURCES_LANDING = '/resources'
-  static RESOURCES_NEWSLETTERS = '/newsletters'
-  static RESOURCES_EPUBS = '/publications'
-  static RESOURCES_BUDDHIST_CULTURE = '/buddhist-culture'
-  static RESOURCES_ORDINATION_ISSUE = '/ordination-issue'
+  RESOURCES_LANDING: '/resources',
+  RESOURCES_NEWSLETTERS: '/newsletters',
+  RESOURCES_EPUBS: '/publications',
+  RESOURCES_BUDDHIST_CULTURE: '/buddhist-culture',
+  RESOURCES_ORDINATION_ISSUE: '/ordination-issue'
 }

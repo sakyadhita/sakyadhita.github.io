@@ -14,11 +14,14 @@ import { AlertCircle } from 'lucide-react'
 export const ErrorLoadingContent = ({ height = '100%', width = '100%' }) => {
   return (
     <div
-      className="flex flex-col items-center justify-center bg-gray-900 text-white rounded-2xl space-y-4"
+      className="
+        flex flex-col items-center justify-center space-y-4 rounded-2xl
+        bg-gray-900 text-white
+      "
       style={{ height, width }}
     >
-      <AlertCircle className="w-16 h-16 text-brand-red animate-pulse" />
-      <p className="text-xl font-bold font-heading tracking-wide lowercase">
+      <AlertCircle className="size-16 animate-pulse text-brand-red" />
+      <p className="font-heading text-xl font-bold tracking-wide lowercase">
         Failed to load content
       </p>
     </div>

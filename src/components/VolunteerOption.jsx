@@ -23,18 +23,29 @@ export default function VolunteerOption(props) {
       <div className="committee-row flex items-center space-x-3">
         <Checkbox
           id={id}
-          className="border-black data-checked:bg-brand-orange w-6 h-6 rounded-md shadow-sm"
+          className="
+            size-6 rounded-md border-black shadow-sm
+            data-checked:bg-brand-orange
+          "
           checked={props.checked}
           onCheckedChange={handleCheckbox}
         />
         <Label
           htmlFor={id}
-          className="committee-title cursor-pointer font-bold text-lg font-body text-brand-dark-purple"
+          className="
+            committee-title cursor-pointer font-body text-lg font-bold
+            text-brand-dark-purple
+          "
         >
           {props.title}
         </Label>
       </div>
-      <p className="committee-description mt-2 ml-9 text-base font-body text-gray-600 leading-relaxed italic">
+      <p
+        className="
+          committee-description mt-2 ml-9 font-body text-base/relaxed
+          text-gray-600 italic
+        "
+      >
         {props.description}
       </p>
     </div>

@@ -1,11 +1,11 @@
 ---
-import { getCollection } from 'astro:content'
 import { getImage } from 'astro:assets'
-import { getRawImage } from '../lib/images'
+import { getCollection } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
-import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import EPublications from '../components/Layouts/EPublications'
+import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
+import { getRawImage } from '../lib/images'
 
 const epublicationsRaw = await getCollection('publication')
 const epublications = await Promise.all(
@@ -18,7 +18,7 @@ const epublications = await Promise.all(
     return p
   })
 )
-const categories = Array.from(new Set(epublications.map((p) => p.data.category)))
+const categories = [...new Set(epublications.map((p) => p.data.category))]
 const sections = categories.map((c) => ({
   section_title: c,
   section_list: epublications.filter((p) => p.data.category === c)

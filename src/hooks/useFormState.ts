@@ -80,7 +80,7 @@ export const initialFormState: FormState = {
 
 export function formReducer(state: FormState, action: FormAction): FormState {
   switch (action.type) {
-    case 'SET_FIELD':
+    case 'SET_FIELD': {
       return {
         ...state,
         values: {
@@ -91,7 +91,8 @@ export function formReducer(state: FormState, action: FormAction): FormState {
           }
         }
       }
-    case 'SET_FIELD_ERROR':
+    }
+    case 'SET_FIELD_ERROR': {
       return {
         ...state,
         values: {
@@ -102,7 +103,8 @@ export function formReducer(state: FormState, action: FormAction): FormState {
           }
         }
       }
-    case 'SET_MULTIPLE_ERRORS':
+    }
+    case 'SET_MULTIPLE_ERRORS': {
       return {
         ...state,
         values: {
@@ -116,35 +118,48 @@ export function formReducer(state: FormState, action: FormAction): FormState {
           }, {} as FormValues)
         }
       }
-    case 'SET_ORGANIZATIONS':
+    }
+    case 'SET_ORGANIZATIONS': {
       return { ...state, organizations: action.payload }
-    case 'SET_DONATION':
+    }
+    case 'SET_DONATION': {
       return { ...state, donation: action.payload }
-    case 'SET_MEMBERSHIP_INDEX':
+    }
+    case 'SET_MEMBERSHIP_INDEX': {
       return { ...state, selectedMembershipIndex: action.payload }
-    case 'SET_MEMBER_TYPE':
+    }
+    case 'SET_MEMBER_TYPE': {
       return { ...state, memberType: action.payload }
-    case 'SET_IS_NEW_MEMBER':
+    }
+    case 'SET_IS_NEW_MEMBER': {
       return { ...state, isNewMember: action.payload, memberType: action.payload === 'new' }
-    case 'SET_MEMBERSHIP_CHECK':
+    }
+    case 'SET_MEMBERSHIP_CHECK': {
       return { ...state, membershipCheck: action.payload }
-    case 'SET_DONATE_CHECK':
+    }
+    case 'SET_DONATE_CHECK': {
       return {
         ...state,
         donateCheck: action.payload,
         donation: action.payload ? state.donation : 0
       }
-    case 'SET_DISPLAY_PAYPAL':
+    }
+    case 'SET_DISPLAY_PAYPAL': {
       return { ...state, displayPayPal: action.payload }
-    case 'SET_DISPLAY_PAYPAL_MODAL':
+    }
+    case 'SET_DISPLAY_PAYPAL_MODAL': {
       return { ...state, displayPayPalModal: action.payload }
-    case 'SET_FORM_DISABLED':
+    }
+    case 'SET_FORM_DISABLED': {
       return { ...state, isFormDisabled: action.payload }
-    case 'SET_THANK_YOU_OPEN':
+    }
+    case 'SET_THANK_YOU_OPEN': {
       return { ...state, isThankYouNoteOpen: action.payload }
-    case 'SET_SNACKBAR':
+    }
+    case 'SET_SNACKBAR': {
       return { ...state, snackbar: action.payload }
-    case 'RESET_FORM':
+    }
+    case 'RESET_FORM': {
       return {
         ...state,
         values: initialFormValues,
@@ -157,8 +172,10 @@ export function formReducer(state: FormState, action: FormAction): FormState {
         donateCheck: false,
         displayPayPalModal: false
       }
-    default:
+    }
+    default: {
       return state
+    }
   }
 }
 

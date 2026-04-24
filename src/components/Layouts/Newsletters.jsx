@@ -21,13 +21,22 @@ import {
 const PublicationGrid = ({ displayedNewsletters }) => {
   if (displayedNewsletters.length === 0) {
     return (
-      <div className="w-full flex justify-center py-20 italic text-gray-500 font-body">
+      <div
+        className="
+          flex w-full justify-center py-20 font-body text-gray-500 italic
+        "
+      >
         We have no newsletters to show you at this time
       </div>
     )
   }
   return (
-    <div className="flex flex-row justify-center flex-wrap mx-4 md:mx-20 mb-16 max-w-5xl">
+    <div
+      className="
+        mx-4 mb-16 flex max-w-5xl flex-row flex-wrap justify-center
+        md:mx-20
+      "
+    >
       {displayedNewsletters.map((newsletter) => (
         <NewsletterCard
           key={newsletter.id}
@@ -118,7 +127,7 @@ export default function Newsletters({ newsletters }) {
             </PaginationLink>
           </PaginationItem>
         )
-      } else if (items[items.length - 1]?.type !== PaginationEllipsis) {
+      } else if (items.at(-1)?.type !== PaginationEllipsis) {
         items.push(<PaginationEllipsis key={`ellipsis-${i}`} />)
       }
     }
@@ -126,10 +135,13 @@ export default function Newsletters({ newsletters }) {
   }
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex w-full flex-col items-center">
       <h1
         ref={latestRef}
-        className="font-heading font-bold text-2xl md:text-4xl text-black mt-6 md:mt-20 mb-3 md:mb-8"
+        className="
+          mt-6 mb-3 font-heading text-2xl font-bold text-black
+          md:mt-20 md:mb-8 md:text-4xl
+        "
       >
         Latest
       </h1>
@@ -145,7 +157,9 @@ export default function Newsletters({ newsletters }) {
                   if (currentPage > 0) handlePageChange(currentPage - 1)
                 }}
                 href="#"
-                className={currentPage === 0 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                className={currentPage === 0 ? 'pointer-events-none opacity-50' : `
+                  cursor-pointer
+                `}
               />
             </PaginationItem>
 
@@ -159,7 +173,9 @@ export default function Newsletters({ newsletters }) {
                 }}
                 href="#"
                 className={
-                  currentPage === maxPages - 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'
+                  currentPage === maxPages - 1 ? `
+                    pointer-events-none opacity-50
+                  ` : `cursor-pointer`
                 }
               />
             </PaginationItem>

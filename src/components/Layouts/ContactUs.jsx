@@ -8,13 +8,14 @@
  * @summary     Displays Contact Us Page.
  * @author      Amrit Kaur Singh
  */
-import React from 'react'
 import { Mail, Phone, House } from 'lucide-react'
+import React from 'react'
+
+import { cn } from '../../lib/utils'
+import CustomButton from '../CustomButtonReact'
+import Modal from '../Modal'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
-import Modal from '../Modal'
-import CustomButton from '../CustomButtonReact'
-import { cn } from '../../lib/utils'
 
 export default function ContactUs({ frontmatter, children }) {
   // tracks whether form is disabled
@@ -140,32 +141,63 @@ export default function ContactUs({ frontmatter, children }) {
 
   const inputClasses = (hasError) =>
     cn(
-      'm-2 w-[95%] border-black rounded-3xl focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple h-12 px-6 bg-white font-body',
+      `
+        m-2 h-12 w-[95%] rounded-3xl border-black bg-white px-6 font-body
+        focus-visible:border-brand-dark-purple
+        focus-visible:ring-brand-dark-purple
+      `,
       hasError && 'border-brand-red ring-brand-red'
     )
 
   return (
-    <div className="w-full h-auto flex flex-col lg:flex-row flex-1 font-body">
+    <div
+      className="
+        flex h-auto w-full flex-1 flex-col font-body
+        lg:flex-row
+      "
+    >
       {/* contains textual rendering of all information not including header image  */}
-      <section className="flex-1 p-6 md:p-12 lg:p-24 text-left prose max-w-none text-black">
+      <section
+        className="
+          prose max-w-none flex-1 p-6 text-left text-black
+          md:p-12
+          lg:p-24
+        "
+      >
         {/* Main paragraph at top  */}
-        <h2 className="font-heading font-bold text-2xl lg:text-3xl lowercase tracking-tight mb-5 text-black">
+        <h2
+          className="
+            mb-5 font-heading text-2xl font-bold tracking-tight text-black
+            lowercase
+            lg:text-3xl
+          "
+        >
           Contact Us
         </h2>
-        <div className="font-body text-lg leading-relaxed text-gray-700">{children}</div>
+        <div className="font-body text-lg/relaxed text-gray-700">{children}</div>
         {/* Contact Information */}
-        <h4 className="font-heading italic lowercase text-2xl mt-10 mb-5 border-b-2 border-brand-orange w-fit font-semibold text-black">
+        <h4
+          className="
+            mt-10 mb-5 w-fit border-b-2 border-brand-orange font-heading
+            text-2xl font-semibold text-black lowercase italic
+          "
+        >
           Reach us at:{' '}
         </h4>
         {/* Email */}
         <div className="space-y-3 font-body">
           {frontmatter.email.map((email) => (
-            <p key={email.address} className="flex items-center space-x-2 m-0 text-black">
+            <p key={email.address} className="
+              m-0 flex items-center space-x-2 text-black
+            ">
               {' '}
-              <Mail className="text-brand-orange w-5 h-5" />{' '}
+              <Mail className="size-5 text-brand-orange" />{' '}
               <a
                 href={'mailto:' + email.address}
-                className="hover:text-brand-orange transition-colors no-underline text-black"
+                className="
+                  text-black no-underline transition-colors
+                  hover:text-brand-orange
+                "
               >
                 {' '}
                 {email.address}{' '}
@@ -174,19 +206,24 @@ export default function ContactUs({ frontmatter, children }) {
             </p>
           ))}
           {/* Phone Number */}
-          <p className="flex items-center space-x-2 m-0 text-black">
+          <p className="m-0 flex items-center space-x-2 text-black">
             {' '}
-            <Phone className="text-brand-orange w-5 h-5" /> <span>{frontmatter.phone}</span>
+            <Phone className="size-5 text-brand-orange" /> <span>{frontmatter.phone}</span>
           </p>
           {/* Address */}
           <div className="flex items-start space-x-2 text-black">
-            <House className="text-brand-orange w-6 h-6 shrink-0 mt-1" />
+            <House className="mt-1 size-6 shrink-0 text-brand-orange" />
             <span>{frontmatter.address}</span>
           </div>
         </div>
 
         {/* Renders Form */}
-        <h4 className="font-heading italic lowercase text-2xl mt-12 mb-6 font-semibold text-black">
+        <h4
+          className="
+            mt-12 mb-6 font-heading text-2xl font-semibold text-black lowercase
+            italic
+          "
+        >
           Send us a message!
         </h4>
         <form autoComplete="off" name="contact" className="space-y-4">
@@ -200,7 +237,7 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={inputClasses(values.name.error)}
             />
-            <span className="text-brand-red font-bold text-3xl"> * </span>
+            <span className="text-3xl font-bold text-brand-red"> * </span>
           </div>
           {/* Email Field */}
           <div className="flex">
@@ -213,7 +250,7 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={inputClasses(values.email.error)}
             />
-            <span className="text-brand-red font-bold text-3xl"> * </span>
+            <span className="text-3xl font-bold text-brand-red"> * </span>
           </div>
           {/* Phone Number Field */}
           <div className="flex">
@@ -237,28 +274,36 @@ export default function ContactUs({ frontmatter, children }) {
               disabled={isFormDisabled}
               className={cn(
                 inputClasses(values.message.error),
-                'h-48 rounded-2xl py-4 resize-none'
+                'h-48 resize-none rounded-2xl py-4'
               )}
               rows={8}
             />
-            <span className="text-brand-red font-bold text-3xl"> * </span>
+            <span className="text-3xl font-bold text-brand-red"> * </span>
           </div>
           {/* Note on required fields  */}
-          <p className="text-center font-body text-sm text-gray-500 m-0">
+          <p className="m-0 text-center font-body text-sm text-gray-500">
             {' '}
-            <span className="text-brand-red font-bold"> * </span> indicates a required field
+            <span className="font-bold text-brand-red"> * </span> indicates a required field
           </p>
           {/* Submit Button */}
-          <div className="flex justify-center py-4 mt-5">
+          <div className="mt-5 flex justify-center py-4">
             <CustomButton text="Submit" onClickCallback={handleFormSubmit} />
           </div>
         </form>
 
         {/* Simple Snackbar Replacement */}
         {snackbar.open && (
-          <div className="fixed bottom-5 left-5 bg-brand-red text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center justify-between min-w-[300px]">
+          <div
+            className="
+              fixed bottom-5 left-5 z-50 flex min-w-[300px] items-center
+              justify-between rounded-lg bg-brand-red px-6 py-3 text-white
+              shadow-lg
+            "
+          >
             <span>{snackbar.message}</span>
-            <button onClick={() => setSnackBar({ open: false })} className="ml-4 font-bold">
+            <button onClick={() => setSnackBar({ open: false })} className="
+              ml-4 font-bold
+            ">
               X
             </button>
           </div>

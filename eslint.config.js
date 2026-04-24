@@ -4,15 +4,20 @@ import reactPlugin from 'eslint-plugin-react'
 import reactHooksPlugin from 'eslint-plugin-react-hooks'
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y'
 import markdown from '@eslint/markdown'
+import importPlugin from 'eslint-plugin-import'
+import betterTailwindPlugin from 'eslint-plugin-better-tailwindcss'
+import reactRefreshPlugin from 'eslint-plugin-react-refresh'
+import unicornPlugin from 'eslint-plugin-unicorn'
+import eslintConfigPrettier from 'eslint-config-prettier'
 import globals from 'globals'
 import astroParser from 'astro-eslint-parser'
 import tsParser from '@typescript-eslint/parser'
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', '.astro/**', 'node_modules/**', 'public/**']
+    ignores: ['dist/**', '.astro/**', 'node_modules/**', 'public/**', 'playwright-report/**']
   },
-  
+
   // Base configuration
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx,astro}'],
@@ -23,6 +28,43 @@ export default tseslint.config(
       },
       ecmaVersion: 'latest',
       sourceType: 'module'
+    },
+    plugins: {
+      import: importPlugin,
+      unicorn: unicornPlugin
+    },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json'
+        }
+      }
+    },
+    rules: {
+      ...unicornPlugin.configs.recommended.rules,
+      'unicorn/prevent-abbreviations': 'off',
+      'unicorn/null-as-undefined': 'off',
+      'unicorn/no-null': 'off',
+      'unicorn/prefer-module': 'off',
+      'unicorn/filename-case': 'off',
+      'unicorn/no-array-reduce': 'off',
+      'unicorn/consistent-function-scoping': 'off',
+      'unicorn/no-array-for-each': 'off',
+      'unicorn/prefer-query-selector': 'warn',
+      'unicorn/no-array-reverse': 'warn',
+      'unicorn/no-array-sort': 'warn',
+      
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'type'],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true }
+        }
+      ],
+      'import/no-duplicates': 'error',
+      'no-console': ['warn', { allow: ['warn', 'error'] }]
     }
   },
 
@@ -37,14 +79,23 @@ export default tseslint.config(
           varsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_'
         }
+      ],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' }
       ]
     }
   },
-  
-  // React + JSX-a11y (minimal rules to avoid flat config incompatibility)
+
+  // React + JSX-a11y
   {
     files: ['**/*.{jsx,tsx}'],
+    ...reactPlugin.configs.flat.recommended,
     languageOptions: {
+      ...reactPlugin.configs.flat.recommended.languageOptions,
+      globals: {
+        ...globals.browser
+      },
       parserOptions: {
         ecmaFeatures: {
           jsx: true
@@ -52,14 +103,26 @@ export default tseslint.config(
       }
     },
     plugins: {
+      ...reactPlugin.configs.flat.recommended.plugins,
       'react-hooks': reactHooksPlugin,
-      'jsx-a11y': jsxA11yPlugin
+      'jsx-a11y': jsxA11yPlugin,
+      'react-refresh': reactRefreshPlugin
+    },
+    settings: {
+      react: {
+        version: 'detect'
+      }
     },
     rules: {
+      ...reactPlugin.configs.flat.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
       ...jsxA11yPlugin.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      'react/self-closing-comp': 'error',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'react-hooks/set-state-in-effect': 'off'
     }
   },
@@ -75,6 +138,27 @@ export default tseslint.config(
         extraFileExtensions: ['.astro'],
         sourceType: 'module'
       }
+    },
+    rules: {
+      'astro/no-unused-define-vars-in-style': 'error'
+    }
+  },
+
+  // Tailwind (Better Tailwind)
+  {
+    files: ['**/*.{jsx,tsx,astro}'],
+    plugins: {
+      'better-tailwindcss': betterTailwindPlugin
+    },
+    settings: {
+      'better-tailwindcss': {
+        entryPoint: 'src/css/index.css'
+      }
+    },
+    rules: {
+      ...betterTailwindPlugin.configs.recommended.rules,
+      'better-tailwindcss/no-unknown-classes': 'warn',
+      'better-tailwindcss/no-conflicting-classes': 'warn'
     }
   },
 
@@ -85,5 +169,8 @@ export default tseslint.config(
       markdown
     },
     language: 'markdown/commonmark'
-  }
+  },
+
+  // Prettier (must be last)
+  eslintConfigPrettier
 )

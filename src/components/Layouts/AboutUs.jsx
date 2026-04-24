@@ -8,8 +8,8 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { cn } from '../../lib/utils'
 
+import { cn } from '../../lib/utils'
 import DownArrow from '../../media/down-arrow.svg'
 import Link from '../../media/link.svg'
 
@@ -25,18 +25,30 @@ const CommitteeSelector = ({
     <div className="relative mb-8">
       <button
         type="button"
-        className="relative h-10 w-[175px] bg-white border-2 border-black rounded-full flex items-center justify-between px-4 z-30 cursor-pointer"
+        className="
+          relative z-30 flex h-10 w-[175px] cursor-pointer items-center
+          justify-between rounded-full border-2 border-black bg-white px-4
+        "
         onClick={() => toggleDropdown()}
       >
         <span className="font-body font-bold">{years[committeeIndex]}</span>
         <img src={DownArrow.src} alt="dropdown arrow" className="h-[9px]" />
       </button>
       {dropdownOn && (
-        <div className="absolute top-10 left-[17.5px] w-[140px] flex flex-col items-center bg-white border-2 border-gray-400 z-20 shadow-lg">
+        <div
+          className="
+            absolute top-10 left-[17.5px] z-20 flex w-[140px] flex-col
+            items-center border-2 border-gray-400 bg-white shadow-lg
+          "
+        >
           {years.map((year, index) => (
             <button
               type="button"
-              className="w-full py-2.5 px-0 border-none bg-white hover:bg-gray-200 transition-colors cursor-pointer font-body"
+              className="
+                w-full cursor-pointer border-none bg-white px-0 py-2.5 font-body
+                transition-colors
+                hover:bg-gray-200
+              "
               onClick={() => clickDropdown(year, index)}
               key={index}
             >
@@ -56,24 +68,45 @@ const CommitteeProfiles = ({ committees, year }) => {
         No Committees to Show
       </p>
     )
-  const committee = committees.filter((x) => x.data.startYear === parseInt(year)).reverse()
+  const committee = committees.filter((x) => x.data.startYear === Number.parseInt(year)).reverse()
   if (committee === undefined) return null
   return (
-    <div className="relative w-full max-w-4xl flex flex-row-reverse flex-wrap-reverse justify-evenly gap-y-12">
+    <div
+      className="
+        relative flex w-full max-w-4xl flex-row-reverse flex-wrap-reverse
+        justify-evenly gap-y-12
+      "
+    >
       {committee.map((member) => (
         <div
-          className="relative w-full md:w-80 mx-5 flex flex-col items-center md:items-start"
+          className="
+            relative mx-5 flex w-full flex-col items-center
+            md:w-80 md:items-start
+          "
           key={member.id}
         >
           <img
-            className="h-64 w-64 object-cover rounded-full mb-4 mt-20 border-[15px] border-[#f7f7f7]"
+            className="
+              mt-20 mb-4 size-64 rounded-full border-15 border-[#f7f7f7]
+              object-cover
+            "
             src={member.data.optimizedImage || member.data.imageLink}
             alt="Exec Headshot"
           />
-          <h2 className="my-1 font-heading text-3xl font-bold text-center md:text-left">
+          <h2
+            className="
+              my-1 text-center font-heading text-3xl font-bold
+              md:text-left
+            "
+          >
             {member.data.name}
           </h2>
-          <div className="relative flex flex-row justify-center md:justify-start items-center">
+          <div
+            className="
+              relative flex flex-row items-center justify-center
+              md:justify-start
+            "
+          >
             {member.data.redirectLink && (
               <a
                 href={member.data.redirectLink}
@@ -82,7 +115,10 @@ const CommitteeProfiles = ({ committees, year }) => {
                 className="mr-2"
               >
                 <img
-                  className="h-[1.2em] hover:brightness-75 transition-all"
+                  className="
+                    h-[1.2em] transition-all
+                    hover:brightness-75
+                  "
                   src={Link.src}
                   alt="Profile Link"
                   style={{
@@ -92,12 +128,17 @@ const CommitteeProfiles = ({ committees, year }) => {
                 />
               </a>
             )}
-            <h3 className="my-1 font-heading text-[1.5em] font-normal text-center md:text-left">
+            <h3
+              className="
+                my-1 text-center font-heading text-[1.5em] font-normal
+                md:text-left
+              "
+            >
               {member.data.position}
             </h3>
           </div>
           <div
-            className="prose prose-sm max-w-none font-body py-5 px-2.5"
+            className="prose prose-sm max-w-none px-2.5 py-5 font-body"
             dangerouslySetInnerHTML={{ __html: member.data.htmlBody }}
           />
         </div>
@@ -124,13 +165,13 @@ export default function AboutUs({ committees, sections, children }) {
   // Effect to update the sticky nav on scroll
   useEffect(() => {
     const scrollHandler = () => {
-      for (let i = 0; i < sections.length; i++) {
-        const idString = makeIdURLFriendly(sections[i].data.title)
+      for (const section of sections) {
+        const idString = makeIdURLFriendly(section.data.title)
         const selected = document.querySelector(`#${idString}`)
         if (selected) {
           const rect = selected.getBoundingClientRect()
           if (rect.top <= 200 && rect.bottom >= 200) {
-            setScrollLocation(sections[i].data.title)
+            setScrollLocation(section.data.title)
           }
         }
       }
@@ -152,9 +193,9 @@ export default function AboutUs({ committees, sections, children }) {
     if (
       location ===
       scrollLocation
-        .replace(/\s+/g, '-')
-        .replace(/:/g, '')
-        .replace(/[^a-z0-9-]/gi, '')
+        .replaceAll(/\s+/g, '-')
+        .replaceAll(':', '')
+        .replaceAll(/[^a-z0-9-]/gi, '')
         .toLowerCase()
     )
       return 'text-brand-orange border-b-2 border-brand-orange'
@@ -173,25 +214,39 @@ export default function AboutUs({ committees, sections, children }) {
 
   function makeIdURLFriendly(idString) {
     return idString
-      .replace(/\s+/g, '-')
-      .replace(/:/g, '')
-      .replace(/[^a-z0-9-]/gi, '')
+      .replaceAll(/\s+/g, '-')
+      .replaceAll(':', '')
+      .replaceAll(/[^a-z0-9-]/gi, '')
       .toLowerCase()
   }
 
   return (
     <div className="relative w-full">
-      <div className="w-full flex flex-col md:flex-row">
+      <div
+        className="
+          flex w-full flex-col
+          md:flex-row
+        "
+      >
         {/* Sticky Nav */}
-        <aside className="hidden md:block w-[250px] shrink-0 h-fit sticky top-32 mt-24 ml-8 lg:ml-16">
+        <aside
+          className="
+            sticky top-32 mt-24 ml-8 hidden h-fit w-[250px] shrink-0
+            md:block
+            lg:ml-16
+          "
+        >
           <nav className="relative flex border-r border-gray-300 pr-8">
-            <ul className="flex flex-col list-none p-0 m-0 space-y-4">
+            <ul className="m-0 flex list-none flex-col space-y-4 p-0">
               {sections.map((section) => (
                 <li key={section.id} className="py-2">
                   <a
                     href={`#${makeIdURLFriendly(section.data.title)}`}
                     className={cn(
-                      'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
+                      `
+                        pb-1 font-body text-lg no-underline transition-all
+                        hover:text-brand-orange hover:no-underline
+                      `,
                       computeNavUnderline(makeIdURLFriendly(section.data.title))
                     )}
                   >
@@ -203,9 +258,12 @@ export default function AboutUs({ committees, sections, children }) {
                 <a
                   href="#exec"
                   className={cn(
-                    'font-body text-lg transition-all hover:text-brand-orange no-underline hover:no-underline pb-1',
+                    `
+                      pb-1 font-body text-lg no-underline transition-all
+                      hover:text-brand-orange hover:no-underline
+                    `,
                     scrollLocation === 'Executive Committee'
-                      ? 'text-brand-orange border-b-2 border-brand-orange'
+                      ? 'border-b-2 border-brand-orange text-brand-orange'
                       : 'border-b-2 border-transparent'
                   )}
                 >
@@ -217,17 +275,46 @@ export default function AboutUs({ committees, sections, children }) {
         </aside>
 
         {/* Contents of page */}
-        <div className="flex-1 w-full max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-24 font-body">
-          <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:mb-8 prose-img:mt-12 prose-img:w-full prose-img:rounded-lg prose-img:shadow-lg">
+        <div
+          className="
+            mx-auto w-full max-w-4xl flex-1 px-6 py-12 font-body
+            md:px-12 md:py-24
+          "
+        >
+          <div
+            className="
+              prose prose-lg max-w-none
+              prose-headings:mb-8 prose-headings:font-heading
+              prose-headings:font-bold
+              prose-img:mt-12 prose-img:w-full prose-img:rounded-lg
+              prose-img:shadow-lg
+            "
+          >
             {children}
           </div>
 
           {/* Mini Divider */}
-          <hr className="w-1/2 md:w-[700px] h-2 bg-brand-orange border-none mx-auto my-24 hidden md:block" />
+          <hr
+            className="
+              mx-auto my-24 hidden h-2 w-1/2 border-none bg-brand-orange
+              md:block md:w-[700px]
+            "
+          />
 
           {/* Executive Committee Section */}
-          <div className="flex flex-col items-center mt-12 md:mt-0" id="exec">
-            <h1 className="font-heading font-bold text-3xl md:text-5xl mb-8">
+          <div
+            className="
+              mt-12 flex flex-col items-center
+              md:mt-0
+            "
+            id="exec"
+          >
+            <h1
+              className="
+                mb-8 font-heading text-3xl font-bold
+                md:text-5xl
+              "
+            >
               Executive Committee
             </h1>
 

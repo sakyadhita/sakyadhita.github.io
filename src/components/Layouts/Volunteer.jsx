@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
-
-import { Input } from '../ui/input'
 import { CountryDropdown } from 'react-country-region-selector'
-import VolunteerOption from '../VolunteerOption'
-import Modal from '../Modal'
-import CustomButton from '../CustomButtonReact'
+
 import { cn } from '../../lib/utils'
+import CustomButton from '../CustomButtonReact'
+import Modal from '../Modal'
+import { Input } from '../ui/input'
+import VolunteerOption from '../VolunteerOption'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return (
-    <span className="error-asterisk text-brand-red ml-2 font-bold text-xl flex-shrink-0">*</span>
-  )
+  return <span className="
+    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
+  ">*</span>
 }
 
 // funcion to render all volunteer committees
@@ -73,7 +73,12 @@ function displayCommittees(
 
   // renders committees in two columns
   return (
-    <div className="volunteer-options grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div
+      className="
+        volunteer-options grid grid-cols-1 gap-12
+        md:grid-cols-2
+      "
+    >
       <div className="left-options-column flex flex-col space-y-6">{volunteerOptionsLeft}</div>
       <div className="right-options-column flex flex-col space-y-6">{volunteerOptionsRight}</div>
     </div>
@@ -186,7 +191,7 @@ export default function Volunteer({ interests }) {
 
   // handles any changes to committees selected
   function handleCommitteesChange(event) {
-    const val = parseInt(event.target.value, 10)
+    const val = Number.parseInt(event.target.value, 10)
     if (selectedCommittees.includes(val)) {
       setSelectedCommittees(selectedCommittees.filter((committee) => committee !== val))
     } else {
@@ -266,7 +271,7 @@ export default function Volunteer({ interests }) {
     }
 
     // defines address to pass to backend
-    const addressOpt = values.addressTwo.value !== '' ? `${values.addressTwo.value} ` : ''
+    const addressOpt = values.addressTwo.value === '' ? '' : `${values.addressTwo.value} `
     const givenAddress = `${values.addressOne.value} ${addressOpt}${values.city.value} ${values.stateLocation.value} ${values.country.value} ${values.zipcode.value}`
     const selectedInterests = selectedCommittees.map((c) => interests[c].data.title).join(',')
 
@@ -322,24 +327,38 @@ export default function Volunteer({ interests }) {
 
   const inputClasses = (hasError) =>
     cn(
-      'h-12 border-black rounded-2xl focus-visible:ring-brand-dark-purple focus-visible:border-brand-dark-purple px-4 text-lg font-body bg-white w-full',
+      `
+        h-12 w-full rounded-2xl border-black bg-white px-4 font-body text-lg
+        focus-visible:border-brand-dark-purple
+        focus-visible:ring-brand-dark-purple
+      `,
       hasError && 'border-brand-red'
     )
 
   return (
     <div className="font-body">
-      <div className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-12 text-black">
-        <form autoComplete="off" className="space-y-4 max-w-2xl mx-auto">
-          <p className="text-right text-sm text-gray-500 font-body italic mb-10 text-black">
+      <div
+        className="
+          mx-auto max-w-7xl space-y-12 px-6 py-12 text-black
+          md:px-12
+        "
+      >
+        <form autoComplete="off" className="mx-auto max-w-2xl space-y-4">
+          <p className="mb-10 text-right font-body text-sm text-gray-500 italic">
             {' '}
-            <span className="error-asterisk text-brand-red font-bold"> * </span> indicates a
+            <span className="error-asterisk font-bold text-brand-red"> * </span> indicates a
             required field
           </p>
-          <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mb-8 mt-12">
+          <h1
+            className="
+              mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+              text-3xl text-brand-dark-purple lowercase italic
+            "
+          >
             Sign Me Up!
           </h1>
           {/* first name field */}
-          <div className="flex items-center !mt-1">
+          <div className="mt-1! flex items-center">
             <div className="flex-1">
               <Input
                 className={inputClasses(values.firstName.error)}
@@ -353,7 +372,7 @@ export default function Volunteer({ interests }) {
             {displayAsterisk()}
           </div>
           {/* middle name field */}
-          <div className="flex items-center !mt-1">
+          <div className="mt-1! flex items-center">
             <div className="flex-1">
               <Input
                 className={inputClasses(values.middleName.error)}
@@ -364,10 +383,10 @@ export default function Volunteer({ interests }) {
                 name="middleName"
               />
             </div>
-            <span className="ml-2 w-4 flex-shrink-0"></span>
+            <span className="ml-2 w-4 shrink-0" />
           </div>
           {/* last name field */}
-          <div className="flex items-center !mt-1">
+          <div className="mt-1! flex items-center">
             <div className="flex-1">
               <Input
                 className={inputClasses(values.lastName.error)}
@@ -381,11 +400,16 @@ export default function Volunteer({ interests }) {
             {displayAsterisk()}
           </div>
 
-          <h1 className="text-3xl font-heading text-brand-dark-purple border-b-2 border-brand-orange w-fit pb-1 lowercase italic mt-16 mb-8">
+          <h1
+            className="
+              mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+              text-3xl text-brand-dark-purple lowercase italic
+            "
+          >
             Contact Information
           </h1>
           {/* email address field */}
-          <div className="flex items-center !mt-1">
+          <div className="mt-1! flex items-center">
             <div className="flex-1">
               <Input
                 className={inputClasses(values.emailAddress.error)}
@@ -400,10 +424,15 @@ export default function Volunteer({ interests }) {
             {displayAsterisk()}
           </div>
           {/* country dropdown field */}
-          <div className="flex items-center !mt-1">
+          <div className="mt-1! flex items-center">
             <div className="flex-1">
               <CountryDropdown
-                className="input-field country-dropdown h-12 border-black rounded-2xl px-4 text-lg font-body w-full bg-white transition-all focus:ring-2 focus:ring-brand-dark-purple outline-none"
+                className="
+                  input-field country-dropdown h-12 w-full rounded-2xl
+                  border-black bg-white px-4 font-body text-lg transition-all
+                  outline-none
+                  focus:ring-2 focus:ring-brand-dark-purple
+                "
                 style={
                   values.country.error
                     ? { border: '1px solid #ea4444' }
@@ -417,10 +446,15 @@ export default function Volunteer({ interests }) {
             {displayAsterisk()}
           </div>
           {/* displays other address fields if country is selected */}
-          {values.country.value !== '' ? (
-            <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500 pt-4">
+          {values.country.value === '' ? null : (
+            <div
+              className="
+                animate-in fade-in slide-in-from-top-4 space-y-4 pt-4
+                duration-500
+              "
+            >
               {/* address line 1 field */}
-              <div className="flex items-center !mt-1">
+              <div className="mt-1! flex items-center">
                 <div className="flex-1">
                   <Input
                     className={inputClasses(values.addressOne.error)}
@@ -434,7 +468,7 @@ export default function Volunteer({ interests }) {
                 {displayAsterisk()}
               </div>
               {/* address line 2 field */}
-              <div className="flex items-center !mt-1">
+              <div className="mt-1! flex items-center">
                 <div className="flex-1">
                   <Input
                     className={inputClasses(values.addressTwo.value)}
@@ -445,10 +479,10 @@ export default function Volunteer({ interests }) {
                     name="addressTwo"
                   />
                 </div>
-                <span className="ml-2 w-4 flex-shrink-0"></span>
+                <span className="ml-2 w-4 shrink-0" />
               </div>
               {/* city field */}
-              <div className="flex items-center !mt-1">
+              <div className="mt-1! flex items-center">
                 <div className="flex-1">
                   <Input
                     className={inputClasses(values.city.error)}
@@ -462,7 +496,7 @@ export default function Volunteer({ interests }) {
                 {displayAsterisk()}
               </div>
               {/* state field */}
-              <div className="flex items-center !mt-1">
+              <div className="mt-1! flex items-center">
                 <div className="flex-1">
                   <Input
                     className={inputClasses(values.stateLocation.error)}
@@ -476,7 +510,7 @@ export default function Volunteer({ interests }) {
                 {displayAsterisk()}
               </div>
               {/* zipcode field */}
-              <div className="flex items-center !mt-1">
+              <div className="mt-1! flex items-center">
                 <div className="flex-1">
                   <Input
                     className={inputClasses(values.zipcode.error)}
@@ -490,7 +524,7 @@ export default function Volunteer({ interests }) {
                 {displayAsterisk()}
               </div>
               {/* phone number field */}
-              <div className="flex items-center !mt-1">
+              <div className="mt-1! flex items-center">
                 <div className="flex-1">
                   <Input
                     className={inputClasses(values.phoneNumber.error)}
@@ -502,32 +536,41 @@ export default function Volunteer({ interests }) {
                     name="phoneNumber"
                   />
                 </div>
-                <span className="ml-2 w-4 flex-shrink-0"></span>
+                <span className="ml-2 w-4 shrink-0" />
               </div>
             </div>
-          ) : null}
+          )}
 
           <div className="space-y-6 pt-10">
-            <h1 className="text-3xl font-heading text-brand-dark-purple text-center lowercase italic">
+            <h1
+              className="
+                text-center font-heading text-3xl text-brand-dark-purple
+                lowercase italic
+              "
+            >
               What would you like to help with?
             </h1>
-            <p className="text-center text-lg text-gray-600 font-body">
+            <p className="text-center font-body text-lg text-gray-600">
               Select all committees you are interested in.
             </p>
             {committeesError ? (
-              <p className="text-center text-brand-red font-bold animate-pulse">
+              <p className="animate-pulse text-center font-bold text-brand-red">
                 At least one committee must be selected.
               </p>
             ) : null}
             {/* displays all committee options or spinner if loading data */}
-            <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 shadow-inner">
+            <div
+              className="
+                rounded-2xl border border-gray-100 bg-gray-50 p-8 shadow-inner
+              "
+            >
               {displayCommittees(isMobile, interests, selectedCommittees, handleCommitteesChange)}
             </div>
           </div>
           {/* submit button */}
           <div className="flex justify-center pt-12 pb-16">
             <CustomButton
-              className="w-auto px-16 h-16 text-2xl rounded-full"
+              className="h-16 w-auto rounded-full px-16 text-2xl"
               text="Submit"
               onClickCallback={handleSubmit}
             />
@@ -536,7 +579,13 @@ export default function Volunteer({ interests }) {
 
         {/* Simple Snackbar Replacement */}
         {snackbar.open && (
-          <div className="fixed bottom-5 left-5 bg-brand-red text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center justify-between min-w-[300px]">
+          <div
+            className="
+              fixed bottom-5 left-5 z-50 flex min-w-[300px] items-center
+              justify-between rounded-lg bg-brand-red px-6 py-3 text-white
+              shadow-lg
+            "
+          >
             <span>{snackbar.message}</span>
             <button
               onClick={() => setSnackBar({ open: false })}

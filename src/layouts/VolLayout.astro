@@ -1,11 +1,11 @@
 ---
-import { getCollection } from 'astro:content'
 import { getImage } from 'astro:assets'
-import { getRawImage } from '../lib/images'
+import { getCollection } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
 import Volunteer from '../components/Layouts/Volunteer'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
+import { getRawImage } from '../lib/images'
 
 const { frontmatter } = Astro.props
 
@@ -15,11 +15,10 @@ const optimizedHeader = rawHeader
   : null
 
 const volinterests = await getCollection('volinterest')
-const interests = volinterests.map((interest) => {
-  let newinterest = { ...interest }
-  newinterest.id = (parseInt(interest.id) - 1).toString()
-  return newinterest
-})
+const interests = volinterests.map((interest) => ({
+  ...interest,
+  id: (Number.parseInt(interest.id) - 1).toString()
+}))
 ---
 
 <PageLayout>

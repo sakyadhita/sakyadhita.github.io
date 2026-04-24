@@ -9,9 +9,10 @@
  */
 
 import { useState, useEffect } from 'react'
-import Slideshow from '../Slideshow'
-import EPubSection from '../EPubs/EPubSection'
+
 import EPubCard from '../EPubs/EPubCard'
+import EPubSection from '../EPubs/EPubSection'
+import Slideshow from '../Slideshow'
 
 // renders selected section from state, including each card in that page,
 // and a button to go back to the main EPublications screen
@@ -19,25 +20,39 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
   if (!isMobile) {
     // render desktop version
     return (
-      <div className="block relative mt-32 mx-[10vw] mb-24">
-        <div className="block relative top-0 left-0 w-full h-12">
-          <h1 className="w-full font-heading text-4xl leading-relaxed text-center">
+      <div className="relative mx-[10vw] mt-32 mb-24 block">
+        <div className="relative top-0 left-0 block h-12 w-full">
+          <h1 className="w-full text-center font-heading text-4xl/relaxed">
             {selectedSection.section_title}
           </h1>
           <button
             type="button"
-            className="absolute left-6 bottom-0 w-fit z-100 p-0 mb-4 border-none bg-inherit font-body text-lg leading-relaxed no-underline hover:underline cursor-pointer"
+            className="
+              absolute bottom-0 left-6 z-100 mb-4 w-fit cursor-pointer
+              border-none bg-inherit p-0 font-body text-lg/relaxed no-underline
+              hover:underline
+            "
             onClick={() => {
               setSelectedSection('')
             }}
           >
             &lt; Back
           </button>
-          <p className="z-100 absolute right-6 bottom-0 w-fit font-body text-lg leading-relaxed no-underline">
+          <p
+            className="
+              absolute right-6 bottom-0 z-100 w-fit font-body text-lg/relaxed
+              no-underline
+            "
+          >
             All <span className="text-brand-orange">({selectedSection.section_list.length})</span>
           </p>
         </div>
-        <div className="flex items-start justify-center flex-wrap relative text-center mx-[-25px]">
+        <div
+          className="
+            relative mx-[-25px] flex flex-wrap items-start justify-center
+            text-center
+          "
+        >
           {
             // render each card based on data passed in
             selectedSection.section_list.map((pub) => (
@@ -58,14 +73,23 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
   }
   return (
     // render mobile version
-    <div className="block relative my-12 mx-[10vw]">
-      <div className="block relative -top-12 -ml-[10vw] pt-5 w-[calc(100%+20vw)] h-24 shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]">
-        <h1 className="w-full font-heading text-2xl font-bold leading-tight text-center">
+    <div className="relative mx-[10vw] my-12 block">
+      <div
+        className="
+          relative -top-12 ml-[-10vw] block h-24 w-[calc(100%+20vw)] pt-5
+          shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]
+        "
+      >
+        <h1 className="w-full text-center font-heading text-2xl/tight font-bold">
           {selectedSection.section_title}
         </h1>
         <button
           type="button"
-          className="block relative w-fit p-0 mx-auto mt-3 mb-5 border-none bg-inherit font-body text-base leading-tight text-center hover:underline cursor-pointer"
+          className="
+            relative mx-auto mt-3 mb-5 block w-fit cursor-pointer border-none
+            bg-inherit p-0 text-center font-body text-base/tight
+            hover:underline
+          "
           onClick={() => {
             setSelectedSection('')
           }}
@@ -73,11 +97,18 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
           &lt; Back to latest
         </button>
       </div>
-      <div className="flex items-start justify-center flex-wrap relative text-center mx-[-25px]">
+      <div
+        className="
+          relative mx-[-25px] flex flex-wrap items-start justify-center
+          text-center
+        "
+      >
         {
           // render each card based on data passed in
           selectedSection.section_list.map((pub) => (
-            <div key={pub.data.id} className="flex flex-col items-center justify-start">
+            <div key={pub.data.id} className="
+              flex flex-col items-center justify-start
+            ">
               <EPubCard
                 title={pub.data.title}
                 author={pub.data.author}
@@ -89,7 +120,10 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
               <button
                 type="button"
                 onClick={() => window.open(pub.data.pdfLink, '_blank', 'norefferer')}
-                className="h-9 w-40 rounded-full bg-brand-orange border-none text-white mb-5 cursor-pointer"
+                className="
+                  mb-5 h-9 w-40 cursor-pointer rounded-full border-none
+                  bg-brand-orange text-white
+                "
               >
                 Read
               </button>
@@ -124,14 +158,14 @@ export default function EPublications({ sections, featuredEpubs }) {
 
   useEffect(() => {
     // scroll to top whenever a new section is selected / left
-    const layout = document.getElementById('page-layout')
+    const layout = document.querySelector('#page-layout')
     if (layout) layout.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
   // scroll to top of div when a section is selected
   useEffect(() => {
     if (selectedSection !== '') {
-      const page = document.getElementById('EPubPage')
+      const page = document.querySelector('#EPubPage')
       if (page)
         page.scrollIntoView({
           // smooth animation on scroll
@@ -149,31 +183,68 @@ export default function EPublications({ sections, featuredEpubs }) {
           <Slideshow height={isMobile ? '530px' : '450px'} width="100%" isMobile={isMobile}>
             {featuredEpubs.map((epub) => (
               <div
-                className="relative flex w-full h-full bg-brand-dark-purple text-white items-center justify-center lg:items-stretch lg:justify-start"
+                className="
+                  relative flex size-full items-center justify-center
+                  bg-brand-dark-purple text-white
+                  lg:items-stretch lg:justify-start
+                "
                 key={epub.id}
               >
-                <div className="absolute top-0 left-0 z-10 bg-brand-dark-purple lg:m-8 lg:ml-40 lg:mt-8 p-2.5 lg:w-[350px] md:w-72 max-sm:w-52 max-sm:h-[430px] max-sm:mx-auto max-sm:mt-10 block font-heading text-left h-fit max-md:bg-brand-dark-purple/90 max-md:p-5">
-                  <h1 className="text-4xl font-bold leading-tight max-sm:text-lg max-sm:leading-relaxed">
+                <div
+                  className="
+                    absolute top-0 left-0 z-10 block h-fit bg-brand-dark-purple
+                    p-2.5 text-left font-heading
+                    max-md:bg-brand-dark-purple/90 max-md:p-5
+                    max-sm:mx-auto max-sm:mt-10 max-sm:h-[430px] max-sm:w-52
+                    md:w-72
+                    lg:m-8 lg:mt-8 lg:ml-40 lg:w-[350px]
+                  "
+                >
+                  <h1
+                    className="
+                      text-4xl/tight font-bold
+                      max-sm:text-lg/relaxed
+                    "
+                  >
                     {epub.data.title}
                   </h1>
-                  <h2 className="text-lg font-bold leading-relaxed max-md:hidden">
+                  <h2
+                    className="
+                      text-lg/relaxed font-bold
+                      max-md:hidden
+                    "
+                  >
                     {epub.data.author}
                   </h2>
-                  <p className="font-body text-base font-normal leading-relaxed max-sm:leading-normal">
+                  <p
+                    className="
+                      font-body text-base/relaxed font-normal
+                      max-sm:leading-normal
+                    "
+                  >
                     {epub.data.description}
                   </p>
                   <button
                     type="button"
-                    className="font-body text-xl leading-relaxed text-center text-white bg-brand-orange rounded-full w-48 h-14 border-none mt-4 max-sm:w-36 max-sm:h-9 max-sm:text-sm cursor-pointer"
+                    className="
+                      mt-4 h-14 w-48 cursor-pointer rounded-full border-none
+                      bg-brand-orange text-center font-body text-xl/relaxed
+                      text-white
+                      max-sm:h-9 max-sm:w-36 max-sm:text-sm
+                    "
                     onClick={() => {
-                      window.location.href = epub.data.pdfLink
+                      globalThis.location.href = epub.data.pdfLink
                     }}
                   >
                     Read More
                   </button>
                 </div>
                 <img
-                  className="absolute top-0 right-0 w-[700px] max-md:w-full m-0 p-0 bg-brand-dark-purple object-cover h-full"
+                  className="
+                    absolute top-0 right-0 m-0 h-full w-[700px]
+                    bg-brand-dark-purple object-cover p-0
+                    max-md:w-full
+                  "
                   src={epub.data.optimizedImage || epub.data.imageLink}
                   alt=""
                 />
@@ -181,7 +252,7 @@ export default function EPublications({ sections, featuredEpubs }) {
             ))}
           </Slideshow>
           {/* Render a new publications section for each section in data, pass in each card */}
-          <div className={!isMobile ? 'mt-14 mb-24' : 'm-0'}>
+          <div className={isMobile ? 'm-0' : 'mt-14 mb-24'}>
             {sections.map((section) => (
               <EPubSection
                 key={section.section_title}
@@ -194,7 +265,7 @@ export default function EPublications({ sections, featuredEpubs }) {
         </>
       ) : (
         renderSelectedSection(
-          sections.filter((e) => e.section_title === selectedSection)[0],
+          sections.find((e) => e.section_title === selectedSection),
           setSelectedSection,
           isMobile
         )

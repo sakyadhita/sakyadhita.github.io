@@ -3,13 +3,14 @@
  * Replaces react-slideshow-image to better align with current tech stack (shadcn/ui style).
  */
 
-import React, { useState, useEffect, useCallback } from 'react'
-import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import Fade from 'embla-carousel-fade'
+import useEmblaCarousel from 'embla-carousel-react'
+import React, { useState, useEffect, useCallback } from 'react'
+
+import { cn } from '../lib/utils'
 import LeftArrow from '../media/leftarrow.svg'
 import RightArrow from '../media/rightarrow.svg'
-import { cn } from '../lib/utils'
 
 const Slideshow = ({ children, height, width, isMobile }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 }, [
@@ -38,11 +39,17 @@ const Slideshow = ({ children, height, width, isMobile }) => {
   }, [emblaApi, setScrollSnapList, onSelect])
 
   return (
-    <div className="Slideshow group relative overflow-hidden block" style={{ width }}>
+    <div className="Slideshow group relative block overflow-hidden" style={{ width }}>
       <div className="h-full" ref={emblaRef} style={{ height }}>
         <div className="flex h-full">
           {React.Children.map(children, (child) => (
-            <div className="relative flex-[0_0_100%] min-w-0 h-full backface-hidden">{child}</div>
+            <div
+              className="
+                relative h-full min-w-0 flex-[0_0_100%] backface-hidden
+              "
+            >
+              {child}
+            </div>
           ))}
         </div>
       </div>
@@ -52,34 +59,47 @@ const Slideshow = ({ children, height, width, isMobile }) => {
         <>
           <button
             type="button"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer border-none bg-transparent"
+            className="
+              absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer
+              border-none bg-transparent opacity-0 transition-opacity
+              group-hover:opacity-100
+            "
             onClick={scrollPrev}
             aria-label="Previous slide"
           >
-            <img className="w-[50px] z-20" src={LeftArrow.src} alt="left arrow" />
+            <img className="z-20 w-[50px]" src={LeftArrow.src} alt="left arrow" />
           </button>
           <button
             type="button"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer border-none bg-transparent"
+            className="
+              absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer
+              border-none bg-transparent opacity-0 transition-opacity
+              group-hover:opacity-100
+            "
             onClick={scrollNext}
             aria-label="Next slide"
           >
-            <img className="w-[50px] z-20" src={RightArrow.src} alt="right arrow" />
+            <img className="z-20 w-[50px]" src={RightArrow.src} alt="right arrow" />
           </button>
         </>
       )}
 
       {/* Indicators */}
-      <div className="absolute bottom-16 left-0 right-0 z-20 flex justify-center gap-4">
+      <div className="
+        absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4
+      ">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
             type="button"
             className={cn(
-              'w-5 h-5 rounded-full transition-all border-[10px] cursor-pointer',
+              'size-5 cursor-pointer rounded-full border-10 transition-all',
               index === selectedIndex
-                ? 'bg-white border-white scale-110'
-                : 'bg-[#c4c4c4] border-[#c4c4c4] hover:bg-white/50 hover:border-white/50'
+                ? 'scale-110 border-white bg-white'
+                : `
+                  border-[#c4c4c4] bg-[#c4c4c4]
+                  hover:border-white/50 hover:bg-white/50
+                `
             )}
             onClick={() => scrollTo(index)}
             aria-label={`Go to slide ${index + 1}`}

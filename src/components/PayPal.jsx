@@ -8,6 +8,7 @@
  * @author PatrickBrown1
  */
 import React from 'react'
+
 import { usePayPalSDK } from '../hooks/usePayPalSDK'
 
 // const config = require("../config.js");
@@ -117,8 +118,8 @@ export default function PayPal({
   React.useEffect(() => {
     // Wait for PayPal SDK to load
     const waitForPayPal = () => {
-      if (window.paypal && window.paypal.Buttons) {
-        window.paypal
+      if (globalThis.paypal && globalThis.paypal.Buttons) {
+        globalThis.paypal
           .Buttons({
             createOrder: async (_data, actions) => {
               // console.log(paypalOrderObject)
@@ -146,7 +147,7 @@ export default function PayPal({
                       isNewMember,
                       affiliatedOrgs,
                       membershipType: membershipTitle,
-                      totalPaid: parseFloat(details.purchase_units[0].amount.value),
+                      totalPaid: Number.parseFloat(details.purchase_units[0].amount.value),
                       payPalTransactionId: details.purchase_units[0].payments.captures[0].id
                     })
                   })
