@@ -46,8 +46,7 @@
 body {
   margin: 0;
   font-family: var(--font-body);
-  color: var(--black);
-  -webkit-font-smoothing: antialiased;
+  @apply text-black antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 

@@ -187,9 +187,10 @@ export default function ContactUs({ frontmatter, children }) {
         {/* Email */}
         <div className="space-y-3 font-body">
           {frontmatter.email.map((email) => (
-            <p key={email.address} className="
-              m-0 flex items-center space-x-2 text-black
-            ">
+            <p
+              key={email.address}
+              className="m-0 flex items-center space-x-2 text-black"
+            >
               {' '}
               <Mail className="size-5 text-brand-orange" />{' '}
               <a
@@ -295,15 +296,16 @@ export default function ContactUs({ frontmatter, children }) {
         {snackbar.open && (
           <div
             className="
-              fixed bottom-5 left-5 z-50 flex min-w-[300px] items-center
+              fixed bottom-5 left-5 z-50 flex min-w-80 items-center
               justify-between rounded-lg bg-brand-red px-6 py-3 text-white
               shadow-lg
             "
           >
             <span>{snackbar.message}</span>
-            <button onClick={() => setSnackBar({ open: false })} className="
-              ml-4 font-bold
-            ">
+            <button
+              onClick={() => setSnackBar({ open: false })}
+              className="ml-4 font-bold"
+            >
               X
             </button>
           </div>

@@ -26,19 +26,19 @@ const CommitteeSelector = ({
       <button
         type="button"
         className="
-          relative z-30 flex h-10 w-[175px] cursor-pointer items-center
+          relative z-30 flex h-10 w-44 cursor-pointer items-center
           justify-between rounded-full border-2 border-black bg-white px-4
         "
         onClick={() => toggleDropdown()}
       >
         <span className="font-body font-bold">{years[committeeIndex]}</span>
-        <img src={DownArrow.src} alt="dropdown arrow" className="h-[9px]" />
+        <img src={DownArrow.src} alt="dropdown arrow" className="h-2" />
       </button>
       {dropdownOn && (
         <div
           className="
-            absolute top-10 left-[17.5px] z-20 flex w-[140px] flex-col
-            items-center border-2 border-gray-400 bg-white shadow-lg
+            absolute top-10 left-[17.5px] z-20 flex w-36 flex-col items-center
+            border-2 border-gray-400 bg-white shadow-lg
           "
         >
           {years.map((year, index) => (
@@ -231,7 +231,7 @@ export default function AboutUs({ committees, sections, children }) {
         {/* Sticky Nav */}
         <aside
           className="
-            sticky top-32 mt-24 ml-8 hidden h-fit w-[250px] shrink-0
+            sticky top-32 mt-24 ml-8 hidden h-fit w-64 shrink-0
             md:block
             lg:ml-16
           "
@@ -297,7 +297,7 @@ export default function AboutUs({ committees, sections, children }) {
           <hr
             className="
               mx-auto my-24 hidden h-2 w-1/2 border-none bg-brand-orange
-              md:block md:w-[700px]
+              md:block md:w-3/4
             "
           />
 

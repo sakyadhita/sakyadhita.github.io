@@ -67,7 +67,7 @@ const Slideshow = ({ children, height, width, isMobile }) => {
             onClick={scrollPrev}
             aria-label="Previous slide"
           >
-            <img className="z-20 w-[50px]" src={LeftArrow.src} alt="left arrow" />
+            <img className="z-20 w-12" src={LeftArrow.src} alt="left arrow" />
           </button>
           <button
             type="button"
@@ -79,15 +79,15 @@ const Slideshow = ({ children, height, width, isMobile }) => {
             onClick={scrollNext}
             aria-label="Next slide"
           >
-            <img className="z-20 w-[50px]" src={RightArrow.src} alt="right arrow" />
+            <img className="z-20 w-12" src={RightArrow.src} alt="right arrow" />
           </button>
         </>
       )}
 
       {/* Indicators */}
-      <div className="
-        absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4
-      ">
+      <div
+        className="absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4"
+      >
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
@@ -97,7 +97,7 @@ const Slideshow = ({ children, height, width, isMobile }) => {
               index === selectedIndex
                 ? 'scale-110 border-white bg-white'
                 : `
-                  border-[#c4c4c4] bg-[#c4c4c4]
+                  border-gray-400 bg-gray-400
                   hover:border-white/50 hover:bg-white/50
                 `
             )}

@@ -59,9 +59,9 @@ const EPubSectionMobile = (
             <img src={LeftArrowBlack.src} alt="left arrow" />
           </button>
         ) : (
-          <span className="
-            relative bottom-48 m-0 inline-block h-8 max-w-8 min-w-8
-          " />
+          <span
+            className="relative bottom-48 m-0 inline-block h-8 max-w-8 min-w-8"
+          />
         )}
         <EPubCard
           title={currentPub.data.title}
@@ -83,9 +83,9 @@ const EPubSectionMobile = (
             <img src={RightArrowBlack.src} alt="right arrow" />
           </button>
         ) : (
-          <span className="
-            relative bottom-48 m-0 inline-block h-8 max-w-8 min-w-8
-          " />
+          <span
+            className="relative bottom-48 m-0 inline-block h-8 max-w-8 min-w-8"
+          />
         )}
         <div className="absolute bottom-0 h-px w-full bg-brand-orange" />
       </div>
@@ -133,9 +133,9 @@ const EPubSectionDesktop = (publication_section, setSelectedSection, isMobile) =
         />
       ))}
     </div>
-    <div className="
-      absolute bottom-0 box-border h-2 w-full bg-brand-orange px-6
-    " />
+    <div
+      className="absolute bottom-0 box-border h-2 w-full bg-brand-orange px-6"
+    />
   </div>
 )
 export default function EPubSection({ publication_section, setSelectedSection, isMobile }) {

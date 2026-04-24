@@ -36,9 +36,9 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
         ref={ref}
         className={cn(
           `
-            bg-background animate-in fade-in-0 zoom-in-95 fixed top-[50%]
-            left-[50%] z-50 grid w-full max-w-lg translate-[-50%] gap-4 border
-            p-6 shadow-lg duration-200
+            bg-background animate-in fade-in-0 zoom-in-95 fixed top-1/2 left-1/2
+            z-50 grid w-full max-w-lg -translate-1/2 gap-4 border p-6 shadow-lg
+            duration-200
             sm:rounded-lg
           `,
           className

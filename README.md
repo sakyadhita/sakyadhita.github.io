@@ -35,6 +35,12 @@ To ensure long-term stability and prevent regressions, the project now includes 
 
 ## Releases
 
+* 2.0.2: **Tooling & Styling Standardization**
+    - Overhauled ESLint Flat Config (v9) with TypeScript, React, Astro, and Markdown integration.
+    - Implemented `eslint-plugin-unicorn` and `eslint-plugin-import` for modern JS patterns and sorted imports.
+    - Standardized Tailwind v4 utility usage, migrating arbitrary values to theme-consistent tokens and standard classes.
+    - Switched to `eslint-plugin-better-tailwindcss` for improved Tailwind v4 support and class conflict detection.
+    - Resolved several legacy code patterns and potential runtime bugs identified by stricter linting.
 * 2.0.1: **Stability, Lint, and Typecheck Improvements**
     - Resolved Astro typecheck issues in Home layout and Home body component typing.
     - Fixed blocking ESLint errors and aligned project linting to pass consistently.

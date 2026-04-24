@@ -46,9 +46,8 @@ export default function NewsEventsSlide({
       {/* Displays all slide information in rectangular box */}
       <div
         className="
-          absolute top-[7%] left-[15%] h-fit w-[75%] bg-brand-dark-purple/20 p-5
-          text-white
-          min-[350px]:w-[70.5vw] min-[350px]:p-8
+          absolute top-[7%] left-[15%] h-fit w-[70.5vw] bg-brand-dark-purple/20
+          p-8 text-white
           md:left-1/2 md:w-lg md:-translate-x-1/2
           lg:left-[15%] lg:translate-x-0 lg:p-12
         "

@@ -106,9 +106,10 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
         {
           // render each card based on data passed in
           selectedSection.section_list.map((pub) => (
-            <div key={pub.data.id} className="
-              flex flex-col items-center justify-start
-            ">
+            <div
+              key={pub.data.id}
+              className="flex flex-col items-center justify-start"
+            >
               <EPubCard
                 title={pub.data.title}
                 author={pub.data.author}
@@ -195,9 +196,9 @@ export default function EPublications({ sections, featuredEpubs }) {
                     absolute top-0 left-0 z-10 block h-fit bg-brand-dark-purple
                     p-2.5 text-left font-heading
                     max-md:bg-brand-dark-purple/90 max-md:p-5
-                    max-sm:mx-auto max-sm:mt-10 max-sm:h-[430px] max-sm:w-52
+                    max-sm:mx-auto max-sm:mt-10 max-sm:h-108 max-sm:w-52
                     md:w-72
-                    lg:m-8 lg:mt-8 lg:ml-40 lg:w-[350px]
+                    lg:m-8 lg:mt-8 lg:ml-40 lg:w-80
                   "
                 >
                   <h1
@@ -241,9 +242,8 @@ export default function EPublications({ sections, featuredEpubs }) {
                 </div>
                 <img
                   className="
-                    absolute top-0 right-0 m-0 h-full w-[700px]
+                    absolute top-0 right-0 m-0 size-full max-w-3xl
                     bg-brand-dark-purple object-cover p-0
-                    max-md:w-full
                   "
                   src={epub.data.optimizedImage || epub.data.imageLink}
                   alt=""

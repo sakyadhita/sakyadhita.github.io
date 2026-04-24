@@ -9,9 +9,13 @@ import VolunteerOption from '../VolunteerOption'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return <span className="
-    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
-  ">*</span>
+  return (
+    <span
+      className="error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red"
+    >
+      *
+    </span>
+  )
 }
 
 // funcion to render all volunteer committees
@@ -581,7 +585,7 @@ export default function Volunteer({ interests }) {
         {snackbar.open && (
           <div
             className="
-              fixed bottom-5 left-5 z-50 flex min-w-[300px] items-center
+              fixed bottom-5 left-5 z-50 flex min-w-80 items-center
               justify-between rounded-lg bg-brand-red px-6 py-3 text-white
               shadow-lg
             "

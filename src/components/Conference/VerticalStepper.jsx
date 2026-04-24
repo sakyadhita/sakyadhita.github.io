@@ -154,9 +154,10 @@ export default function VerticalStepper(props) {
     <div className="w-fit">
       <div className="flex min-h-[666.5px] flex-col items-start px-2">
         {splitSteps.map((step, index) => (
-          <div key={step.confNum} className="
-            group flex w-full flex-col items-start
-          ">
+          <div
+            key={step.confNum}
+            className="group flex w-full flex-col items-start"
+          >
             <div className="flex w-full items-center">
               {/* Node Button */}
               <button
@@ -183,9 +184,9 @@ export default function VerticalStepper(props) {
                     : { color: props.color, borderColor: props.color }
                 }
               >
-                <span className="
-                  pointer-events-none text-xs font-bold lowercase
-                ">
+                <span
+                  className="pointer-events-none text-xs font-bold lowercase"
+                >
                   {ordinal_suffix_of(step.confNum)}
                 </span>
               </button>

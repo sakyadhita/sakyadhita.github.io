@@ -54,13 +54,15 @@ To update content, modify the Markdown files in `src/content/`.
 - **Frontmatter**: Ensure all required fields (defined in `src/content/config.ts`) are present.
 
 ### Code Style
-- **Formatting**: Handled by Prettier.
+- **Formatting**: Handled by Prettier with standard Tailwind v4 utility sorting.
     - 2-space indentation.
     - No semicolons (`semi: false`).
     - Single quotes (`singleQuote: true`).
     - Line width: 100 characters.
-- **Linting**: ESLint with plugins for Astro, React, and Markdown.
-- **React**: Use `.jsx` for files containing JSX. Prefer functional components and hooks.
+    - Standard utility classes: Prefer standard Tailwind scale (e.g., `w-44`, `h-112`) over arbitrary values (`w-[175px]`).
+- **Linting**: ESLint v9 Flat Config with plugins for Astro, React, Markdown, and modern JS patterns (`unicorn`).
+- **Imports**: Enforced sorting via `eslint-plugin-import`.
+- **React**: Use `.jsx` for files containing JSX. Prefer functional components and hooks. Use React 19 native refs and patterns.
 
 ### Deployment
 Pushes to the `main` branch automatically trigger a deploy on Netlify and run the Playwright test suite via GitHub Actions. Always verify your changes with `pnpm build` and `pnpm test:e2e` before pushing.

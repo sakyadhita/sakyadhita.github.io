@@ -57,9 +57,11 @@ const optimizedHeader = rawHeader
                   <div id={item.data.title.replaceAll(' ', '')} />
                   <h1>{item.data.title}</h1>
                   <item.Content />
-                  {index === sections.length - 1 ? null : <hr class="
-                    my-12 border-brand-orange
-                  " />}
+                  {index === sections.length - 1 ? null : (
+                    <hr
+                      class="my-12 border-brand-orange"
+                    />
+                  )}
                 </div>
               ))}
               <slot />
