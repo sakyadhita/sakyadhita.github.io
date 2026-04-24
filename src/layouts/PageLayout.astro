@@ -4,7 +4,7 @@ import '../css/index.css'
 import { Font } from 'astro:assets'
 
 import Footer from '../components/Main/Footer.astro'
-import NavBar from '../components/Main/NavBar/NavBar.jsx'
+import NavBar from '../components/Main/NavBar/NavBar.astro'
 
 interface Props {
   hideFooter?: boolean
@@ -30,7 +30,7 @@ const { hideFooter = false } = Astro.props
 
   <body class="flex min-h-screen flex-col">
     <div id="page-layout" class="flex flex-1 flex-col">
-      <NavBar client:idle />
+      <NavBar />
       <main class="flex-1">
         <slot />
       </main>
