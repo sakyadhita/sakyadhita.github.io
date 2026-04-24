@@ -1,0 +1,178 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import EPubCard from './EPubCard'
+
+interface Props {
+  publication_section: {
+    section_title: string
+    section_list: any[]
+  }
+  isMobile?: boolean
+}
+
+const { publication_section, isMobile = false } = Astro.props
+---
+
+<div
+  class="EPubSection relative mx-[10vw] block px-0 py-11"
+  data-section-title={publication_section.section_title}
+>
+  {/* Desktop Header */}
+  <div class="header-desktop relative top-0 left-0 hidden h-12 w-full lg:block">
+    <h1 class="w-full text-center font-heading text-4xl/relaxed">
+      {publication_section.section_title}
+    </h1>
+    <button
+      type="button"
+      class="
+        section-toggle absolute right-6 bottom-0 z-20 mb-4 w-fit cursor-pointer
+        border-none bg-inherit p-0 font-body text-lg/relaxed no-underline
+        hover:underline
+      "
+      data-section={publication_section.section_title}
+    >
+      All <span class="text-brand-orange">({publication_section.section_list.length})</span>
+      &gt;
+    </button>
+  </div>
+
+  {/* Mobile Header */}
+  <div class="header-mobile relative top-0 left-0 flex h-16 w-full flex-col lg:hidden">
+    <h1 class="w-full text-center font-heading text-2xl/tight font-bold">
+      {publication_section.section_title}
+    </h1>
+    <button
+      type="button"
+      class="
+        section-toggle z-20 m-auto mb-4 w-fit cursor-pointer border-none
+        bg-inherit p-0 text-center font-body text-base/tight no-underline
+        hover:underline
+      "
+      data-section={publication_section.section_title}
+    >
+      All <span class="text-brand-orange">({publication_section.section_list.length})</span>
+      &gt;
+    </button>
+  </div>
+
+  {/* Desktop Content */}
+  <div
+    class="
+      content-desktop relative mx-[-25px] hidden flex-wrap items-start
+      justify-center text-center lg:flex
+    "
+  >
+    {
+      publication_section.section_list.slice(0, 5).map((pub) => (
+        <EPubCard
+          title={pub.data.title}
+          author={pub.data.author}
+          image_url={pub.data.imageLink}
+          optimized_url={pub.data.optimizedImage}
+          redirect_link={pub.data.pdfLink}
+          isMobile={false}
+          client:load
+        />
+      ))
+    }
+  </div>
+
+  {/* Mobile Content (Simple Carousel logic ported to Vanilla JS) */}
+  <div
+    class="
+      content-mobile relative mx-[-25px] flex flex-wrap items-start
+      justify-center overflow-hidden text-center lg:hidden
+    "
+  >
+    <button
+      type="button"
+      class="
+        prev-btn relative bottom-48 m-0 inline-block h-8 w-8 cursor-pointer
+        border-none bg-inherit disabled:invisible
+      "
+    >
+      <Icon name="lucide:chevron-left" class="size-full" />
+    </button>
+
+    <div class="mobile-card-container">
+      {
+        publication_section.section_list.map((pub, index) => (
+          <div class={index === 0 ? 'block' : 'hidden'} data-index={index}>
+            <EPubCard
+              title={pub.data.title}
+              author={pub.data.author}
+              image_url={pub.data.imageLink}
+              optimized_url={pub.data.optimizedImage}
+              redirect_link={pub.data.pdfLink}
+              isMobile={true}
+              client:load
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <button
+      type="button"
+      class="
+        next-btn relative bottom-48 m-0 inline-block h-8 w-8 cursor-pointer
+        border-none bg-inherit disabled:invisible
+      "
+    >
+      <Icon name="lucide:chevron-right" class="size-full" />
+    </button>
+  </div>
+
+  <div class="absolute bottom-0 h-px w-full bg-brand-orange lg:h-2"></div>
+</div>
+
+<script>
+  function initEPubSections() {
+    const sections = document.querySelectorAll('.EPubSection')
+    sections.forEach((section) => {
+      let currentIndex = 0
+      const list = section.querySelectorAll('.mobile-card-container > div')
+      const prevBtn = section.querySelector('.prev-btn') as HTMLButtonElement
+      const nextBtn = section.querySelector('.next-btn') as HTMLButtonElement
+
+      const updateMobileView = () => {
+        list.forEach((item, index) => {
+          if (index === currentIndex) {
+            item.classList.remove('hidden')
+            item.classList.add('block')
+          } else {
+            item.classList.remove('block')
+            item.classList.add('hidden')
+          }
+        })
+
+        if (prevBtn) prevBtn.disabled = currentIndex === 0
+        if (nextBtn) nextBtn.disabled = currentIndex === list.length - 1
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          if (currentIndex > 0) {
+            currentIndex--
+            updateMobileView()
+          }
+        })
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          if (currentIndex < list.length - 1) {
+            currentIndex++
+            updateMobileView()
+          }
+        })
+      }
+
+      updateMobileView()
+    })
+  }
+
+  initEPubSections()
+  document.addEventListener('astro:page-load', initEPubSections)
+</script>

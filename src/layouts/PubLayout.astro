@@ -3,7 +3,7 @@ import { getImage } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
-import EPublications from '../components/Layouts/EPublications'
+import EPublications from '../components/Layouts/EPublications.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import { getRawImage, getAssetUrl } from '../lib/images'
 
@@ -29,7 +29,7 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
 
 <PageLayout>
   <ResourcesNavBar>
-    <EPublications client:idle sections={sections} featuredEpubs={featuredEpubs}>
+    <EPublications sections={sections} featuredEpubs={featuredEpubs}>
       <slot />
     </EPublications>
   </ResourcesNavBar>

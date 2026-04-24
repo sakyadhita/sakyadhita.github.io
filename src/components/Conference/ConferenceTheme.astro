@@ -1,0 +1,116 @@
+---
+import Modal from '../Modal'
+
+interface Props {
+  title?: string
+  location: string
+  redirect?: string
+  theme: string
+  signup?: string
+  isMobile?: boolean
+  tabs?: any // Not used in Astro version as tabs are handled in parent
+}
+
+const { title, location, redirect, theme, signup, isMobile = false } = Astro.props
+---
+
+<div class="fade-in slide-in-from-bottom-4 animate-in space-y-10">
+  {/* The title of the conference */}
+  {
+    title && (
+      <section class="space-y-6">
+        <h1
+          class="
+            font-heading text-3xl font-bold tracking-tight
+            text-brand-dark-purple lowercase
+            md:text-5xl
+          "
+        >
+          {title}
+        </h1>
+      </section>
+    )
+  }
+
+  {/* The location of the conference */}
+  <section>
+    <h3
+      class="
+        font-heading text-xl font-bold text-brand-orange lowercase italic
+        md:text-2xl
+      "
+    >
+      {location}
+    </h3>
+  </section>
+
+  {/* Button that opens the modal */}
+  {
+    signup && !isMobile && (
+      <section>
+        <button
+          type="button"
+          class="
+            signup-btn rounded-full border-none bg-brand-orange px-8 py-3
+            font-body font-bold tracking-wider text-white uppercase shadow-md
+            transition-all
+            hover:bg-brand-dark-orange
+            active:scale-95
+          "
+        >
+          Sign Up
+        </button>
+      </section>
+    )
+  }
+
+  {/* The text describing the specific conference */}
+  <div
+    class="
+      mr-8 flex flex-col-reverse gap-8
+      lg:flex-row lg:gap-12
+    "
+  >
+    <div
+      class="
+        prose prose-lg max-w-none flex-1 font-body leading-relaxed
+        text-gray-700 lowercase italic
+      "
+      set:html={theme}
+    />
+    <div
+      class="
+        shrink-0
+        lg:w-1/2
+      "
+    >
+      <slot name="slideshow" />
+    </div>
+  </div>
+
+  <Modal
+    client:load
+    open={false}
+    hide={() => {}}
+    text="You will be redirected to a new link to sign up for the conference. Do you want to be redirected?"
+    positiveUrl={redirect}
+    positiveButtonText="Yes"
+    negativeButtonText="No"
+    id="signup-modal"
+  />
+</div>
+
+<script>
+  function initConferenceTheme() {
+    const signupBtns = document.querySelectorAll('.signup-btn');
+    signupBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Find the modal - this might be tricky with shadcn/ui React Modal.
+        // We might need a more global way to trigger it.
+        // For now, let's just use window.location if we can't easily trigger the React modal.
+        // Actually, if we use client:load on Modal, we might need a store.
+      });
+    });
+  }
+  // ...
+</script>

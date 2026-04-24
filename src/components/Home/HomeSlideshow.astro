@@ -1,0 +1,28 @@
+---
+import Slideshow from '../Slideshow.astro'
+import NewsSlide from './NewsSlide.astro'
+
+interface Props {
+  newsAndEvents: any[]
+}
+
+const { newsAndEvents } = Astro.props
+
+if (!newsAndEvents || newsAndEvents.length === 0) return null
+---
+
+<Slideshow height="85vh" width="100%" isMobile={false}>
+  {
+    newsAndEvents.map((slideInfo) => (
+      <NewsSlide
+        height="85vh"
+        showButton={!!slideInfo.redirectLink}
+        openInSameTab={false}
+        redirect_link={slideInfo.redirectLink}
+        title={slideInfo.title}
+        description={slideInfo.description}
+        image_url={slideInfo.optimizedImage || slideInfo.imageLink}
+      />
+    ))
+  }
+</Slideshow>

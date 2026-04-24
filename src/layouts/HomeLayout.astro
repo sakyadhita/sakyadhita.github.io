@@ -5,7 +5,7 @@ import { marked } from 'marked'
 
 import PageLayout from './PageLayout.astro'
 import HomeBody from '../components/Home/HomeBody.astro'
-import HomeSlideshow from '../components/Home/HomeSlideshow'
+import HomeSlideshow from '../components/Home/HomeSlideshow.astro'
 import { getRawImage } from '../lib/images'
 
 interface HomeImageModule {
@@ -72,7 +72,7 @@ const branchesWithHtml = await Promise.all(
 
 <PageLayout>
   <div class="w-full text-black">
-    <HomeSlideshow client:idle newsAndEvents={newsAndEvents} />
+    <HomeSlideshow newsAndEvents={newsAndEvents} />
 
     <HomeBody
       IntroContent={IntroContent}

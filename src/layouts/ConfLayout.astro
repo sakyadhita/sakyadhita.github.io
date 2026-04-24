@@ -4,8 +4,8 @@ import { getCollection } from 'astro:content'
 import { marked } from 'marked'
 
 import PageLayout from './PageLayout.astro'
-import ConferenceDesktop from '../components/Conference/ConferenceDesktop'
-import MobileConference from '../components/Conference/MobileConference'
+import ConferenceDesktop from '../components/Conference/ConferenceDesktop.astro'
+import MobileConference from '../components/Conference/MobileConference.astro'
 import { getRawImage, getAssetUrl } from '../lib/images'
 
 const conferencesRaw = await getCollection('conference')
@@ -51,12 +51,12 @@ const data = conferences.toReversed()
     hidden
     lg:block
   ">
-    <ConferenceDesktop client:idle data={data} />
+    <ConferenceDesktop data={data} />
   </div>
   <div class="
     block
     lg:hidden
   ">
-    <MobileConference client:idle data={data} />
+    <MobileConference data={data} />
   </div>
 </PageLayout>

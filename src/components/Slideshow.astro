@@ -1,0 +1,189 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { cn } from '../lib/utils'
+
+/**
+ * Slideshow component built with Embla Carousel (Native Astro version).
+ * Matches the functionality of Slideshow.jsx while reducing React overhead.
+ */
+interface Props {
+  height?: string
+  width?: string
+  isMobile?: boolean
+  className?: string
+}
+
+const { height = '100%', width = '100%', isMobile = false, className = '' } = Astro.props
+---
+
+<div
+  class={cn('Slideshow group relative block overflow-hidden', className)}
+  style={{ width }}
+  data-is-mobile={isMobile}
+>
+  <div class="embla h-full" style={{ height }}>
+    <div class="embla__container flex h-full">
+      <slot />
+    </div>
+  </div>
+
+  {/* Custom Arrows - Only on desktop as per original implementation */}
+  {
+    !isMobile && (
+      <>
+        <button
+          type="button"
+          class="
+            embla__prev absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer
+            border-none bg-transparent opacity-0 transition-opacity
+            group-hover:opacity-100
+          "
+          aria-label="Previous slide"
+        >
+          <Icon name="lucide:chevron-left" class="z-20 size-12 text-white" />
+        </button>
+        <button
+          type="button"
+          class="
+            embla__next absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer
+            border-none bg-transparent opacity-0 transition-opacity
+            group-hover:opacity-100
+          "
+          aria-label="Next slide"
+        >
+          <Icon name="lucide:chevron-right" class="z-20 size-12 text-white" />
+        </button>
+      </>
+    )
+  }
+
+  {/* Indicators */}
+  <div
+    class="
+      embla__dots absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4
+    "
+  >
+  </div>
+</div>
+
+<style>
+  /* Embla core styles */
+  .embla {
+    overflow: hidden;
+  }
+  .embla__container {
+    display: flex;
+    /* transition: transform 0.3s ease; /* Default Embla handles this */
+  }
+
+  /* Slide wrapper should be applied to children via news slide or manually */
+  :global(.embla__slide) {
+    position: relative;
+    height: 100%;
+    min-width: 0;
+    flex: 0 0 100%;
+    backface-visibility: hidden;
+  }
+
+  /* Dots styles */
+  :global(.embla__dot) {
+    width: 1.25rem; /* size-5 */
+    height: 1.25rem;
+    cursor: pointer;
+    border-radius: 9999px;
+    border: 10px solid #9ca3af; /* border-gray-400 */
+    background-color: #9ca3af; /* bg-gray-400 */
+    transition: all 0.2s;
+    padding: 0;
+  }
+
+  :global(.embla__dot:hover) {
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  :global(.embla__dot--selected) {
+    transform: scale(1.1);
+    border-color: white;
+    background-color: white;
+  }
+</style>
+
+<script>
+  import EmblaCarousel from 'embla-carousel'
+  import Autoplay from 'embla-carousel-autoplay'
+  import Fade from 'embla-carousel-fade'
+
+  function initSlideshows() {
+    const slideshowNodes = document.querySelectorAll('.Slideshow')
+
+    slideshowNodes.forEach((node) => {
+      // Prevent double initialization
+      if (node.hasAttribute('data-embla-initialized')) return
+      node.setAttribute('data-embla-initialized', 'true')
+
+      const viewportNode = node.querySelector('.embla') as HTMLElement
+      const prevBtn = node.querySelector('.embla__prev')
+      const nextBtn = node.querySelector('.embla__next')
+      const dotsNode = node.querySelector('.embla__dots')
+
+      if (!viewportNode) return
+
+      const emblaApi = EmblaCarousel(viewportNode, { loop: true, duration: 30 }, [
+        Autoplay({ delay: 4000, stopOnInteraction: false }),
+        Fade()
+      ])
+
+      // Arrows
+      if (prevBtn) prevBtn.addEventListener('click', () => emblaApi.scrollPrev())
+      if (nextBtn) nextBtn.addEventListener('click', () => emblaApi.scrollNext())
+
+      // Dots
+      if (dotsNode) {
+        const updateDots = () => {
+          const selectedIndex = emblaApi.selectedScrollSnap()
+          const dots = dotsNode.querySelectorAll('.embla__dot')
+          dots.forEach((dot, index) => {
+            if (index === selectedIndex) {
+              dot.classList.add('embla__dot--selected')
+            } else {
+              dot.classList.remove('embla__dot--selected')
+            }
+          })
+        }
+
+        const createDots = () => {
+          const scrollSnaps = emblaApi.scrollSnapList()
+          dotsNode.innerHTML = scrollSnaps
+            .map(
+              (_, index) => `
+            <button
+              class="embla__dot"
+              type="button"
+              aria-label="Go to slide ${index + 1}"
+            ></button>
+          `
+            )
+            .join('')
+
+          dotsNode.querySelectorAll('.embla__dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => emblaApi.scrollTo(index))
+          })
+        }
+
+        createDots()
+        updateDots()
+        emblaApi.on('select', updateDots)
+        emblaApi.on('reInit', () => {
+          createDots()
+          updateDots()
+        })
+      }
+    })
+  }
+
+  // Run on page load and on Astro transitions
+  initSlideshows()
+  document.addEventListener('astro:page-load', initSlideshows)
+</script>

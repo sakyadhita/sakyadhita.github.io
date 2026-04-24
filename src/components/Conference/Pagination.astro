@@ -1,0 +1,59 @@
+---
+import { cn } from '../../lib/utils'
+
+interface Props {
+  count: number
+  page: number
+  size: number
+}
+
+const { count, page, size } = Astro.props
+const totalPages = Math.ceil(count / size)
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
+---
+
+<nav class="Pagination mt-4 flex w-full justify-center" aria-label="Pagination">
+  <ul class="flex items-center gap-1">
+    <li>
+      <button
+        class={cn(
+          'prev-page-btn flex h-10 items-center gap-1 pl-2.5 pr-4 text-sm font-medium transition-colors hover:bg-gray-100 rounded-md',
+          page === 1 && 'pointer-events-none opacity-50'
+        )}
+        data-page={page - 1}
+        disabled={page === 1}
+      >
+        <span>Previous</span>
+      </button>
+    </li>
+
+    {
+      pages.map((p) => (
+        <li>
+          <button
+            class={cn(
+              'page-num-btn flex size-10 items-center justify-center rounded-md text-sm font-medium transition-colors',
+              page === p ? 'bg-white shadow-sm border border-gray-200' : 'hover:bg-gray-100'
+            )}
+            data-page={p}
+          >
+            {p}
+          </button>
+        </li>
+      ))
+    }
+
+    <li>
+      <button
+        class={cn(
+          'next-page-btn flex h-10 items-center gap-1 pl-4 pr-2.5 text-sm font-medium transition-colors hover:bg-gray-100 rounded-md',
+          page === totalPages && 'pointer-events-none opacity-50'
+        )}
+        data-page={page + 1}
+        disabled={page === totalPages}
+      >
+        <span>Next</span>
+      </button>
+    </li>
+  </ul>
+</nav>

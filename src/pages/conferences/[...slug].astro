@@ -3,8 +3,8 @@ import { getImage } from 'astro:assets'
 import { type CollectionEntry, getCollection } from 'astro:content'
 import { marked } from 'marked'
 
-import ConferenceDesktop from '../../components/Conference/ConferenceDesktop'
-import MobileConference from '../../components/Conference/MobileConference'
+import ConferenceDesktop from '../../components/Conference/ConferenceDesktop.astro'
+import MobileConference from '../../components/Conference/MobileConference.astro'
 import PageLayout from '../../layouts/PageLayout.astro'
 import { getRawImage, getAssetUrl } from '../../lib/images'
 
@@ -67,12 +67,12 @@ const data = conferences.toReversed()
     hidden
     lg:block
   ">
-    <ConferenceDesktop client:only="react" data={data} id={conference.id} />
+    <ConferenceDesktop data={data} id={conference.id} />
   </div>
   <div class="
     block
     lg:hidden
   ">
-    <MobileConference client:only="react" data={data} id={conference.id} />
+    <MobileConference data={data} id={conference.id} />
   </div>
 </PageLayout>

@@ -1,0 +1,162 @@
+---
+import Slideshow from '../Slideshow.astro'
+import VerticalStepper from './VerticalStepper.astro'
+import ConferenceTheme from './ConferenceTheme.astro'
+import ConferenceOverview from './ConferenceOverview.astro'
+
+interface Props {
+  data: any[]
+  id?: string
+}
+
+const { data, id } = Astro.props
+
+// Find initial index
+const initialIndex = id ? data.findIndex(x => x.id === id) : 0
+const index = initialIndex === -1 ? 0 : initialIndex
+---
+
+<div id="conference-desktop-root" class="w-full px-4 py-12 md:px-12" data-initial-index={index}>
+  <div class="relative flex flex-col gap-8 lg:flex-row lg:gap-16">
+    {/* The vertical stepper */}
+    <aside class="w-full lg:w-48 lg:shrink-0">
+      <div class="lg:sticky lg:top-32">
+        <VerticalStepper items={data} color="#6652a0" id={id} />
+      </div>
+    </aside>
+
+    {/* Main Content Area */}
+    <main class="min-w-0 flex-1">
+      <div class="fade-in slide-in-from-bottom-4 animate-in duration-500">
+        <div id="conference-content-container">
+           {data.map((item, idx) => (
+             <div class={`conference-item ${idx === index ? 'block' : 'hidden'}`} data-item-index={idx}>
+                <div class="tabs-container mb-8 flex w-fit space-x-1 rounded-xl bg-gray-100 p-1 font-body">
+                  <button class="tab-btn theme-tab rounded-lg px-6 py-2 font-bold transition-all bg-white text-brand-dark-purple shadow-sm" data-type="theme">Theme</button>
+                  <button class="tab-btn overview-tab rounded-lg px-6 py-2 font-bold transition-all text-gray-500 hover:text-gray-700" data-type="overview">Overview</button>
+                </div>
+
+                <div class="tab-content theme-content">
+                  <ConferenceTheme
+                    title={item.data.title}
+                    location={item.data.location}
+                    redirect={item.data.signUpLink}
+                    theme={item.data.htmlBody}
+                    signup={item.data.signUpLink}
+                    isMobile={false}
+                  >
+                    <div slot="slideshow" class="h-112 overflow-hidden rounded-3xl border border-gray-100 bg-gray-50 shadow-2xl">
+                       {item.data.optimizedImages?.length === 1 ? (
+                         <img class="size-full object-cover" alt="Event Visual" src={item.data.optimizedImages[0]} />
+                       ) : (
+                         <Slideshow height="100%" width="100%" isMobile={false}>
+                           {item.data.optimizedImages?.map((image) => (
+                             <div class="embla__slide size-full">
+                               <img class="size-full object-cover" alt="Event Visual" src={image} />
+                             </div>
+                           ))}
+                         </Slideshow>
+                       )}
+                    </div>
+                  </ConferenceTheme>
+                </div>
+
+                <div class="tab-content overview-content hidden">
+                   <ConferenceOverview
+                    info={item}
+                    title={item.data.title}
+                  >
+                    <div slot="slideshow" class="h-112 overflow-hidden rounded-3xl border border-gray-100 bg-gray-50 shadow-2xl">
+                       {/* Same slideshow as theme for now or video if it exists */}
+                       {item.data.video ? (
+                         <div class="size-full bg-black">
+                            <iframe
+                              src={item.data.video.replace('watch?v=', 'embed/')}
+                              class="size-full"
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen
+                            ></iframe>
+                         </div>
+                       ) : (
+                         item.data.optimizedImages?.length === 1 ? (
+                           <img class="size-full object-cover" alt="Event Visual" src={item.data.optimizedImages[0]} />
+                         ) : (
+                           <Slideshow height="100%" width="100%" isMobile={false}>
+                             {item.data.optimizedImages?.map((image) => (
+                               <div class="embla__slide size-full">
+                                 <img class="size-full object-cover" alt="Event Visual" src={image} />
+                               </div>
+                             ))}
+                           </Slideshow>
+                         )
+                       )}
+                    </div>
+                   </ConferenceOverview>
+                </div>
+             </div>
+           ))}
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  function initConferenceDesktop() {
+    const root = document.getElementById('conference-desktop-root');
+    if (!root) return;
+
+    const items = root.querySelectorAll('.conference-item');
+    const stepperBtns = document.querySelectorAll('.stepper-node-btn, .stepper-label-btn');
+
+    const updateConference = (index: number) => {
+      items.forEach((item, idx) => {
+        if (idx === index) {
+          item.classList.remove('hidden');
+          item.classList.add('block');
+        } else {
+          item.classList.remove('block');
+          item.classList.add('hidden');
+        }
+      });
+    };
+
+    // Tab switching logic
+    items.forEach((item) => {
+      const themeTab = item.querySelector('.theme-tab');
+      const overviewTab = item.querySelector('.overview-tab');
+      const themeContent = item.querySelector('.theme-content');
+      const overviewContent = item.querySelector('.overview-content');
+
+      const switchTab = (type: 'theme' | 'overview') => {
+        if (type === 'theme') {
+          themeTab?.classList.add('bg-white', 'text-brand-dark-purple', 'shadow-sm');
+          themeTab?.classList.remove('text-gray-500');
+          overviewTab?.classList.remove('bg-white', 'text-brand-dark-purple', 'shadow-sm');
+          overviewTab?.classList.add('text-gray-500');
+          themeContent?.classList.remove('hidden');
+          overviewContent?.classList.add('hidden');
+        } else {
+          overviewTab?.classList.add('bg-white', 'text-brand-dark-purple', 'shadow-sm');
+          overviewTab?.classList.remove('text-gray-500');
+          themeTab?.classList.remove('bg-white', 'text-brand-dark-purple', 'shadow-sm');
+          themeTab?.classList.add('text-gray-500');
+          overviewContent?.classList.remove('hidden');
+          themeContent?.classList.add('hidden');
+        }
+      };
+
+      themeTab?.addEventListener('click', () => switchTab('theme'));
+      overviewTab?.addEventListener('click', () => switchTab('overview'));
+    });
+
+    // Stepper interaction - we'll need to listen to custom events or just add listeners if they are in the same page
+    document.addEventListener('conference-step-change', (e: any) => {
+       updateConference(e.detail.index);
+    });
+  }
+
+  initConferenceDesktop();
+  document.addEventListener('astro:page-load', initConferenceDesktop);
+</script>
