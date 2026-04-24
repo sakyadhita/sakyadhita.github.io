@@ -41,8 +41,10 @@ describe('Modal Component', () => {
   })
 
   it('has modal styling', () => {
-    const { container } = render(<Modal {...defaultProps} />)
-    const text = container.textContent
-    expect(text).toContain('Test modal text')
+    render(<Modal {...defaultProps} />)
+    const description = screen.getByText('Test modal text')
+    // Check for some key classes from Modal.tsx
+    expect(description.className).toContain('font-body')
+    expect(description.className).toContain('text-2xl')
   })
 })
