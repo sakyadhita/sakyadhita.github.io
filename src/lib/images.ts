@@ -1,11 +1,66 @@
 import { getImage } from 'astro:assets'
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/**/*.{jpeg,jpg,png,webp,JPG,JPEG,PNG,WEBP}',
+  '/src/assets/**/*.{jpeg,jpg,png,webp,svg,JPG,JPEG,PNG,WEBP,SVG}',
   {
     eager: true
   }
 )
+
+const docs = import.meta.glob<string>(
+  '/src/assets/**/*.{pdf,doc,docx,zip,txt,PDF,DOC,DOCX,ZIP,TXT}',
+  {
+    query: '?url',
+    import: 'default',
+    eager: true
+  }
+)
+
+/**
+ * Returns the resolved URL for any asset (image or document) in src/assets.
+ * Useful for resolving links in frontmatter that point to /assets/...
+ */
+export function getAssetUrl(publicPath: string) {
+  if (!publicPath) return null
+  if (publicPath.startsWith('http') || publicPath.startsWith('mailto:')) return publicPath
+
+  const decodedPath = decodeURIComponent(publicPath)
+  const pathsToTest = [
+    publicPath.startsWith('/') ? publicPath : `/${publicPath}`,
+    decodedPath.startsWith('/') ? decodedPath : `/${decodedPath}`
+  ]
+
+  for (const path of pathsToTest) {
+    const cleanPath = path.replace(/\/$/, '')
+    const srcPath = cleanPath.startsWith('/assets') ? `/src${cleanPath}` : `/src/assets${cleanPath}`
+    const noSlash = srcPath.startsWith('/') ? srcPath.slice(1) : srcPath
+
+    const resolve = (map: Record<string, any>) => map[srcPath] || map[noSlash]
+
+    const img = resolve(images)
+    if (img) return img.default.src
+
+    const doc = resolve(docs)
+    if (doc) return doc
+  }
+
+  // Fallback: filename alone
+  const fileName = decodedPath.split('/').pop()
+  if (fileName) {
+    const findByFileName = (map: Record<string, any>) => {
+      const foundKey = Object.keys(map).find((key) => key.endsWith(`/${fileName}`))
+      return foundKey ? map[foundKey] : null
+    }
+
+    const fallbackImg = findByFileName(images)
+    if (fallbackImg) return fallbackImg.default.src
+
+    const fallbackDoc = findByFileName(docs)
+    if (fallbackDoc) return fallbackDoc
+  }
+
+  return publicPath
+}
 
 export async function getOptimizedImage(
   publicPath: string,

@@ -5,7 +5,7 @@
  * @summary Displays latest news on the Home Page.
  * @author Jitendra Joshi
  */
-import { getOptimizedImage } from '../../lib/images'
+import { getOptimizedImage, getAssetUrl } from '../../lib/images'
 import CustomButton from '../CustomButton.astro'
 
 interface Props {
@@ -16,6 +16,7 @@ interface Props {
 
 const { article } = Astro.props
 const optimizedImage = await getOptimizedImage(article.data.image, 800)
+const redirectLink = getAssetUrl(article.data.redirectLink)
 ---
 
 <div id="news-flash" class="prose mb-6 max-w-none">
@@ -31,7 +32,7 @@ const optimizedImage = await getOptimizedImage(article.data.image, 800)
         <slot />
       </div>
       <div class="flex items-center justify-center">
-        <CustomButton text="Learn More" redirect_link={article.data.redirectLink} />
+        <CustomButton text="Learn More" redirect_link={redirectLink} />
       </div>
     </div>
     <div class="flex-1">

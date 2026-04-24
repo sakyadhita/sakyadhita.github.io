@@ -6,11 +6,10 @@
 import Autoplay from 'embla-carousel-autoplay'
 import Fade from 'embla-carousel-fade'
 import useEmblaCarousel from 'embla-carousel-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import React, { useState, useEffect, useCallback } from 'react'
 
 import { cn } from '../lib/utils'
-import LeftArrow from '../media/leftarrow.svg'
-import RightArrow from '../media/rightarrow.svg'
 
 const Slideshow = ({ children, height, width, isMobile }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 }, [
@@ -67,7 +66,7 @@ const Slideshow = ({ children, height, width, isMobile }) => {
             onClick={scrollPrev}
             aria-label="Previous slide"
           >
-            <img className="z-20 w-12" src={LeftArrow.src} alt="left arrow" />
+            <ChevronLeft className="z-20 size-12 text-white" />
           </button>
           <button
             type="button"
@@ -79,15 +78,15 @@ const Slideshow = ({ children, height, width, isMobile }) => {
             onClick={scrollNext}
             aria-label="Next slide"
           >
-            <img className="z-20 w-12" src={RightArrow.src} alt="right arrow" />
+            <ChevronRight className="z-20 size-12 text-white" />
           </button>
         </>
       )}
 
       {/* Indicators */}
-      <div
-        className="absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4"
-      >
+      <div className="
+        absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4
+      ">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}

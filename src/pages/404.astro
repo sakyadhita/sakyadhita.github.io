@@ -1,9 +1,9 @@
 ---
 import { getImage } from 'astro:assets'
 
+import LotusHeader from '../assets/Lotus_Header.png'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
-import LotusHeader from '../media/Lotus_Header.png'
 
 const optimizedHeader = await getImage({ src: LotusHeader, format: 'webp', width: 1600 })
 ---

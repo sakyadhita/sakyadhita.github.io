@@ -16,12 +16,51 @@ interface Props {
 }
 const { conference } = Astro.props
 
+import { getImage } from 'astro:assets'
+import { marked } from 'marked'
+
+import { getRawImage, getAssetUrl } from '../../lib/images'
 import ConferenceDesktop from '../../components/Conference/ConferenceDesktop'
 import MobileConference from '../../components/Conference/MobileConference'
 import PageLayout from '../../layouts/PageLayout.astro'
 
-const conferences = await getCollection('conference')
-const data = [...conferences].reverse()
+const conferencesRaw = await getCollection('conference')
+const conferences = await Promise.all(
+  conferencesRaw.map(async (c) => {
+    const htmlBody = await marked.parse(c.body || '')
+    let optimizedImages = null
+    if (c.data.slideShowImages) {
+      optimizedImages = await Promise.all(
+        c.data.slideShowImages.map(async (img) => {
+          const raw = getRawImage(img)
+          if (raw) {
+            const opt = await getImage({ src: raw, format: 'webp', width: 1200 })
+            return opt.src
+          }
+          return img
+        })
+      )
+    }
+
+    const resolveList = (list?: { description: string; url: string }[]) =>
+      list ? list.map((i) => ({ ...i, url: getAssetUrl(i.url) })) : undefined
+
+    return {
+      ...c,
+      data: {
+        ...c.data,
+        optimizedImages,
+        htmlBody,
+        brochures: resolveList(c.data.brochures),
+        programs: resolveList(c.data.programs),
+        abstracts: resolveList(c.data.abstracts),
+        presentations: resolveList(c.data.presentations)
+      }
+    }
+  })
+)
+
+const data = conferences.toReversed()
 ---
 
 <PageLayout>

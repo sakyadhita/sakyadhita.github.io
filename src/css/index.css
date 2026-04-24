@@ -10,8 +10,43 @@
   --color-brand-grey: #9b9b9b;
   --color-brand-dark-grey: #5a5a5a;
 
+  /* shadcn/ui theme variables */
+  --color-background: white;
+  --color-foreground: black;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-popover: white;
+  --color-popover-foreground: black;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #a1a1aa;
+  --color-accent: #f4f4f5;
+  --color-accent-foreground: black;
+  --color-primary: var(--color-brand-orange);
+  --color-primary-foreground: white;
+  --color-secondary: var(--color-brand-light-purple);
+  --color-secondary-foreground: white;
+
+  /* Animation primitives (Tailwind v4) */
+  --animate-in: animate-in 0.2s ease-out;
+  --animate-out: animate-out 0.2s ease-in;
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-fade-out: fade-out 0.2s ease-in;
+  --animate-zoom-in: zoom-in 0.2s ease-out;
+  --animate-zoom-out: zoom-out 0.2s ease-in;
+  --animate-slide-in-from-top: slide-in-from-top 0.2s ease-out;
+  --animate-slide-in-from-bottom: slide-in-from-bottom 0.2s ease-out;
+
   --font-heading: "Libre Baskerville", serif;
   --font-body: "Nunito", sans-serif;
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @utility hover-underline-animation {

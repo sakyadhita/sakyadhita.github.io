@@ -5,17 +5,18 @@ import { getCollection } from 'astro:content'
 import PageLayout from './PageLayout.astro'
 import EPublications from '../components/Layouts/EPublications'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
-import { getRawImage } from '../lib/images'
+import { getRawImage, getAssetUrl } from '../lib/images'
 
 const epublicationsRaw = await getCollection('publication')
 const epublications = await Promise.all(
   epublicationsRaw.map(async (p) => {
     const raw = getRawImage(p.data.imageLink)
+    const pdfLink = getAssetUrl(p.data.pdfLink)
     if (raw) {
       const optimized = await getImage({ src: raw, format: 'webp', width: 400 })
-      return { ...p, data: { ...p.data, optimizedImage: optimized.src } }
+      return { ...p, data: { ...p.data, optimizedImage: optimized.src, pdfLink } }
     }
-    return p
+    return { ...p, data: { ...p.data, pdfLink } }
   })
 )
 const categories = [...new Set(epublications.map((p) => p.data.category))]

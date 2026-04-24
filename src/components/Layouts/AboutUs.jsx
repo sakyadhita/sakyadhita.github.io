@@ -7,11 +7,10 @@
  * @author      Aaron Kirk
  */
 
+import { ChevronDown, ExternalLink } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 
 import { cn } from '../../lib/utils'
-import DownArrow from '../../media/down-arrow.svg'
-import Link from '../../media/link.svg'
 
 const CommitteeSelector = ({
   years,
@@ -32,7 +31,7 @@ const CommitteeSelector = ({
         onClick={() => toggleDropdown()}
       >
         <span className="font-body font-bold">{years[committeeIndex]}</span>
-        <img src={DownArrow.src} alt="dropdown arrow" className="h-2" />
+        <ChevronDown className="size-4" />
       </button>
       {dropdownOn && (
         <div
@@ -68,7 +67,9 @@ const CommitteeProfiles = ({ committees, year }) => {
         No Committees to Show
       </p>
     )
-  const committee = committees.filter((x) => x.data.startYear === Number.parseInt(year)).reverse()
+  const committee = committees
+    .filter((x) => x.data.startYear === Number.parseInt(year))
+    .toReversed()
   if (committee === undefined) return null
   return (
     <div
@@ -114,17 +115,11 @@ const CommitteeProfiles = ({ committees, year }) => {
                 rel="noreferrer"
                 className="mr-2"
               >
-                <img
+                <ExternalLink
                   className="
-                    h-[1.2em] transition-all
+                    h-[1.2em] text-brand-orange transition-all
                     hover:brightness-75
                   "
-                  src={Link.src}
-                  alt="Profile Link"
-                  style={{
-                    filter:
-                      'invert(54%) sepia(100%) saturate(466%) hue-rotate(334deg) brightness(101%) contrast(84%)'
-                  }}
                 />
               </a>
             )}

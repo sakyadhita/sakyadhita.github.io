@@ -10,10 +10,8 @@ const Checkbox = React.forwardRef(({ className, ...props }, ref) => (
     ref={ref}
     className={cn(
       `
-        peer border-primary
-        focus-visible:ring-ring
-        size-4 shrink-0 rounded-sm border shadow-sm
-        focus-visible:ring-1 focus-visible:outline-none
+        peer size-4 shrink-0 rounded-sm border border-primary shadow-sm
+        focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none
         disabled:cursor-not-allowed disabled:opacity-50
         data-checked:bg-brand-orange data-checked:text-white
       `,

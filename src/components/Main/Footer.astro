@@ -8,11 +8,13 @@
  * @author Amrit Kaur Singh
  */
 import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
 
+import License from '../../assets/by-nc-nd.png'
 import Brand from './Brand.astro'
+import Logo from '../../assets/logo.svg'
 import { SITE_PAGES } from '../../constants/links'
 import { cn } from '../../lib/utils'
-import Logo from '../../media/logo.svg'
 
 const FACEBOOK_LINK = 'https://www.facebook.com/sakyadhita.international'
 const YOUTUBE_LINK = 'https://www.youtube.com/channel/UCLOIc4vqaqPKcjaRqmn6-yg/playlists'
@@ -386,10 +388,15 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
         md:text-base
       "
     >
-      <img width={64} src="/by-nc-nd.png" alt="license" class="
-        mb-2 inline-block
-        md:mb-0
-      " />
+      <Image
+        src={License}
+        alt="license"
+        width={64}
+        class="
+          mb-2 inline-block
+          md:mb-0
+        "
+      />
       <span class="
         block
         md:ml-2 md:inline-block

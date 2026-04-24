@@ -51,9 +51,9 @@ export default function ConferencesDesktop(props) {
   }
 
   const tabs = () => (
-    <div
-      className="mb-8 flex w-fit space-x-1 rounded-xl bg-gray-100 p-1 font-body"
-    >
+    <div className="
+      mb-8 flex w-fit space-x-1 rounded-xl bg-gray-100 p-1 font-body
+    ">
       <button
         className={cn(
           'rounded-lg px-6 py-2 font-bold transition-all',
@@ -222,9 +222,9 @@ export default function ConferencesDesktop(props) {
 
         {/* Main Content Area */}
         <main className="min-w-0 flex-1">
-          <div
-            className="animate-in fade-in slide-in-from-bottom-4 duration-500"
-          >
+          <div className="
+            fade-in slide-in-from-bottom-4 animate-in duration-500
+          ">
             {displayInformation()}
           </div>
         </main>

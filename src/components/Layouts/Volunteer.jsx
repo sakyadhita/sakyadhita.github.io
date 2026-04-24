@@ -9,13 +9,9 @@ import VolunteerOption from '../VolunteerOption'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return (
-    <span
-      className="error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red"
-    >
-      *
-    </span>
-  )
+  return <span className="
+    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
+  ">*</span>
 }
 
 // funcion to render all volunteer committees
@@ -453,7 +449,7 @@ export default function Volunteer({ interests }) {
           {values.country.value === '' ? null : (
             <div
               className="
-                animate-in fade-in slide-in-from-top-4 space-y-4 pt-4
+                fade-in slide-in-from-top-4 animate-in space-y-4 pt-4
                 duration-500
               "
             >

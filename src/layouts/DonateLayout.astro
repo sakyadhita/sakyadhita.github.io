@@ -1,17 +1,15 @@
 ---
+import { Image } from 'astro:assets'
+
 import PageLayout from './PageLayout.astro'
 import CustomButton from '../components/CustomButton.astro'
 import BeInvolved from '../components/Home/BeInvolved.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import { SITE_PAGES } from '../constants/links'
-import { getOptimizedImage } from '../lib/images'
+import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg'
+import amazonSmileImg from '../assets/Donate Page/AmazonSmile-01.jpeg'
 
 const { frontmatter } = Astro.props
-const optimizedWorkingTogether = await getOptimizedImage(
-  '/assets/Donate Page/WorkingTogether-440px.jpeg',
-  440
-)
-const optimizedAmazonSmile = await getOptimizedImage('/assets/Donate Page/AmazonSmile-01.jpeg', 350)
 ---
 
 <PageLayout>
@@ -70,10 +68,11 @@ const optimizedAmazonSmile = await getOptimizedImage('/assets/Donate Page/Amazon
               <img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
             </form>
           </div>
-          <img
+          <Image
             class="mt-8 h-auto w-full max-w-sm rounded-lg shadow-md"
             alt="13th Conference"
-            src={optimizedWorkingTogether?.src || '/assets/Donate Page/WorkingTogether-440px.jpeg'}
+            src={workingTogetherImg}
+            width={440}
           />
         </section>
         {/* AmazonSmile Info */}
@@ -95,10 +94,11 @@ const optimizedAmazonSmile = await getOptimizedImage('/assets/Donate Page/Amazon
             selection and convenient shopping experience as Amazon.com, with the added bonus that
             Amazon will donate a portion of the purchase price to Sakyadhita.
           </p>
-          <img
+          <Image
             class="mt-8 h-auto w-full max-w-sm rounded-lg shadow-md"
             alt="AmazonSmile Promo"
-            src={optimizedAmazonSmile?.src || '/assets/Donate Page/AmazonSmile-01.jpeg'}
+            src={amazonSmileImg}
+            width={350}
           />
           <div class="mt-8">
             <CustomButton text="Support" redirect_link="http://smile.amazon.com/ch/95-4112765" />

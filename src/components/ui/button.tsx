@@ -5,10 +5,9 @@ import { cn } from '../../lib/utils'
 
 const buttonVariants = cva(
   `
-    focus-visible:ring-ring
     inline-flex items-center justify-center rounded-md text-sm font-medium
     whitespace-nowrap transition-colors
-    focus-visible:ring-1 focus-visible:outline-none
+    focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none
     disabled:pointer-events-none disabled:opacity-50
   `,
   {
@@ -23,9 +22,8 @@ const buttonVariants = cva(
           hover:bg-brand-red/90
         `,
         outline: `
-          border-input bg-background
+          border border-input bg-background shadow-sm
           hover:bg-accent hover:text-accent-foreground
-          border shadow-sm
         `,
         secondary: `
           bg-brand-orange text-white shadow-sm

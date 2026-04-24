@@ -157,7 +157,43 @@ export default tseslint.config(
     },
     rules: {
       ...betterTailwindPlugin.configs.recommended.rules,
-      'better-tailwindcss/no-unknown-classes': 'warn',
+      'better-tailwindcss/no-unknown-classes': [
+        'warn',
+        {
+          ignore: [
+            'not-prose',
+            'fade-in',
+            'fade-in-0',
+            'fade-out-0',
+            'zoom-in-95',
+            'zoom-out-95',
+            'slide-in-from-bottom-4',
+            'slide-in-from-top-4',
+            'slide-in-from-top-2',
+            'slide-in-from-bottom-2',
+            'slide-in-from-left-2',
+            'slide-in-from-right-2',
+            'component-display',
+            'outer',
+            'home-map-tooltip',
+            'error-asterisk',
+            'volunteer-options',
+            'left-options-column',
+            'right-options-column',
+            'input-field',
+            'country-dropdown',
+            'continue-button',
+            'committee-row',
+            'committee-title',
+            'committee-description',
+            'branding',
+            'section',
+            'scroll',
+            'Slideshow',
+            'custom-class'
+          ]
+        }
+      ],
       'better-tailwindcss/no-conflicting-classes': 'warn'
     }
   },

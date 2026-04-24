@@ -13,13 +13,9 @@ import { Textarea } from '../ui/textarea'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return (
-    <span
-      className="error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red"
-    >
-      *
-    </span>
-  )
+  return <span className="
+    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
+  ">*</span>
 }
 
 export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
@@ -466,7 +462,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
             {values.country.value === '' ? null : (
               <div
                 className="
-                  animate-in fade-in slide-in-from-top-4 space-y-4 pt-2
+                  fade-in slide-in-from-top-4 animate-in space-y-4 pt-2
                   duration-500
                 "
               >
@@ -574,7 +570,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
               </div>
             </div>
           ) : (
-            <div className="animate-in fade-in space-y-8 pt-8 duration-500">
+            <div className="fade-in animate-in space-y-8 pt-8 duration-500">
               <section className="space-y-4">
                 <h1
                   className="
@@ -736,9 +732,9 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
                       text-center
                     "
                   >
-                    <p
-                      className="animate-pulse text-lg font-bold text-brand-red"
-                    >
+                    <p className="
+                      animate-pulse text-lg font-bold text-brand-red
+                    ">
                       *Please fill out all required fields to proceed to payment.
                     </p>
                   </div>

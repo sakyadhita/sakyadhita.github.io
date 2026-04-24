@@ -31,7 +31,7 @@ export default function NewsletterCard({
         >
           <img
             alt={title}
-            src={image_url}
+            src={_displayImage}
             className="
               mb-2.5 h-60 w-full object-cover
               shadow-[0px_0px_4px_2px_rgba(0,0,0,0.25)] transition-all
@@ -71,7 +71,7 @@ export default function NewsletterCard({
       >
         <img
           alt={title}
-          src={image_url}
+          src={_displayImage}
           className="
             mb-3 h-48 w-full object-cover
             shadow-[0px_0px_3px_0.75px_rgba(0,0,0,0.25)]

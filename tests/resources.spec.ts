@@ -14,7 +14,7 @@ test.describe('Resources Navigation Bar (desktop)', () => {
   test('should be visible on the resources landing page', async ({ page }) => {
     await page.goto('/resources')
     // The desktop nav is hidden md:flex — visible at 1280px
-    const nav = page.locator('nav.sticky')
+    const nav = page.locator('#resources-desktop-nav')
     await expect(nav).toBeVisible()
   })
 
@@ -24,7 +24,7 @@ test.describe('Resources Navigation Bar (desktop)', () => {
     await page.goto('/resources')
     // CSS selector .bg-brand-dark-orange matches only the exact class token,
     // not the hover:bg-brand-dark-orange variant
-    const activeLinks = page.locator('nav.sticky a.bg-brand-dark-orange')
+    const activeLinks = page.locator('#resources-desktop-nav a.bg-brand-dark-orange')
     await expect(activeLinks).toHaveCount(1)
     await expect(activeLinks.first()).toContainText('resources')
   })
@@ -33,14 +33,14 @@ test.describe('Resources Navigation Bar (desktop)', () => {
     page
   }) => {
     await page.goto('/newsletters')
-    const activeLinks = page.locator('nav.sticky a.bg-brand-dark-orange')
+    const activeLinks = page.locator('#resources-desktop-nav a.bg-brand-dark-orange')
     await expect(activeLinks).toHaveCount(1)
     await expect(activeLinks.first()).toContainText('newsletters')
   })
 
   test('should navigate to the newsletters page from the resources navbar', async ({ page }) => {
     await page.goto('/resources')
-    await page.locator('nav.sticky').getByRole('link', { name: 'newsletters' }).click()
+    await page.locator('#resources-desktop-nav').getByRole('link', { name: 'newsletters' }).click()
     await expect(page).toHaveURL(/\/newsletters/)
     await expect(
       page.getByRole('heading', { level: 1 }).filter({ visible: true }).first()
@@ -49,7 +49,7 @@ test.describe('Resources Navigation Bar (desktop)', () => {
 
   test('should navigate to the publications page from the resources navbar', async ({ page }) => {
     await page.goto('/resources')
-    await page.locator('nav.sticky').getByRole('link', { name: 'publications' }).click()
+    await page.locator('#resources-desktop-nav').getByRole('link', { name: 'publications' }).click()
     await expect(page).toHaveURL(/\/publications/)
   })
 })

@@ -106,10 +106,9 @@ const renderSelectedSection = (selectedSection, setSelectedSection, isMobile) =>
         {
           // render each card based on data passed in
           selectedSection.section_list.map((pub) => (
-            <div
-              key={pub.data.id}
-              className="flex flex-col items-center justify-start"
-            >
+            <div key={pub.data.id} className="
+              flex flex-col items-center justify-start
+            ">
               <EPubCard
                 title={pub.data.title}
                 author={pub.data.author}

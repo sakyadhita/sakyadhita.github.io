@@ -31,7 +31,7 @@ export default function ConferenceTheme(props) {
   const hide = () => setOpen(false)
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 space-y-10">
+    <div className="fade-in slide-in-from-bottom-4 animate-in space-y-10">
       {/* The title of the conference */}
       {props.title ? (
         <section className="space-y-6">

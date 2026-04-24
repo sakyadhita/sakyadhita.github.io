@@ -4,8 +4,9 @@
  * hamburger icon to expand the navigation panel.
  */
 import { Icon } from 'astro-icon/components'
-import Brand from '../Brand.astro'
+
 import { SITE_PAGES } from '../../../constants/links'
+import Brand from '../Brand.astro'
 
 const navLinks = [
   { label: 'Home', link: SITE_PAGES.HOME },
@@ -22,8 +23,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
   <!-- The actual Navigation Bar -->
   <div
     class="
-      flex h-12 w-full items-center justify-between bg-brand-light-purple
-      px-6 py-2 text-white shadow-none
+      flex h-12 w-full items-center justify-between bg-brand-light-purple px-6
+      py-2 text-white shadow-none
       md:h-32 md:px-14 md:py-4 md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]
     "
   >
@@ -48,9 +49,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
   <div
     id="nav-panel"
     class="
-      fixed top-0 right-[-100vw] z-1001 flex size-full flex-col
-      justify-start overflow-y-auto bg-brand-orange pt-16 transition-[right]
-      duration-500 ease-in-out
+      fixed top-0 right-[-100vw] z-1001 flex size-full flex-col justify-start
+      overflow-y-auto bg-brand-orange pt-16 transition-[right] duration-500
+      ease-in-out
       md:top-32 md:right-[-320px] md:h-[calc(100vh-128px)] md:w-80
       md:justify-between md:pt-0
     "
@@ -60,8 +61,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
       type="button"
       id="nav-close"
       class="
-        absolute top-6 right-6 size-6 cursor-pointer border-none
-        bg-transparent
+        absolute top-6 right-6 size-6 cursor-pointer border-none bg-transparent
         md:hidden
       "
       aria-label="Close Navigation"
@@ -70,28 +70,31 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
     </button>
 
     <!-- Nav Links -->
-    <div
-      class="
-        flex size-full flex-col
-        md:h-auto
-      "
-    >
+    <div class="
+      flex size-full flex-col
+      md:h-auto
+    ">
       {
         navLinks.map((item) => {
           const isActive =
-            currentPath === (item.link.replace(/\/$/, '') || '/')
-              ? 'bg-brand-dark-orange'
-              : ''
+            currentPath === (item.link.replace(/\/$/, '') || '/') ? 'bg-brand-dark-orange' : ''
           return (
             <a
               href={item.link}
               class={`
-                w-full h-16 md:h-24 flex justify-start items-center pl-10 md:pl-8 
-                hover:bg-brand-dark-orange hover:no-underline transition-colors group
+                group flex h-16 w-full items-center justify-start pl-10
+                transition-colors
+                hover:bg-brand-dark-orange hover:no-underline
+                md:h-24 md:pl-8
                 ${isActive}
               `}
             >
-              <span class="font-heading text-lg text-white lowercase md:text-xl">
+              <span
+                class="
+                  font-heading text-lg text-white lowercase
+                  md:text-xl
+                "
+              >
                 {item.label}
               </span>
             </a>
@@ -115,7 +118,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
 </nav>
 
 <script>
-  const nav = document.querySelector('#main-nav')
   const toggle = document.querySelector('#nav-toggle')
   const close = document.querySelector('#nav-close')
   const panel = document.querySelector('#nav-panel')

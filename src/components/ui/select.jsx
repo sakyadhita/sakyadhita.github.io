@@ -13,12 +13,11 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
     ref={ref}
     className={cn(
       `
-        border-input ring-offset-background
-        placeholder:text-muted-foreground
-        focus:ring-ring
         flex h-9 w-full items-center justify-between rounded-md border
-        bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-sm
-        focus:ring-1 focus:outline-none
+        border-input bg-transparent px-3 py-2 text-sm whitespace-nowrap
+        shadow-sm ring-offset-background
+        placeholder:text-muted-foreground
+        focus:ring-1 focus:ring-ring focus:outline-none
         disabled:cursor-not-allowed disabled:opacity-50
         [&>span]:line-clamp-1
       `,
@@ -40,8 +39,8 @@ const SelectContent = React.forwardRef(({ className, children, ...props }, ref) 
         ref={ref}
         className={cn(
           `
-            bg-popover text-popover-foreground animate-in fade-in-0 zoom-in-95
-            relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border
+            fade-in-0 zoom-in-95 relative z-50 max-h-96 min-w-32 animate-in
+            overflow-hidden rounded-md border bg-popover text-popover-foreground
             shadow-md
           `,
           className
@@ -61,9 +60,9 @@ const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => 
     ref={ref}
     className={cn(
       `
-        focus:bg-accent focus:text-accent-foreground
         relative flex w-full cursor-default items-center rounded-sm py-1.5 pr-8
         pl-2 text-sm outline-none select-none
+        focus:bg-accent focus:text-accent-foreground
         data-disabled:pointer-events-none data-disabled:opacity-50
       `,
       className

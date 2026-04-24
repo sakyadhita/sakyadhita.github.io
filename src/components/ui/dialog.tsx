@@ -16,7 +16,7 @@ const DialogOverlay = React.forwardRef<HTMLDivElement, DialogOverlayProps>(
     <BaseDialog.Backdrop
       data-slot="dialog-overlay"
       ref={ref}
-      className={cn('animate-in fade-in-0 fixed inset-0 z-50 bg-black/80', className)}
+      className={cn('fade-in-0 fixed inset-0 z-50 animate-in bg-black/80', className)}
       {...props}
     />
   )
@@ -36,9 +36,9 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
         ref={ref}
         className={cn(
           `
-            bg-background animate-in fade-in-0 zoom-in-95 fixed top-1/2 left-1/2
-            z-50 grid w-full max-w-lg -translate-1/2 gap-4 border p-6 shadow-lg
-            duration-200
+            fade-in-0 zoom-in-95 fixed top-1/2 left-1/2 z-50 grid w-full
+            max-w-lg -translate-1/2 animate-in gap-4 border bg-background p-6
+            shadow-lg duration-200
             sm:rounded-lg
           `,
           className
@@ -48,11 +48,10 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
         {children}
         <BaseDialog.Close
           className="
-            ring-offset-background
-            focus:ring-ring
-            absolute top-4 right-4 rounded-sm opacity-70 transition-opacity
+            absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background
+            transition-opacity
             hover:opacity-100
-            focus:ring-2 focus:ring-offset-2 focus:outline-none
+            focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none
             disabled:pointer-events-none
           "
         >
@@ -126,7 +125,7 @@ const DialogDescription = React.forwardRef<HTMLParagraphElement, DialogDescripti
     <BaseDialog.Description
       data-slot="dialog-description"
       ref={ref}
-      className={cn('text-muted-foreground text-sm', className)}
+      className={cn('text-sm text-muted-foreground', className)}
       {...props}
     />
   )

@@ -56,7 +56,7 @@ export default function ConferenceOverview(props) {
   )
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 w-full space-y-10">
+    <div className="fade-in slide-in-from-bottom-4 w-full animate-in space-y-10">
       {/* The title of the conference */}
       <section className="space-y-6">
         <h1

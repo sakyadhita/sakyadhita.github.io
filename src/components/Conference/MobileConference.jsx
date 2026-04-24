@@ -159,7 +159,7 @@ export default function MobileConferences(props) {
 
   const displayInformation = () => (
     <div className="mt-8 space-y-12">
-      <section className="animate-in fade-in slide-in-from-bottom-4">
+      <section className="fade-in slide-in-from-bottom-4 animate-in">
         <h2
           className="
             mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading text-2xl
@@ -176,7 +176,7 @@ export default function MobileConferences(props) {
           isMobile
         />
       </section>
-      <section className="animate-in fade-in slide-in-from-bottom-4 delay-200">
+      <section className="fade-in slide-in-from-bottom-4 animate-in delay-200">
         <h2
           className="
             mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading text-2xl

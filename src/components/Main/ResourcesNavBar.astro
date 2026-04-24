@@ -7,8 +7,9 @@
  * @summary     Additional Navbar for the Resources page.
  * @author      Aaron Kirk
  */
+import { Icon } from 'astro-icon/components'
+
 import { SITE_PAGES } from '../../constants/links'
-import Cross from '../../media/cross.svg'
 
 const navItems = [
   { label: 'resources', link: SITE_PAGES.RESOURCES_LANDING },
@@ -62,7 +63,7 @@ const textClasses = 'font-heading text-white text-lg lowercase'
     "
     aria-label="Close Resources Navigation"
   >
-    <img src={Cross.src} alt="Close Resources Navigation" class="size-full" />
+    <Icon name="lucide:x" class="size-full text-white" />
   </button>
 
   <nav class="flex flex-col">
@@ -81,6 +82,7 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 
 {/* Desktop Horizontal Navbar */}
 <nav
+  id="resources-desktop-nav"
   class="
     sticky top-32 z-999 hidden h-20 w-full items-center justify-center
     bg-brand-orange shadow-md

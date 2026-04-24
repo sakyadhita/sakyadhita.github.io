@@ -43,11 +43,9 @@ export default function CustomPagination(props) {
               e.preventDefault()
               handlePageChange(props.page - 1)
             }}
-            className={
-              props.page === 1
-                ? 'pointer-events-none opacity-50'
-                : `cursor-pointer`
-            }
+            className={props.page === 1 ? 'pointer-events-none opacity-50' : `
+              cursor-pointer
+            `}
           />
         </PaginationItem>
 
@@ -74,11 +72,9 @@ export default function CustomPagination(props) {
               e.preventDefault()
               handlePageChange(props.page + 1)
             }}
-            className={
-              props.page === count
-                ? 'pointer-events-none opacity-50'
-                : `cursor-pointer`
-            }
+            className={props.page === count ? 'pointer-events-none opacity-50' : `
+              cursor-pointer
+            `}
           />
         </PaginationItem>
       </PaginationContent>
