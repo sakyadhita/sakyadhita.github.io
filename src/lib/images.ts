@@ -28,7 +28,7 @@ export function getAssetUrl(publicPath: string) {
 
   // For non-images, we assume they are in public/assets
   // Return the encoded public path for browser compatibility
-  return encodeURI(cleanPath).replace(/%25/g, '%') // Fix double encoding if any
+  return encodeURI(cleanPath).replaceAll('%25', '%') // Fix double encoding if any
 }
 
 export async function getOptimizedImage(
