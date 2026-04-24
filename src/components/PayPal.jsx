@@ -9,13 +9,15 @@
  */
 import React from 'react'
 
+import { CONTACT_INFO } from '../constants/contact'
+import { PAYPAL_CONFIG } from '../constants/paypal'
 import { usePayPalSDK } from '../hooks/usePayPalSDK'
 
 // const config = require("../config.js");
 
 // const BACKEND_URL = config.backend.uri;
 
-const TAX_RATE = 0.08
+const TAX_RATE = PAYPAL_CONFIG.TAX_RATE
 
 const encode = (data) => {
   return Object.keys(data)
@@ -160,8 +162,7 @@ export default function PayPal({
                     .catch((error) => {
                       document.body.style.cursor = null
                       alert(
-                        "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email. Error: " +
-                          error
+                        `Transaction completed but it wasn't sent to us. Please email us at ${CONTACT_INFO.SERVICE_EMAIL} with the receipt sent to your email. Error: ${error}`
                       )
                     })
                 )

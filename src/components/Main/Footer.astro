@@ -10,17 +10,14 @@
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 
-import License from '../../assets/by-nc-nd.png'
 import Brand from './Brand.astro'
+import License from '../../assets/by-nc-nd.png'
 import Logo from '../../assets/logo.svg'
+import { EXTERNAL_ASSETS } from '../../constants/assets'
+import { EXTERNAL_LINKS } from '../../constants/external'
 import { SITE_PAGES } from '../../constants/links'
+import { SOCIAL_LINKS } from '../../constants/social'
 import { cn } from '../../lib/utils'
-
-const FACEBOOK_LINK = 'https://www.facebook.com/sakyadhita.international'
-const YOUTUBE_LINK = 'https://www.youtube.com/channel/UCLOIc4vqaqPKcjaRqmn6-yg/playlists'
-const PINTEREST_LINK = 'https://www.pinterest.com/sakyadhita/'
-const ABW_BLOG_LINK = 'http://awakeningbuddhistwomen.blogspot.com/'
-const GOODREADS_LINK = 'https://www.goodreads.com/group/show/94269-women-in-buddhism'
 
 const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-all shrink-0'
 ---
@@ -34,8 +31,7 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
       shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)] blur-[5px]
     "
     style={{
-      backgroundImage:
-        'url("https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2996&q=80")'
+      backgroundImage: `url("${EXTERNAL_ASSETS.FOOTER_BG}")`
     }}
   >
   </div>
@@ -276,7 +272,7 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
         </span>
         <div class="flex flex-row space-x-6">
           <a
-            href={FACEBOOK_LINK}
+            href={SOCIAL_LINKS.FACEBOOK}
             target="_blank"
             rel="noreferrer"
             class="
@@ -296,7 +292,7 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             />
           </a>
           <a
-            href={YOUTUBE_LINK}
+            href={SOCIAL_LINKS.YOUTUBE}
             target="_blank"
             rel="noreferrer"
             class="
@@ -316,7 +312,7 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             />
           </a>
           <a
-            href={PINTEREST_LINK}
+            href={SOCIAL_LINKS.PINTEREST}
             target="_blank"
             rel="noreferrer"
             class="
@@ -336,7 +332,7 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             />
           </a>
           <a
-            href={ABW_BLOG_LINK}
+            href={SOCIAL_LINKS.BLOG}
             target="_blank"
             rel="noreferrer"
             class="
@@ -356,7 +352,7 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
             />
           </a>
           <a
-            href={GOODREADS_LINK}
+            href={SOCIAL_LINKS.GOODREADS}
             target="_blank"
             rel="noreferrer"
             class="
@@ -388,15 +384,10 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
         md:text-base
       "
     >
-      <Image
-        src={License}
-        alt="license"
-        width={64}
-        class="
-          mb-2 inline-block
-          md:mb-0
-        "
-      />
+      <Image src={License} alt="license" width={64} class="
+        mb-2 inline-block
+        md:mb-0
+      " />
       <span class="
         block
         md:ml-2 md:inline-block
@@ -405,7 +396,7 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
         <a
           target="_blank"
           rel="noreferrer"
-          href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+          href={EXTERNAL_LINKS.CREATIVE_COMMONS}
           class="
             mx-1 transition-colors
             hover:text-brand-orange

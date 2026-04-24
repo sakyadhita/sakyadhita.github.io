@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import { PAYPAL_CONFIG } from '../constants/paypal'
+
 declare global {
   interface Window {
     paypal?: {
@@ -21,9 +23,8 @@ export function usePayPalSDK() {
       return
     }
 
-    // Create and append script tag
     const script = document.createElement('script')
-    script.src = `https://www.paypal.com/sdk/js?client-id=AT0I6Qa0JYVBvlExcrLDBJAY3oqylXV_pIIn471l6C289hFh7E19i46YhR5G3Nq9mYyZ8v4u3m_m&currency=USD`
+    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CONFIG.CLIENT_ID}&currency=${PAYPAL_CONFIG.CURRENCY}`
     script.async = true
     script.addEventListener('load', () => {
       // PayPal SDK is now available

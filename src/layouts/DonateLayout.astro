@@ -2,12 +2,14 @@
 import { Image } from 'astro:assets'
 
 import PageLayout from './PageLayout.astro'
+import amazonSmileImg from '../assets/Donate Page/AmazonSmile-01.jpeg'
+import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg'
 import CustomButton from '../components/CustomButton.astro'
 import BeInvolved from '../components/Home/BeInvolved.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
+import { CONTACT_INFO } from '../constants/contact'
 import { SITE_PAGES } from '../constants/links'
-import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg'
-import amazonSmileImg from '../assets/Donate Page/AmazonSmile-01.jpeg'
+import { PAYPAL_CONFIG } from '../constants/paypal'
 
 const { frontmatter } = Astro.props
 ---
@@ -52,11 +54,11 @@ const { frontmatter } = Astro.props
           <p class="mt-6 font-bold">Make a One-Time or Reoccuring Donation</p>
           {/* PayPal Donate Button */}
           <div class="mt-8 flex h-12 justify-center">
-            <form action="https://www.paypal.com/donate" method="post" target="_blank">
-              <input type="hidden" name="hosted_button_id" value="78ZSMXL4ZSYJQ" />
+            <form action={PAYPAL_CONFIG.DONATE_URL} method="post" target="_blank">
+              <input type="hidden" name="hosted_button_id" value={PAYPAL_CONFIG.HOSTED_BUTTON_ID} />
               <input
                 type="image"
-                src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                src={PAYPAL_CONFIG.DONATE_BUTTON_IMG}
                 name="submit"
                 title="PayPal - The safer, easier way to pay online!"
                 alt="Donate with PayPal button"
@@ -65,7 +67,7 @@ const { frontmatter } = Astro.props
                   hover:opacity-90
                 "
               />
-              <img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+              <img alt="" src={PAYPAL_CONFIG.PIXEL_IMG} width="1" height="1" />
             </form>
           </div>
           <Image
@@ -101,7 +103,7 @@ const { frontmatter } = Astro.props
             width={350}
           />
           <div class="mt-8">
-            <CustomButton text="Support" redirect_link="http://smile.amazon.com/ch/95-4112765" />
+            <CustomButton text="Support" redirect_link={CONTACT_INFO.AMAZON_SMILE_URL} />
           </div>
         </section>
       </div>

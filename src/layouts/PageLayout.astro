@@ -5,6 +5,7 @@ import { Font } from 'astro:assets'
 
 import Footer from '../components/Main/Footer.astro'
 import NavBar from '../components/Main/NavBar/NavBar.astro'
+import { EXTERNAL_LINKS } from '../constants/external'
 
 interface Props {
   hideFooter?: boolean
@@ -46,8 +47,8 @@ const { hideFooter = false } = Astro.props
     </form>
 
     <iframe
-      src="https://consent.trustarc.com/?domain=sakyadhita.org&c=tecm&js=nj&type=tecm&mrid=d8d38cd8-942b-240340173b4b&propertyId=T2D7QGF6MF9B2-1&flow=visitor-info&variant=analytics&mrid=T2D7QGF6MF9B2&isMobileEnabled=true&isDesktopEnabled=true&shouldCheckCountry=true&mobileVariant=analytics&mobileFlow=visitor-info&disableSetCookie=true"
-      data-merchant="T2D7QGF6MF9B2-1"
+      src={EXTERNAL_LINKS.TRUSTARC_CONSENT}
+      data-merchant={EXTERNAL_LINKS.TRUSTARC_MERCHANT_ID}
       style="z-index: 2147483647; display: none;"></iframe>
   </body>
 </html>

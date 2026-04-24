@@ -3,6 +3,8 @@ import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection } from 'astro:content'
 
+import { EXTERNAL_ASSETS } from './constants/assets'
+
 const news = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/news' }),
   schema: rssSchema.extend({
@@ -91,7 +93,7 @@ const exco = defineCollection({
     rank: z.number().int().optional(),
     name: z.string(),
     position: z.string(),
-    imageLink: z.string().optional().default('https://assets.ucsd.edu/img/icon/headshot.jpg'),
+    imageLink: z.string().optional().default(EXTERNAL_ASSETS.DEFAULT_HEADSHOT),
     redirectLink: z.string().optional(),
     openInSameTab: z.boolean()
   })
