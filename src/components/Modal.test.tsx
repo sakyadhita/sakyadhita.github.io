@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 
 import Modal from './Modal'
@@ -11,13 +11,13 @@ describe('Modal Component', () => {
   }
 
   it('renders modal when open is true', () => {
-    const { container } = render(<Modal {...defaultProps} />)
-    expect(container.textContent).toContain('Test modal text')
+    render(<Modal {...defaultProps} />)
+    expect(screen.getByText('Test modal text')).toBeDefined()
   })
 
   it('does not render when open is false', () => {
-    const { container } = render(<Modal {...defaultProps} open={false} />)
-    expect(container.textContent).not.toContain('Test modal text')
+    render(<Modal {...defaultProps} open={false} />)
+    expect(screen.queryByText('Test modal text')).toBeNull()
   })
 
   it('renders negative button when negativeButtonText is provided', () => {
