@@ -21,27 +21,23 @@ describe('Modal Component', () => {
   })
 
   it('renders negative button when negativeButtonText is provided', () => {
-    const { container } = render(<Modal {...defaultProps} negativeButtonText="Cancel" />)
-    const button = container.querySelector('button')
-    expect(button?.textContent).toContain('Cancel')
+    render(<Modal {...defaultProps} negativeButtonText="Cancel" />)
+    const button = screen.getByRole('button', { name: /cancel/i })
+    expect(button).toBeDefined()
   })
 
   it('calls hide when negative button is clicked', () => {
     const hideCallback = vi.fn()
-    const { container } = render(
-      <Modal {...defaultProps} hide={hideCallback} negativeButtonText="Cancel" />
-    )
-    const button = container.querySelector('button') as HTMLButtonElement
-    button?.click()
+    render(<Modal {...defaultProps} hide={hideCallback} negativeButtonText="Cancel" />)
+    const button = screen.getByRole('button', { name: /cancel/i })
+    button.click()
     expect(hideCallback).toHaveBeenCalledWith(false)
   })
 
   it('renders both buttons when both are provided', () => {
-    const { container } = render(
-      <Modal {...defaultProps} negativeButtonText="Cancel" positiveButtonText="Confirm" />
-    )
-    const buttons = container.querySelectorAll('button')
-    expect(buttons.length).toBeGreaterThanOrEqual(2)
+    render(<Modal {...defaultProps} negativeButtonText="Cancel" positiveButtonText="Confirm" />)
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeDefined()
+    expect(screen.getByRole('button', { name: /confirm/i })).toBeDefined()
   })
 
   it('has modal styling', () => {
