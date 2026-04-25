@@ -1,68 +1,62 @@
 # Agent Context: Sakyadhita Website
 
-This project is the official website for **Sakyadhita International Association of Buddhist Women**, built using **Astro** and **React**. It was migrated from a legacy SERN stack to a modern static site architecture.
+This project is the official website for **Sakyadhita International Association of Buddhist Women**, built using **Astro** and **React**. It has been fully modernized into an idiomatic, flattened Astro architecture.
 
 ## 🚀 Project Overview
 
-- **Framework**: [Astro](https://astro.build/)
-- **UI Library**: [React](https://reactjs.org/) (used for interactive components)
-- **Testing**: [Playwright](https://playwright.dev/) for End-to-End (E2E) testing.
-- **State Management**: Local React state where needed.
+- **Framework**: [Astro](https://astro.build/) (v6)
+- **UI Library**: [React](https://reactjs.org/) (v19, used for complex interactive forms and maps)
+- **Testing**: [Playwright](https://playwright.dev/) for End-to-End (E2E) testing; [Vitest](https://vitest.dev/) for component tests.
 - **Content**: Managed via [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/) in `src/content/`.
-- **Icons**: [Lucide React](https://lucide.dev/) for UI icons and [Simple Icons](https://simpleicons.org/) for brand/social icons.
-- **Styling**: Vanilla CSS located in `src/styles/global.css`.
-- **Deployment**: Hosted on **Netlify**, with forms handled by Netlify Forms.
+- **Icons**: [Lucide React](https://lucide.dev/) and [Simple Icons](https://simpleicons.org/).
+- **Styling**: Tailwind CSS v4.
+- **Deployment**: Netlify.
 
 ## 🏗️ Architectural Decisions
 
-- **Astro**: The project is committed to using Astro as the core meta-framework. We prioritize **Astro Native Components** (Server Islands/SSR) for presentational elements (e.g., Navigation, Galleries, Slideshows) to minimize client-side JavaScript, while reserving React for complex, state-driven interactivity.
-- **shadcn/ui (Base UI Native)**: All new UI components should be built using shadcn/ui. The project specifically uses the **Base UI** native version of shadcn components to ensure a headless, accessible, and highly customizable UI layer without the bloat of traditional component libraries.
-- **Tailwind CSS v4**: Tailwind CSS is the primary utility for styling, used in conjunction with shadcn/ui.
-- **E2E Testing**: Playwright is used to ensure stability across browsers and devices, with automated checks on PRs and pushes.
+- **Astro Native Pages**: All user-facing pages are native `.astro` components in `src/pages/`. Legacy markdown layouts have been removed in favor of co-located logic and content.
+- **Flattened Components**: The `src/components/` directory is completely flattened. All UI components (Astro and React) reside in the root of `src/components/` (except for `ui/` primitives) for maximum clarity and simpler imports.
+- **Native Image Optimization**: The project uses Astro's native `image()` schema type and `<Image />` component for all assets. Manual image mapping logic has been eliminated.
+- **shadcn/ui (Base UI Native)**: UI primitives are built using the headless **Base UI** version of shadcn components, ensuring accessibility and customizability.
+- **Tailwind CSS v4**: Primary utility-first styling engine, standardized with brand theme tokens.
 
 ## 🛠️ Getting Started
 
 ### Prerequisites
-- **Node.js**: Version 22 or higher (required by Astro 6+).
-- **Package Manager**: [pnpm](https://pnpm.io/) (enabled via `corepack enable`).
+- **Node.js**: v22+
+- **Package Manager**: [pnpm](https://pnpm.io/)
 
 ### Commands
 | Command | Action |
 | :--- | :--- |
 | `pnpm install` | Install dependencies. |
-| `pnpm dev` | Start development server at `localhost:4321`. |
-| `pnpm build` | Build the static site to `./dist/`. |
-| `pnpm preview` | Preview the production build locally. |
-| `pnpm test:ui` | Run Vitest ui tests. |
+| `pnpm dev` | Start development server. |
+| `pnpm build` | Build the static site. |
+| `pnpm test:ui` | Run Vitest component tests. |
 | `pnpm test:e2e` | Run Playwright E2E tests. |
 | `pnpm lint` | Run Prettier and ESLint. |
 
 ## 📂 Project Structure
 
-- `src/content/`: Main data source for the site. Each subdirectory (e.g., `news`, `branch`, `conference`) is a collection defined in `src/content/config.ts`.
-- `src/pages/`: File-based routing. Most pages are `.md` files that specify a layout in their frontmatter.
-- `src/layouts/`: Astro components that provide the page structure (e.g., `PageLayout.astro`, `HomeLayout.astro`).
-- `src/components/`: React and Astro components. React components use the `.jsx` extension and are often hydrated with `client:only="react"`.
-- `tests/`: End-to-end tests written in Playwright.
-- `public/assets/`: Static assets like images, PDFs, and documents referenced by content.
-- `src/styles/`: Global and component-specific CSS files.
+- `src/pages/`: Native `.astro` pages defining all site routes.
+- `src/components/`: Flattened directory of Astro and React components.
+- `src/components/ui/`: Headless UI primitives (shadcn/Base UI).
+- `src/content/`: Content collections (news, branch, conference, etc.).
+- `src/layouts/`: Global wrapper components (e.g., `PageLayout.astro`).
+- `src/lib/`: Shared TypeScript types, utility functions, and image helpers.
+- `src/assets/`: Local images and branding assets for Astro optimization.
+- `public/`: Unprocessed static assets (documents, PDFs, fonts).
+- `tests/`: Playwright E2E tests.
 
 ## ✍️ Development Conventions
 
 ### Content Updates
-To update content, modify the Markdown files in `src/content/`.
-- **Frontmatter**: Ensure all required fields (defined in `src/content/config.ts`) are present.
+Modify markdown files in `src/content/`. Images must be relative paths (e.g., `../../assets/...`) to be processed by the native image loader.
 
 ### Code Style
-- **Formatting**: Handled by Prettier with standard Tailwind v4 utility sorting.
-    - 2-space indentation.
-    - No semicolons (`semi: false`).
-    - Single quotes (`singleQuote: true`).
-    - Line width: 100 characters.
-    - Standard utility classes: Prefer standard Tailwind scale (e.g., `w-44`, `h-112`) over arbitrary values (`w-[175px]`).
-- **Linting**: ESLint v9 Flat Config with plugins for Astro, React, Markdown, and modern JS patterns (`unicorn`).
-- **Imports**: Enforced sorting via `eslint-plugin-import`.
-- **React**: Use `.tsx` for files containing React. Prefer functional components and hooks. Use React 19 native refs and patterns.
+- **Formatting**: Prettier with Tailwind v4 utility sorting.
+- **TypeScript**: Strict type-checking enabled. All component props must be explicitly typed.
+- **React**: Use `.tsx` for React components. Prefer functional components and React 19 patterns.
 
 ### Deployment
-Pushes to the `main` branch automatically trigger a deploy on Netlify. Always verify your changes with `pnpm astro check`, `pnpm test:ui`, `pnpm test:e2e` and `pnpm build`.
+Pushes to `main` trigger Netlify deploys. Verify changes with `pnpm astro check` and `pnpm build` before merging.
