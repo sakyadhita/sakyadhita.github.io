@@ -14,9 +14,10 @@ interface Props {
   openInSameTab?: boolean
   onClickCallback?: (event: Event) => void
   className?: string
+  id?: string
 }
 
-const { text, redirect_link, openInSameTab = false, className = '' } = Astro.props
+const { text, redirect_link, openInSameTab = false, className = '', id } = Astro.props
 
 const classes = cn(
   `
@@ -41,7 +42,7 @@ const classes = cn(
       {text}
     </a>
   ) : (
-    <button type="button" class={classes}>
+    <button type="button" class={classes} id={id}>
       {text}
     </button>
   )
