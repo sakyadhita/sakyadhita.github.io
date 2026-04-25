@@ -15,7 +15,10 @@ const Pagination = ({ className, ...props }) => (
 )
 Pagination.displayName = 'Pagination'
 
-const PaginationContent = React.forwardRef(({ className, ...props }, ref) => (
+const PaginationContent = React.forwardRef<
+  HTMLUListElement,
+  React.HTMLAttributes<HTMLUListElement>
+>(({ className, ...props }, ref) => (
   <ul
     ref={ref}
     data-slot="pagination-content"
@@ -25,9 +28,11 @@ const PaginationContent = React.forwardRef(({ className, ...props }, ref) => (
 ))
 PaginationContent.displayName = 'PaginationContent'
 
-const PaginationItem = React.forwardRef(({ className, ...props }, ref) => (
-  <li ref={ref} data-slot="pagination-item" className={cn('', className)} {...props} />
-))
+const PaginationItem = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
+  ({ className, ...props }, ref) => (
+    <li ref={ref} data-slot="pagination-item" className={cn('', className)} {...props} />
+  )
+)
 PaginationItem.displayName = 'PaginationItem'
 
 const PaginationLink = ({ className, isActive, size = 'icon', children, ...props }) => (

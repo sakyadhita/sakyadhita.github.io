@@ -4,29 +4,32 @@ import * as React from 'react'
 
 import { cn } from '../../lib/utils'
 
-const Checkbox = React.forwardRef(({ className, ...props }, ref) => (
-  <BaseCheckbox.Root
-    data-slot="checkbox"
-    ref={ref}
-    className={cn(
-      `
-        peer size-4 shrink-0 rounded-sm border border-primary shadow-sm
-        focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none
-        disabled:cursor-not-allowed disabled:opacity-50
-        data-checked:bg-brand-orange data-checked:text-white
-      `,
-      className
-    )}
-    {...props}
-  >
-    <BaseCheckbox.Indicator
-      data-slot="checkbox-indicator"
-      className={cn('flex items-center justify-center text-current')}
+const Checkbox = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+  ({ className, ...props }, ref) => (
+    <BaseCheckbox.Root
+      data-slot="checkbox"
+      ref={ref}
+      className={cn(
+        `
+          peer size-4 shrink-0 rounded-sm border border-primary shadow-sm
+          focus-visible:ring-1 focus-visible:ring-ring
+          focus-visible:outline-none
+          disabled:cursor-not-allowed disabled:opacity-50
+          data-checked:bg-brand-orange data-checked:text-white
+        `,
+        className
+      )}
+      {...props}
     >
-      <Check className="size-4" />
-    </BaseCheckbox.Indicator>
-  </BaseCheckbox.Root>
-))
+      <BaseCheckbox.Indicator
+        data-slot="checkbox-indicator"
+        className={cn('flex items-center justify-center text-current')}
+      >
+        <Check className="size-4" />
+      </BaseCheckbox.Indicator>
+    </BaseCheckbox.Root>
+  )
+)
 Checkbox.displayName = 'Checkbox'
 
 export { Checkbox }

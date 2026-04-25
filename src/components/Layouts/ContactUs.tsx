@@ -17,7 +17,21 @@ import Modal from '../Modal'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 
-export default function ContactUs({ frontmatter, children }) {
+interface EmailInfo {
+  address: string
+  description: string
+}
+
+interface ContactUsProps {
+  frontmatter: {
+    email: EmailInfo[]
+    phone: string
+    address: string
+  }
+  children: React.ReactNode
+}
+
+export default function ContactUs({ frontmatter, children }: ContactUsProps) {
   // tracks whether form is disabled
   const [isFormDisabled, setIsFormDisabled] = React.useState(false)
   // tracks whether thank you modal should open

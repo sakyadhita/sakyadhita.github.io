@@ -6,7 +6,21 @@
  * @author PatrickBrown1
  */
 
-export default function NewsletterCard({ title, year, image_url, optimized_url, redirect_link }) {
+interface NewsletterCardProps {
+  title: string
+  year: number | string
+  image_url: string
+  optimized_url?: string
+  redirect_link: string
+}
+
+export default function NewsletterCard({
+  title,
+  year,
+  image_url,
+  optimized_url,
+  redirect_link
+}: NewsletterCardProps) {
   const _displayImage = optimized_url || image_url
 
   return (

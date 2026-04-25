@@ -26,7 +26,22 @@ const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
 const mapWidth = 800
 const mapHeight = 600
 
-export default function InteractiveMap({ markers, disableZooming = false }) {
+interface Marker {
+  name: string
+  latitude: number
+  longitude: number
+  isBranch: boolean
+  siteLink?: string
+  email?: string
+  html?: string
+}
+
+interface InteractiveMapProps {
+  markers: Marker[]
+  disableZooming?: boolean
+}
+
+export default function InteractiveMap({ markers, disableZooming = false }: InteractiveMapProps) {
   return (
     <div className="size-full">
       <TooltipProvider>

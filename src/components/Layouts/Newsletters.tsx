@@ -51,7 +51,23 @@ const PublicationGrid = ({ displayedNewsletters }) => {
   )
 }
 
-export default function Newsletters({ newsletters }) {
+interface NewsletterData {
+  id: string
+  data: {
+    volume: number
+    number: number
+    year: number | string
+    imageLink?: string
+    optimizedImage?: string
+    pdfLink: string
+  }
+}
+
+interface NewslettersProps {
+  newsletters: NewsletterData[]
+}
+
+export default function Newsletters({ newsletters }: NewslettersProps) {
   const [maxPages, setMaxPages] = useState(1)
   const [numPerPage, setNumPerPage] = useState(9)
   const [currentPage, setCurrentPage] = useState(0)

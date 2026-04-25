@@ -3,8 +3,6 @@ import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection } from 'astro:content'
 
-import { SITE_ASSETS } from './SiteMetadata'
-
 const news = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/news' }),
   schema: rssSchema.extend({

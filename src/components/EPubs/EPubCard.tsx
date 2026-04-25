@@ -6,7 +6,21 @@
  */
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '../ui/tooltip'
 
-export default function EPubCard({ title, author, image_url, optimized_url, redirect_link }) {
+interface EPubCardProps {
+  title: string
+  author: string
+  image_url?: string
+  optimized_url?: string
+  redirect_link: string | null
+}
+
+export default function EPubCard({
+  title,
+  author,
+  image_url,
+  optimized_url,
+  redirect_link
+}: EPubCardProps) {
   const displayImage = optimized_url || image_url
 
   return (

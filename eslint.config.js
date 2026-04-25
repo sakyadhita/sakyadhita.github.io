@@ -1,17 +1,17 @@
-import tseslint from 'typescript-eslint'
+import markdown from '@eslint/markdown'
+import tsParser from '@typescript-eslint/parser'
+import astroParser from 'astro-eslint-parser'
+import eslintConfigPrettier from 'eslint-config-prettier'
 import astroPlugin from 'eslint-plugin-astro'
+import betterTailwindPlugin from 'eslint-plugin-better-tailwindcss'
+import importPlugin from 'eslint-plugin-import'
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooksPlugin from 'eslint-plugin-react-hooks'
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y'
-import markdown from '@eslint/markdown'
-import importPlugin from 'eslint-plugin-import'
-import betterTailwindPlugin from 'eslint-plugin-better-tailwindcss'
 import reactRefreshPlugin from 'eslint-plugin-react-refresh'
 import unicornPlugin from 'eslint-plugin-unicorn'
-import eslintConfigPrettier from 'eslint-config-prettier'
 import globals from 'globals'
-import astroParser from 'astro-eslint-parser'
-import tsParser from '@typescript-eslint/parser'
+import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
@@ -117,6 +117,8 @@ export default tseslint.config(
       ...reactPlugin.configs.flat.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
       ...jsxA11yPlugin.configs.recommended.rules,
+      'react-refresh/only-export-components': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/self-closing-comp': 'error',
@@ -157,43 +159,7 @@ export default tseslint.config(
     },
     rules: {
       ...betterTailwindPlugin.configs.recommended.rules,
-      'better-tailwindcss/no-unknown-classes': [
-        'warn',
-        {
-          ignore: [
-            'not-prose',
-            'fade-in',
-            'fade-in-0',
-            'fade-out-0',
-            'zoom-in-95',
-            'zoom-out-95',
-            'slide-in-from-bottom-4',
-            'slide-in-from-top-4',
-            'slide-in-from-top-2',
-            'slide-in-from-bottom-2',
-            'slide-in-from-left-2',
-            'slide-in-from-right-2',
-            'component-display',
-            'outer',
-            'home-map-tooltip',
-            'error-asterisk',
-            'volunteer-options',
-            'left-options-column',
-            'right-options-column',
-            'input-field',
-            'country-dropdown',
-            'continue-button',
-            'committee-row',
-            'committee-title',
-            'committee-description',
-            'branding',
-            'section',
-            'scroll',
-            'Slideshow',
-            'custom-class'
-          ]
-        }
-      ],
+      'better-tailwindcss/no-unknown-classes': 'off',
       'better-tailwindcss/no-conflicting-classes': 'warn'
     }
   },

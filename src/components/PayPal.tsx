@@ -25,6 +25,23 @@ const encode = (data) => {
 }
 
 // PayPal script is located in public/index.html (contains Client ID)
+interface PayPalProps {
+  fName?: any
+  mName?: any
+  lName?: any
+  email?: any
+  phone?: any
+  membershipTitle?: string
+  membershipID?: number
+  membershipCost?: number
+  donationAmount?: number
+  isNewMember?: boolean
+  affiliatedOrgs?: string
+  disable?: boolean
+  transactionCompleted?: () => void
+  address?: string
+}
+
 export default function PayPal({
   fName,
   mName,
@@ -40,7 +57,7 @@ export default function PayPal({
   disable,
   transactionCompleted,
   address
-}) {
+}: PayPalProps) {
   // only add values to itemTotal and taxTotal if they are positive
   let itemTotal
   itemTotal = membershipCost > 0 ? membershipCost : itemTotal

@@ -12,13 +12,21 @@ import { useState, useEffect } from 'react'
 
 import { cn } from '../../lib/utils'
 
+interface CommitteeSelectorProps {
+  years: string[]
+  toggleDropdown: () => void
+  dropdownOn: boolean
+  clickDropdown: (year: string, index: number) => void
+  committeeIndex: number
+}
+
 const CommitteeSelector = ({
   years,
   toggleDropdown,
   dropdownOn,
   clickDropdown,
   committeeIndex
-}) => {
+}: CommitteeSelectorProps) => {
   if (years.length === 0) return null
   return (
     <div className="relative mb-8">
@@ -60,7 +68,27 @@ const CommitteeSelector = ({
   )
 }
 
-const CommitteeProfiles = ({ committees, year }) => {
+interface CommitteeData {
+  id: string
+  data: {
+    startYear: number
+    endYear: number
+    name: string
+    position: string
+    redirectLink?: string
+    openInSameTab?: boolean
+    htmlBody?: string
+    optimizedImage?: string
+    imageLink?: string
+  }
+}
+
+interface CommitteeProfilesProps {
+  committees: CommitteeData[]
+  year: string
+}
+
+const CommitteeProfiles = ({ committees, year }: CommitteeProfilesProps) => {
   if (committees.length === 0)
     return (
       <p className="text-center font-body text-[1.125em] text-gray-500 italic">
@@ -142,7 +170,18 @@ const CommitteeProfiles = ({ committees, year }) => {
   )
 }
 
-export default function AboutUs({ committees, sections, children }) {
+interface SectionData {
+  id: string
+  data: { title: string }
+}
+
+interface AboutUsProps {
+  committees: CommitteeData[]
+  sections: SectionData[]
+  children: React.ReactNode
+}
+
+export default function AboutUs({ committees, sections, children }: AboutUsProps) {
   // Keeps track of the current location for the sticky navbar
   const [scrollLocation, setScrollLocation] = useState('mission')
   // Toggles the dropdown menu for different executive committees

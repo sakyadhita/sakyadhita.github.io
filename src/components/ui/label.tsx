@@ -10,9 +10,11 @@ const labelVariants = cva(
   `
 )
 
-const Label = React.forwardRef(({ className, htmlFor, ...props }, ref) => (
-  <label ref={ref} htmlFor={htmlFor} className={cn(labelVariants(), className)} {...props} />
-))
+const Label = React.forwardRef<HTMLLabelElement, React.LabelHTMLAttributes<HTMLLabelElement>>(
+  ({ className, htmlFor, ...props }, ref) => (
+    <label ref={ref} htmlFor={htmlFor} className={cn(labelVariants(), className)} {...props} />
+  )
+)
 Label.displayName = 'Label'
 
 export { Label }

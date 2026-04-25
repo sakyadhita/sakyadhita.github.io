@@ -10,13 +10,27 @@
 import { Checkbox } from './ui/checkbox'
 import { Label } from './ui/label'
 
-export default function VolunteerOption(props) {
+interface VolunteerOptionProps {
+  value: number
+  checked: boolean
+  handleChange: (e: { target: { value: number; checked: boolean } }) => void
+  title: string
+  description: string
+}
+
+export default function VolunteerOption({
+  value,
+  checked,
+  handleChange,
+  title,
+  description
+}: VolunteerOptionProps) {
   const handleCheckbox = (checked) => {
     // Replicate event object for the legacy handler
-    props.handleChange({ target: { value: props.value, checked } })
+    handleChange({ target: { value, checked } })
   }
 
-  const id = `committee-${props.value}`
+  const id = `committee-${value}`
 
   return (
     <div className="mb-4">
@@ -27,7 +41,7 @@ export default function VolunteerOption(props) {
             size-6 rounded-md border-black shadow-sm
             data-checked:bg-brand-orange
           "
-          checked={props.checked}
+          checked={checked}
           onCheckedChange={handleCheckbox}
         />
         <Label
@@ -37,7 +51,7 @@ export default function VolunteerOption(props) {
             text-brand-dark-purple
           "
         >
-          {props.title}
+          {title}
         </Label>
       </div>
       <p
@@ -46,7 +60,7 @@ export default function VolunteerOption(props) {
           text-gray-600 italic
         "
       >
-        {props.description}
+        {description}
       </p>
     </div>
   )

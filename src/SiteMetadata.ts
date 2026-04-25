@@ -1,4 +1,3 @@
-
 export const CONTACT_INFO = {
   GENERAL_EMAIL: 'sakyadhita@gmail.com',
   SERVICE_EMAIL: 'service.sakyadhita@gmail.com',

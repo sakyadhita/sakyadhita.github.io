@@ -37,7 +37,26 @@ function displayCommittees(volunteerCommittees, selectedCommittees, handleCommit
   )
 }
 
-export default function Volunteer({ interests }) {
+interface CommitteeData {
+  id: string
+  data: {
+    startYear: number
+    endYear: number
+    name: string
+    position: string
+    redirectLink?: string
+    openInSameTab?: boolean
+    htmlBody?: string
+    optimizedImage?: string
+    imageLink?: string
+  }
+}
+
+interface VolunteerProps {
+  interests: CommitteeData[]
+}
+
+export default function Volunteer({ interests }: VolunteerProps) {
   // stores values and error states for various field in form
   const [values, setValues] = useState({
     firstName: {

@@ -18,7 +18,18 @@ function displayAsterisk() {
   ">*</span>
 }
 
-export default function JoinUs({ frontmatter: _frontmatter, memberships }) {
+interface MembershipItem {
+  id: string
+  title: string
+  cost: string
+}
+
+interface JoinUsProps {
+  frontmatter: any
+  memberships: MembershipItem[]
+}
+
+export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinUsProps) {
   const [membershipCheck, setMembershipCheck] = useState(false)
   // tracks whether donation field should be displayed
   const [donateCheck, setDonateCheck] = useState(false)
