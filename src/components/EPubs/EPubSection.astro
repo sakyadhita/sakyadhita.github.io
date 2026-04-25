@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-import EPubCard from './EPubCard'
+import EPubCard from './EPubCard.astro'
 
 import type { PublicationSection } from '../../lib/types'
 
@@ -49,10 +49,8 @@ const { publication_section } = Astro.props
           <EPubCard
             title={pub.data.title}
             author={pub.data.author}
-            image_url={pub.data.imageLink}
-            optimized_url={pub.data.optimizedImage}
-            redirect_link={pub.data.pdfLink}
-            client:load
+            image={pub.data.imageLink}
+            pdfLink={pub.data.pdfLink}
           />
         ))
     }
@@ -80,10 +78,8 @@ const { publication_section } = Astro.props
             <EPubCard
               title={pub.data.title}
               author={pub.data.author}
-              image_url={pub.data.imageLink}
-              optimized_url={pub.data.optimizedImage}
-              redirect_link={pub.data.pdfLink}
-              client:load
+              image={pub.data.imageLink}
+              pdfLink={pub.data.pdfLink}
             />
           </div>
         ))

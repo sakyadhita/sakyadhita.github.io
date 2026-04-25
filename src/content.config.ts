@@ -59,16 +59,17 @@ const newsletter = defineCollection({
 
 const publication = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/publication' }),
-  schema: z.object({
-    category: z.string(),
-    id: z.number().int().nonnegative(),
-    title: z.string(),
-    author: z.string(),
-    feature: z.boolean(),
-    description: z.string().optional(),
-    imageLink: z.string(),
-    pdfLink: z.string()
-  })
+  schema: ({ image }) =>
+    z.object({
+      category: z.string(),
+      id: z.number().int().nonnegative(),
+      title: z.string(),
+      author: z.string(),
+      feature: z.boolean(),
+      description: z.string().optional(),
+      imageLink: image(),
+      pdfLink: z.string()
+    })
 })
 
 const section = defineCollection({
