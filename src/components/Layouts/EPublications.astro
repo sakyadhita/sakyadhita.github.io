@@ -219,7 +219,7 @@ const { sections, featuredEpubs } = Astro.props
 
     const showSection = (title: string) => {
       const sectionId = `section-${title.replaceAll(/\s+/g, '-')}`
-      const targetSection = document.getElementById(sectionId)
+      const targetSection = document.querySelector(`#${sectionId}`)
 
       if (landingView && detailsView && targetSection) {
         landingView.classList.add('hidden')
