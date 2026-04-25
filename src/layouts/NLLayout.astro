@@ -1,31 +1,16 @@
 ---
-import { getImage } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
-import Newsletters from '../components/Layouts/Newsletters'
+import Newsletters from '../components/Layouts/Newsletters.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import { getRawImage, getAssetUrl } from '../lib/images'
+import { getOptimizedImage } from '../lib/images'
 
-const newslettersRaw = await getCollection('newsletter')
-const newsletters = await Promise.all(
-  newslettersRaw.map(async (n) => {
-    const raw = getRawImage(n.data.imageLink)
-    const pdfLink = getAssetUrl(n.data.pdfLink)
-    if (raw) {
-      const optimized = await getImage({ src: raw, format: 'webp', width: 300 })
-      return { ...n, data: { ...n.data, optimizedImage: optimized.src, pdfLink } }
-    }
-    return { ...n, data: { ...n.data, pdfLink } }
-  })
-)
+const newsletters = await getCollection('newsletter')
 
 const { frontmatter } = Astro.props
-const rawHeader = getRawImage(frontmatter.image)
-const optimizedHeader = rawHeader
-  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
-  : null
+const optimizedHeader = await getOptimizedImage(frontmatter.image, 1600)
 
 // return a reverse sort of the newsletter
 const reverseSortNewsletter = newsletters.toSorted((a, b) => {
@@ -52,7 +37,7 @@ const reverseSortNewsletter = newsletters.toSorted((a, b) => {
       text={frontmatter.description}
       image={optimizedHeader?.src || frontmatter.image}
     />
-    <Newsletters client:idle newsletters={reverseSortNewsletter}>
+    <Newsletters newsletters={reverseSortNewsletter}>
       <slot />
     </Newsletters>
   </ResourcesNavBar>

@@ -47,13 +47,14 @@ const conference = defineCollection({
 
 const newsletter = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/newsletter' }),
-  schema: z.object({
-    volume: z.number().int().nonnegative(),
-    number: z.number().int().nonnegative(),
-    year: z.number().int().nonnegative(),
-    pdfLink: z.string(),
-    imageLink: z.string()
-  })
+  schema: ({ image }) =>
+    z.object({
+      volume: z.number().int().nonnegative(),
+      number: z.number().int().nonnegative(),
+      year: z.number().int().nonnegative(),
+      pdfLink: z.string(),
+      imageLink: image()
+    })
 })
 
 const publication = defineCollection({

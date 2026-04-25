@@ -35,9 +35,9 @@ export default function CustomModal({
         <DialogHeader>
           <DialogTitle className="sr-only">Notification</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="
-          px-4 pt-4 text-center font-body text-2xl text-black
-        ">
+        <DialogDescription
+          className="px-4 pt-4 text-center font-body text-2xl text-black"
+        >
           {text}
         </DialogDescription>
 

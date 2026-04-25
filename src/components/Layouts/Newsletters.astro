@@ -1,0 +1,205 @@
+---
+/**
+ * This file renders the Newsletters section of the Resources page.
+ * It uses client-side Vanilla JS for pagination.
+ */
+import type { CollectionEntry } from 'astro:content'
+
+import NewsletterCard from '../Newsletters/NewsletterCard.astro'
+
+interface Props {
+  newsletters: CollectionEntry<'newsletter'>[]
+}
+
+const { newsletters } = Astro.props
+---
+
+{
+  newsletters.length === 0 ? (
+    <div class="flex w-full justify-center py-20 font-body text-gray-500 italic">
+      We have no newsletters to show you at this time
+    </div>
+  ) : (
+    <div id="newsletters-root" class="relative">
+      <div
+        id="newsletter-grid"
+        class="
+          mx-4 mb-16 flex max-w-5xl flex-row flex-wrap justify-center
+          md:mx-20
+        "
+      >
+        {newsletters.map((newsletter) => (
+          <NewsletterCard
+            title={`Volume ${newsletter.data.volume}, Number ${newsletter.data.number}`}
+            year={newsletter.data.year}
+            image={newsletter.data.imageLink}
+            pdfLink={newsletter.data.pdfLink}
+          />
+        ))}
+      </div>
+
+      <div id="pagination-container" class="mb-20">
+        <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center">
+          <ul id="pagination-content" class="flex flex-row items-center gap-1">
+            <!-- Will be populated by JS -->
+          </ul>
+        </nav>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  function initNewsletters() {
+    const root = document.querySelector('#newsletters-root')
+    if (!root) return
+
+    const paginationContent = root.querySelector('#pagination-content')
+    const cards = Array.from(root.querySelectorAll('.newsletter-card'))
+    
+    let currentPage = 0
+    let numPerPage = 9
+
+    const updateNumPerPage = () => {
+      if (window.innerWidth <= 746) {
+        numPerPage = 4
+      } else if (window.innerWidth <= 1167) {
+        numPerPage = 6
+      } else {
+        numPerPage = 9
+      }
+    }
+
+    const render = () => {
+      const maxPages = Math.ceil(cards.length / numPerPage)
+      if (currentPage >= maxPages) currentPage = Math.max(0, maxPages - 1)
+
+      // Update visibility
+      cards.forEach((card, idx) => {
+        const start = currentPage * numPerPage
+        const end = (currentPage + 1) * numPerPage
+        if (idx >= start && idx < end) {
+          card.classList.remove('hidden')
+          card.classList.add('inline-block')
+        } else {
+          card.classList.remove('inline-block')
+          card.classList.add('hidden')
+        }
+      })
+
+      // Update pagination
+      renderPagination(maxPages)
+    }
+
+    const renderPagination = (maxPages: number) => {
+      if (!paginationContent) return
+      paginationContent.innerHTML = ''
+
+      if (maxPages <= 1) {
+        const container = root.querySelector('#pagination-container')
+        if (container) container.classList.add('hidden')
+        return
+      } else {
+        const container = root.querySelector('#pagination-container')
+        if (container) container.classList.remove('hidden')
+      }
+
+      // Previous
+      const prevItem = document.createElement('li')
+      const isFirst = currentPage === 0
+      prevItem.innerHTML = `
+        <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 gap-1 pl-2.5 cursor-pointer ${isFirst ? 'pointer-events-none opacity-50' : ''}" aria-label="Go to previous page">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left h-4 w-4"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Previous</span>
+        </a>
+      `
+      prevItem.onclick = (e) => {
+        e.preventDefault()
+        if (currentPage > 0) {
+          currentPage--
+          render()
+          scrollToGrid()
+        }
+      }
+      paginationContent.appendChild(prevItem)
+
+      // Page numbers
+      const range = 2
+      const margin = 1
+
+      for (let i = 0; i < maxPages; i++) {
+        if (
+          i < margin ||
+          i >= maxPages - margin ||
+          (i >= currentPage - range && i <= currentPage + range)
+        ) {
+          const item = document.createElement('li')
+          const isActive = currentPage === i
+          item.innerHTML = `
+            <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${isActive ? 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground' : 'hover:bg-accent hover:text-accent-foreground'} h-9 w-9 cursor-pointer font-body" ${isActive ? 'aria-current="page"' : ''}>
+              ${i + 1}
+            </a>
+          `
+          item.onclick = (e) => {
+            e.preventDefault()
+            currentPage = i
+            render()
+            scrollToGrid()
+          }
+          paginationContent.appendChild(item)
+        } else if (
+          (i === margin && currentPage - range > margin) ||
+          (i === maxPages - margin - 1 && currentPage + range < maxPages - margin - 1)
+        ) {
+          const ellipsis = document.createElement('li')
+          ellipsis.innerHTML = `
+            <span aria-hidden="true" class="flex h-9 w-9 items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal h-4 w-4"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              <span class="sr-only">More pages</span>
+            </span>
+          `
+          paginationContent.appendChild(ellipsis)
+          // Skip loop to next showing page
+          if (i === margin) i = currentPage - range - 1
+          else if (i === maxPages - margin - 1) i = maxPages - margin - 1
+        }
+      }
+
+      // Next
+      const nextItem = document.createElement('li')
+      const isLast = currentPage === maxPages - 1
+      nextItem.innerHTML = `
+        <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 gap-1 pr-2.5 cursor-pointer ${isLast ? 'pointer-events-none opacity-50' : ''}" aria-label="Go to next page">
+          <span>Next</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      `
+      nextItem.onclick = (e) => {
+        e.preventDefault()
+        if (currentPage < maxPages - 1) {
+          currentPage++
+          render()
+          scrollToGrid()
+        }
+      }
+      paginationContent.appendChild(nextItem)
+    }
+
+    const scrollToGrid = () => {
+      const top = root.getBoundingClientRect().top + window.scrollY - 100
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
+
+    window.addEventListener('resize', () => {
+      const oldNum = numPerPage
+      updateNumPerPage()
+      if (oldNum !== numPerPage) render()
+    })
+
+    updateNumPerPage()
+    render()
+  }
+
+  initNewsletters()
+  document.addEventListener('astro:page-load', initNewsletters)
+</script>
