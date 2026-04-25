@@ -10,7 +10,7 @@ This project is the official website for **Sakyadhita International Association 
 - **State Management**: Local React state where needed.
 - **Content**: Managed via [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/) in `src/content/`.
 - **Icons**: [Lucide React](https://lucide.dev/) for UI icons and [Simple Icons](https://simpleicons.org/) for brand/social icons.
-- **Styling**: Vanilla CSS located in `src/css/`.
+- **Styling**: Vanilla CSS located in `src/styles/global.css`.
 - **Deployment**: Hosted on **Netlify**, with forms handled by Netlify Forms.
 
 ## 🏗️ Architectural Decisions
@@ -33,6 +33,7 @@ This project is the official website for **Sakyadhita International Association 
 | `pnpm dev` | Start development server at `localhost:4321`. |
 | `pnpm build` | Build the static site to `./dist/`. |
 | `pnpm preview` | Preview the production build locally. |
+| `pnpm test:ui` | Run Vitest ui tests. |
 | `pnpm test:e2e` | Run Playwright E2E tests. |
 | `pnpm lint` | Run Prettier and ESLint. |
 
@@ -44,7 +45,7 @@ This project is the official website for **Sakyadhita International Association 
 - `src/components/`: React and Astro components. React components use the `.jsx` extension and are often hydrated with `client:only="react"`.
 - `tests/`: End-to-end tests written in Playwright.
 - `public/assets/`: Static assets like images, PDFs, and documents referenced by content.
-- `src/css/`: Global and component-specific CSS files.
+- `src/styles/`: Global and component-specific CSS files.
 
 ## ✍️ Development Conventions
 
@@ -62,10 +63,10 @@ To update content, modify the Markdown files in `src/content/`.
     - Standard utility classes: Prefer standard Tailwind scale (e.g., `w-44`, `h-112`) over arbitrary values (`w-[175px]`).
 - **Linting**: ESLint v9 Flat Config with plugins for Astro, React, Markdown, and modern JS patterns (`unicorn`).
 - **Imports**: Enforced sorting via `eslint-plugin-import`.
-- **React**: Use `.jsx` for files containing JSX. Prefer functional components and hooks. Use React 19 native refs and patterns.
+- **React**: Use `.tsx` for files containing JSX. Prefer functional components and hooks. Use React 19 native refs and patterns.
 
 ### Deployment
-Pushes to the `main` branch automatically trigger a deploy on Netlify and run the Playwright test suite via GitHub Actions. Always verify your changes with `pnpm build` and `pnpm test:e2e` before pushing.
+Pushes to the `main` branch automatically trigger a deploy on Netlify. Always verify your changes with `pnpm astro check`, `pnpm test:ui`, `pnpm test:e2e` and `pnpm build`.
 
 ## 📝 TODOs / Future Work
 - [ ] Complete the migration of `src/content/config.ts` to the latest Astro loader API (e.g., using `glob` loader).
