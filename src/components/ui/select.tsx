@@ -75,9 +75,11 @@ const SelectItem = React.forwardRef<HTMLLIElement, React.LiHTMLAttributes<HTMLLI
       )}
       {...props}
     >
-      <span className="
+      <span
+        className="
         absolute right-2 flex size-3.5 items-center justify-center
-      ">
+      "
+      >
         <BaseSelect.ItemIndicator data-slot="select-item-indicator">
           <Check className="size-4" />
         </BaseSelect.ItemIndicator>

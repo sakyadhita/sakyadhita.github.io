@@ -15,15 +15,11 @@ const optimizedHeader = rawHeader
 ---
 
 <PageLayout>
-  <div class="
-    flex w-full flex-col
-    lg:flex-row
-  ">
+  <div class="flex w-full flex-col
+    lg:flex-row">
     {/* Responsive Header for Mobile - Astro */}
-    <div class="
-      w-full
-      lg:hidden
-    ">
+    <div class="w-full
+      lg:hidden">
       <ResourcesHeader image={optimizedHeader?.src || frontmatter.image} title="Contact Us" />
     </div>
 
@@ -36,10 +32,8 @@ const optimizedHeader = rawHeader
 
     {/* The Side Image for Desktop */}
     <div
-      class="
-        hidden min-h-[500px] flex-1 bg-cover bg-center bg-no-repeat
-        lg:block
-      "
+      class="hidden min-h-[500px] flex-1 bg-cover bg-center bg-no-repeat
+        lg:block"
       style={{ backgroundImage: `url("${optimizedHeader?.src || frontmatter.image}")` }}
     >
     </div>

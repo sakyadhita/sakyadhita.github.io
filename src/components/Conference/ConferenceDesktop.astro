@@ -20,19 +20,13 @@ const initialIndex = id ? data.findIndex((x) => x.id === id) : 0
 const index = initialIndex === -1 ? 0 : initialIndex
 ---
 
-<div id="conference-desktop-root" class="
-  w-full px-4 py-12
-  md:px-12
-" data-initial-index={index}>
-  <div class="
-    relative flex flex-col gap-8
-    lg:flex-row lg:gap-16
-  ">
+<div id="conference-desktop-root" class="w-full px-4 py-12
+  md:px-12" data-initial-index={index}>
+  <div class="relative flex flex-col gap-8
+    lg:flex-row lg:gap-16">
     {/* The vertical stepper */}
-    <aside class="
-      w-full
-      lg:w-48 lg:shrink-0
-    ">
+    <aside class="w-full
+      lg:w-48 lg:shrink-0">
       <div class="lg:sticky lg:top-32">
         <VerticalStepper items={data} color="#6652a0" id={id} />
       </div>

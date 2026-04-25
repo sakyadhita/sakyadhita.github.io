@@ -68,10 +68,7 @@ export default function EPubCard({
               {author}
             </div>
           </TooltipTrigger>
-          <TooltipContent
-            side="top"
-            className="border-black bg-black font-body text-white"
-          >
+          <TooltipContent side="top" className="border-black bg-black font-body text-white">
             {author}
           </TooltipContent>
         </Tooltip>

@@ -47,16 +47,12 @@ const data = conferences.toReversed()
 ---
 
 <PageLayout>
-  <div class="
-    hidden
-    lg:block
-  ">
+  <div class="hidden
+    lg:block">
     <ConferenceDesktop data={data} />
   </div>
-  <div class="
-    block
-    lg:hidden
-  ">
+  <div class="block
+    lg:hidden">
     <MobileConference data={data} />
   </div>
 </PageLayout>
