@@ -25,7 +25,7 @@ export default function VolunteerOption({
   title,
   description
 }: VolunteerOptionProps) {
-  const handleCheckbox = (checked) => {
+  const handleCheckbox = (checked: boolean) => {
     // Replicate event object for the legacy handler
     handleChange({ target: { value, checked } })
   }

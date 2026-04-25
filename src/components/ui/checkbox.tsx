@@ -4,11 +4,24 @@ import * as React from 'react'
 
 import { cn } from '../../lib/utils'
 
-const Checkbox = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ className, ...props }, ref) => (
+interface CheckboxProps extends React.HTMLAttributes<HTMLSpanElement> {
+  checked?: boolean
+  onCheckedChange?: (checked: boolean) => void
+  value?: string
+  id?: string
+  disabled?: boolean
+}
+
+const Checkbox = React.forwardRef<HTMLSpanElement, CheckboxProps>(
+  ({ className, checked, onCheckedChange, value, id, disabled, ...props }, ref) => (
     <BaseCheckbox.Root
       data-slot="checkbox"
       ref={ref}
+      checked={checked}
+      onCheckedChange={onCheckedChange}
+      value={value}
+      id={id}
+      disabled={disabled}
       className={cn(
         `
           peer size-4 shrink-0 rounded-sm border border-primary shadow-sm

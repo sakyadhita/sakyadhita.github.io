@@ -19,7 +19,7 @@ interface PayPalModalProps {
   email: string
   phoneNumber: string
   membershipTitle: string
-  membershipID: string
+  membershipID: number
   membershipCost: number
   donationAmount: number
   isNewMember: boolean

@@ -12,13 +12,9 @@ import React from 'react'
 import { usePayPalSDK } from '../hooks/usePayPalSDK'
 import { CONTACT_INFO, PAYPAL_CONFIG } from '../SiteMetadata'
 
-// const config = require("../config.js");
-
-// const BACKEND_URL = config.backend.uri;
-
 const TAX_RATE = PAYPAL_CONFIG.TAX_RATE
 
-const encode = (data) => {
+const encode = (data: any) => {
   return Object.keys(data)
     .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
     .join('&')
@@ -49,9 +45,8 @@ export default function PayPal({
   email,
   phone,
   membershipTitle,
-  membershipID: _membershipID,
-  membershipCost,
-  donationAmount,
+  membershipCost = 0,
+  donationAmount = 0,
   isNewMember,
   affiliatedOrgs,
   disable,
@@ -100,7 +95,9 @@ export default function PayPal({
     }
     return { itemTotal: total, taxTotal: tax, itemsList: list }
   }, [membershipCost, donationAmount, membershipTitle])
-  const paypalRef = React.useRef()
+
+  const paypalRef = React.useRef<HTMLDivElement>(null)
+
   const paypalOrderObject = React.useMemo(
     () => ({
       intent: 'CAPTURE',
@@ -181,19 +178,19 @@ export default function PayPal({
   React.useEffect(() => {
     // Wait for PayPal SDK to load
     const waitForPayPal = () => {
-      if (globalThis.paypal && globalThis.paypal.Buttons) {
-        globalThis.paypal
+      if (window.paypal && window.paypal.Buttons) {
+        window.paypal
           .Buttons({
-            createOrder: async (_data, actions) => {
+            createOrder: async (_data: any, actions: any) => {
               // console.log(paypalOrderObject)
               return actions.order.create(paypalOrderObject)
             },
-            onApprove: async (_data, actions) => {
+            onApprove: async (_data: any, actions: any) => {
               // loading cursor to indicate to the user they need to wait
               document.body.style.cursor = 'wait'
-              return actions.order.capture().then((details) => {
+              return actions.order.capture().then((details: any) => {
                 // restore screen back to normal
-                document.body.style.cursor = null
+                document.body.style.cursor = ''
 
                 const values = latestFormValues.current
                 return (
@@ -218,39 +215,24 @@ export default function PayPal({
                     // message sent
                     .then(() => {
                       // display thank you modal and clear form
-                      values.transactionCompleted()
+                      values.transactionCompleted?.()
                     })
 
                     // message could not be sent
-                    .catch((error) => {
-                      document.body.style.cursor = null
+                    .catch((error: any) => {
+                      document.body.style.cursor = ''
                       alert(
                         `Transaction completed but it wasn't sent to us. Please email us at ${CONTACT_INFO.SERVICE_EMAIL} with the receipt sent to your email. Error: ${error}`
                       )
                     })
                 )
-                // .then((res) => {
-                //     if (res.ok) {
-                //       transactionCompleted()
-                //     } else {
-                //       alert(
-                //         "Transaction completed but it wasn't sent to us. Please email us with the receipt sent to your email."
-                //       )
-                //     }
-                //   })
-                //   .catch(() => {
-                //     document.body.style.cursor = null
-                //     alert(
-                //       'There was an internal error. Check your email for a receipt from PayPal, and contact us to set up your order.'
-                //     )
-                //   })
               })
             },
             onCancel: () => {
-              document.body.style.cursor = null
+              document.body.style.cursor = ''
             },
-            onError: (_err) => {
-              document.body.style.cursor = null
+            onError: (_err: any) => {
+              document.body.style.cursor = ''
               alert(
                 'An unexpected error occurred - your payment did not go through. Please try again later.'
               )

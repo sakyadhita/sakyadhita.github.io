@@ -13,9 +13,15 @@ import { Textarea } from '../ui/textarea'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return <span className="
+  return (
+    <span
+      className="
     error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
-  ">*</span>
+  "
+    >
+      *
+    </span>
+  )
 }
 
 interface MembershipItem {
@@ -119,7 +125,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
       values.stateLocation.value === '' ||
       values.zipcode.value === '' ||
       (!membershipCheck &&
-        (memberType === '' || organizations === '' || selectedMembershipIndex === 0)) ||
+        (isNewMember === '' || organizations === '' || selectedMembershipIndex === 0)) ||
       (donateCheck && donation === 0)
     ) {
       setDisplayPayPal(false)
@@ -129,7 +135,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
   }, [
     values,
     membershipCheck,
-    memberType,
+    isNewMember,
     organizations,
     selectedMembershipIndex,
     donateCheck,
@@ -137,19 +143,22 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
   ])
 
   // handles user input to any form field
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target
     setValues({
       ...values,
-      [event.target.name]: {
-        value: event.target.value
+      [name]: {
+        ...(values as any)[name],
+        value: value
       }
     })
   }
 
   // handle user input to new member field
-  const handleNewMember = (val) => {
-    setIsNewMember(val)
-    if (val === 'new') {
+  const handleNewMember = (val: string | null) => {
+    const safeVal = val || ''
+    setIsNewMember(safeVal)
+    if (safeVal === 'new') {
       setMemberType(true)
     } else {
       setMemberType(false)
@@ -157,22 +166,23 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
   }
 
   // handles change in membership checkbox
-  const handleMembershipChange = (checked) => {
+  const handleMembershipChange = (checked: boolean) => {
     setMembershipCheck(checked)
   }
 
   // handles change in donation checkbox
-  const handleDonateChange = (checked) => {
-    if (donateCheck) setDonation('')
+  const handleDonateChange = (checked: boolean) => {
+    if (checked === false) setDonation(0)
     setDonateCheck(checked)
   }
 
   // handles user input to country field
-  const handleCountryChange = (val) => {
+  const handleCountryChange = (val: string) => {
     setValues({
       ...values,
       country: {
-        value: val
+        value: val,
+        error: false
       }
     })
   }
@@ -183,7 +193,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
   }
 
   // called when user decides to close thank you modal
-  const handleModalClose = (event) => {
+  const handleModalClose = (event: boolean) => {
     setIsThankYouNoteOpen(event)
   }
 
@@ -198,17 +208,17 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
     // clear form values
     setValues({
       ...values,
-      firstName: { ...values.firstName, value: '' },
-      middleName: { ...values.middleName, value: '' },
-      lastName: { ...values.lastName, value: '' },
-      phoneNumber: { ...values.phoneNumber, value: '' },
-      emailAddress: { ...values.emailAddress, value: '' },
-      country: { ...values.country, value: '' },
-      addressOne: { ...values.addressOne, value: '' },
-      addressTwo: { ...values.addressTwo, value: '' },
-      city: { ...values.city, value: '' },
-      stateLocation: { ...values.stateLocation, value: '' },
-      zipcode: { ...values.zipcode, value: '' }
+      firstName: { ...values.firstName, value: '', error: false },
+      middleName: { ...values.middleName, value: '', error: false },
+      lastName: { ...values.lastName, value: '', error: false },
+      phoneNumber: { ...values.phoneNumber, value: '', error: false },
+      emailAddress: { ...values.emailAddress, value: '', error: false },
+      country: { ...values.country, value: '', error: false },
+      addressOne: { ...values.addressOne, value: '', error: false },
+      addressTwo: { ...values.addressTwo, value: '', error: false },
+      city: { ...values.city, value: '', error: false },
+      stateLocation: { ...values.stateLocation, value: '', error: false },
+      zipcode: { ...values.zipcode, value: '', error: false }
     })
 
     // clear all other values
@@ -221,7 +231,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
     setDonateCheck(false)
   }
 
-  const encode = (data) => {
+  const encode = (data: any) => {
     return Object.keys(data)
       .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
       .join('&')
@@ -272,7 +282,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
     if (firstName || lastName || email || country || address || city || state || zipcode) {
       setSnackBar({ open: true, message: 'Missing required fields' })
       setIsFormDisabled(false)
-      document.body.style.cursor = null
+      document.body.style.cursor = ''
       return
     }
 
@@ -308,11 +318,11 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
       })
 
     // allow form to be edited
-    document.body.style.cursor = null
+    document.body.style.cursor = ''
     setIsFormDisabled(false)
   }
 
-  const inputClasses = (hasError) =>
+  const inputClasses = (hasError: boolean) =>
     cn(
       `
         h-12 w-full rounded-2xl border-black bg-white px-4 font-body text-lg
@@ -495,7 +505,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
                 <div className="flex items-center">
                   <div className="flex-1">
                     <Input
-                      className={inputClasses(values.addressTwo.value)}
+                      className={inputClasses(values.addressTwo.error)}
                       placeholder="Address Line 2"
                       value={values.addressTwo.value}
                       onChange={handleChange}
@@ -637,7 +647,9 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
                   <div className="flex-1">
                     <Select
                       value={selectedMembershipIndex.toString()}
-                      onValueChange={(val) => setSelectedMembershipIndex(Number.parseInt(val))}
+                      onValueChange={(val) =>
+                        setSelectedMembershipIndex(Number.parseInt(val || '0'))
+                      }
                     >
                       <SelectTrigger className={selectTriggerClasses}>
                         <SelectValue placeholder="Select Membership" />
@@ -716,7 +728,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
                   email={values.emailAddress.value}
                   phoneNumber={values.phoneNumber.value}
                   membershipTitle={memberships[selectedMembershipIndex].title}
-                  membershipID={memberships[selectedMembershipIndex].id}
+                  membershipID={Number.parseInt(memberships[selectedMembershipIndex].id)}
                   membershipCost={Number.parseFloat(memberships[selectedMembershipIndex].cost)}
                   donationAmount={donation}
                   isNewMember={memberType}
@@ -743,9 +755,11 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
                       text-center
                     "
                   >
-                    <p className="
+                    <p
+                      className="
                       animate-pulse text-lg font-bold text-brand-red
-                    ">
+                    "
+                    >
                       *Please fill out all required fields to proceed to payment.
                     </p>
                   </div>
@@ -766,7 +780,7 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
           >
             <span>{snackbar.message}</span>
             <button
-              onClick={() => setSnackBar({ open: false })}
+              onClick={() => setSnackBar({ open: false, message: '' })}
               className="ml-4 font-bold text-white"
             >
               X

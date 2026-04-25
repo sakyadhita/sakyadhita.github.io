@@ -1,39 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CountryDropdown } from 'react-country-region-selector'
 
 import { cn } from '../../lib/utils'
 import CustomButton from '../CustomButtonReact'
 import Modal from '../Modal'
-import { Input } from '../ui/input'
 import VolunteerOption from '../VolunteerOption'
 
-// function to display asterisk for required fields
-function displayAsterisk() {
-  return <span className="
-    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
-  ">*</span>
-}
-
-// funcion to render all volunteer committees
-function displayCommittees(volunteerCommittees, selectedCommittees, handleCommitteesChange) {
+function displayCommittees(
+  volunteerCommittees: any[],
+  selectedCommittees: number[],
+  handleCommitteesChange: (e: { target: { value: number; checked: boolean } }) => void
+) {
   return (
-    <div
-      className="
-        volunteer-options grid grid-cols-1 gap-6
-        md:grid-cols-2 md:gap-12
-      "
-    >
+    <div className="mt-8 space-y-6">
       {volunteerCommittees.map((committee) => (
         <VolunteerOption
           key={committee.id}
-          value={committee.id}
-          checked={selectedCommittees.includes(committee.id)}
+          value={Number.parseInt(committee.id)}
+          checked={selectedCommittees.includes(Number.parseInt(committee.id))}
           handleChange={handleCommitteesChange}
           title={committee.data.title}
           description={committee.data.description}
         />
       ))}
     </div>
+  )
+}
+
+// function to display asterisk for required fields
+function displayAsterisk() {
+  return (
+    <span
+      className="
+    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
+  "
+    >
+      *
+    </span>
   )
 }
 
@@ -50,6 +53,10 @@ interface VolunteerProps {
 }
 
 export default function Volunteer({ interests }: VolunteerProps) {
+  // tracks whether thank you modal should be open
+  const [isThankYouNoteOpen, setIsThankYouNoteOpen] = React.useState(false)
+  // tracks whether the form is disabled
+  const [isFormDisabled, setIsFormDisabled] = useState(false)
   // stores values and error states for various field in form
   const [values, setValues] = useState({
     firstName: {
@@ -76,36 +83,14 @@ export default function Volunteer({ interests }: VolunteerProps) {
       value: '',
       error: false
     },
-    addressOne: {
-      value: '',
-      error: false
-    },
-    addressTwo: {
-      value: '',
-      error: false
-    },
-    city: {
-      value: '',
-      error: false
-    },
-    stateLocation: {
-      value: '',
-      error: false
-    },
-    zipcode: {
+    address: {
       value: '',
       error: false
     }
   })
 
-  // stores all volunteer committees selected by user
-  const [selectedCommittees, setSelectedCommittees] = useState([])
-  // tracks whether thank you modal should be open
-  const [isThankYouNoteOpen, setIsThankYouNoteOpen] = React.useState(false)
-  // tracks whether the form is disabled
-  const [isFormDisabled, setIsFormDisabled] = useState(false)
-  // tracks whether error message for commitees is displayed
-  const [committeesError, setCommitteesError] = useState(false)
+  // stores IDs of all committees selected
+  const [selectedCommittees, setSelectedCommittees] = useState<number[]>([])
 
   // snackbar used to display error messages
   const [snackbar, setSnackBar] = useState({
@@ -114,48 +99,70 @@ export default function Volunteer({ interests }: VolunteerProps) {
   })
 
   // handles user input to any form field
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target
     setValues({
       ...values,
-      [event.target.name]: {
-        value: event.target.value
+      [name]: {
+        ...(values as any)[name],
+        value: value
       }
     })
   }
 
   // handles user input to country field
-  const handleCountryChange = (val) => {
+  const handleCountryChange = (val: string) => {
     setValues({
       ...values,
       country: {
-        value: val
+        value: val,
+        error: false
       }
     })
   }
 
   // called when user decides to close thank you modal
-  const handleModalClose = (event) => {
+  const handleModalClose = (event: boolean) => {
     setIsThankYouNoteOpen(event)
   }
 
-  // handles any changes to committees selected
-  function handleCommitteesChange(event) {
-    const val = Number.parseInt(event.target.value, 10)
+  // handles change in any of the committee checkboxes
+  function handleCommitteesChange(event: { target: { value: number; checked: boolean } }) {
+    const val = event.target.value
     if (selectedCommittees.includes(val)) {
-      setSelectedCommittees(selectedCommittees.filter((committee) => committee !== val))
+      setSelectedCommittees(selectedCommittees.filter((item) => item !== val))
     } else {
       setSelectedCommittees((oldArray) => [...oldArray, val])
-      setCommitteesError(false)
     }
   }
 
-  const encode = (data) => {
+  // called when form is submitted
+  const handleFormCompleted = () => {
+    // display thank you modal
+    setIsThankYouNoteOpen(true)
+
+    // clear form values
+    setValues({
+      ...values,
+      firstName: { ...values.firstName, value: '', error: false },
+      middleName: { ...values.middleName, value: '', error: false },
+      lastName: { ...values.lastName, value: '', error: false },
+      phoneNumber: { ...values.phoneNumber, value: '', error: false },
+      emailAddress: { ...values.emailAddress, value: '', error: false },
+      country: { ...values.country, value: '', error: false },
+      address: { ...values.address, value: '', error: false }
+    })
+
+    // clear committee selections
+    setSelectedCommittees([])
+  }
+
+  const encode = (data: any) => {
     return Object.keys(data)
       .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
       .join('&')
   }
 
-  // called when submit button is clicked
   const handleSubmit = async () => {
     // ignore if form is still being processed
     if (isFormDisabled) return
@@ -171,18 +178,12 @@ export default function Volunteer({ interests }: VolunteerProps) {
     let email = false
     let country = false
     let address = false
-    let city = false
-    let state = false
-    let zipcode = false
 
     if (values.firstName.value === '') firstName = true
     if (values.lastName.value === '') lastName = true
     if (values.emailAddress.value === '') email = true
     if (values.country.value === '') country = true
-    if (values.addressOne.value === '') address = true
-    if (values.city.value === '') city = true
-    if (values.stateLocation.value === '') state = true
-    if (values.zipcode.value === '') zipcode = true
+    if (values.address.value === '') address = true
 
     // sets error values for all fields
     setValues({
@@ -191,38 +192,20 @@ export default function Volunteer({ interests }: VolunteerProps) {
       lastName: { ...values.lastName, error: lastName },
       emailAddress: { ...values.emailAddress, error: email },
       country: { ...values.country, error: country },
-      addressOne: { ...values.addressOne, error: address },
-      city: { ...values.city, error: city },
-      stateLocation: { ...values.stateLocation, error: state },
-      zipcode: { ...values.zipcode, error: zipcode }
+      address: { ...values.address, error: address }
     })
 
-    if (selectedCommittees.length === 0) {
-      setCommitteesError(true)
-    }
-
     // checks if any required fields are empty
-    if (
-      firstName ||
-      lastName ||
-      email ||
-      country ||
-      address ||
-      city ||
-      state ||
-      zipcode ||
-      selectedCommittees.length === 0
-    ) {
+    if (firstName || lastName || email || country || address) {
       setSnackBar({ open: true, message: 'Missing required fields' })
       setIsFormDisabled(false)
-      document.body.style.cursor = null
+      document.body.style.cursor = ''
       return
     }
 
-    // defines address to pass to backend
-    const addressOpt = values.addressTwo.value === '' ? '' : `${values.addressTwo.value} `
-    const givenAddress = `${values.addressOne.value} ${addressOpt}${values.city.value} ${values.stateLocation.value} ${values.country.value} ${values.zipcode.value}`
-    const selectedInterests = selectedCommittees.map((c) => interests[c].data.title).join(',')
+    const selectedCommitteesText = selectedCommittees
+      .map((id) => interests.find((i) => Number.parseInt(i.id) === id)?.data.title)
+      .join(', ')
 
     await fetch('/', {
       method: 'POST',
@@ -234,31 +217,14 @@ export default function Volunteer({ interests }: VolunteerProps) {
         lName: values.lastName.value,
         phone: values.phoneNumber.value,
         email: values.emailAddress.value,
-        address: givenAddress,
-        interests: selectedInterests
+        address: values.address.value,
+        interests: selectedCommitteesText
       })
     })
       // message sent
       .then(() => {
-        // display thank you modal
-        setIsThankYouNoteOpen(true)
-        // clear form values
-        setValues({
-          ...values,
-          firstName: { ...values.firstName, value: '' },
-          middleName: { ...values.middleName, value: '' },
-          lastName: { ...values.lastName, value: '' },
-          phoneNumber: { ...values.phoneNumber, value: '' },
-          emailAddress: { ...values.emailAddress, value: '' },
-          country: { ...values.country, value: '' },
-          addressOne: { ...values.addressOne, value: '' },
-          addressTwo: { ...values.addressTwo, value: '' },
-          city: { ...values.city, value: '' },
-          stateLocation: { ...values.stateLocation, value: '' },
-          zipcode: { ...values.zipcode, value: '' }
-        })
-        setSelectedCommittees([])
-        setCommitteesError(false)
+        // display thank you modal and clear form
+        handleFormCompleted()
       })
       // message could not be sent
       .catch((error) => {
@@ -270,18 +236,18 @@ export default function Volunteer({ interests }: VolunteerProps) {
       })
 
     // allow form to be edited
-    document.body.style.cursor = null
+    document.body.style.cursor = ''
     setIsFormDisabled(false)
   }
 
-  const inputClasses = (hasError) =>
+  const inputClasses = (hasError: boolean) =>
     cn(
       `
-        h-12 w-full rounded-2xl border-black bg-white px-4 font-body text-lg
-        focus-visible:border-brand-dark-purple
-        focus-visible:ring-brand-dark-purple
+        input-field h-12 w-full rounded-2xl border-black bg-white px-4
+        font-body text-lg transition-all outline-none
+        focus:ring-2 focus:ring-brand-dark-purple
       `,
-      hasError && 'border-brand-red'
+      hasError && 'border-brand-red ring-2 ring-brand-red'
     )
 
   return (
@@ -292,237 +258,179 @@ export default function Volunteer({ interests }: VolunteerProps) {
           md:px-12
         "
       >
-        <form autoComplete="off" className="mx-auto max-w-2xl space-y-4">
-          <p className="mb-10 text-right font-body text-sm text-gray-500 italic">
-            {' '}
-            <span className="error-asterisk font-bold text-brand-red"> * </span> indicates a
-            required field
+        <div className="space-y-6">
+          <h1 className="font-heading text-4xl text-brand-dark-purple lowercase">
+            Support Sakyadhita!
+          </h1>
+          <p className="text-lg/relaxed text-gray-700">
+            Sakyadhita is a 501(c)3 non-profit organization. We are a volunteer-run organization
+            and rely on the generous support of our members and donors. We are always looking for
+            volunteers to help us with our various initiatives. If you are interested in
+            volunteering with us, please fill out the form below and select the committees you are
+            interested in joining.
           </p>
-          <h1
-            className="
-              mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
-              text-3xl text-brand-dark-purple lowercase italic
-            "
-          >
-            Sign Me Up!
-          </h1>
-          {/* first name field */}
-          <div className="mt-1! flex items-center">
-            <div className="flex-1">
-              <Input
-                className={inputClasses(values.firstName.error)}
-                placeholder="First Name"
-                value={values.firstName.value}
-                onChange={handleChange}
-                disabled={isFormDisabled}
-                name="firstName"
-              />
-            </div>
-            {displayAsterisk()}
-          </div>
-          {/* middle name field */}
-          <div className="mt-1! flex items-center">
-            <div className="flex-1">
-              <Input
-                className={inputClasses(values.middleName.error)}
-                placeholder="Middle Name"
-                value={values.middleName.value}
-                onChange={handleChange}
-                disabled={isFormDisabled}
-                name="middleName"
-              />
-            </div>
-            <span className="ml-2 w-4 shrink-0" />
-          </div>
-          {/* last name field */}
-          <div className="mt-1! flex items-center">
-            <div className="flex-1">
-              <Input
-                className={inputClasses(values.lastName.error)}
-                placeholder="Last Name"
-                value={values.lastName.value}
-                onChange={handleChange}
-                disabled={isFormDisabled}
-                name="lastName"
-              />
-            </div>
-            {displayAsterisk()}
-          </div>
+        </div>
 
-          <h1
-            className="
-              mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
-              text-3xl text-brand-dark-purple lowercase italic
-            "
-          >
-            Contact Information
-          </h1>
-          {/* email address field */}
-          <div className="mt-1! flex items-center">
-            <div className="flex-1">
-              <Input
-                className={inputClasses(values.emailAddress.error)}
-                placeholder="Email Address"
-                type="email"
-                value={values.emailAddress.value}
-                onChange={handleChange}
-                disabled={isFormDisabled}
-                name="emailAddress"
-              />
-            </div>
-            {displayAsterisk()}
-          </div>
-          {/* country dropdown field */}
-          <div className="mt-1! flex items-center">
-            <div className="flex-1">
-              <CountryDropdown
-                className="
-                  input-field country-dropdown h-12 w-full rounded-2xl
-                  border-black bg-white px-4 font-body text-lg transition-all
-                  outline-none
-                  focus:ring-2 focus:ring-brand-dark-purple
-                "
-                style={
-                  values.country.error
-                    ? { border: '1px solid #ea4444' }
-                    : { border: '1px solid #000000' }
-                }
-                value={values.country.value}
-                onChange={handleCountryChange}
-                disabled={isFormDisabled}
-              />
-            </div>
-            {displayAsterisk()}
-          </div>
-          {/* displays other address fields if country is selected */}
-          {values.country.value === '' ? null : (
-            <div
-              className="
-                fade-in slide-in-from-top-4 animate-in space-y-4 pt-4
-                duration-500
-              "
-            >
-              {/* address line 1 field */}
-              <div className="mt-1! flex items-center">
-                <div className="flex-1">
-                  <Input
-                    className={inputClasses(values.addressOne.error)}
-                    placeholder="Address Line 1"
-                    value={values.addressOne.value}
-                    onChange={handleChange}
-                    disabled={isFormDisabled}
-                    name="addressOne"
-                  />
-                </div>
-                {displayAsterisk()}
-              </div>
-              {/* address line 2 field */}
-              <div className="mt-1! flex items-center">
-                <div className="flex-1">
-                  <Input
-                    className={inputClasses(values.addressTwo.value)}
-                    placeholder="Address Line 2"
-                    value={values.addressTwo.value}
-                    onChange={handleChange}
-                    disabled={isFormDisabled}
-                    name="addressTwo"
-                  />
-                </div>
-                <span className="ml-2 w-4 shrink-0" />
-              </div>
-              {/* city field */}
-              <div className="mt-1! flex items-center">
-                <div className="flex-1">
-                  <Input
-                    className={inputClasses(values.city.error)}
-                    placeholder="City"
-                    value={values.city.value}
-                    onChange={handleChange}
-                    disabled={isFormDisabled}
-                    name="city"
-                  />
-                </div>
-                {displayAsterisk()}
-              </div>
-              {/* state field */}
-              <div className="mt-1! flex items-center">
-                <div className="flex-1">
-                  <Input
-                    className={inputClasses(values.stateLocation.error)}
-                    placeholder="State"
-                    value={values.stateLocation.value}
-                    onChange={handleChange}
-                    disabled={isFormDisabled}
-                    name="stateLocation"
-                  />
-                </div>
-                {displayAsterisk()}
-              </div>
-              {/* zipcode field */}
-              <div className="mt-1! flex items-center">
-                <div className="flex-1">
-                  <Input
-                    className={inputClasses(values.zipcode.error)}
-                    placeholder="Zip Code"
-                    value={values.zipcode.value}
-                    onChange={handleChange}
-                    disabled={isFormDisabled}
-                    name="zipcode"
-                  />
-                </div>
-                {displayAsterisk()}
-              </div>
-              {/* phone number field */}
-              <div className="mt-1! flex items-center">
-                <div className="flex-1">
-                  <Input
-                    className={inputClasses(values.phoneNumber.error)}
-                    placeholder="Phone Number"
-                    type="tel"
-                    value={values.phoneNumber.value}
-                    onChange={handleChange}
-                    disabled={isFormDisabled}
-                    name="phoneNumber"
-                  />
-                </div>
-                <span className="ml-2 w-4 shrink-0" />
-              </div>
-            </div>
-          )}
-
-          <div className="space-y-6 pt-10">
+        <form autoComplete="off" className="mx-auto max-w-2xl space-y-4">
+          <section className="space-y-4">
             <h1
               className="
-                text-center font-heading text-3xl text-brand-dark-purple
-                lowercase italic
+                mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1
+                font-heading text-3xl text-brand-dark-purple lowercase italic
               "
             >
-              What would you like to help with?
+              Sign Me Up!
             </h1>
-            <p className="text-center font-body text-lg text-gray-600">
-              Select all committees you are interested in.
-            </p>
-            {committeesError ? (
-              <p className="animate-pulse text-center font-bold text-brand-red">
-                At least one committee must be selected.
-              </p>
-            ) : null}
-            {/* displays all committee options or spinner if loading data */}
-            <div
+            {/* first name field */}
+            <div className="flex items-center">
+              <div className="flex-1">
+                <input
+                  name="firstName"
+                  className={inputClasses(values.firstName.error)}
+                  placeholder="First Name"
+                  value={values.firstName.value}
+                  onChange={handleChange}
+                  disabled={isFormDisabled}
+                  required
+                />
+              </div>
+              {displayAsterisk()}
+            </div>
+            {/* middle name field */}
+            <div className="flex items-center">
+              <div className="flex-1">
+                <input
+                  name="middleName"
+                  className={inputClasses(values.middleName.error)}
+                  placeholder="Middle Name"
+                  value={values.middleName.value}
+                  onChange={handleChange}
+                  disabled={isFormDisabled}
+                />
+              </div>
+              <span className="ml-2 w-4 shrink-0" />
+            </div>
+            {/* last name field */}
+            <div className="flex items-center">
+              <div className="flex-1">
+                <input
+                  name="lastName"
+                  className={inputClasses(values.lastName.error)}
+                  placeholder="Last Name"
+                  value={values.lastName.value}
+                  onChange={handleChange}
+                  disabled={isFormDisabled}
+                  required
+                />
+              </div>
+              {displayAsterisk()}
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h1
               className="
-                rounded-2xl border border-gray-100 bg-gray-50 p-8 shadow-inner
+                mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1
+                font-heading text-3xl text-brand-dark-purple lowercase italic
               "
             >
-              {displayCommittees(interests, selectedCommittees, handleCommitteesChange)}
+              Contact Information
+            </h1>
+            {/* email address field */}
+            <div className="flex items-center">
+              <div className="flex-1">
+                <input
+                  name="emailAddress"
+                  className={inputClasses(values.emailAddress.error)}
+                  placeholder="Email Address"
+                  value={values.emailAddress.value}
+                  onChange={handleChange}
+                  disabled={isFormDisabled}
+                  type="email"
+                  required
+                />
+              </div>
+              {displayAsterisk()}
             </div>
-          </div>
-          {/* submit button */}
-          <div className="flex justify-center pt-12 pb-16">
-            <CustomButton
-              className="h-16 w-auto rounded-full px-16 text-2xl"
-              text="Submit"
-              onClickCallback={handleSubmit}
-            />
+            {/* country dropdown field */}
+            <div className="flex items-center">
+              <div className="flex-1">
+                <CountryDropdown
+                  className="
+                    input-field h-12 w-full rounded-2xl border-black bg-white
+                    px-4 font-body text-lg transition-all outline-none
+                    focus:ring-2 focus:ring-brand-dark-purple
+                  "
+                  style={
+                    values.country.error
+                      ? { border: '1px solid #ea4444' }
+                      : { border: '1px solid #000000' }
+                  }
+                  value={values.country.value}
+                  onChange={handleCountryChange}
+                  disabled={isFormDisabled}
+                />
+              </div>
+              {displayAsterisk()}
+            </div>
+            {/* address field */}
+            <div className="flex items-center">
+              <div className="flex-1">
+                <input
+                  name="address"
+                  className={inputClasses(values.address.error)}
+                  placeholder="Full Address"
+                  value={values.address.value}
+                  onChange={handleChange}
+                  disabled={isFormDisabled}
+                  required
+                />
+              </div>
+              {displayAsterisk()}
+            </div>
+            {/* phone number field */}
+            <div className="flex items-center">
+              <div className="flex-1">
+                <input
+                  name="phoneNumber"
+                  className={inputClasses(values.phoneNumber.error)}
+                  placeholder="Phone Number"
+                  value={values.phoneNumber.value}
+                  onChange={handleChange}
+                  disabled={isFormDisabled}
+                />
+              </div>
+              <span className="ml-2 w-4 shrink-0" />
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h1
+              className="
+                mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1
+                font-heading text-3xl text-brand-dark-purple lowercase italic
+              "
+            >
+              Committee Interests
+            </h1>
+            <p className="text-lg/relaxed text-gray-700 italic">
+              Select any and all committees you are interested in joining:
+            </p>
+            {displayCommittees(interests, selectedCommittees, handleCommitteesChange)}
+          </section>
+
+          <div className="space-y-10 pt-16">
+            <p className="text-center font-body text-lg text-gray-500 italic">
+              <span className="font-bold text-brand-red"> * </span> indicates a required field
+            </p>
+            {/* submit button */}
+            <div className="flex justify-center pb-12">
+              <CustomButton
+                className="h-16 w-auto rounded-full px-16 text-2xl"
+                text="Submit"
+                onClickCallback={handleSubmit}
+              />
+            </div>
           </div>
         </form>
 
@@ -537,7 +445,7 @@ export default function Volunteer({ interests }: VolunteerProps) {
           >
             <span>{snackbar.message}</span>
             <button
-              onClick={() => setSnackBar({ open: false })}
+              onClick={() => setSnackBar({ open: false, message: '' })}
               className="ml-4 font-bold text-white"
             >
               X
@@ -547,7 +455,7 @@ export default function Volunteer({ interests }: VolunteerProps) {
       </div>
       {/* thank you modal displayed when form is submitted */}
       <Modal
-        text="Thank you for your support! We will get in touch with you shortly."
+        text="Thank you for your interest! We will get in touch with you shortly."
         open={isThankYouNoteOpen}
         hide={handleModalClose}
         negativeButtonText="Ok"

@@ -11,10 +11,15 @@ const TooltipTrigger = BaseTooltip.Trigger
 
 const TooltipPortal = BaseTooltip.Portal
 
-const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
-  ({ className, sideOffset = 4, ...props }, ref) => (
+interface TooltipContentProps extends React.HTMLProps<HTMLDivElement> {
+  side?: 'top' | 'right' | 'bottom' | 'left'
+  sideOffset?: number
+}
+
+const TooltipContent = React.forwardRef<HTMLDivElement, TooltipContentProps>(
+  ({ className, sideOffset = 4, side = 'top', ...props }, ref) => (
     <BaseTooltip.Portal>
-      <BaseTooltip.Positioner sideOffset={sideOffset}>
+      <BaseTooltip.Positioner sideOffset={sideOffset} side={side}>
         <BaseTooltip.Popup
           ref={ref}
           className={cn(

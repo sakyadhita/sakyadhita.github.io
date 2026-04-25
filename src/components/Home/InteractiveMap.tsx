@@ -26,7 +26,7 @@ const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
 const mapWidth = 800
 const mapHeight = 600
 
-interface Marker {
+interface MarkerData {
   name: string
   latitude: number
   longitude: number
@@ -37,7 +37,7 @@ interface Marker {
 }
 
 interface InteractiveMapProps {
-  markers: Marker[]
+  markers: MarkerData[]
   disableZooming?: boolean
 }
 
@@ -61,7 +61,7 @@ export default function InteractiveMap({ markers, disableZooming = false }: Inte
             {/* Creates all continents to be displayed */}
             <Geographies geography={geoUrl}>
               {({ geographies }) =>
-                geographies.map((geo) => (
+                geographies.map((geo: any) => (
                   <Geography
                     key={geo.rsmKey}
                     fill="#BBDBF0"
