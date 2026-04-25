@@ -2,12 +2,12 @@
 import { YouTube } from '@astro-community/astro-embed-youtube'
 import { Image } from 'astro:assets'
 
-import Slideshow from '../Slideshow.astro'
+import HorizontalStepper from './ConferenceHorizontalStepper.astro'
 import ConferenceOverview from './ConferenceOverview.astro'
 import ConferenceTheme from './ConferenceTheme.astro'
-import HorizontalStepper from './HorizontalStepper.astro'
+import Slideshow from './Slideshow.astro'
 
-import type { ConferenceEntry } from '../../lib/types'
+import type { ConferenceEntry } from '../lib/types'
 
 interface Props {
   data: ConferenceEntry[]
@@ -197,7 +197,7 @@ const index = initialIndex === -1 ? 0 : initialIndex
 </div>
 
 <script>
-  import type { ConferenceStepChangeEvent } from '../../lib/types'
+  import type { ConferenceStepChangeEvent } from '../lib/types'
 
   function initMobileConference() {
     const root = document.querySelector('#conference-mobile-root')

@@ -10,10 +10,10 @@ import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 
 import Brand from './Brand.astro'
-import License from '../../assets/by-nc-nd.png'
-import Logo from '../../assets/logo.svg'
-import { cn } from '../../lib/utils'
-import { SITE_PAGES, SOCIAL_LINKS } from '../../SiteMetadata'
+import License from '../assets/by-nc-nd.png'
+import Logo from '../assets/logo.svg'
+import { cn } from '../lib/utils'
+import { SITE_PAGES, SOCIAL_LINKS } from '../SiteMetadata'
 
 const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-all shrink-0'
 
@@ -281,10 +281,13 @@ const currentYear = new Date().getFullYear()
           >
             <Icon
               name="simple-icons:facebook"
-              class={cn(socialIconClasses, `
-                p-1 text-white
-                group-hover:bg-[#3b5998]
-              `)}
+              class={cn(
+                socialIconClasses,
+                `
+                  p-1 text-white
+                  group-hover:bg-[#3b5998]
+                `
+              )}
             />
           </a>
           <a
@@ -298,10 +301,13 @@ const currentYear = new Date().getFullYear()
           >
             <Icon
               name="simple-icons:youtube"
-              class={cn(socialIconClasses, `
-                rounded-xl p-1 text-white
-                group-hover:bg-[#c4302b]
-              `)}
+              class={cn(
+                socialIconClasses,
+                `
+                  rounded-xl p-1 text-white
+                  group-hover:bg-[#c4302b]
+                `
+              )}
             />
           </a>
           <a
@@ -315,10 +321,13 @@ const currentYear = new Date().getFullYear()
           >
             <Icon
               name="simple-icons:pinterest"
-              class={cn(socialIconClasses, `
-                rounded-2xl p-2 text-white
-                group-hover:bg-[#E60023]
-              `)}
+              class={cn(
+                socialIconClasses,
+                `
+                  rounded-2xl p-2 text-white
+                  group-hover:bg-[#E60023]
+                `
+              )}
             />
           </a>
           <a
@@ -332,10 +341,13 @@ const currentYear = new Date().getFullYear()
           >
             <Icon
               name="simple-icons:rss"
-              class={cn(socialIconClasses, `
-                p-1 text-white
-                group-hover:text-brand-orange
-              `)}
+              class={cn(
+                socialIconClasses,
+                `
+                  p-1 text-white
+                  group-hover:text-brand-orange
+                `
+              )}
             />
           </a>
           <a
@@ -349,10 +361,13 @@ const currentYear = new Date().getFullYear()
           >
             <Icon
               name="simple-icons:goodreads"
-              class={cn(socialIconClasses, `
-                p-1 text-white
-                group-hover:text-[#e9e5cd]
-              `)}
+              class={cn(
+                socialIconClasses,
+                `
+                  p-1 text-white
+                  group-hover:text-[#e9e5cd]
+                `
+              )}
             />
           </a>
         </div>

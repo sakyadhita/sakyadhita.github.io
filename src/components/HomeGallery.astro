@@ -4,15 +4,10 @@
  * Migrated from HomeGallery.jsx to reduce React overhead.
  * Uses PhotoSwipe for the lightbox gallery.
  */
-interface ImageLike {
-  original: string
-  thumbnail: string
-  width: number
-  height: number
-}
+import { Image } from 'astro:assets'
 
 interface Props {
-  images: ImageLike[]
+  images: ImageMetadata[]
 }
 
 const { images } = Astro.props
@@ -30,7 +25,7 @@ const { images } = Astro.props
   {
     images.map((image) => (
       <a
-        href={image.original}
+        href={image.src}
         data-pswp-width={image.width}
         data-pswp-height={image.height}
         class="
@@ -42,14 +37,9 @@ const { images } = Astro.props
         target="_blank"
         rel="noreferrer"
       >
-        <img
-          src={image.thumbnail}
-          width={image.width}
-          height={image.height}
-          loading="lazy"
-          alt="Home gallery"
-          class="size-full object-cover"
-        />
+        <Image src={image} width={600} alt="Home gallery" class="
+          size-full object-cover
+        " />
       </a>
     ))
   }

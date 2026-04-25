@@ -2,9 +2,9 @@
 import { getCollection } from 'astro:content'
 
 import LotusHeader from '../assets/Lotus_Header.png'
-import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
-import NewsletterCard from '../components/Newsletters/NewsletterCard.astro'
+import NewsletterCard from '../components/NewsletterCard.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
+import ResourcesNavBar from '../components/ResourcesNavBar.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const newslettersRaw = await getCollection('newsletter')

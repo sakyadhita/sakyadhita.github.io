@@ -1,15 +1,19 @@
 ---
-import { getImage } from 'astro:assets'
 import { getCollection, getEntry, render } from 'astro:content'
 import { marked } from 'marked'
 
-import HomeBody from '../components/Home/HomeBody.astro'
-import HomeSlideshow from '../components/Home/HomeSlideshow.astro'
+import DonateImg from '../assets/Donate Page/Donate.jpg'
+import JoiningHandsImg from '../assets/Join Us Page/JoinUs.jpg'
+import VolunteerImg from '../assets/Join Us Page/Volunteer.jpg'
+import HomeBeInvolved from '../components/HomeBeInvolved.astro'
+import HomeGallery from '../components/HomeGallery.astro'
+import HomeHero from '../components/HomeHero.astro'
+import HomeMap from '../components/HomeMap'
+import HomeNewsFlash from '../components/HomeNewsFlash.astro'
+import HomeNewsSlide from '../components/HomeNewsSlide.astro'
+import Slideshow from '../components/Slideshow.astro'
 import PageLayout from '../layouts/PageLayout.astro'
-
-interface HomeImageModule {
-  default: ImageMetadata
-}
+import { SITE_PAGES } from '../SiteMetadata'
 
 const branches = await getCollection('branch')
 
@@ -38,20 +42,10 @@ const additionalSections = await Promise.all(
   })
 )
 
-const imagesRaw = Object.values(
-  import.meta.glob('../assets/home/*.jpg', { eager: true })
-) as HomeImageModule[]
-const images = await Promise.all(
-  imagesRaw.map(async (img) => {
-    const optimized = await getImage({ src: img.default, format: 'webp', width: 600 })
-    return {
-      original: img.default.src,
-      thumbnail: optimized.src,
-      width: img.default.width,
-      height: img.default.height
-    }
-  })
-)
+// Fetch gallery images
+const homeImages = Object.values(
+  import.meta.glob<{ default: ImageMetadata }>('../assets/home/*.jpg', { eager: true })
+).map((m) => m.default)
 
 // For tooltips, we still need HTML strings
 const branchesWithHtml = await Promise.all(
@@ -60,19 +54,203 @@ const branchesWithHtml = await Promise.all(
     return { ...b, html }
   })
 )
+
+interface NewsFlashArticle {
+  data: {
+    title: string
+    subtitle: string
+    image: ImageMetadata
+    redirectLink: string
+  }
+}
 ---
 
 <PageLayout>
   <div class="w-full text-black">
-    <HomeSlideshow newsAndEvents={newsAndEvents} />
+    {
+      newsAndEvents && newsAndEvents.length > 0 && (
+        <Slideshow height="85vh" width="100%">
+          {newsAndEvents.map((slideInfo) => (
+            <HomeNewsSlide
+              height="85vh"
+              showButton={!!slideInfo.redirectLink}
+              openInSameTab={false}
+              redirect_link={slideInfo.redirectLink}
+              title={slideInfo.title}
+              description={slideInfo.description}
+              image_url={slideInfo.optimizedImage || slideInfo.imageLink}
+            />
+          ))}
+        </Slideshow>
+      )
+    }
 
-    <HomeBody
-      IntroContent={IntroContent}
-      newsflash={newsflash}
-      NewsFlashContent={NewsFlashContent}
-      additionalSections={additionalSections}
-      images={images}
-      branches={branchesWithHtml}
-    />
+    <section
+      class="
+        flex w-full flex-col items-center px-4 py-12 font-body text-black
+        md:px-12 md:py-24
+      "
+    >
+      <section id="home-intro" class="w-full whitespace-pre-line text-black">
+        <HomeHero>
+          {IntroContent && <IntroContent />}
+        </HomeHero>
+      </section>
+
+      <div class="
+        my-16 h-0.5 w-1/2 bg-brand-orange
+        md:my-20
+      "></div>
+
+      {
+        newsflash && newsflash.data.isPublished && NewsFlashContent && (
+          <section id="latest-news" class="w-full">
+            <HomeNewsFlash article={newsflash as unknown as NewsFlashArticle}>
+              <NewsFlashContent />
+            </HomeNewsFlash>
+          </section>
+        )
+      }
+
+      {
+        additionalSections.map((section) => (
+          <div class="w-full">
+            <div class="mx-auto my-16 h-0.5 w-1/2 bg-brand-orange" />
+            <section class="
+              flex w-full flex-col gap-8 text-left whitespace-pre-line
+            ">
+              <h1
+                class="
+                  mt-5 mb-8 font-heading text-2xl font-bold text-black
+                  md:text-3xl
+                "
+              >
+                {section.data.title}
+              </h1>
+              <div
+                class="
+                  prose flex max-w-none flex-col items-center justify-center
+                  text-black
+                "
+              >
+                <section.Content />
+              </div>
+            </section>
+          </div>
+        ))
+      }
+
+      {homeImages.length > 0 && <HomeGallery images={homeImages} />}
+
+      <section
+        id="branches-and-chapters"
+        class="
+          mt-8 flex w-full flex-col-reverse items-center justify-center gap-8
+          lg:flex-row-reverse lg:gap-0
+        "
+      >
+        <div class="
+          h-96 w-full
+          md:h-[600px]
+          lg:w-1/2
+        ">
+          <HomeMap
+            client:visible
+            disableZooming={false}
+            markers={branchesWithHtml.map((m) => ({
+              name: m.data.name as string,
+              latitude: m.data.latitude as number,
+              longitude: m.data.longitude as number,
+              isBranch: m.data.isBranch as boolean,
+              siteLink: m.data.siteLink as string,
+              email: m.data.email as string,
+              html: m.html
+            }))}
+          />
+        </div>
+
+        <div class="
+          prose mt-6 w-full max-w-none
+          lg:mt-0 lg:w-1/2 lg:pr-12
+        ">
+          <h1 class="
+            mb-8 font-heading text-2xl font-bold text-black
+            md:text-3xl
+          ">
+            Branches
+          </h1>
+          <p class="text-gray-700">
+            Buddhist women and their allies gather at the Sakyadhita International Conferences every
+            two years and also organize national branches and local chapters to facilitate
+            networking and events closer to home. These branches and chapters help bring awareness
+            of Sakyadhita’s goals and activities to large numbers of people in their vicinity. Some
+            help plan the international conferences, developing leadership skills on the ground.
+            Others are active in translation activities and have done excellent work in training
+            translators who are qualified to translate materials on Buddhism and issues of interest
+            to Buddhist women.
+            <br /><br />
+            Click on a pin for more information about the branch!
+          </p>
+          <section class="
+            mt-8 flex flex-row items-start justify-evenly font-bold text-black
+          ">
+            <div class="flex flex-row items-center justify-center text-center">
+              <div class="mr-2 size-6 bg-brand-orange"></div>
+              <div class="lowercase">Branch</div>
+            </div>
+
+            <div class="flex flex-row items-center justify-center text-center">
+              <div class="mr-2 size-6 bg-brand-light-purple"></div>
+              <div class="lowercase">Chapter</div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <div class="
+        my-16 h-0.5 w-1/2 bg-brand-orange
+        md:my-20
+      "></div>
+
+      <section id="home-be-involved" class="prose mt-8 w-full max-w-none">
+        <h1
+          class="
+            mb-8 text-center font-heading text-2xl font-bold text-black
+            md:text-left md:text-3xl
+          "
+        >
+          Be Involved{' '}
+        </h1>
+        <div
+          class="
+            mt-8 flex flex-col items-center justify-between gap-5
+            md:flex-row md:gap-10
+            lg:gap-12
+          "
+        >
+          <HomeBeInvolved
+            description="Become a member of Sakyadhita!"
+            image_url={JoiningHandsImg}
+            openInSameTab="true"
+            redirect_link={SITE_PAGES.JOIN_US}
+            button_title="Join Us"
+          />
+          <HomeBeInvolved
+            description="Interested in helping us with anything from writing content to building?"
+            image_url={VolunteerImg}
+            openInSameTab="true"
+            redirect_link={SITE_PAGES.VOLUNTEER}
+            button_title="Volunteer"
+          />
+          <HomeBeInvolved
+            description="Help us grow and continue to connect by donating in any amount"
+            image_url={DonateImg}
+            openInSameTab="true"
+            redirect_link={SITE_PAGES.DONATE}
+            button_title="Donate"
+          />
+        </div>
+      </section>
+    </section>
   </div>
 </PageLayout>

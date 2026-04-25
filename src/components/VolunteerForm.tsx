@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { CountryDropdown } from 'react-country-region-selector'
 
-import { cn } from '../../lib/utils'
-import CustomButton from '../CustomButtonReact'
-import Modal from '../Modal'
-import VolunteerOption from '../VolunteerOption'
+import CustomButton from './CustomButtonReact'
+import Modal from './Modal'
+import VolunteerOption from './VolunteerOption'
+import { cn } from '../lib/utils'
 
 function displayCommittees(
   volunteerCommittees: any[],
@@ -29,15 +29,9 @@ function displayCommittees(
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return (
-    <span
-      className="
+  return <span className="
     error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
-  "
-    >
-      *
-    </span>
-  )
+  ">*</span>
 }
 
 interface CommitteeData {
@@ -243,8 +237,8 @@ export default function Volunteer({ interests }: VolunteerProps) {
   const inputClasses = (hasError: boolean) =>
     cn(
       `
-        input-field h-12 w-full rounded-2xl border-black bg-white px-4
-        font-body text-lg transition-all outline-none
+        input-field h-12 w-full rounded-2xl border-black bg-white px-4 font-body
+        text-lg transition-all outline-none
         focus:ring-2 focus:ring-brand-dark-purple
       `,
       hasError && 'border-brand-red ring-2 ring-brand-red'
@@ -263,8 +257,8 @@ export default function Volunteer({ interests }: VolunteerProps) {
             Support Sakyadhita!
           </h1>
           <p className="text-lg/relaxed text-gray-700">
-            Sakyadhita is a 501(c)3 non-profit organization. We are a volunteer-run organization
-            and rely on the generous support of our members and donors. We are always looking for
+            Sakyadhita is a 501(c)3 non-profit organization. We are a volunteer-run organization and
+            rely on the generous support of our members and donors. We are always looking for
             volunteers to help us with our various initiatives. If you are interested in
             volunteering with us, please fill out the form below and select the committees you are
             interested in joining.

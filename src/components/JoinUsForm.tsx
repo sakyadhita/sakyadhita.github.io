@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { CountryDropdown } from 'react-country-region-selector'
 
-import { cn } from '../../lib/utils'
-import CustomButton from '../CustomButtonReact'
-import Modal from '../Modal'
-import PayPalModal from '../PayPalModal'
-import { Checkbox } from '../ui/checkbox'
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Textarea } from '../ui/textarea'
+import CustomButton from './CustomButtonReact'
+import Modal from './Modal'
+import PayPalModal from './PayPalModal'
+import { cn } from '../lib/utils'
+import { Checkbox } from './ui/checkbox'
+import { Input } from './ui/input'
+import { Label } from './ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { Textarea } from './ui/textarea'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return (
-    <span
-      className="
+  return <span className="
     error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
-  "
-    >
-      *
-    </span>
-  )
+  ">*</span>
 }
 
 interface MembershipItem {
@@ -755,11 +749,9 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
                       text-center
                     "
                   >
-                    <p
-                      className="
+                    <p className="
                       animate-pulse text-lg font-bold text-brand-red
-                    "
-                    >
+                    ">
                       *Please fill out all required fields to proceed to payment.
                     </p>
                   </div>

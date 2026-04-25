@@ -178,8 +178,8 @@ export default function PayPal({
   React.useEffect(() => {
     // Wait for PayPal SDK to load
     const waitForPayPal = () => {
-      if (window.paypal && window.paypal.Buttons) {
-        window.paypal
+      if (globalThis.paypal && globalThis.paypal.Buttons) {
+        globalThis.paypal
           .Buttons({
             createOrder: async (_data: any, actions: any) => {
               // console.log(paypalOrderObject)
