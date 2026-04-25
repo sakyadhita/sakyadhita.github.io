@@ -1,3 +1,3 @@
 ---
-layout: ../layouts/ConfLayout.astro
+layout: ../layouts/Conference.astro
 ---

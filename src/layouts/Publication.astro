@@ -4,8 +4,8 @@ import { getCollection } from 'astro:content'
 import PageLayout from './PageLayout.astro'
 import EPubCard from '../components/EPubs/EPubCard.astro'
 import EPubSection from '../components/EPubs/EPubSection.astro'
-import Slideshow from '../components/Slideshow.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
+import Slideshow from '../components/Slideshow.astro'
 
 const epublications = await getCollection('publication')
 
@@ -34,8 +34,8 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
             featuredEpubs.map((epub) => (
               <div
                 class="
-                  embla__slide relative flex size-full items-center justify-center
-                  bg-brand-dark-purple text-white
+                  embla__slide relative flex size-full items-center
+                  justify-center bg-brand-dark-purple text-white
                   lg:items-stretch lg:justify-start
                 "
               >
@@ -103,12 +103,10 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
           <slot />
         </div>
 
-        <div
-          class="
-            sections-container mt-14 mb-24
-            max-md:m-0
-          "
-        >
+        <div class="
+          sections-container mt-14 mb-24
+          max-md:m-0
+        ">
           {sections.map((section) => <EPubSection publication_section={section} />)}
         </div>
       </div>
@@ -136,14 +134,16 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
                 >
                   <div
                     class="
-                      absolute -top-12 left-[-10vw] block h-24 w-[calc(100%+20vw)]
+                      absolute -top-12 left-[-10vw] block h-24
+                      w-[calc(100%+20vw)]
                       shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]
                       lg:hidden
                     "
                   />
                   <h1
                     class="
-                      z-10 w-full text-center font-heading text-2xl/tight font-bold
+                      z-10 w-full text-center font-heading text-2xl/tight
+                      font-bold
                       lg:text-4xl/relaxed lg:font-normal
                     "
                   >
@@ -156,7 +156,8 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
                       border-none bg-inherit p-0 text-center font-body
                       text-base/tight
                       hover:underline
-                      lg:absolute lg:bottom-0 lg:left-6 lg:mb-4 lg:text-lg/relaxed
+                      lg:absolute lg:bottom-0 lg:left-6 lg:mb-4
+                      lg:text-lg/relaxed
                     "
                   >
                     &lt; <span class="lg:hidden">Back to latest</span>
@@ -183,8 +184,8 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
                 {/* Content */}
                 <div
                   class="
-                    relative mx-[-25px] flex flex-wrap items-start justify-center
-                    text-center
+                    relative mx-[-25px] flex flex-wrap items-start
+                    justify-center text-center
                   "
                 >
                   {section.section_list.map((pub) => (

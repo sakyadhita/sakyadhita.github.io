@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
-import NewsletterCard from '../components/Newsletters/NewsletterCard.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
+import NewsletterCard from '../components/Newsletters/NewsletterCard.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import { getOptimizedImage } from '../lib/images'
 
@@ -30,14 +30,16 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
       text={frontmatter.description}
       image={optimizedHeader?.src || frontmatter.image}
     />
-    
+
     <div class="mx-auto max-w-5xl px-4">
       <slot />
     </div>
 
     {
       newsletters.length === 0 ? (
-        <div class="flex w-full justify-center py-20 font-body text-gray-500 italic">
+        <div class="
+          flex w-full justify-center py-20 font-body text-gray-500 italic
+        ">
           We have no newsletters to show you at this time
         </div>
       ) : (
@@ -60,10 +62,14 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
           </div>
 
           <div id="pagination-container" class="mb-20">
-            <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center">
-              <ul id="pagination-content" class="flex flex-row items-center gap-1">
-                <!-- Will be populated by JS -->
-              </ul>
+            <nav
+              role="navigation"
+              aria-label="pagination"
+              class="mx-auto flex w-full justify-center"
+            >
+              <ul id="pagination-content" class="
+                flex flex-row items-center gap-1
+              "></ul>
             </nav>
           </div>
         </div>
@@ -78,8 +84,8 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
     if (!root) return
 
     const paginationContent = root.querySelector('#pagination-content')
-    const cards = Array.from(root.querySelectorAll('.newsletter-card'))
-    
+    const cards = [...root.querySelectorAll('.newsletter-card')]
+
     let currentPage = 0
     let numPerPage = 9
 
@@ -136,15 +142,15 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
           <span>Previous</span>
         </a>
       `
-      prevItem.onclick = (e) => {
-        e.preventDefault()
-        if (currentPage > 0) {
-          currentPage--
-          render()
-          scrollToGrid()
-        }
+      prevItem.addEventListener('click', (e) => {
+      e.preventDefault()
+      if (currentPage > 0) {
+        currentPage--
+        render()
+        scrollToGrid()
       }
-      paginationContent.appendChild(prevItem)
+    })
+      paginationContent.append(prevItem)
 
       // Page numbers
       const range = 2
@@ -163,13 +169,13 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
               ${i + 1}
             </a>
           `
-          item.onclick = (e) => {
-            e.preventDefault()
-            currentPage = i
-            render()
-            scrollToGrid()
-          }
-          paginationContent.appendChild(item)
+          item.addEventListener('click', (e) => {
+          e.preventDefault()
+          currentPage = i
+          render()
+          scrollToGrid()
+        })
+          paginationContent.append(item)
         } else if (
           (i === margin && currentPage - range > margin) ||
           (i === maxPages - margin - 1 && currentPage + range < maxPages - margin - 1)
@@ -181,7 +187,7 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
               <span class="sr-only">More pages</span>
             </span>
           `
-          paginationContent.appendChild(ellipsis)
+          paginationContent.append(ellipsis)
           // Skip loop to next showing page
           if (i === margin) i = currentPage - range - 1
           else if (i === maxPages - margin - 1) i = maxPages - margin - 1
@@ -197,15 +203,15 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       `
-      nextItem.onclick = (e) => {
-        e.preventDefault()
-        if (currentPage < maxPages - 1) {
-          currentPage++
-          render()
-          scrollToGrid()
-        }
+      nextItem.addEventListener('click', (e) => {
+      e.preventDefault()
+      if (currentPage < maxPages - 1) {
+        currentPage++
+        render()
+        scrollToGrid()
       }
-      paginationContent.appendChild(nextItem)
+    })
+      paginationContent.append(nextItem)
     }
 
     const scrollToGrid = () => {

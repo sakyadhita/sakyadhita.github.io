@@ -1,3 +1,3 @@
 ---
-layout: '../layouts/HomeLayout.astro'
+layout: '../layouts/Home.astro'
 ---

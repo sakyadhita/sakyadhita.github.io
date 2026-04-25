@@ -1,5 +1,5 @@
 ---
-layout: ../layouts/VolLayout.astro
+layout: ../layouts/Volunteer.astro
 title: Volunteer
 description: Volunteer through Sakyadhita
 image: ../assets/Lotus_Header.png

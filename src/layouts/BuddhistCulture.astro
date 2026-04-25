@@ -33,8 +33,10 @@ const optimizedHeader = rawHeader
         text={frontmatter.description}
       />
 
-      <div class="mx-auto w-full max-w-4xl px-6 py-12 font-body
-        md:px-12 md:py-24">
+      <div class="
+        mx-auto w-full max-w-4xl px-6 py-12 font-body
+        md:px-12 md:py-24
+      ">
         {
           sections.length === 0 ? (
             <div class="flex h-64 items-center justify-center">
@@ -55,7 +57,9 @@ const optimizedHeader = rawHeader
                   <div id={item.data.title.replaceAll(' ', '')} />
                   <h1>{item.data.title}</h1>
                   <item.Content />
-                  {index === sections.length - 1 ? null : <hr class="my-12 border-brand-orange" />}
+                  {index === sections.length - 1 ? null : <hr class="
+                    my-12 border-brand-orange
+                  " />}
                 </div>
               ))}
               <slot />

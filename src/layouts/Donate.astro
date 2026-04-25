@@ -22,17 +22,25 @@ const { frontmatter } = Astro.props
     />
 
     {/* All page content */}
-    <div class="flex flex-col px-4 py-12
-      md:px-12 md:py-24">
-      <div class="flex flex-col items-start justify-center gap-8
-        lg:flex-row lg:gap-0">
+    <div class="
+      flex flex-col px-4 py-12
+      md:px-12 md:py-24
+    ">
+      <div class="
+        flex flex-col items-start justify-center gap-8
+        lg:flex-row lg:gap-0
+      ">
         {/* PayPal Info */}
         <section
-          class="mx-0 flex flex-1 flex-col items-center text-center
-            lg:mx-8 lg:text-left"
+          class="
+            mx-0 flex flex-1 flex-col items-center text-center
+            lg:mx-8 lg:text-left
+          "
         >
-          <h1 class="mb-4 font-heading text-3xl font-bold
-            md:text-5xl">PayPal</h1>
+          <h1 class="
+            mb-4 font-heading text-3xl font-bold
+            md:text-5xl
+          ">PayPal</h1>
           <hr class="mb-8 h-1.5 w-1/2 border-none bg-brand-orange" />
           <p class="max-w-2xl leading-relaxed text-gray-700">
             Your donation makes a difference. In the tradition of the Buddha our work is offered
@@ -52,8 +60,10 @@ const { frontmatter } = Astro.props
                 name="submit"
                 title="PayPal - The safer, easier way to pay online!"
                 alt="Donate with PayPal button"
-                class="transition-opacity
-                  hover:opacity-90"
+                class="
+                  transition-opacity
+                  hover:opacity-90
+                "
               />
               <img alt="" src={PAYPAL_CONFIG.PIXEL_IMG} width="1" height="1" />
             </form>
@@ -67,11 +77,15 @@ const { frontmatter } = Astro.props
         </section>
         {/* AmazonSmile Info */}
         <section
-          class="mx-0 mt-12 flex flex-1 flex-col items-center text-center
-            lg:mx-8 lg:mt-0 lg:text-left"
+          class="
+            mx-0 mt-12 flex flex-1 flex-col items-center text-center
+            lg:mx-8 lg:mt-0 lg:text-left
+          "
         >
-          <h1 class="mb-4 font-heading text-3xl font-bold
-            md:text-5xl">AmazonSmile</h1>
+          <h1 class="
+            mb-4 font-heading text-3xl font-bold
+            md:text-5xl
+          ">AmazonSmile</h1>
           <hr class="mb-8 h-1.5 w-1/2 border-none bg-brand-orange" />
           <p class="max-w-2xl leading-relaxed text-gray-700">
             You can also support Sakyadhita International by shopping online through AmazonSmile, a
@@ -92,23 +106,31 @@ const { frontmatter } = Astro.props
         </section>
       </div>
 
-      <div class="hidden justify-center
-        md:flex">
+      <div class="
+        hidden justify-center
+        md:flex
+      ">
         <hr class="my-24 h-2.5 w-1/2 border-none bg-brand-orange" />
       </div>
 
       {/* Support Us Section */}
-      <section class="mt-12 flex flex-col items-center
-        md:mt-0 md:items-start">
-        <h1 class="mb-8 font-heading text-3xl font-bold
-          md:text-5xl">
+      <section class="
+        mt-12 flex flex-col items-center
+        md:mt-0 md:items-start
+      ">
+        <h1 class="
+          mb-8 font-heading text-3xl font-bold
+          md:text-5xl
+        ">
           Support Us via Involvement
         </h1>
         <p class="mb-8 text-gray-700">Get involved and support us!</p>
         <div
-          class="flex w-full flex-col items-center justify-evenly gap-8
+          class="
+            flex w-full flex-col items-center justify-evenly gap-8
             md:flex-row
-            lg:gap-12"
+            lg:gap-12
+          "
         >
           <BeInvolved
             description="Become a member of Sakyadhita!"
