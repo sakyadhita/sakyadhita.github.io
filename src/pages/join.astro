@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content'
 
-import PageLayout from '../layouts/PageLayout.astro'
+import FirstConference from '../assets/Join Us Page/1stConference.jpeg'
 import JoinUsComponent from '../components/Layouts/JoinUs'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import FirstConference from '../assets/Join Us Page/1stConference.jpeg'
+import PageLayout from '../layouts/PageLayout.astro'
 
 const membertypes = await getCollection('membertype')
 const memberships = membertypes.map((m) => ({

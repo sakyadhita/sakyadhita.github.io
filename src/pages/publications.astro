@@ -2,13 +2,13 @@
 import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
-import PageLayout from '../layouts/PageLayout.astro'
+import LotusHeader from '../assets/Lotus_Header.png'
 import EPubCard from '../components/EPubs/EPubCard.astro'
 import EPubSection from '../components/EPubs/EPubSection.astro'
-import Slideshow from '../components/Slideshow.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
+import Slideshow from '../components/Slideshow.astro'
+import PageLayout from '../layouts/PageLayout.astro'
 import { getAssetUrl } from '../lib/images'
-import LotusHeader from '../assets/Lotus_Header.png'
 
 const publicationsRaw = await getCollection('publication')
 const publications = publicationsRaw.toSorted((a, b) => a.data.id - b.data.id)
@@ -116,12 +116,10 @@ const frontmatter = {
           <slot />
         </div>
 
-        <div
-          class="
-            sections-container mt-14 mb-24
-            max-md:m-0
-          "
-        >
+        <div class="
+          sections-container mt-14 mb-24
+          max-md:m-0
+        ">
           {sections.map((section) => <EPubSection publication_section={section} />)}
         </div>
       </div>

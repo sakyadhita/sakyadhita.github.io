@@ -1,15 +1,15 @@
 ---
 import { Image } from 'astro:assets'
 
-import PageLayout from '../layouts/PageLayout.astro'
 import amazonSmileImg from '../assets/Donate Page/AmazonSmile-01.jpeg'
+import DonateImg from '../assets/Donate Page/Donate.jpg'
 import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg'
+import JoiningHandsImg from '../assets/Join Us Page/JoinUs.jpg'
+import LotusHeader from '../assets/Lotus_Header.png'
 import BeInvolved from '../components/Home/BeInvolved.astro'
 import PayPal from '../components/PayPal'
+import PageLayout from '../layouts/PageLayout.astro'
 import { PAYPAL_CONFIG, SITE_PAGES } from '../SiteMetadata'
-import LotusHeader from '../assets/Lotus_Header.png'
-import JoiningHandsImg from '../assets/Join Us Page/JoinUs.jpg'
-import DonateImg from '../assets/Donate Page/Donate.jpg'
 
 const frontmatter = {
   title: 'Donate & Support',
@@ -19,21 +19,17 @@ const frontmatter = {
 ---
 
 <PageLayout>
-  <div
-    class="
-      mx-auto w-full max-w-7xl px-6 py-12
-      md:px-12 md:py-24
-    "
-  >
+  <div class="
+    mx-auto w-full max-w-7xl px-6 py-12
+    md:px-12 md:py-24
+  ">
     <div class="space-y-16">
       {/* Header section */}
       <section class="prose max-w-none text-center">
-        <h1
-          class="
-            mb-6 font-heading text-4xl font-bold text-black
-            md:text-5xl
-          "
-        >
+        <h1 class="
+          mb-6 font-heading text-4xl font-bold text-black
+          md:text-5xl
+        ">
           {frontmatter.title}
         </h1>
         <p class="mx-auto max-w-3xl font-body text-xl text-gray-700 italic">
@@ -42,19 +38,15 @@ const frontmatter = {
       </section>
 
       {/* Main content grid */}
-      <div
-        class="
-          grid grid-cols-1 gap-12
-          lg:grid-cols-2
-        "
-      >
+      <div class="
+        grid grid-cols-1 gap-12
+        lg:grid-cols-2
+      ">
         {/* Left Column: Direct Donation */}
-        <section
-          class="
-            space-y-8 rounded-3xl bg-[#f7f7f7] p-8
-            md:p-12
-          "
-        >
+        <section class="
+          space-y-8 rounded-3xl bg-[#f7f7f7] p-8
+          md:p-12
+        ">
           <div
             class="
               prose prose-lg max-w-none font-body text-gray-700
@@ -79,18 +71,14 @@ const frontmatter = {
               ring-black/5
             "
           >
-            <div
-              class="
-                flex flex-col
-                md:flex-row
-              "
-            >
-              <div
-                class="
-                  w-full
-                  md:w-1/3
-                "
-              >
+            <div class="
+              flex flex-col
+              md:flex-row
+            ">
+              <div class="
+                w-full
+                md:w-1/3
+              ">
                 <Image
                   src={workingTogetherImg}
                   alt="Working Together"
@@ -103,11 +91,9 @@ const frontmatter = {
                 />
               </div>
               <div class="flex flex-1 flex-col justify-center p-8">
-                <h3
-                  class="
-                    mb-4 font-heading text-2xl font-bold text-black italic
-                  "
-                >
+                <h3 class="
+                  mb-4 font-heading text-2xl font-bold text-black italic
+                ">
                   Working Together
                 </h3>
                 <p class="font-body text-gray-600">
@@ -124,18 +110,14 @@ const frontmatter = {
               ring-black/5
             "
           >
-            <div
-              class="
-                flex flex-col
-                md:flex-row
-              "
-            >
-              <div
-                class="
-                  w-full
-                  md:w-1/3
-                "
-              >
+            <div class="
+              flex flex-col
+              md:flex-row
+            ">
+              <div class="
+                w-full
+                md:w-1/3
+              ">
                 <Image
                   src={amazonSmileImg}
                   alt="Amazon Smile"
@@ -148,13 +130,9 @@ const frontmatter = {
                 />
               </div>
               <div class="flex flex-1 flex-col justify-center p-8">
-                <h3
-                  class="
-                    mb-4 font-heading text-2xl font-bold text-black italic
-                  "
-                >
-                  Amazon Smile
-                </h3>
+                <h3 class="
+                  mb-4 font-heading text-2xl font-bold text-black italic
+                ">Amazon Smile</h3>
                 <p class="font-body text-gray-600">
                   Support Sakyadhita while you shop at Amazon. A portion of your purchase goes
                   directly to our programs.
@@ -179,12 +157,10 @@ const frontmatter = {
           <div class="h-px flex-1 bg-gray-100"></div>
         </div>
 
-        <div
-          class="
-            grid grid-cols-1 gap-8
-            md:grid-cols-2
-          "
-        >
+        <div class="
+          grid grid-cols-1 gap-8
+          md:grid-cols-2
+        ">
           <BeInvolved
             title="Join Sakyadhita"
             description="Become a member and join our global network of Buddhist women"

@@ -1,10 +1,10 @@
 ---
 import { getCollection, render } from 'astro:content'
 
-import PageLayout from '../layouts/PageLayout.astro'
+import LotusHeader from '../assets/Lotus_Header.png'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import LotusHeader from '../assets/Lotus_Header.png'
+import PageLayout from '../layouts/PageLayout.astro'
 
 const sectionsRaw = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'BuddhistCulture'
@@ -32,12 +32,10 @@ const frontmatter = {
         text={frontmatter.description}
       />
 
-      <div
-        class="
-          mx-auto w-full max-w-4xl px-6 py-12 font-body
-          md:px-12 md:py-24
-        "
-      >
+      <div class="
+        mx-auto w-full max-w-4xl px-6 py-12 font-body
+        md:px-12 md:py-24
+      ">
         {
           sections.length === 0 ? (
             <div class="flex h-64 items-center justify-center">
@@ -60,9 +58,7 @@ const frontmatter = {
                   <item.Content />
                   {index === sections.length - 1 ? null : (
                     <hr
-                      class="
-                        my-12 border-brand-orange
-                      "
+                      class="my-12 border-brand-orange"
                     />
                   )}
                 </div>

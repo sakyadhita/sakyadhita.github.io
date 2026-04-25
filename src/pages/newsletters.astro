@@ -1,11 +1,11 @@
 ---
 import { getCollection } from 'astro:content'
 
-import PageLayout from '../layouts/PageLayout.astro'
+import LotusHeader from '../assets/Lotus_Header.png'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import NewsletterCard from '../components/Newsletters/NewsletterCard.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import LotusHeader from '../assets/Lotus_Header.png'
+import PageLayout from '../layouts/PageLayout.astro'
 
 const newslettersRaw = await getCollection('newsletter')
 
@@ -73,9 +73,10 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
               aria-label="pagination"
               class="mx-auto flex w-full justify-center"
             >
-              <ul id="pagination-content" class="
-                flex flex-row items-center gap-1
-              " />
+              <ul
+                id="pagination-content"
+                class="flex flex-row items-center gap-1"
+              />
             </nav>
           </div>
         </div>

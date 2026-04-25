@@ -24,8 +24,7 @@ const optimizedImage =
       ? await getImage({ src: image, format: 'webp', width: 1600 })
       : null
 
-const imageUrl =
-  optimizedImage?.src || (typeof image === 'string' ? image : image ? image.src : '')
+const imageUrl = optimizedImage?.src || (typeof image === 'string' ? image : image ? image.src : '')
 ---
 
 <div

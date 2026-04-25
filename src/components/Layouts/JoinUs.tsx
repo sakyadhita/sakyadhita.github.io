@@ -13,13 +13,9 @@ import { Textarea } from '../ui/textarea'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return (
-    <span
-      className="error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red"
-    >
-      *
-    </span>
-  )
+  return <span className="
+    error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red
+  ">*</span>
 }
 
 interface MembershipItem {
@@ -747,9 +743,9 @@ export default function JoinUs({ frontmatter: _frontmatter, memberships }: JoinU
                       text-center
                     "
                   >
-                    <p
-                      className="animate-pulse text-lg font-bold text-brand-red"
-                    >
+                    <p className="
+                      animate-pulse text-lg font-bold text-brand-red
+                    ">
                       *Please fill out all required fields to proceed to payment.
                     </p>
                   </div>

@@ -23,9 +23,11 @@ const currentYear = new Date().getFullYear()
 <div class="relative mt-auto">
   {/* Background Image Layer */}
   <div
-    class="absolute inset-0 z-[-1] size-full rounded-md bg-cover
+    class="
+      absolute inset-0 z-[-1] size-full rounded-md bg-cover
       bg-position-[center,top] bg-no-repeat
-      shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)] blur-[5px]"
+      shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)] blur-[5px]
+    "
     style={{
       backgroundImage:
         'url("https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2996&q=80")'
@@ -34,50 +36,64 @@ const currentYear = new Date().getFullYear()
   </div>
 
   <div
-    class="relative z-0 flex min-h-[550px] w-full flex-col items-center
+    class="
+      relative z-0 flex min-h-[550px] w-full flex-col items-center
       justify-center overflow-hidden bg-brand-light-purple/90 px-6 py-10
       font-body
-      md:px-20 md:py-16"
+      md:px-20 md:py-16
+    "
   >
     {/* Pages Links */}
     <section
-      class="flex w-full flex-1 flex-col justify-between space-y-8
-        md:flex-row md:space-y-0"
+      class="
+        flex w-full flex-1 flex-col justify-between space-y-8
+        md:flex-row md:space-y-0
+      "
     >
       <div class="flex flex-col">
         <a
           href={SITE_PAGES.HOME}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
             hover:no-underline
-            md:text-2xl"
+            md:text-2xl
+          "
         >
           Home
         </a>
-        <div class="ml-1 flex flex-col
-          md:ml-0">
+        <div class="
+          ml-1 flex flex-col
+          md:ml-0
+        ">
           <a
             href={SITE_PAGES.JOIN_US}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             Join Us
           </a>
           <a
             href={SITE_PAGES.VOLUNTEER}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             Volunteer
           </a>
           <a
             href={SITE_PAGES.DONATE}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             Donate
@@ -88,46 +104,58 @@ const currentYear = new Date().getFullYear()
       <div class="flex flex-col text-left">
         <a
           href={SITE_PAGES.CONFERENCES}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
             hover:no-underline
-            md:text-2xl"
+            md:text-2xl
+          "
         >
           Conferences
         </a>
-        <div class="ml-1 flex flex-col
-          md:ml-0">
+        <div class="
+          ml-1 flex flex-col
+          md:ml-0
+        ">
           <a
             href="/conferences/19"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             2025 19th conference, (Sarawak, Malaysia)
           </a>
           <a
             href="/conferences/18"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             2023 18th conference, (Seoul, Korea)
           </a>
           <a
             href="/conferences/17"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             2021 17th conference, (online)
           </a>
           <a
             href="/conferences/16"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             2019 16th conference, (Blue Mountains, Australia)
@@ -138,46 +166,58 @@ const currentYear = new Date().getFullYear()
       <div class="flex flex-col">
         <a
           href={SITE_PAGES.RESOURCES_LANDING}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
             hover:no-underline
-            md:text-2xl"
+            md:text-2xl
+          "
         >
           Resources
         </a>
-        <div class="ml-1 flex flex-col
-          md:ml-0">
+        <div class="
+          ml-1 flex flex-col
+          md:ml-0
+        ">
           <a
             href={SITE_PAGES.RESOURCES_NEWSLETTERS}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             Newsletters
           </a>
           <a
             href={SITE_PAGES.RESOURCES_EPUBS}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             Publications
           </a>
           <a
             href={SITE_PAGES.RESOURCES_BUDDHIST_CULTURE}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             Buddhist Culture
           </a>
           <a
             href={SITE_PAGES.RESOURCES_ORDINATION_ISSUE}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
+            class="
+              mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
               hover:text-brand-orange
-              md:text-sm"
+              md:text-sm
+            "
           >
             <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
             Ordination
@@ -188,9 +228,11 @@ const currentYear = new Date().getFullYear()
       <div>
         <a
           href={SITE_PAGES.ABOUT_US}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
             hover:no-underline
-            md:text-2xl"
+            md:text-2xl
+          "
         >
           About
         </a>
@@ -199,9 +241,11 @@ const currentYear = new Date().getFullYear()
       <div>
         <a
           href={SITE_PAGES.CONTACT_US}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
+          class="
+            mb-2 block font-heading text-lg font-bold text-white capitalize
             hover:no-underline
-            md:text-2xl"
+            md:text-2xl
+          "
         >
           Contact
         </a>
@@ -210,13 +254,19 @@ const currentYear = new Date().getFullYear()
 
     {/* Bottom Section: Social Media & Brand */}
     <section
-      class="mt-12 flex w-full flex-col items-center justify-between space-y-8
-        md:flex-row md:space-y-0"
+      class="
+        mt-12 flex w-full flex-col items-center justify-between space-y-8
+        md:flex-row md:space-y-0
+      "
     >
-      <div class="flex flex-col items-center text-white
-        md:items-start">
-        <span class="mb-4 text-lg font-bold
-          md:text-xl">
+      <div class="
+        flex flex-col items-center text-white
+        md:items-start
+      ">
+        <span class="
+          mb-4 text-lg font-bold
+          md:text-xl
+        ">
           Check us out on these platforms!
         </span>
         <div class="flex flex-row space-x-6">
@@ -224,55 +274,85 @@ const currentYear = new Date().getFullYear()
             href={SOCIAL_LINKS.FACEBOOK}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:facebook"
-              class={cn(socialIconClasses, 'text-white group-hover:bg-[#3b5998] p-1')}
+              class={cn(socialIconClasses, `
+                p-1 text-white
+                group-hover:bg-[#3b5998]
+              `)}
             />
           </a>
           <a
             href={SOCIAL_LINKS.YOUTUBE}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:youtube"
-              class={cn(socialIconClasses, 'text-white group-hover:bg-[#c4302b] rounded-xl p-1')}
+              class={cn(socialIconClasses, `
+                rounded-xl p-1 text-white
+                group-hover:bg-[#c4302b]
+              `)}
             />
           </a>
           <a
             href={SOCIAL_LINKS.PINTEREST}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:pinterest"
-              class={cn(socialIconClasses, 'text-white group-hover:bg-[#E60023] rounded-2xl p-2')}
+              class={cn(socialIconClasses, `
+                rounded-2xl p-2 text-white
+                group-hover:bg-[#E60023]
+              `)}
             />
           </a>
           <a
             href={SOCIAL_LINKS.BLOG}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:rss"
-              class={cn(socialIconClasses, 'text-white group-hover:text-brand-orange p-1')}
+              class={cn(socialIconClasses, `
+                p-1 text-white
+                group-hover:text-brand-orange
+              `)}
             />
           </a>
           <a
             href={SOCIAL_LINKS.GOODREADS}
             target="_blank"
             rel="noreferrer"
-            class="group transition-transform hover:scale-110"
+            class="
+              group transition-transform
+              hover:scale-110
+            "
           >
             <Icon
               name="simple-icons:goodreads"
-              class={cn(socialIconClasses, 'text-white group-hover:text-[#e9e5cd] p-1')}
+              class={cn(socialIconClasses, `
+                p-1 text-white
+                group-hover:text-[#e9e5cd]
+              `)}
             />
           </a>
         </div>
@@ -282,25 +362,29 @@ const currentYear = new Date().getFullYear()
     </section>
 
     <div
-      class="mt-12 w-full border-t border-white/20 pt-8 text-center font-body text-sm
+      class="
+        mt-12 w-full border-t border-white/20 pt-8 text-center font-body text-sm
         text-white
-        md:text-base"
+        md:text-base
+      "
     >
-      <Image
-        src={License}
-        alt="license"
-        width={64}
-        class="mb-2 inline-block
-        md:mb-0"
-      />
-      <span class="block
-        md:ml-2 md:inline-block">
+      <Image src={License} alt="license" width={64} class="
+        mb-2 inline-block
+        md:mb-0
+      " />
+      <span class="
+        block
+        md:ml-2 md:inline-block
+      ">
         © {currentYear} Website is licensed under a
         <a
           target="_blank"
           rel="noreferrer"
           href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
-          class="mx-1 transition-colors hover:text-brand-orange"
+          class="
+            mx-1 transition-colors
+            hover:text-brand-orange
+          "
         >
           Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International License
         </a>

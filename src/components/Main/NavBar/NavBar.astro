@@ -70,12 +70,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
     </button>
 
     {/* Nav Links */}
-    <div
-      class="
-        flex size-full flex-col
-        md:h-auto
-      "
-    >
+    <div class="
+      flex size-full flex-col
+      md:h-auto
+    ">
       {
         navLinks.map((item) => {
           const isActive =
