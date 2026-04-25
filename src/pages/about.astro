@@ -5,6 +5,7 @@ import { getCollection, render } from 'astro:content'
 import PageLayout from '../layouts/PageLayout.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import { getAssetUrl } from '../lib/images'
+import LotusHeader from '../assets/Lotus_Header.png'
 
 const committeesRaw = await getCollection('exco')
 const committees = await Promise.all(
@@ -32,9 +33,10 @@ const sections = await Promise.all(
 )
 
 const frontmatter = {
-  title: "About Us",
-  description: "Sakyadhita is an alliance of Buddhist women and allies who work for gender equity in the world’s Buddhist traditions. We promote research and publications on Buddhist women's history and document their achievements. We strive to create equal opportunities for women in all Buddhist traditions.",
-  image: "../assets/Lotus_Header.png"
+  title: 'About Us',
+  description:
+    "Sakyadhita is an alliance of Buddhist women and allies who work for gender equity in the world’s Buddhist traditions. We promote research and publications on Buddhist women's history and document their achievements. We strive to create equal opportunities for women in all Buddhist traditions.",
+  image: LotusHeader
 }
 
 function makeIdURLFriendly(idString: string) {
@@ -54,10 +56,12 @@ function makeIdURLFriendly(idString: string) {
   />
 
   <div id="about-us-root" class="relative w-full">
-    <div class="
-      flex w-full flex-col
-      md:flex-row
-    ">
+    <div
+      class="
+        flex w-full flex-col
+        md:flex-row
+      "
+    >
       {/* Sticky Nav */}
       <aside
         class="
@@ -106,10 +110,12 @@ function makeIdURLFriendly(idString: string) {
       </aside>
 
       {/* Contents of page */}
-      <div class="
-        mx-auto w-full max-w-4xl flex-1 px-6 py-12 font-body
-        md:px-12 md:py-24
-      ">
+      <div
+        class="
+          mx-auto w-full max-w-4xl flex-1 px-6 py-12 font-body
+          md:px-12 md:py-24
+        "
+      >
         <div
           class="
             prose prose-lg max-w-none
@@ -127,6 +133,7 @@ function makeIdURLFriendly(idString: string) {
               </div>
             ))
           }
+          <slot />
         </div>
 
         {/* Mini Divider */}
@@ -138,14 +145,19 @@ function makeIdURLFriendly(idString: string) {
         />
 
         {/* Executive Committee Section */}
-        <div class="
-          about-section mt-12 flex flex-col items-center
-          md:mt-0
-        " id="exec">
-          <h1 class="
-            mb-8 font-heading text-3xl font-bold
-            md:text-5xl
-          ">
+        <div
+          class="
+            about-section mt-12 flex flex-col items-center
+            md:mt-0
+          "
+          id="exec"
+        >
+          <h1
+            class="
+              mb-8 font-heading text-3xl font-bold
+              md:text-5xl
+            "
+          >
             Executive Committee
           </h1>
 
@@ -206,9 +218,12 @@ function makeIdURLFriendly(idString: string) {
           }
 
           {/* Committee Profiles */}
-          <div id="committee-profiles-container" class="
-            flex w-full justify-center
-          ">
+          <div
+            id="committee-profiles-container"
+            class="
+              flex w-full justify-center
+            "
+          >
             {
               yearRanges.map((yearRange) => {
                 const [start] = yearRange.split('-').map(Number)

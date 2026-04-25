@@ -2,11 +2,12 @@
 import PageLayout from '../layouts/PageLayout.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import ResourcesHeader from '../components/ResourcesLanding/ResourcesLandingPageHeader.astro'
+import LotusHeader from '../assets/Lotus_Header.png'
 
 const frontmatter = {
-  title: "Sakyadhita Resources",
-  description: "All information related and central to Sakyadhita.",
-  image: "../assets/Lotus_Header.png"
+  title: 'Sakyadhita Resources',
+  description: 'All information related and central to Sakyadhita.',
+  image: LotusHeader
 }
 ---
 
@@ -21,5 +22,6 @@ const frontmatter = {
         width="100%"
       />
     </div>
+    <slot />
   </ResourcesNavBar>
 </PageLayout>

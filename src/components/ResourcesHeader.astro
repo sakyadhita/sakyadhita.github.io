@@ -7,7 +7,6 @@
  */
 import { getImage } from 'astro:assets'
 
-import { getRawImage } from '../lib/images'
 import { cn } from '../lib/utils'
 
 interface Props {
@@ -19,12 +18,15 @@ interface Props {
 
 const { image, title, text, class: className } = Astro.props
 
-const rawImage = typeof image === 'string' ? getRawImage(image) : image
-const optimizedImage = rawImage
-  ? await getImage({ src: rawImage, format: 'webp', width: 1600 })
-  : null
+const optimizedImage =
+  typeof image === 'string'
+    ? null
+    : image
+      ? await getImage({ src: image, format: 'webp', width: 1600 })
+      : null
 
-const imageUrl = optimizedImage?.src || (typeof image === 'string' ? image : image ? image.src : '')
+const imageUrl =
+  optimizedImage?.src || (typeof image === 'string' ? image : image ? image.src : '')
 ---
 
 <div

@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content'
 import PageLayout from '../layouts/PageLayout.astro'
 import JoinUsComponent from '../components/Layouts/JoinUs'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
+import FirstConference from '../assets/Join Us Page/1stConference.jpeg'
 
 const membertypes = await getCollection('membertype')
 const memberships = membertypes.map((m) => ({
@@ -13,9 +14,10 @@ const memberships = membertypes.map((m) => ({
 }))
 
 const frontmatter = {
-  title: "Join Us",
-  description: "You join the world's leading international organization committed to transforming the lives of women in Buddhist societies. Sakyadhita seeks to unite Buddhist women of diverse countries and traditions, to promote their welfare, and to facilitate their work for the benefit of humanity. We invite you to join us in developing comprehensive resources to globally assist Buddhist women in creating a better world.",
-  image: "/assets/Join Us Page/1stConference.jpeg"
+  title: 'Join Us',
+  description:
+    "You join the world's leading international organization committed to transforming the lives of women in Buddhist societies. Sakyadhita seeks to unite Buddhist women of diverse countries and traditions, to promote their welfare, and to facilitate their work for the benefit of humanity. We invite you to join us in developing comprehensive resources to globally assist Buddhist women in creating a better world.",
+  image: FirstConference
 }
 ---
 
@@ -26,7 +28,9 @@ const frontmatter = {
     image={frontmatter.image}
   />
 
-  <JoinUsComponent client:load frontmatter={frontmatter} memberships={memberships} />
+  <JoinUsComponent client:load frontmatter={frontmatter} memberships={memberships}>
+    <slot />
+  </JoinUsComponent>
 
   {/* Hidden forms for Netlify detection */}
   <form name="membership" data-netlify="true" netlify-honeypot="bot-field" hidden>

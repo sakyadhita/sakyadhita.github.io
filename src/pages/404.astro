@@ -1,21 +1,19 @@
 ---
-import { getImage } from 'astro:assets'
-
 import LotusHeader from '../assets/Lotus_Header.png'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
-
-const optimizedHeader = await getImage({ src: LotusHeader, format: 'webp', width: 1600 })
 ---
 
 <PageLayout>
   <div class="sm:hidden">
-    <ResourcesHeader title="404 - Invalid Page" image={optimizedHeader.src} />
+    <ResourcesHeader title="404 - Invalid Page" image={LotusHeader} />
   </div>
-  <div class="
-    hidden
-    sm:block
-  ">
-    <ResourcesHeader title="404" text="Page Not Found" image={optimizedHeader.src} />
+  <div
+    class="
+      hidden
+      sm:block
+    "
+  >
+    <ResourcesHeader title="404" text="Page Not Found" image={LotusHeader} />
   </div>
 </PageLayout>

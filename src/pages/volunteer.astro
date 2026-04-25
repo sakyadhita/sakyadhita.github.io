@@ -4,11 +4,12 @@ import { getCollection } from 'astro:content'
 import PageLayout from '../layouts/PageLayout.astro'
 import VolunteerComponent from '../components/Layouts/Volunteer'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
+import LotusHeader from '../assets/Lotus_Header.png'
 
 const frontmatter = {
-  title: "Volunteer",
-  description: "Volunteer through Sakyadhita",
-  image: "../assets/Lotus_Header.png"
+  title: 'Volunteer',
+  description: 'Volunteer through Sakyadhita',
+  image: LotusHeader
 }
 
 const volinterests = await getCollection('volinterest')
@@ -25,7 +26,9 @@ const interests = volinterests.map((interest) => ({
     image={frontmatter.image}
   />
 
-  <VolunteerComponent client:load interests={interests} />
+  <VolunteerComponent client:load interests={interests}>
+    <slot />
+  </VolunteerComponent>
 
   {/* Hidden form for Netlify detection */}
   <form name="volunteer" data-netlify="true" netlify-honeypot="bot-field" hidden>
