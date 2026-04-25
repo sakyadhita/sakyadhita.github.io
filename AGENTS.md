@@ -1,4 +1,4 @@
-# Gemini Context: Sakyadhita Website
+# Agent Context: Sakyadhita Website
 
 This project is the official website for **Sakyadhita International Association of Buddhist Women**, built using **Astro** and **React**. It was migrated from a legacy SERN stack to a modern static site architecture.
 
@@ -51,7 +51,6 @@ This project is the official website for **Sakyadhita International Association 
 
 ### Content Updates
 To update content, modify the Markdown files in `src/content/`.
-- **Images**: Reference images from `/assets/...` (which maps to `public/assets/`).
 - **Frontmatter**: Ensure all required fields (defined in `src/content/config.ts`) are present.
 
 ### Code Style
@@ -63,11 +62,7 @@ To update content, modify the Markdown files in `src/content/`.
     - Standard utility classes: Prefer standard Tailwind scale (e.g., `w-44`, `h-112`) over arbitrary values (`w-[175px]`).
 - **Linting**: ESLint v9 Flat Config with plugins for Astro, React, Markdown, and modern JS patterns (`unicorn`).
 - **Imports**: Enforced sorting via `eslint-plugin-import`.
-- **React**: Use `.tsx` for files containing JSX. Prefer functional components and hooks. Use React 19 native refs and patterns.
+- **React**: Use `.tsx` for files containing React. Prefer functional components and hooks. Use React 19 native refs and patterns.
 
 ### Deployment
 Pushes to the `main` branch automatically trigger a deploy on Netlify. Always verify your changes with `pnpm astro check`, `pnpm test:ui`, `pnpm test:e2e` and `pnpm build`.
-
-## 📝 TODOs / Future Work
-- [ ] Complete the migration of `src/content/config.ts` to the latest Astro loader API (e.g., using `glob` loader).
-- [ ] Ensure all images in `public/assets` are optimized where possible.
