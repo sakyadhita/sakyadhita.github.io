@@ -1,4 +1,6 @@
 ---
+import { YouTube } from '@astro-community/astro-embed-youtube'
+
 import Slideshow from '../Slideshow.astro'
 import ConferenceOverview from './ConferenceOverview.astro'
 import ConferenceTheme from './ConferenceTheme.astro'
@@ -121,14 +123,7 @@ const index = initialIndex === -1 ? 0 : initialIndex
                     >
                       {/* Same slideshow as theme for now or video if it exists */}
                       {item.data.video ? (
-                        <div class="size-full bg-black">
-                          <iframe
-                            src={item.data.video.replace('watch?v=', 'embed/')}
-                            class="size-full"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                          />
-                        </div>
+                        <YouTube id={item.data.video} class="size-full bg-black" />
                       ) : item.data.optimizedImages?.length === 1 ? (
                         <img
                           class="size-full object-cover"
