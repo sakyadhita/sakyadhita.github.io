@@ -1,12 +1,11 @@
 ---
-import { getImage } from 'astro:assets'
 import { type CollectionEntry, getCollection } from 'astro:content'
 import { marked } from 'marked'
 
 import ConferenceDesktop from '../../components/Conference/ConferenceDesktop.astro'
 import MobileConference from '../../components/Conference/MobileConference.astro'
 import PageLayout from '../../layouts/PageLayout.astro'
-import { getRawImage, getAssetUrl } from '../../lib/images'
+import { getAssetUrl } from '../../lib/images'
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
@@ -27,28 +26,15 @@ const conferencesRaw = await getCollection('conference')
 const conferences = await Promise.all(
   conferencesRaw.map(async (c) => {
     const htmlBody = await marked.parse(c.body || '')
-    let optimizedImages = null
-    if (c.data.slideShowImages) {
-      optimizedImages = await Promise.all(
-        c.data.slideShowImages.map(async (img) => {
-          const raw = getRawImage(img)
-          if (raw) {
-            const opt = await getImage({ src: raw, format: 'webp', width: 1200 })
-            return opt.src
-          }
-          return img
-        })
-      )
-    }
 
-    const resolveList = (list?: { description: string; url: string }[]) =>
+    const resolveList = (list?: { description: string; url: string | null }[]) =>
       list ? list.map((i) => ({ ...i, url: getAssetUrl(i.url) })) : undefined
 
     return {
       ...c,
       data: {
         ...c.data,
-        optimizedImages,
+        optimizedImages: c.data.slideShowImages || null,
         htmlBody,
         brochures: resolveList(c.data.brochures),
         programs: resolveList(c.data.programs),

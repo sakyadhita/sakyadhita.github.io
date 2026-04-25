@@ -4,6 +4,8 @@
  *
  * @author PatrickBrown1 (Migrated to Astro by Gemini CLI)
  */
+import { Image } from 'astro:assets'
+
 import type { ImageMetadata } from 'astro'
 
 interface Props {
@@ -16,40 +18,52 @@ interface Props {
 const { title, year, image, pdfLink } = Astro.props
 ---
 
-<div class="newsletter-card group m-4 inline-block w-60
-    sm:m-5 sm:w-64
-    md:m-6 md:size-72">
+<div class="
+  newsletter-card group m-4 inline-block w-60
+  sm:m-5 sm:w-64
+  md:m-6 md:size-72
+">
   <a
     href={pdfLink}
     target="_blank"
     rel="noreferrer noopener"
-    class="text-black no-underline
-      hover:no-underline"
+    class="
+      text-black no-underline
+      hover:no-underline
+    "
   >
-    <img
+    <Image
       alt={title}
-      src={image.src}
+      src={image}
+      width={300}
+      height={400}
       loading="lazy"
       decoding="async"
-      class="mb-3 h-48 w-full object-cover
+      class="
+        mb-3 h-48 w-full object-cover
         shadow-[0px_0px_3px_0.75px_rgba(0,0,0,0.25)] transition-all
         group-hover:scale-105
         group-hover:shadow-[0px_0px_6px_2px_var(--color-brand-dark-orange)]
         sm:mb-4 sm:h-52
-        md:mb-2.5 md:h-60"
+        md:mb-2.5 md:h-60
+      "
     />
     <span
-      class="block h-5 text-left font-body text-sm/5 text-black
+      class="
+        block h-5 text-left font-body text-sm/5 text-black
         sm:text-base/6
-        md:text-base/5"
+        md:text-base/5
+      "
     >
       {year}
     </span>
     <span
-      class="mt-1 block h-7 overflow-hidden text-left font-body text-base/6
-        text-wrap text-black
+      class="
+        mt-1 block h-7 overflow-hidden text-left font-body text-base/6 text-wrap
+        text-black
         sm:text-xl/7
-        md:text-xl/7"
+        md:text-xl/7
+      "
     >
       {title}
     </span>

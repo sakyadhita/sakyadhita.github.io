@@ -1,91 +1,61 @@
 ---
+/**
+ * Renders the global Brand (header) for the website.
+ *
+ * @summary Global brand component.
+ * @author Amrit Kaur Singh
+ */
+import { Image } from 'astro:assets'
+
 import Logo from '../../assets/logo.svg'
-import { cn } from '../../lib/utils'
 import { SITE_PAGES } from '../../SiteMetadata'
 
 interface Props {
-  location?: 'footer' | 'navbar'
+  textColor?: string
 }
 
-const { location } = Astro.props
-const isFooter = location === 'footer'
+const { textColor = 'text-black' } = Astro.props
 ---
 
 <a
   href={SITE_PAGES.HOME}
-  class={cn(
-    `
-      inline-flex items-center text-inherit
-      hover:text-inherit hover:no-underline
-    `,
-    isFooter
-      ? `
-        flex-row-reverse justify-end text-right text-white
-        hover:text-white
-      `
-      : 'h-full max-h-full justify-start overflow-hidden text-left'
-  )}
+  class={`
+    group flex items-center space-x-3 no-underline transition-opacity
+    hover:opacity-90
+    ${textColor}
+  `}
 >
-  <img
-    src={Logo.src}
-    alt="Logo"
-    class={cn(
-      isFooter
-        ? `
-          h-12
-          md:h-20
-        `
-        : `
-          h-9 max-h-full w-auto object-contain
-          md:h-full
-        `
-    )}
-  />
   <div
-    class={cn(
-      'branding flex flex-col',
-      isFooter
-        ? `
-          mr-2
-          md:mr-2.5
-        `
-        : `
-          ml-1
-          md:ml-2.5
-        `
-    )}
+    class="
+      relative flex items-center justify-center rounded-full bg-white/10 p-1
+      backdrop-blur-sm
+    "
   >
-    <h3
-      class={cn(
-        'mb-0 font-heading lowercase',
-        isFooter
-          ? `
-            text-xl
-            md:text-4xl
-          `
-          : `
-            text-lg
-            md:text-3xl
-          `
-      )}
-    >
+    <Image
+      src={Logo}
+      alt="Sakyadhita Logo"
+      class="
+        size-10 transition-transform
+        group-hover:scale-110
+        md:size-12
+      "
+    />
+  </div>
+  <div class="flex flex-col leading-tight">
+    <span class="
+      font-heading text-xl font-bold tracking-tight italic
+      md:text-2xl
+    ">
       sakyadhita
-    </h3>
+    </span>
     <span
-      class={cn(
-        'font-body text-lg lowercase opacity-90',
-        isFooter
-          ? `
-            hidden
-            sm:block
-          `
-          : `
-            hidden
-            md:block
-          `
-      )}
+      class="
+        hidden font-body text-[10px] font-medium tracking-[0.2em] uppercase
+        opacity-80
+        md:block
+      "
     >
-      international association of buddhist women
+      International Association
     </span>
   </div>
 </a>

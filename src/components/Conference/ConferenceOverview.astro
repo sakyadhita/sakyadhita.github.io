@@ -16,9 +16,11 @@ const items = info.data
   {/* The title of the conference */}
   <section class="space-y-6">
     <h1
-      class="max-w-2xl font-heading text-3xl font-bold tracking-tight
+      class="
+        max-w-2xl font-heading text-3xl font-bold tracking-tight
         text-brand-dark-purple lowercase
-        md:text-5xl"
+        md:text-5xl
+      "
     >
       {title}
     </h1>
@@ -27,20 +29,26 @@ const items = info.data
   {/* Header section for file downloads */}
   <section class="max-w-md">
     <h4
-      class="mb-8 border-l-4 border-brand-orange pl-4 font-heading text-xl/relaxed
-        font-bold text-gray-600 lowercase italic"
+      class="
+        mb-8 border-l-4 border-brand-orange pl-4 font-heading text-xl/relaxed
+        font-bold text-gray-600 lowercase italic
+      "
     >
       Conference resources are available for download as a PDF.
     </h4>
   </section>
 
-  <div class="flex flex-col gap-8
-    lg:flex-row lg:gap-12">
+  <div class="
+    flex flex-col gap-8
+    lg:flex-row lg:gap-12
+  ">
     <div class="max-w-md flex-1 space-y-2">
       {/* brochures */}
       <div
-        class="mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
-          tracking-widest text-white uppercase"
+        class="
+          mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+          tracking-widest text-white uppercase
+        "
       >
         Brochures
       </div>
@@ -84,8 +92,10 @@ const items = info.data
 
       {/* programs */}
       <div
-        class="mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
-          tracking-widest text-white uppercase"
+        class="
+          mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+          tracking-widest text-white uppercase
+        "
       >
         Programs
       </div>
@@ -129,8 +139,10 @@ const items = info.data
 
       {/* abstracts */}
       <div
-        class="mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
-          tracking-widest text-white uppercase"
+        class="
+          mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+          tracking-widest text-white uppercase
+        "
       >
         Abstracts
       </div>
@@ -174,8 +186,10 @@ const items = info.data
 
       {/* presentations */}
       <div
-        class="mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
-          tracking-widest text-white uppercase"
+        class="
+          mb-3 bg-brand-orange p-1 px-2 font-body text-sm font-bold
+          tracking-widest text-white uppercase
+        "
       >
         Presentations
       </div>
@@ -218,8 +232,10 @@ const items = info.data
       </div>
     </div>
 
-    <div class="shrink-0
-      lg:w-1/2">
+    <div class="
+      shrink-0
+      lg:w-1/2
+    ">
       <slot name="slideshow" />
     </div>
   </div>

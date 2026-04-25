@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
@@ -6,15 +7,19 @@ import EPubCard from '../components/EPubs/EPubCard.astro'
 import EPubSection from '../components/EPubs/EPubSection.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import Slideshow from '../components/Slideshow.astro'
+import { getAssetUrl } from '../lib/images'
 
-const epublications = await getCollection('publication')
+const publicationsRaw = await getCollection('publication')
+const publications = publicationsRaw.toSorted((a, b) => a.data.id - b.data.id)
 
-const categories = [...new Set(epublications.map((p) => p.data.category))]
+const categories = [...new Set(publications.map((p) => p.data.category))]
 const sections = categories.map((c) => ({
   section_title: c,
-  section_list: epublications.filter((p) => p.data.category === c)
+  section_list: publications.filter((p) => p.data.category === c)
 }))
-const featuredEpubs = epublications.filter((p) => p.data.feature)
+const featuredEpubs = publications.filter((p) => p.data.feature)
+
+const { frontmatter } = Astro.props
 ---
 
 <PageLayout>
@@ -81,18 +86,20 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
                       text-xl/relaxed text-white
                       max-sm:h-9 max-sm:w-36 max-sm:text-sm
                     "
-                    data-url={epub.data.pdfLink}
+                    data-url={getAssetUrl(epub.data.pdfLink)}
                   >
                     Read More
                   </button>
                 </div>
-                <img
+                <Image
                   class="
                     absolute top-0 right-0 m-0 size-full max-w-3xl
                     bg-brand-dark-purple object-cover p-0
                   "
-                  src={epub.data.imageLink.src}
+                  src={epub.data.imageLink}
                   alt=""
+                  width={1200}
+                  height={450}
                 />
               </div>
             ))
@@ -203,7 +210,7 @@ const featuredEpubs = epublications.filter((p) => p.data.feature)
                           border-none bg-brand-orange text-white
                           lg:hidden
                         "
-                        data-url={pub.data.pdfLink}
+                        data-url={getAssetUrl(pub.data.pdfLink)}
                       >
                         Read
                       </button>

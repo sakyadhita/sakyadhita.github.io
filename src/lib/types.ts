@@ -1,13 +1,14 @@
+import type { ImageMetadata } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 
 export interface ConferenceResource {
   description: string
-  url: string
+  url: string | null
 }
 
 export type ConferenceEntry = CollectionEntry<'conference'> & {
   data: {
-    optimizedImages: string[] | null
+    optimizedImages: (ImageMetadata | string)[] | null
     htmlBody: string
     brochures?: ConferenceResource[]
     programs?: ConferenceResource[]
@@ -17,18 +18,18 @@ export type ConferenceEntry = CollectionEntry<'conference'> & {
 }
 
 export interface NewsAndEvents {
-  title: string
+  title?: string
   subtitle?: string
-  imageLink: string
+  imageLink: string | ImageMetadata
   redirectLink?: string
-  optimizedImage?: string
+  optimizedImage?: string | ImageMetadata
   description?: string
   date?: string | Date
 }
 
 export interface PublicationEntry extends CollectionEntry<'publication'> {
   data: CollectionEntry<'publication'>['data'] & {
-    optimizedImage?: string
+    optimizedImage?: string | ImageMetadata
   }
 }
 

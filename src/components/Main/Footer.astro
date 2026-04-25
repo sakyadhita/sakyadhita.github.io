@@ -1,337 +1,238 @@
 ---
 /**
- * Renders the responsive Footer component for the general website. Footer is coded to display after end of all content,
- * but is not guranteed to be always at the bottom of the page for small content pages.
+ * Renders the global Footer for the website.
  *
- * This component has no dependencies, and works independently.
- *
+ * @summary Global footer component.
  * @author Amrit Kaur Singh
  */
-import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 
-import Brand from './Brand.astro'
-import License from '../../assets/by-nc-nd.png'
 import Logo from '../../assets/logo.svg'
-import { cn } from '../../lib/utils'
-import { EXTERNAL_LINKS, SITE_PAGES, SOCIAL_LINKS } from '../../SiteMetadata'
+import { SITE_PAGES, SOCIAL_LINKS } from '../../SiteMetadata'
 
-const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-all shrink-0'
+const currentYear = new Date().getFullYear()
+
+// Common link classes
+const linkClass = 'hover:text-brand-orange transition-colors'
+const sectionTitleClass = 'font-heading font-bold text-xl mb-6 text-black'
+const listClass = 'space-y-4'
 ---
 
-<div class="relative mt-auto">
-  {/* Background Image Layer */}
-  <div
-    class="absolute inset-0 z-[-1] size-full rounded-md bg-cover
-      bg-position-[center,top] bg-no-repeat
-      shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)] blur-[5px]"
-  >
-  </div>
-
-  <div
-    class="relative z-0 flex min-h-[550px] w-full flex-col items-center
-      justify-center overflow-hidden bg-brand-light-purple/90 px-6 py-10
-      font-body
-      md:px-20 md:py-16"
-  >
-    {/* Pages Links */}
-    <section
-      class="flex w-full flex-1 flex-col justify-between space-y-8
-        md:flex-row md:space-y-0"
-    >
-      <div class="flex flex-col">
-        <a
-          href={SITE_PAGES.HOME}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
-            hover:no-underline
-            md:text-2xl"
-        >
-          Home
-        </a>
-        <div class="ml-1 flex flex-col
-          md:ml-0">
-          <a
-            href={SITE_PAGES.JOIN_US}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            Join Us
-          </a>
-          <a
-            href={SITE_PAGES.VOLUNTEER}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            Volunteer
-          </a>
-          <a
-            href={SITE_PAGES.DONATE}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            Donate
-          </a>
+<footer class="w-full bg-[#f7f7f7] py-16 text-gray-700">
+  <div class="
+    mx-auto max-w-7xl px-6
+    md:px-12
+  ">
+    <div class="
+      grid grid-cols-1 gap-12
+      lg:grid-cols-4
+    ">
+      {/* Brand Section */}
+      <div class="space-y-6">
+        <div class="flex items-center space-x-3">
+          <Image src={Logo} alt="Sakyadhita Logo" class="size-12" />
+          <span class="
+            font-heading text-2xl font-bold tracking-tight text-black italic
+          ">
+            sakyadhita
+          </span>
         </div>
-      </div>
-
-      <div class="flex flex-col text-left">
-        <a
-          href={SITE_PAGES.CONFERENCES}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
-            hover:no-underline
-            md:text-2xl"
-        >
-          Conferences
-        </a>
-        <div class="ml-1 flex flex-col
-          md:ml-0">
-          <a
-            href="/conferences/19"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            2025 19th conference, (Sarawak, Malaysia)
-          </a>
-          <a
-            href="/conferences/18"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            2023 18th conference, (Seoul, Korea)
-          </a>
-          <a
-            href="/conferences/17"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            2021 17th conference, (online)
-          </a>
-          <a
-            href="/conferences/16"
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            2019 16th conference, (Blue Mountains, Australia)
-          </a>
-        </div>
-      </div>
-
-      <div class="flex flex-col">
-        <a
-          href={SITE_PAGES.RESOURCES_LANDING}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
-            hover:no-underline
-            md:text-2xl"
-        >
-          Resources
-        </a>
-        <div class="ml-1 flex flex-col
-          md:ml-0">
-          <a
-            href={SITE_PAGES.RESOURCES_NEWSLETTERS}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            Newsletters
-          </a>
-          <a
-            href={SITE_PAGES.RESOURCES_EPUBS}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            Publications
-          </a>
-          <a
-            href={SITE_PAGES.RESOURCES_BUDDHIST_CULTURE}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            Buddhist Culture
-          </a>
-          <a
-            href={SITE_PAGES.RESOURCES_ORDINATION_ISSUE}
-            class="mt-1 flex items-center text-xs text-[#cee5ec] transition-colors
-              hover:text-brand-orange
-              md:text-sm"
-          >
-            <img src={Logo.src} alt="Logo" class="mr-2 h-auto w-5" />
-            Ordination
-          </a>
-        </div>
-      </div>
-
-      <div>
-        <a
-          href={SITE_PAGES.ABOUT_US}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
-            hover:no-underline
-            md:text-2xl"
-        >
-          About
-        </a>
-      </div>
-
-      <div>
-        <a
-          href={SITE_PAGES.CONTACT_US}
-          class="mb-2 block font-heading text-lg font-bold text-white capitalize
-            hover:no-underline
-            md:text-2xl"
-        >
-          Contact
-        </a>
-      </div>
-    </section>
-
-    {/* Bottom Section: Social Media & Brand */}
-    <section
-      class="mt-12 flex w-full flex-col items-center justify-between space-y-8
-        md:flex-row md:space-y-0"
-    >
-      <div class="flex flex-col items-center text-white
-        md:items-start">
-        <span class="mb-4 text-lg font-bold
-          md:text-xl">
-          Check us out on these platforms!
-        </span>
-        <div class="flex flex-row space-x-6">
+        <p class="font-body text-sm/relaxed leading-relaxed">
+          The Sakyadhita International Association of Buddhist Women is an alliance of women around
+          the world.
+        </p>
+        <div class="flex space-x-5">
           <a
             href={SOCIAL_LINKS.FACEBOOK}
             target="_blank"
-            rel="noreferrer"
-            class="group transition-transform
-              hover:scale-110"
+            rel="noopener noreferrer"
+            class="
+              text-gray-400
+              hover:text-[#1877F2]
+            "
+            aria-label="Facebook"
           >
-            <Icon
-              name="simple-icons:facebook"
-              class={cn(
-                socialIconClasses,
-                `
-                  p-1 text-white
-                  group-hover:bg-[#3b5998]
-                `
-              )}
-            />
+            <svg class="size-6 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              ></path>
+            </svg>
           </a>
           <a
             href={SOCIAL_LINKS.YOUTUBE}
             target="_blank"
-            rel="noreferrer"
-            class="group transition-transform
-              hover:scale-110"
+            rel="noopener noreferrer"
+            class="
+              text-gray-400
+              hover:text-[#FF0000]
+            "
+            aria-label="YouTube"
           >
-            <Icon
-              name="simple-icons:youtube"
-              class={cn(
-                socialIconClasses,
-                `
-                  rounded-xl p-1 text-white
-                  group-hover:bg-[#c4302b]
-                `
-              )}
-            />
-          </a>
-          <a
-            href={SOCIAL_LINKS.PINTEREST}
-            target="_blank"
-            rel="noreferrer"
-            class="group transition-transform
-              hover:scale-110"
-          >
-            <Icon
-              name="simple-icons:pinterest"
-              class={cn(
-                socialIconClasses,
-                `
-                  rounded-2xl p-2 text-white
-                  group-hover:bg-[#E60023]
-                `
-              )}
-            />
-          </a>
-          <a
-            href={SOCIAL_LINKS.BLOG}
-            target="_blank"
-            rel="noreferrer"
-            class="group transition-transform
-              hover:scale-110"
-          >
-            <Icon
-              name="simple-icons:rss"
-              class={cn(
-                socialIconClasses,
-                `
-                  p-1 text-white
-                  group-hover:text-brand-orange
-                `
-              )}
-            />
-          </a>
-          <a
-            href={SOCIAL_LINKS.GOODREADS}
-            target="_blank"
-            rel="noreferrer"
-            class="group transition-transform
-              hover:scale-110"
-          >
-            <Icon
-              name="simple-icons:goodreads"
-              class={cn(
-                socialIconClasses,
-                `
-                  p-1 text-white
-                  group-hover:text-[#e9e5cd]
-                `
-              )}
-            />
+            <svg class="size-6 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.016 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+              ></path>
+            </svg>
           </a>
         </div>
       </div>
 
-      <Brand location="footer" />
-    </section>
+      {/* Explore Section */}
+      <div>
+        <h3 class={sectionTitleClass}>Explore</h3>
+        <ul class={listClass}>
+          <li>
+            <a href={SITE_PAGES.HOME} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Home</span>
+            </a>
+          </li>
+          <li>
+            <a href={SITE_PAGES.ABOUT_US} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>About Us</span>
+            </a>
+          </li>
+          <li>
+            <a href={SITE_PAGES.CONFERENCES} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Conferences</span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-    <div
-      class="mt-12 w-full border-t border-white/20 pt-8 text-center font-body text-sm
-        text-white
-        md:text-base"
-    >
-      <Image src={License} alt="license" width={64} class="mb-2 inline-block
-        md:mb-0" />
-      <span class="block
-        md:ml-2 md:inline-block">
-        Website is licensed under a
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={EXTERNAL_LINKS.CREATIVE_COMMONS}
-          class="mx-1 transition-colors
-            hover:text-brand-orange"
-        >
-          Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International License
-        </a>
-        .
-      </span>
+      {/* Resources Section */}
+      <div>
+        <h3 class={sectionTitleClass}>Resources</h3>
+        <ul class={listClass}>
+          <li>
+            <a
+              href={SITE_PAGES.RESOURCES_LANDING}
+              class="flex items-center text-black no-underline"
+            >
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Library</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={SITE_PAGES.RESOURCES_NEWSLETTERS}
+              class="flex items-center text-black no-underline"
+            >
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Newsletters</span>
+            </a>
+          </li>
+          <li>
+            <a href={SITE_PAGES.RESOURCES_EPUBS} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>E-Publications</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={SITE_PAGES.RESOURCES_BUDDHIST_CULTURE}
+              class="flex items-center text-black no-underline"
+            >
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Buddhist Culture</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={SITE_PAGES.RESOURCES_ORDINATION_ISSUE}
+              class="flex items-center text-black no-underline"
+            >
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Ordination Issue</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Contact Section */}
+      <div>
+        <h3 class={sectionTitleClass}>Connect</h3>
+        <ul class={listClass}>
+          <li>
+            <a href={SITE_PAGES.CONTACT_US} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Contact Us</span>
+            </a>
+          </li>
+          <li>
+            <a href={SITE_PAGES.JOIN_US} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Join Us</span>
+            </a>
+          </li>
+          <li>
+            <a href={SITE_PAGES.VOLUNTEER} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Volunteer</span>
+            </a>
+          </li>
+          <li>
+            <a href={SITE_PAGES.DONATE} class="
+              flex items-center text-black no-underline
+            ">
+              <Image src={Logo} alt="Logo" class="mr-2 h-auto w-5" />
+              <span class={linkClass}>Donate</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    {/* Bottom Bar */}
+    <div class="mt-16 border-t border-gray-200 pt-8">
+      <div class="
+        flex flex-col items-center justify-between gap-4
+        md:flex-row
+      ">
+        <p class="font-body text-sm text-gray-500">
+          © {currentYear} Sakyadhita International Association of Buddhist Women.
+        </p>
+        <div class="flex space-x-6 text-sm">
+          <a
+            href={SOCIAL_LINKS.FACEBOOK}
+            class="
+              text-gray-500
+              hover:text-brand-orange
+            "
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Facebook
+          </a>
+          <a
+            href={SOCIAL_LINKS.YOUTUBE}
+            class="
+              text-gray-500
+              hover:text-brand-orange
+            "
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            YouTube
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</footer>

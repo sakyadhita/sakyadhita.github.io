@@ -40,7 +40,12 @@ describe('CustomButton Component', () => {
   })
 
   it('applies custom className', () => {
-    const { container } = render(<CustomButton text="Custom class" className="custom-class" />)
+    const { container } = render(
+      <CustomButton
+        text="Custom class"
+        className="custom-class"
+      />
+    )
     const button = container.querySelector('button')
     expect(button?.className).toContain('custom-class')
   })

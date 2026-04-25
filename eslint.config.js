@@ -142,7 +142,8 @@ export default tseslint.config(
       }
     },
     rules: {
-      'astro/no-unused-define-vars-in-style': 'error'
+      'astro/no-unused-define-vars-in-style': 'error',
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   },
 

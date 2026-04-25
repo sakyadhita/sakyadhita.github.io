@@ -11,7 +11,7 @@ import { getRawImage } from '../lib/images'
 import { cn } from '../lib/utils'
 
 interface Props {
-  image: string
+  image?: string | ImageMetadata
   title?: string
   text?: string
   class?: string
@@ -19,10 +19,12 @@ interface Props {
 
 const { image, title, text, class: className } = Astro.props
 
-const rawImage = getRawImage(image)
+const rawImage = typeof image === 'string' ? getRawImage(image) : image
 const optimizedImage = rawImage
   ? await getImage({ src: rawImage, format: 'webp', width: 1600 })
   : null
+
+const imageUrl = optimizedImage?.src || (typeof image === 'string' ? image : image ? image.src : '')
 ---
 
 <div
@@ -34,13 +36,15 @@ const optimizedImage = rawImage
     `,
     className
   )}
-  style={{ backgroundImage: `url("${optimizedImage?.src || image}")` }}
+  style={{ backgroundImage: imageUrl ? `url("${imageUrl}")` : 'none' }}
 >
   {/* Purple box with a title and description */}
   <div
-    class="absolute top-8 mt-[10%] ml-[7vw] h-fit w-2/3 bg-brand-dark-purple/90 p-8
+    class="
+      absolute top-8 mt-[10%] ml-[7vw] h-fit w-2/3 bg-brand-dark-purple/90 p-8
       text-white
-      sm:top-0 sm:ml-[10%] sm:w-lg"
+      sm:top-0 sm:ml-[10%] sm:w-lg
+    "
   >
     {
       title && (

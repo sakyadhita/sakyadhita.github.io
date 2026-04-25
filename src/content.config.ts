@@ -5,16 +5,17 @@ import { defineCollection } from 'astro:content'
 
 const news = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/news' }),
-  schema: rssSchema.extend({
-    imageLink: z.string(),
-    redirectLink: z.string().optional(),
-    draft: z.boolean().optional()
-  })
+  schema: ({ image }) =>
+    rssSchema.extend({
+      imageLink: image(),
+      redirectLink: z.string().optional(),
+      draft: z.boolean().optional()
+    })
 })
 
 const item = z.object({
   description: z.string(),
-  url: z.string()
+  url: z.string().nullable()
 })
 
 const branch = defineCollection({
@@ -31,18 +32,19 @@ const branch = defineCollection({
 
 const conference = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/conference' }),
-  schema: z.object({
-    title: z.string(),
-    confNum: z.number().int().nonnegative(),
-    location: z.string(),
-    slideShowImages: z.string().array().optional(),
-    programs: item.array().optional(),
-    presentations: item.array().optional(),
-    brochures: item.array().optional(),
-    abstracts: item.array().optional(),
-    video: z.string().url().optional(),
-    signupLink: z.string().url().optional()
-  })
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      confNum: z.number().int().nonnegative(),
+      location: z.string(),
+      slideShowImages: image().array().optional(),
+      programs: item.array().optional(),
+      presentations: item.array().optional(),
+      brochures: item.array().optional(),
+      abstracts: item.array().optional(),
+      video: z.string().url().optional(),
+      signupLink: z.string().url().optional()
+    })
 })
 
 const newsletter = defineCollection({
@@ -74,14 +76,15 @@ const publication = defineCollection({
 
 const section = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/section' }),
-  schema: z.object({
-    page: z.string(),
-    title: z.string(),
-    subtitle: z.string().optional(),
-    isPublished: z.boolean(),
-    image: z.string().optional(),
-    redirectLink: z.string().optional()
-  })
+  schema: ({ image }) =>
+    z.object({
+      page: z.string(),
+      title: z.string(),
+      subtitle: z.string().optional(),
+      isPublished: z.boolean(),
+      image: image().optional(),
+      redirectLink: z.string().optional()
+    })
 })
 
 const exco = defineCollection({
@@ -94,7 +97,7 @@ const exco = defineCollection({
       rank: z.number().int().optional(),
       name: z.string(),
       position: z.string(),
-      imageLink: image().optional().default('./assets/headshot.jpg'),
+      imageLink: image().optional(),
       redirectLink: z.string().optional(),
       openInSameTab: z.boolean()
     })

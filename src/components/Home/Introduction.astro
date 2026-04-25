@@ -5,14 +5,16 @@
  * @summary Renders section content.
  * @author Amrit Kaur Singh
  */
+import { Image } from 'astro:assets'
+
 import Logo from '../../assets/logo.svg'
 ---
 
 <div class="prose prose-lg max-w-none font-body leading-relaxed text-gray-700">
-  <h1 class="leading-none">
+  <h1 class="leading-none text-black">
     Grassr<span class="not-prose inline-flex items-center gap-1 align-baseline"
-      ><img src={Logo.src} alt="" aria-hidden="true" class="inline-block size-8" /><img
-        src={Logo.src}
+      ><Image src={Logo} alt="" aria-hidden="true" class="inline-block size-8" /><Image
+        src={Logo}
         alt=""
         aria-hidden="true"
         class="inline-block size-8"

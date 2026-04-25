@@ -26,27 +26,33 @@ const { height = '100%', width = '100%', className = '' } = Astro.props
   {/* Custom Arrows - Only on desktop */}
   <button
     type="button"
-    class="embla__prev absolute top-1/2 left-4 z-10 hidden -translate-y-1/2
+    class="
+      embla__prev absolute top-1/2 left-4 z-10 hidden -translate-y-1/2
       cursor-pointer border-none bg-transparent opacity-0 transition-opacity
       group-hover:opacity-100
-      lg:block"
+      lg:block
+    "
     aria-label="Previous slide"
   >
     <Icon name="lucide:chevron-left" class="z-20 size-12 text-white" />
   </button>
   <button
     type="button"
-    class="embla__next absolute top-1/2 right-4 z-10 hidden -translate-y-1/2
+    class="
+      embla__next absolute top-1/2 right-4 z-10 hidden -translate-y-1/2
       cursor-pointer border-none bg-transparent opacity-0 transition-opacity
       group-hover:opacity-100
-      lg:block"
+      lg:block
+    "
     aria-label="Next slide"
   >
     <Icon name="lucide:chevron-right" class="z-20 size-12 text-white" />
   </button>
 
   {/* Indicators */}
-  <div class="embla__dots absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4"></div>
+  <div class="
+    embla__dots absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4
+  "></div>
 </div>
 
 <style>

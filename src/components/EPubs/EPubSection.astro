@@ -17,18 +17,24 @@ const { publication_section } = Astro.props
   data-section-title={publication_section.section_title}
 >
   {/* Header */}
-  <div class="relative top-0 left-0 flex w-full flex-col
-    lg:h-12 lg:flex-row">
-    <h1 class="w-full text-center font-heading text-2xl/tight font-bold
-      lg:text-4xl/relaxed">
+  <div class="
+    relative top-0 left-0 flex w-full flex-col
+    lg:h-12 lg:flex-row
+  ">
+    <h1 class="
+      w-full text-center font-heading text-2xl/tight font-bold
+      lg:text-4xl/relaxed
+    ">
       {publication_section.section_title}
     </h1>
     <button
       type="button"
-      class="section-toggle z-20 m-auto mb-4 w-fit cursor-pointer border-none
+      class="
+        section-toggle z-20 m-auto mb-4 w-fit cursor-pointer border-none
         bg-inherit p-0 text-center font-body text-base/tight no-underline
         hover:underline
-        lg:absolute lg:right-6 lg:bottom-0 lg:mb-4 lg:text-lg/relaxed"
+        lg:absolute lg:right-6 lg:bottom-0 lg:mb-4 lg:text-lg/relaxed
+      "
       data-section={publication_section.section_title}
     >
       All <span class="text-brand-orange">({publication_section.section_list.length})</span>
@@ -38,9 +44,11 @@ const { publication_section } = Astro.props
 
   {/* Desktop Content (Static) */}
   <div
-    class="content-desktop relative mx-[-25px] hidden flex-wrap items-start
+    class="
+      content-desktop relative mx-[-25px] hidden flex-wrap items-start
       justify-center text-center
-      lg:flex"
+      lg:flex
+    "
   >
     {
       publication_section.section_list
@@ -58,15 +66,19 @@ const { publication_section } = Astro.props
 
   {/* Mobile Content (Carousel) */}
   <div
-    class="content-mobile relative mx-[-25px] flex flex-wrap items-start
+    class="
+      content-mobile relative mx-[-25px] flex flex-wrap items-start
       justify-center overflow-hidden text-center
-      lg:hidden"
+      lg:hidden
+    "
   >
     <button
       type="button"
-      class="prev-btn relative bottom-48 m-0 inline-block size-8 cursor-pointer
+      class="
+        prev-btn relative bottom-48 m-0 inline-block size-8 cursor-pointer
         border-none bg-inherit
-        disabled:invisible"
+        disabled:invisible
+      "
     >
       <Icon name="lucide:chevron-left" class="size-full" />
     </button>
@@ -88,16 +100,20 @@ const { publication_section } = Astro.props
 
     <button
       type="button"
-      class="next-btn relative bottom-48 m-0 inline-block size-8 cursor-pointer
+      class="
+        next-btn relative bottom-48 m-0 inline-block size-8 cursor-pointer
         border-none bg-inherit
-        disabled:invisible"
+        disabled:invisible
+      "
     >
       <Icon name="lucide:chevron-right" class="size-full" />
     </button>
   </div>
 
-  <div class="absolute bottom-0 h-px w-full bg-brand-orange
-    lg:h-2"></div>
+  <div class="
+    absolute bottom-0 h-px w-full bg-brand-orange
+    lg:h-2
+  "></div>
 </div>
 
 <script>

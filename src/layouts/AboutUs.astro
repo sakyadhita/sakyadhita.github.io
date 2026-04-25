@@ -1,9 +1,10 @@
 ---
+import { Image } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import { getOptimizedImage, getAssetUrl } from '../lib/images'
+import { getAssetUrl } from '../lib/images'
 
 const committeesRaw = await getCollection('exco')
 const committees = await Promise.all(
@@ -31,7 +32,6 @@ const sections = await Promise.all(
 )
 
 const { frontmatter } = Astro.props
-const optimizedHeader = await getOptimizedImage(frontmatter.image, 1600)
 
 function makeIdURLFriendly(idString: string) {
   return idString
@@ -46,7 +46,7 @@ function makeIdURLFriendly(idString: string) {
   <ResourcesHeader
     title={frontmatter.title}
     text={frontmatter.description}
-    image={optimizedHeader?.src || frontmatter.image}
+    image={frontmatter.image}
   />
 
   <div id="about-us-root" class="relative w-full">
@@ -226,14 +226,27 @@ function makeIdURLFriendly(idString: string) {
                           md:w-80 md:items-start
                         "
                       >
-                        <img
-                          class="
-                            mt-20 mb-4 size-64 rounded-full border-15
-                            border-[#f7f7f7] object-cover
-                          "
-                          src={member.data.imageLink.src}
-                          alt="Exec Headshot"
-                        />
+                        {member.data.imageLink ? (
+                          <Image
+                            class="
+                              mt-20 mb-4 size-64 rounded-full border-15
+                              border-[#f7f7f7] object-cover
+                            "
+                            src={member.data.imageLink}
+                            alt="Exec Headshot"
+                            width={256}
+                            height={256}
+                          />
+                        ) : (
+                          <img
+                            class="
+                              mt-20 mb-4 size-64 rounded-full border-15
+                              border-[#f7f7f7] object-cover
+                            "
+                            src="/assets/headshot.jpg"
+                            alt="Exec Headshot"
+                          />
+                        )}
                         <h2
                           class="
                             my-1 text-center font-heading text-3xl font-bold
@@ -287,9 +300,11 @@ function makeIdURLFriendly(idString: string) {
                             {member.data.position}
                           </h3>
                         </div>
-                        <div class="
-                          prose prose-sm max-w-none px-2.5 py-5 font-body
-                        ">
+                        <div
+                          class="
+                            prose prose-sm max-w-none px-2.5 py-5 font-body
+                          "
+                        >
                           <member.Content />
                         </div>
                       </div>
@@ -315,7 +330,7 @@ function makeIdURLFriendly(idString: string) {
     const sections = root.querySelectorAll('.about-section')
 
     const observerOptions = {
-      root: document.querySelector('#page-layout'),
+      root: null,
       rootMargin: '-20% 0px -70% 0px',
       threshold: 0
     }
@@ -325,7 +340,7 @@ function makeIdURLFriendly(idString: string) {
         if (entry.isIntersecting) {
           const id = entry.target.id
           navLinks.forEach((link) => {
-            if (link.dataset.sectionId === id) {
+            if ((link as HTMLElement).dataset.sectionId === id) {
               link.classList.remove('border-transparent')
               link.classList.add('text-brand-orange', 'border-brand-orange')
             } else {

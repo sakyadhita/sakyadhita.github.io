@@ -12,7 +12,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
  * Documents (PDF, DOC, etc.) are served from public/assets for stability.
  * Images are resolved from src/assets for Astro optimization.
  */
-export function getAssetUrl(publicPath: string) {
+export function getAssetUrl(publicPath: string | null | undefined) {
   if (!publicPath) return null
   if (publicPath.startsWith('http') || publicPath.startsWith('mailto:')) return publicPath
 
@@ -32,7 +32,7 @@ export function getAssetUrl(publicPath: string) {
 }
 
 export async function getOptimizedImage(
-  publicPath: string,
+  publicPath: string | null | undefined,
   width?: number,
   format: 'webp' | 'avif' | 'png' | 'jpg' = 'webp'
 ) {
@@ -78,7 +78,7 @@ export async function getOptimizedImage(
   return optimized
 }
 
-export function getRawImage(publicPath: string) {
+export function getRawImage(publicPath: string | null | undefined) {
   if (!publicPath) return null
 
   const decodedPath = decodeURIComponent(publicPath)

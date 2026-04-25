@@ -36,9 +36,11 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 <button
   id="resources-menu-toggle"
   type="button"
-  class="fixed top-20 left-5 z-1001 flex size-10 cursor-pointer items-center
+  class="
+    fixed top-20 left-5 z-1001 flex size-10 cursor-pointer items-center
     justify-center rounded-full border-none bg-brand-orange shadow-lg
-    md:hidden"
+    md:hidden
+  "
   aria-label="Toggle Resources Menu"
 >
   <span class="text-xs font-bold text-white uppercase">Menu</span>
@@ -47,14 +49,18 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 {/* Mobile Drawer */}
 <div
   id="resources-mobile-drawer"
-  class="fixed top-0 right-0 z-1002 flex size-full translate-x-full flex-col
+  class="
+    fixed top-0 right-0 z-1002 flex size-full translate-x-full flex-col
     bg-brand-orange pt-20 transition-transform duration-500
-    md:hidden"
+    md:hidden
+  "
 >
   <button
     id="resources-drawer-close"
     type="button"
-    class="absolute top-6 right-6 size-6 cursor-pointer border-none bg-transparent"
+    class="
+      absolute top-6 right-6 size-6 cursor-pointer border-none bg-transparent
+    "
     aria-label="Close Resources Navigation"
   >
     <Icon name="lucide:x" class="size-full text-white" />
@@ -77,9 +83,11 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 {/* Desktop Horizontal Navbar */}
 <nav
   id="resources-desktop-nav"
-  class="sticky top-32 z-999 hidden h-20 w-full items-center justify-center
+  class="
+    sticky top-32 z-999 hidden h-20 w-full items-center justify-center
     bg-brand-orange shadow-md
-    md:flex"
+    md:flex
+  "
 >
   {
     navItems.map((item) => (

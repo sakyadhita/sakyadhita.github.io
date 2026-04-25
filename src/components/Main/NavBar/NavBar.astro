@@ -22,9 +22,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
 <nav class="sticky top-0 z-1000 w-full" id="main-nav">
   <!-- The actual Navigation Bar -->
   <div
-    class="flex h-12 w-full items-center justify-between bg-brand-light-purple px-6
+    class="
+      flex h-12 w-full items-center justify-between bg-brand-light-purple px-6
       py-2 text-white shadow-none
-      md:h-32 md:px-14 md:py-4 md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]"
+      md:h-32 md:px-14 md:py-4 md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]
+    "
   >
     <!-- Logo and Branding -->
     <Brand />
@@ -33,8 +35,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
     <button
       type="button"
       id="nav-toggle"
-      class="relative size-5 cursor-pointer border-none bg-transparent
-        md:size-12"
+      class="
+        relative size-5 cursor-pointer border-none bg-transparent
+        md:size-12
+      "
       aria-label="Toggle Navigation"
     >
       <Icon name="lucide:menu" class="size-full" id="menu-icon" />
@@ -44,26 +48,32 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
   <!-- Navigation Panel -->
   <div
     id="nav-panel"
-    class="fixed top-0 right-[-100vw] z-1001 flex size-full flex-col justify-start
+    class="
+      fixed top-0 right-[-100vw] z-1001 flex size-full flex-col justify-start
       overflow-y-auto bg-brand-orange pt-16 transition-[right] duration-500
       ease-in-out
       md:top-32 md:right-[-320px] md:h-[calc(100vh-128px)] md:w-80
-      md:justify-between md:pt-0"
+      md:justify-between md:pt-0
+    "
   >
     <!-- Cross icon to close panel on mobile -->
     <button
       type="button"
       id="nav-close"
-      class="absolute top-6 right-6 size-6 cursor-pointer border-none bg-transparent
-        md:hidden"
+      class="
+        absolute top-6 right-6 size-6 cursor-pointer border-none bg-transparent
+        md:hidden
+      "
       aria-label="Close Navigation"
     >
       <Icon name="lucide:x" class="w-full" />
     </button>
 
     <!-- Nav Links -->
-    <div class="flex size-full flex-col
-      md:h-auto">
+    <div class="
+      flex size-full flex-col
+      md:h-auto
+    ">
       {
         navLinks.map((item) => {
           const isActive =
@@ -97,9 +107,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
   <!-- Overlay to darken website content when toggled -->
   <div
     id="nav-overlay"
-    class="pointer-events-none fixed inset-0 z-999 hidden bg-black/30 opacity-0
+    class="
+      pointer-events-none fixed inset-0 z-999 hidden bg-black/30 opacity-0
       backdrop-blur-[2px] transition-opacity duration-500
-      md:block"
+      md:block
+    "
     aria-label="Close navigation overlay"
   >
   </div>

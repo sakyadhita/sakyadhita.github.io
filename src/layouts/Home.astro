@@ -6,7 +6,6 @@ import { marked } from 'marked'
 import PageLayout from './PageLayout.astro'
 import HomeBody from '../components/Home/HomeBody.astro'
 import HomeSlideshow from '../components/Home/HomeSlideshow.astro'
-import { getRawImage } from '../lib/images'
 
 interface HomeImageModule {
   default: ImageMetadata
@@ -17,16 +16,9 @@ const branches = await getCollection('branch')
 const newsRaw = await getCollection('news', ({ data }) => {
   return data.draft !== true
 })
-const newsAndEvents = await Promise.all(
-  newsRaw.map(async (n) => {
-    const raw = getRawImage(n.data.imageLink)
-    if (raw) {
-      const optimized = await getImage({ src: raw, format: 'webp', width: 1600 })
-      return { ...n.data, optimizedImage: optimized.src }
-    }
-    return n.data
-  })
-)
+const newsAndEvents = newsRaw.map((n) => {
+  return { ...n.data, optimizedImage: n.data.imageLink }
+})
 newsAndEvents.sort((a, b) => (a.title || '').localeCompare(b.title || ''))
 
 const intro = await getEntry('section', 'introduction')

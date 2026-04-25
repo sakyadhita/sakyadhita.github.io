@@ -40,9 +40,7 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
                 page-num-btn flex size-10 items-center justify-center rounded-md
                 text-sm font-medium transition-colors
               `,
-              page === p
-                ? 'border border-gray-200 bg-white shadow-sm'
-                : `
+              page === p ? 'border border-gray-200 bg-white shadow-sm' : `
                 hover:bg-gray-100
               `
             )}

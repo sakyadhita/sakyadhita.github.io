@@ -1,18 +1,11 @@
 ---
-import { getImage } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
-import Volunteer from '../components/Layouts/Volunteer'
+import VolunteerComponent from '../components/Layouts/Volunteer'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import { getRawImage } from '../lib/images'
 
 const { frontmatter } = Astro.props
-
-const rawHeader = getRawImage(frontmatter.image)
-const optimizedHeader = rawHeader
-  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
-  : null
 
 const volinterests = await getCollection('volinterest')
 const interests = volinterests.map((interest) => ({
@@ -25,12 +18,12 @@ const interests = volinterests.map((interest) => ({
   <ResourcesHeader
     title={frontmatter.title}
     text={frontmatter.description}
-    image={optimizedHeader?.src || frontmatter.image}
+    image={frontmatter.image}
   />
 
-  <Volunteer client:load interests={interests}>
+  <VolunteerComponent client:load interests={interests}>
     <slot />
-  </Volunteer>
+  </VolunteerComponent>
 
   {/* Hidden form for Netlify detection */}
   <form name="volunteer" data-netlify="true" netlify-honeypot="bot-field" hidden>

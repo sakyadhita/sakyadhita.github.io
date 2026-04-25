@@ -5,16 +5,19 @@ import { Mail, Phone, House, X } from 'lucide-react'
 import PageLayout from './PageLayout.astro'
 import CustomButton from '../components/CustomButton.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import { getRawImage, getOptimizedImage } from '../lib/images'
+import { getRawImage } from '../lib/images'
 
 const { frontmatter } = Astro.props
-
-const rawHeader = getRawImage(frontmatter.image)
-const optimizedHeader = await getOptimizedImage(frontmatter.image, 1600)
 
 const emailInfo = frontmatter.email || []
 const phone = frontmatter.phone
 const address = frontmatter.address
+
+const rawHeader = getRawImage(frontmatter.image)
+const optimizedHeader = rawHeader
+  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
+  : null
+const headerImageUrl = optimizedHeader?.src || frontmatter.image
 ---
 
 <PageLayout>
@@ -27,7 +30,7 @@ const address = frontmatter.address
       w-full
       lg:hidden
     ">
-      <ResourcesHeader image={optimizedHeader?.src || frontmatter.image} title="Contact Us" />
+      <ResourcesHeader image={headerImageUrl} title="Contact Us" />
     </div>
 
     {/* The Interactive Form */}
@@ -36,11 +39,13 @@ const address = frontmatter.address
         flex h-auto w-full flex-1 flex-col font-body
         lg:flex-row
       ">
-        <section class="
-          prose max-w-none flex-1 p-6 text-left text-black
-          md:p-12
-          lg:p-24
-        ">
+        <section
+          class="
+            prose max-w-none flex-1 p-6 text-left text-black
+            md:p-12
+            lg:p-24
+          "
+        >
           <h2
             class="
               mb-5 font-heading text-2xl font-bold tracking-tight text-black
@@ -91,10 +96,12 @@ const address = frontmatter.address
             </div>
           </div>
 
-          <h4 class="
-            mt-12 mb-6 font-heading text-2xl font-semibold text-black lowercase
-            italic
-          ">
+          <h4
+            class="
+              mt-12 mb-6 font-heading text-2xl font-semibold text-black
+              lowercase italic
+            "
+          >
             Send us a message!
           </h4>
 
@@ -185,7 +192,7 @@ const address = frontmatter.address
         hidden min-h-[500px] flex-1 bg-cover bg-center bg-no-repeat
         lg:block
       "
-      style={{ backgroundImage: `url("${optimizedHeader?.src || frontmatter.image}")` }}
+      style={{ backgroundImage: `url("${headerImageUrl}")` }}
     >
     </div>
   </div>
@@ -197,10 +204,12 @@ const address = frontmatter.address
       fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4
     "
   >
-    <div class="
-      w-full max-w-md rounded-lg border-2 border-brand-orange bg-white p-8
-      shadow-xl
-    ">
+    <div
+      class="
+        w-full max-w-md rounded-lg border-2 border-brand-orange bg-white p-8
+        shadow-xl
+      "
+    >
       <p class="px-4 pt-4 text-center font-body text-2xl text-black">
         Thank you for contacting us. We will get in touch with you shortly.
       </p>
@@ -317,7 +326,7 @@ const address = frontmatter.address
           throw new Error('Failed to send message')
         }
       } catch (error: any) {
-      showSnackbar(error.message || 'An error occurred')
+        showSnackbar(error.message || 'An error occurred')
       } finally {
         isSubmitting = false
         document.body.style.cursor = ''

@@ -3,7 +3,7 @@ page: 'NewsFlash'
 title: 19th Sakyadhita International Conference on Buddhist tWomen
 isPublished: true
 subtitle: '"Navigating Change: Buddhist Women in Transition"'
-image: /assets/Conference 19/2025 Sakyadhita Banner.jpg
+image: ../../assets/Conference 19/2025 Sakyadhita Banner.jpg
 redirectLink: https://sakyadhita2025.kbs.org.my
 ---
 

@@ -9,7 +9,13 @@ import VolunteerOption from '../VolunteerOption'
 
 // function to display asterisk for required fields
 function displayAsterisk() {
-  return <span className="error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+  return (
+    <span
+      className="error-asterisk ml-2 shrink-0 text-xl font-bold text-brand-red"
+    >
+      *
+    </span>
+  )
 }
 
 // funcion to render all volunteer committees
@@ -38,15 +44,8 @@ function displayCommittees(volunteerCommittees, selectedCommittees, handleCommit
 interface CommitteeData {
   id: string
   data: {
-    startYear: number
-    endYear: number
-    name: string
-    position: string
-    redirectLink?: string
-    openInSameTab?: boolean
-    htmlBody?: string
-    optimizedImage?: string
-    imageLink?: string
+    title: string
+    description: string
   }
 }
 

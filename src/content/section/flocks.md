@@ -3,7 +3,7 @@ page: 'NewsFlash'
 title: 'Flocks of Golden Beings'
 isPublished: false
 subtitle: Special Report on the Recent Full Ordination of Nuns in Bhutan
-image: /assets/Home Page/Flocks-of-Golden-Beings.jpg
+image: ../../assets/Home Page/Flocks-of-Golden-Beings.jpg
 redirectLink: /assets/Home Page/Emma Slade Flocks of Golden Beings.pdf
 ---
 

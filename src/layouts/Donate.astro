@@ -4,150 +4,167 @@ import { Image } from 'astro:assets'
 import PageLayout from './PageLayout.astro'
 import amazonSmileImg from '../assets/Donate Page/AmazonSmile-01.jpeg'
 import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg'
-import CustomButton from '../components/CustomButton.astro'
 import BeInvolved from '../components/Home/BeInvolved.astro'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
-import { CONTACT_INFO, SITE_PAGES, PAYPAL_CONFIG } from '../SiteMetadata'
+import PayPal from '../components/PayPal'
+import { PAYPAL_CONFIG, SITE_PAGES } from '../SiteMetadata'
 
 const { frontmatter } = Astro.props
 ---
 
 <PageLayout>
-  <div id="donate-page" class="font-body">
-    {/* Responsive Headers using Tailwind utilities instead of React state */}
-    <ResourcesHeader
-      title={frontmatter.title}
-      text={frontmatter.description}
-      image={frontmatter.image}
-    />
-
-    {/* All page content */}
-    <div class="
-      flex flex-col px-4 py-12
-      md:px-12 md:py-24
-    ">
-      <div class="
-        flex flex-col items-start justify-center gap-8
-        lg:flex-row lg:gap-0
-      ">
-        {/* PayPal Info */}
-        <section
-          class="
-            mx-0 flex flex-1 flex-col items-center text-center
-            lg:mx-8 lg:text-left
-          "
-        >
-          <h1 class="
-            mb-4 font-heading text-3xl font-bold
-            md:text-5xl
-          ">PayPal</h1>
-          <hr class="mb-8 h-1.5 w-1/2 border-none bg-brand-orange" />
-          <p class="max-w-2xl leading-relaxed text-gray-700">
-            Your donation makes a difference. In the tradition of the Buddha our work is offered
-            publicly, and free of charge when possible. Consequently, the vital work Sakyadhita
-            performs is funded entirely through donations, memberships, and conference fees. Your
-            generosity allows us to keep conference fees low, while offering conference scholarships
-            to female monastics who otherwise would not be able to attend our bi-annual conferences.
-          </p>
-          <p class="mt-6 font-bold">Make a One-Time or Reoccuring Donation</p>
-          {/* PayPal Donate Button */}
-          <div class="mt-8 flex h-12 justify-center">
-            <form action={PAYPAL_CONFIG.DONATE_URL} method="post" target="_blank">
-              <input type="hidden" name="hosted_button_id" value={PAYPAL_CONFIG.HOSTED_BUTTON_ID} />
-              <input
-                type="image"
-                src={PAYPAL_CONFIG.DONATE_BUTTON_IMG}
-                name="submit"
-                title="PayPal - The safer, easier way to pay online!"
-                alt="Donate with PayPal button"
-                class="
-                  transition-opacity
-                  hover:opacity-90
-                "
-              />
-              <img alt="" src={PAYPAL_CONFIG.PIXEL_IMG} width="1" height="1" />
-            </form>
-          </div>
-          <Image
-            class="mt-8 h-auto w-full max-w-sm rounded-lg shadow-md"
-            alt="13th Conference"
-            src={workingTogetherImg}
-            width={440}
-          />
-        </section>
-        {/* AmazonSmile Info */}
-        <section
-          class="
-            mx-0 mt-12 flex flex-1 flex-col items-center text-center
-            lg:mx-8 lg:mt-0 lg:text-left
-          "
-        >
-          <h1 class="
-            mb-4 font-heading text-3xl font-bold
-            md:text-5xl
-          ">AmazonSmile</h1>
-          <hr class="mb-8 h-1.5 w-1/2 border-none bg-brand-orange" />
-          <p class="max-w-2xl leading-relaxed text-gray-700">
-            You can also support Sakyadhita International by shopping online through AmazonSmile, a
-            simple and automatic way for you to support Sakyadhita every time you shop, at no cost
-            to you. When you shop at AmazonSmile, you’ll find the exact same low prices, vast
-            selection and convenient shopping experience as Amazon.com, with the added bonus that
-            Amazon will donate a portion of the purchase price to Sakyadhita.
-          </p>
-          <Image
-            class="mt-8 h-auto w-full max-w-sm rounded-lg shadow-md"
-            alt="AmazonSmile Promo"
-            src={amazonSmileImg}
-            width={350}
-          />
-          <div class="mt-8">
-            <CustomButton text="Support" redirect_link={CONTACT_INFO.AMAZON_SMILE_URL} />
-          </div>
-        </section>
-      </div>
-
-      <div class="
-        hidden justify-center
-        md:flex
-      ">
-        <hr class="my-24 h-2.5 w-1/2 border-none bg-brand-orange" />
-      </div>
-
-      {/* Support Us Section */}
-      <section class="
-        mt-12 flex flex-col items-center
-        md:mt-0 md:items-start
-      ">
+  <div class="
+    mx-auto w-full max-w-7xl px-6 py-12
+    md:px-12 md:py-24
+  ">
+    <div class="space-y-16">
+      {/* Header section */}
+      <section class="prose max-w-none text-center">
         <h1 class="
-          mb-8 font-heading text-3xl font-bold
+          mb-6 font-heading text-4xl font-bold text-black
           md:text-5xl
         ">
-          Support Us via Involvement
+          {frontmatter.title}
         </h1>
-        <p class="mb-8 text-gray-700">Get involved and support us!</p>
-        <div
-          class="
-            flex w-full flex-col items-center justify-evenly gap-8
-            md:flex-row
-            lg:gap-12
-          "
-        >
+        <p class="mx-auto max-w-3xl font-body text-xl text-gray-700 italic">
+          {frontmatter.description}
+        </p>
+      </section>
+
+      {/* Main content grid */}
+      <div class="
+        grid grid-cols-1 gap-12
+        lg:grid-cols-2
+      ">
+        {/* Left Column: Direct Donation */}
+        <section class="
+          space-y-8 rounded-3xl bg-[#f7f7f7] p-8
+          md:p-12
+        ">
+          <div
+            class="
+              prose prose-lg max-w-none font-body text-gray-700
+              prose-headings:font-heading prose-headings:font-bold
+              prose-headings:text-black
+            "
+          >
+            <slot />
+          </div>
+
+          <div class="pt-8">
+            <h3 class="mb-6 font-heading text-2xl font-bold text-black">Make a Contribution</h3>
+            <PayPal client:only="react" />
+          </div>
+        </section>
+
+        {/* Right Column: Other ways to help */}
+        <section class="space-y-12">
+          <div
+            class="
+              group overflow-hidden rounded-3xl bg-white shadow-xl ring-1
+              ring-black/5
+            "
+          >
+            <div class="
+              flex flex-col
+              md:flex-row
+            ">
+              <div class="
+                w-full
+                md:w-1/3
+              ">
+                <Image
+                  src={workingTogetherImg}
+                  alt="Working Together"
+                  class="
+                    h-48 w-full object-cover
+                    md:h-full
+                  "
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div class="flex flex-1 flex-col justify-center p-8">
+                <h3 class="
+                  mb-4 font-heading text-2xl font-bold text-black italic
+                ">
+                  Working Together
+                </h3>
+                <p class="font-body text-gray-600">
+                  Your donations make it possible for us to continue our work in supporting Buddhist
+                  women worldwide.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="
+              group overflow-hidden rounded-3xl bg-white shadow-xl ring-1
+              ring-black/5
+            "
+          >
+            <div class="
+              flex flex-col
+              md:flex-row
+            ">
+              <div class="
+                w-full
+                md:w-1/3
+              ">
+                <Image
+                  src={amazonSmileImg}
+                  alt="Amazon Smile"
+                  class="
+                    h-48 w-full object-cover
+                    md:h-full
+                  "
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div class="flex flex-1 flex-col justify-center p-8">
+                <h3 class="
+                  mb-4 font-heading text-2xl font-bold text-black italic
+                ">Amazon Smile</h3>
+                <p class="font-body text-gray-600">
+                  Support Sakyadhita while you shop at Amazon. A portion of your purchase goes
+                  directly to our programs.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Netlify Form Detection Pixel */}
+          <form name="_pixel" data-netlify="true" hidden>
+            <img alt="" src={PAYPAL_CONFIG.PIXEL_IMG} width="1" height="1" />
+          </form>
+        </section>
+      </div>
+
+      {/* Bottom Section: Join/Involved */}
+      <section class="pt-12">
+        <div class="mb-12 flex items-center gap-6">
+          <h2 class="font-heading text-3xl font-bold tracking-tight text-black">
+            More Ways to <span class="text-brand-orange">Connect</span>
+          </h2>
+          <div class="h-px flex-1 bg-gray-100"></div>
+        </div>
+
+        <div class="
+          grid grid-cols-1 gap-8
+          md:grid-cols-2
+        ">
           <BeInvolved
-            description="Become a member of Sakyadhita!"
-            image_url="/assets/Join Us Page/JoinUs.jpg"
+            title="Join Sakyadhita"
+            description="Become a member and join our global network of Buddhist women"
+            image_url="/assets/Join Us Page/Joining hands.jpg"
             openInSameTab="true"
             redirect_link={SITE_PAGES.JOIN_US}
             button_title="Join Us"
           />
           <BeInvolved
-            description="Interested in helping us with anything from writing content to building?"
-            image_url="/assets/Join Us Page/Volunteer.jpg"
-            openInSameTab="true"
-            redirect_link={SITE_PAGES.VOLUNTEER}
-            button_title="Volunteer"
-          />
-          <BeInvolved
-            description="Help us grow and continue to connect by donating in any amount"
+            title="Sakyadhita Endowment Fund"
+            description="Help secure our future and stay connect by donating in any amount"
             image_url="/assets/Donate Page/Donate.jpg"
             openInSameTab="true"
             redirect_link={SITE_PAGES.DONATE}

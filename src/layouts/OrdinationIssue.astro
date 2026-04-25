@@ -1,11 +1,9 @@
 ---
-import { getImage } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
 
 import PageLayout from './PageLayout.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import { getRawImage } from '../lib/images'
 
 const sectionsRaw = await getCollection('section', ({ data }) => {
   return data.isPublished == true && data.page == 'OrdinationIssue'
@@ -18,17 +16,13 @@ const sections = await Promise.all(
 )
 
 const { frontmatter } = Astro.props
-const rawHeader = getRawImage(frontmatter.image)
-const optimizedHeader = rawHeader
-  ? await getImage({ src: rawHeader, format: 'webp', width: 1600 })
-  : null
 ---
 
 <PageLayout>
   <ResourcesNavBar>
     <div class="relative w-full">
       <ResourcesHeader
-        image={optimizedHeader?.src || frontmatter.image}
+        image={frontmatter.image}
         title={frontmatter.title}
         text={frontmatter.description}
       />

@@ -8,7 +8,7 @@ import CustomButton from '../CustomButton.astro'
 interface Props {
   title?: string
   description?: string
-  image_url: string
+  image_url: string | ImageMetadata
   redirect_link?: string
   showButton?: boolean
   openInSameTab?: boolean
@@ -24,19 +24,25 @@ const {
   openInSameTab = false,
   height = '100%'
 } = Astro.props
+
+const imageUrl = typeof image_url === 'string' ? image_url : image_url.src
 ---
 
 <div
-  class="embla__slide w-full bg-[no-repeat,no-repeat] bg-size-[cover,contain]
-    bg-position-[center,top]"
-  style={{ backgroundImage: `url("${image_url}")`, height }}
+  class="
+    embla__slide w-full bg-[no-repeat,no-repeat] bg-size-[cover,contain]
+    bg-position-[center,top]
+  "
+  style={{ backgroundImage: `url("${imageUrl}")`, height }}
 >
   {/* Displays all slide information in rectangular box */}
   <div
-    class="absolute top-[7%] left-[15%] h-fit w-[70.5vw] bg-brand-dark-purple/20 p-8
+    class="
+      absolute top-[7%] left-[15%] h-fit w-[70.5vw] bg-brand-dark-purple/20 p-8
       text-white
       md:left-1/2 md:w-lg md:-translate-x-1/2
-      lg:left-[15%] lg:translate-x-0 lg:p-12"
+      lg:left-[15%] lg:translate-x-0 lg:p-12
+    "
   >
     {/* Title */}
     {

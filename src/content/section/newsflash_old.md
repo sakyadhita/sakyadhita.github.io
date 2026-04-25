@@ -3,7 +3,7 @@ page: 'NewsFlash'
 title: 2023 Sakyadhita International Conference on Buddhist Women
 isPublished: false
 subtitle: '"Living in a Precarious World: Impermanence, Resilience, Awakening"'
-image: /assets/Home Page/Seoul_0174_SAK7378.jpg
+image: ../../assets/Home Page/Seoul_0174_SAK7378.jpg
 redirectLink: 'https://youtu.be/YGxVoV13hg8?si=vq0WVMzrIl7T6wCP'
 ---
 

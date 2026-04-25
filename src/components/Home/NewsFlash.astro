@@ -5,25 +5,28 @@
  * @summary Displays latest news on the Home Page.
  * @author Jitendra Joshi
  */
-import { getOptimizedImage, getAssetUrl } from '../../lib/images'
+import { Image } from 'astro:assets'
+
+import { getAssetUrl } from '../../lib/images'
 import CustomButton from '../CustomButton.astro'
 
 interface Props {
   article: {
-    data: { title: string; subtitle: string; image: string; redirectLink: string }
+    data: { title: string; subtitle: string; image: ImageMetadata; redirectLink: string }
   }
 }
 
 const { article } = Astro.props
-const optimizedImage = await getOptimizedImage(article.data.image, 800)
 const redirectLink = getAssetUrl(article.data.redirectLink)
 ---
 
 <div id="news-flash" class="prose mb-6 max-w-none">
   <h1 class="mb-8 font-heading font-bold">{article.data.title}</h1>
 
-  <div id="news-flash-wrapper" class="flex flex-col items-stretch gap-8
-    lg:flex-row">
+  <div id="news-flash-wrapper" class="
+    flex flex-col items-stretch gap-8
+    lg:flex-row
+  ">
     <div class="flex-1 pb-2">
       <p class="mb-4 font-bold text-brand-dark-purple italic">{article.data.subtitle}</p>
       <div class="mb-6">
@@ -34,11 +37,13 @@ const redirectLink = getAssetUrl(article.data.redirectLink)
       </div>
     </div>
     <div class="flex-1">
-      <img
+      <Image
         id="news-flash-img"
         class="size-full rounded-lg object-contain shadow-md"
-        src={optimizedImage?.src || article.data.image}
+        src={article.data.image}
         alt={article.data.title}
+        width={800}
+        height={600}
       />
     </div>
   </div>
