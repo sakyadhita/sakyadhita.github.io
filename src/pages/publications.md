@@ -1,3 +1,3 @@
 ---
-layout: ../layouts/PubLayout.astro
+layout: ../layouts/Publication.astro
 ---

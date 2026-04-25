@@ -86,17 +86,18 @@ const section = defineCollection({
 
 const exco = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/exco' }),
-  schema: z.object({
-    subtitle: z.string().optional(),
-    startYear: z.number().int().positive(),
-    endYear: z.number().int().positive(),
-    rank: z.number().int().optional(),
-    name: z.string(),
-    position: z.string(),
-    imageLink: z.string().optional().default('./assets/headshot.jpg'),
-    redirectLink: z.string().optional(),
-    openInSameTab: z.boolean()
-  })
+  schema: ({ image }) =>
+    z.object({
+      subtitle: z.string().optional(),
+      startYear: z.number().int().positive(),
+      endYear: z.number().int().positive(),
+      rank: z.number().int().optional(),
+      name: z.string(),
+      position: z.string(),
+      imageLink: image().optional().default('./assets/headshot.jpg'),
+      redirectLink: z.string().optional(),
+      openInSameTab: z.boolean()
+    })
 })
 
 const volinterest = defineCollection({

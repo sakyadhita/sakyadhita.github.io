@@ -1,5 +1,5 @@
 ---
-layout: ../layouts/ContactLayout.astro
+layout: ../layouts/ContactUs.astro
 image: /assets/Contact Page/Hong Kong Conference Video.jpeg
 email:
   - address: service.sakyadhita@gmail.com

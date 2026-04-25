@@ -1,0 +1,324 @@
+---
+import { getCollection, render } from 'astro:content'
+
+import PageLayout from './PageLayout.astro'
+import ResourcesHeader from '../components/ResourcesHeader.astro'
+import { getOptimizedImage, getAssetUrl } from '../lib/images'
+
+const committeesRaw = await getCollection('exco')
+const committees = await Promise.all(
+  committeesRaw.map(async (c) => {
+    const redirectLink = getAssetUrl(c.data.redirectLink || '')
+    const { Content } = await render(c)
+    return { ...c, data: { ...c.data, redirectLink }, Content }
+  })
+)
+
+// Group committees by year range
+const yearRanges = [...new Set(committees.map(c => `${c.data.startYear}-${c.data.endYear}`))].sort().reverse()
+const initialYearRange = yearRanges[0]
+
+const sectionsRaw = await getCollection('section', ({ data }) => {
+  return data.isPublished == true && data.page == 'AboutUs'
+})
+const sections = await Promise.all(
+  sectionsRaw.map(async (s) => {
+    const { Content } = await render(s)
+    return { ...s, Content }
+  })
+)
+
+const { frontmatter } = Astro.props
+const optimizedHeader = await getOptimizedImage(frontmatter.image, 1600)
+
+function makeIdURLFriendly(idString: string) {
+  return idString
+    .replaceAll(/\s+/g, '-')
+    .replaceAll(':', '')
+    .replaceAll(/[^a-z0-9-]/gi, '')
+    .toLowerCase()
+}
+---
+
+<PageLayout>
+  <ResourcesHeader
+    title={frontmatter.title}
+    text={frontmatter.description}
+    image={optimizedHeader?.src || frontmatter.image}
+  />
+
+  <div id="about-us-root" class="relative w-full">
+    <div class="flex w-full flex-col md:flex-row">
+      {/* Sticky Nav */}
+      <aside
+        class="
+          sticky top-32 mt-24 ml-8 hidden h-fit w-64 shrink-0
+          md:block
+          lg:ml-16
+        "
+      >
+        <nav class="relative flex border-r border-gray-300 pr-8">
+          <ul class="m-0 flex list-none flex-col space-y-4 p-0">
+            {sections.map((section) => {
+              const id = makeIdURLFriendly(section.data.title)
+              return (
+                <li class="py-2">
+                  <a
+                    href={`#${id}`}
+                    class="nav-link pb-1 font-body text-lg no-underline transition-all hover:text-brand-orange hover:no-underline border-b-2 border-transparent"
+                    data-section-id={id}
+                  >
+                    {section.data.title}
+                  </a>
+                </li>
+              )
+            })}
+            <li class="py-2">
+              <a
+                href="#exec"
+                class="nav-link pb-1 font-body text-lg no-underline transition-all hover:text-brand-orange hover:no-underline border-b-2 border-transparent"
+                data-section-id="exec"
+              >
+                Executive Committee
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Contents of page */}
+      <div
+        class="
+          mx-auto w-full max-w-4xl flex-1 px-6 py-12 font-body
+          md:px-12 md:py-24
+        "
+      >
+        <div
+          class="
+            prose prose-lg max-w-none
+            prose-headings:mb-8 prose-headings:font-heading
+            prose-headings:font-bold
+            prose-img:mt-12 prose-img:w-full prose-img:rounded-lg
+            prose-img:shadow-lg
+          "
+        >
+          {
+            sections.map((section) => (
+              <div class="about-section mb-12" id={makeIdURLFriendly(section.data.title)}>
+                <h1>{section.data.title}</h1>
+                <section.Content />
+              </div>
+            ))
+          }
+          <slot />
+        </div>
+
+        {/* Mini Divider */}
+        <hr
+          class="
+            mx-auto my-24 hidden h-2 w-1/2 border-none bg-brand-orange
+            md:block md:w-3/4
+          "
+        />
+
+        {/* Executive Committee Section */}
+        <div
+          class="about-section mt-12 flex flex-col items-center md:mt-0"
+          id="exec"
+        >
+          <h1
+            class="
+              mb-8 font-heading text-3xl font-bold
+              md:text-5xl
+            "
+          >
+            Executive Committee
+          </h1>
+
+          {/* Committee Selector */}
+          {yearRanges.length > 0 && (
+            <div class="relative mb-8" id="committee-selector">
+              <button
+                type="button"
+                id="dropdown-button"
+                class="
+                  relative z-30 flex h-10 w-44 cursor-pointer items-center
+                  justify-between rounded-full border-2 border-black bg-white px-4
+                "
+              >
+                <span class="font-body font-bold" id="current-year">{initialYearRange}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down size-4"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div
+                id="dropdown-menu"
+                class="
+                  absolute top-10 left-[17.5px] z-20 hidden w-36 flex-col items-center
+                  border-2 border-gray-400 bg-white shadow-lg
+                "
+              >
+                {yearRanges.map((yearRange) => (
+                  <button
+                    type="button"
+                    class="
+                      year-option w-full cursor-pointer border-none bg-white px-0 py-2.5 font-body
+                      transition-colors
+                      hover:bg-gray-200
+                    "
+                    data-year={yearRange}
+                  >
+                    {yearRange}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Committee Profiles */}
+          <div id="committee-profiles-container" class="w-full flex justify-center">
+            {yearRanges.map((yearRange) => {
+              const [start] = yearRange.split('-').map(Number)
+              const members = committees.filter(c => c.data.startYear === start).toReversed()
+              return (
+                <div 
+                  class={`committee-group w-full flex-row-reverse flex-wrap-reverse justify-evenly gap-y-12 ${yearRange === initialYearRange ? 'flex' : 'hidden'}`}
+                  data-year-range={yearRange}
+                >
+                  {members.map((member) => (
+                    <div
+                      class="
+                        relative mx-5 flex w-full flex-col items-center
+                        md:w-80 md:items-start
+                      "
+                    >
+                      <img
+                        class="
+                          mt-20 mb-4 size-64 rounded-full border-15 border-[#f7f7f7]
+                          object-cover
+                        "
+                        src={member.data.imageLink.src}
+                        alt="Exec Headshot"
+                      />
+                      <h2
+                        class="
+                          my-1 text-center font-heading text-3xl font-bold
+                          md:text-left
+                        "
+                      >
+                        {member.data.name}
+                      </h2>
+                      <div
+                        class="
+                          relative flex flex-row items-center justify-center
+                          md:justify-start
+                        "
+                      >
+                        {member.data.redirectLink && (
+                          <a
+                            href={member.data.redirectLink}
+                            target={member.data.openInSameTab ? '' : '_blank'}
+                            rel="noreferrer"
+                            class="mr-2"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link h-[1.2em] text-brand-orange transition-all hover:brightness-75"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                          </a>
+                        )}
+                        <h3
+                          class="
+                            my-1 text-center font-heading text-[1.5em] font-normal
+                            md:text-left
+                          "
+                        >
+                          {member.data.position}
+                        </h3>
+                      </div>
+                      <div class="prose prose-sm max-w-none px-2.5 py-5 font-body">
+                        <member.Content />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</PageLayout>
+
+<script>
+  function initAboutUs() {
+    const root = document.querySelector('#about-us-root')
+    if (!root) return
+
+    // --- Sticky Nav Logic ---
+    const navLinks = root.querySelectorAll('.nav-link')
+    const sections = root.querySelectorAll('.about-section')
+    
+    const observerOptions = {
+      root: document.querySelector('#page-layout'),
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id
+          navLinks.forEach(link => {
+            if (link.getAttribute('data-section-id') === id) {
+              link.classList.remove('border-transparent')
+              link.classList.add('text-brand-orange', 'border-brand-orange')
+            } else {
+              link.classList.remove('text-brand-orange', 'border-brand-orange')
+              link.classList.add('border-transparent')
+            }
+          })
+        }
+      })
+    }, observerOptions)
+
+    sections.forEach(section => observer.observe(section))
+
+    // --- Committee Selector Logic ---
+    const dropdownButton = root.querySelector('#dropdown-button')
+    const dropdownMenu = root.querySelector('#dropdown-menu')
+    const currentYearSpan = root.querySelector('#current-year')
+    const yearOptions = root.querySelectorAll('.year-option')
+    const committeeGroups = root.querySelectorAll('.committee-group')
+
+    if (dropdownButton && dropdownMenu) {
+      dropdownButton.addEventListener('click', (e) => {
+        e.stopPropagation()
+        dropdownMenu.classList.toggle('hidden')
+      })
+
+      document.addEventListener('click', () => {
+        dropdownMenu.classList.add('hidden')
+      })
+
+      yearOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const selectedYear = (option as HTMLElement).dataset.year
+          if (selectedYear) {
+            if (currentYearSpan) currentYearSpan.textContent = selectedYear
+            
+            committeeGroups.forEach(group => {
+              if ((group as HTMLElement).dataset.yearRange === selectedYear) {
+                group.classList.remove('hidden')
+                group.classList.add('flex')
+              } else {
+                group.classList.remove('flex')
+                group.classList.add('hidden')
+              }
+            })
+          }
+          dropdownMenu.classList.add('hidden')
+        })
+      })
+    }
+  }
+
+  initAboutUs()
+  document.addEventListener('astro:page-load', initAboutUs)
+</script>
