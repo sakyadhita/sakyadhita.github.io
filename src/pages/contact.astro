@@ -1,13 +1,28 @@
 ---
 import { getImage } from 'astro:assets'
 import { Mail, Phone, House, X } from 'lucide-react'
+import { marked } from 'marked'
 
-import PageLayout from './PageLayout.astro'
+import PageLayout from '../layouts/PageLayout.astro'
 import CustomButton from '../components/CustomButton.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import { getRawImage } from '../lib/images'
 
-const { frontmatter } = Astro.props
+const frontmatter = {
+  image: "/assets/Contact Page/Hong Kong Conference Video.jpeg",
+  email: [
+    { address: "service.sakyadhita@gmail.com", description: "General Enquiries" }
+  ],
+  phone: "+1 858-525-5173 (Hawaiian Standard Time)",
+  address: "7331 Princess View Drive, San Diego, CA 92120 USA"
+}
+
+const markdownBody = `Thank you for your interest in Sakyadhita International and our work to awaken women to their tremendous potential for social and spiritual transformation. Please contact us for general inquiries and comments, updates on resources and women’s initiatives, Dharma offerings, questions about donations or sponsorships, or general correspondence.
+
+Sakyadhita is volunteer run, so please have patience with us as we answer your email. We
+always strive to answer in a timely manner.`
+
+const htmlContent = await marked.parse(markdownBody)
 
 const emailInfo = frontmatter.email || []
 const phone = frontmatter.phone
@@ -56,7 +71,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image
             Contact Us
           </h2>
           <div class="font-body text-lg/relaxed text-gray-700">
-            <slot />
+            <Fragment set:html={htmlContent} />
           </div>
 
           <h4

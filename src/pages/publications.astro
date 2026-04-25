@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
-import PageLayout from './PageLayout.astro'
+import PageLayout from '../layouts/PageLayout.astro'
 import EPubCard from '../components/EPubs/EPubCard.astro'
 import EPubSection from '../components/EPubs/EPubSection.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
@@ -19,7 +19,11 @@ const sections = categories.map((c) => ({
 }))
 const featuredEpubs = publications.filter((p) => p.data.feature)
 
-const { frontmatter } = Astro.props
+const frontmatter = {
+  title: "E-Publications",
+  description: "Sakyadhita promotes research and publications on Buddhist women’s history and document their achievements. We strive to create equal opportunities for women in all Buddhist traditions.",
+  image: "../assets/Lotus_Header.png"
+}
 ---
 
 <PageLayout>
@@ -105,10 +109,6 @@ const { frontmatter } = Astro.props
             ))
           }
         </Slideshow>
-
-        <div class="mx-auto max-w-5xl px-4">
-          <slot />
-        </div>
 
         <div class="
           sections-container mt-14 mb-24

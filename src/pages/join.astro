@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 
-import PageLayout from './PageLayout.astro'
+import PageLayout from '../layouts/PageLayout.astro'
 import JoinUsComponent from '../components/Layouts/JoinUs'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 
@@ -12,7 +12,11 @@ const memberships = membertypes.map((m) => ({
   cost: String(m.data.cost || '0')
 }))
 
-const { frontmatter } = Astro.props
+const frontmatter = {
+  title: "Join Us",
+  description: "You join the world's leading international organization committed to transforming the lives of women in Buddhist societies. Sakyadhita seeks to unite Buddhist women of diverse countries and traditions, to promote their welfare, and to facilitate their work for the benefit of humanity. We invite you to join us in developing comprehensive resources to globally assist Buddhist women in creating a better world.",
+  image: "/assets/Join Us Page/1stConference.jpeg"
+}
 ---
 
 <PageLayout>
@@ -22,9 +26,7 @@ const { frontmatter } = Astro.props
     image={frontmatter.image}
   />
 
-  <JoinUsComponent client:load frontmatter={frontmatter} memberships={memberships}>
-    <slot />
-  </JoinUsComponent>
+  <JoinUsComponent client:load frontmatter={frontmatter} memberships={memberships} />
 
   {/* Hidden forms for Netlify detection */}
   <form name="membership" data-netlify="true" netlify-honeypot="bot-field" hidden>

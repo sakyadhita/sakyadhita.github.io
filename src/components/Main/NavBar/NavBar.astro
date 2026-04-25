@@ -20,7 +20,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
 ---
 
 <nav class="sticky top-0 z-1000 w-full" id="main-nav">
-  <!-- The actual Navigation Bar -->
+  {/* The actual Navigation Bar */}
   <div
     class="
       flex h-12 w-full items-center justify-between bg-brand-light-purple px-6
@@ -28,10 +28,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
       md:h-32 md:px-14 md:py-4 md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]
     "
   >
-    <!-- Logo and Branding -->
-    <Brand />
+    {/* Logo and Branding */}
+    <Brand location="navbar" />
 
-    <!-- Hamburger Button to Toggle Navigation -->
+    {/* Hamburger Button to Toggle Navigation */}
     <button
       type="button"
       id="nav-toggle"
@@ -45,7 +45,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
     </button>
   </div>
 
-  <!-- Navigation Panel -->
+  {/* Navigation Panel */}
   <div
     id="nav-panel"
     class="
@@ -56,7 +56,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
       md:justify-between md:pt-0
     "
   >
-    <!-- Cross icon to close panel on mobile -->
+    {/* Cross icon to close panel on mobile */}
     <button
       type="button"
       id="nav-close"
@@ -69,11 +69,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
       <Icon name="lucide:x" class="w-full" />
     </button>
 
-    <!-- Nav Links -->
-    <div class="
-      flex size-full flex-col
-      md:h-auto
-    ">
+    {/* Nav Links */}
+    <div
+      class="
+        flex size-full flex-col
+        md:h-auto
+      "
+    >
       {
         navLinks.map((item) => {
           const isActive =
@@ -104,7 +106,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
     </div>
   </div>
 
-  <!-- Overlay to darken website content when toggled -->
+  {/* Overlay to darken website content when toggled */}
   <div
     id="nav-overlay"
     class="
@@ -118,35 +120,40 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
 </nav>
 
 <script>
-  const toggle = document.querySelector('#nav-toggle')
-  const close = document.querySelector('#nav-close')
-  const panel = document.querySelector('#nav-panel')
-  const overlay = document.querySelector('#nav-overlay')
+  function initNav() {
+    const toggle = document.querySelector('#nav-toggle')
+    const close = document.querySelector('#nav-close')
+    const panel = document.querySelector('#nav-panel')
+    const overlay = document.querySelector('#nav-overlay')
 
-  function toggleNav() {
-    const isVisible = panel?.classList.contains('right-0')
+    function toggleNav() {
+      const isVisible = panel?.classList.contains('right-0')
 
-    if (isVisible) {
-      panel?.classList.remove('right-0')
-      overlay?.classList.add('opacity-0', 'pointer-events-none')
-      overlay?.classList.remove('opacity-100', 'pointer-events-auto')
-    } else {
-      panel?.classList.add('right-0')
-      overlay?.classList.remove('opacity-0', 'pointer-events-none')
-      overlay?.classList.add('opacity-100', 'pointer-events-auto')
+      if (isVisible) {
+        panel?.classList.remove('right-0')
+        overlay?.classList.add('opacity-0', 'pointer-events-none')
+        overlay?.classList.remove('opacity-100', 'pointer-events-auto')
+      } else {
+        panel?.classList.add('right-0')
+        overlay?.classList.remove('opacity-0', 'pointer-events-none')
+        overlay?.classList.add('opacity-100', 'pointer-events-auto')
+      }
     }
+
+    toggle?.addEventListener('click', toggleNav)
+    close?.addEventListener('click', toggleNav)
+    overlay?.addEventListener('click', toggleNav)
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && panel?.classList.contains('right-0')) {
+        toggleNav()
+      }
+    })
   }
 
-  toggle?.addEventListener('click', toggleNav)
-  close?.addEventListener('click', toggleNav)
-  overlay?.addEventListener('click', toggleNav)
-
-  // Close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && panel?.classList.contains('right-0')) {
-      toggleNav()
-    }
-  })
+  initNav()
+  document.addEventListener('astro:page-load', initNav)
 </script>
 
 <style>

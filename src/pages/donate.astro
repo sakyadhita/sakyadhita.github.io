@@ -1,14 +1,18 @@
 ---
 import { Image } from 'astro:assets'
 
-import PageLayout from './PageLayout.astro'
+import PageLayout from '../layouts/PageLayout.astro'
 import amazonSmileImg from '../assets/Donate Page/AmazonSmile-01.jpeg'
 import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg'
 import BeInvolved from '../components/Home/BeInvolved.astro'
 import PayPal from '../components/PayPal'
 import { PAYPAL_CONFIG, SITE_PAGES } from '../SiteMetadata'
 
-const { frontmatter } = Astro.props
+const frontmatter = {
+  title: "Donate & Support",
+  description: "Donate to Sakyadhita",
+  image: "../assets/Lotus_Header.png"
+}
 ---
 
 <PageLayout>
@@ -47,7 +51,7 @@ const { frontmatter } = Astro.props
               prose-headings:text-black
             "
           >
-            <slot />
+            {/* Body content was empty in markdown */}
           </div>
 
           <div class="pt-8">

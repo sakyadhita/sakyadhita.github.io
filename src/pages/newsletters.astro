@@ -1,14 +1,18 @@
 ---
 import { getCollection } from 'astro:content'
 
-import PageLayout from './PageLayout.astro'
+import PageLayout from '../layouts/PageLayout.astro'
 import ResourcesNavBar from '../components/Main/ResourcesNavBar.astro'
 import NewsletterCard from '../components/Newsletters/NewsletterCard.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 
 const newslettersRaw = await getCollection('newsletter')
 
-const { frontmatter } = Astro.props
+const frontmatter = {
+  title: "Newsletters",
+  description: "The Sakyadhita newsletter has been published annually since 1990. The newsletter is distributed by email and social media, and posted to the Sakyadhita International website, free of charge. The newsletters contain articles about the Sakyadhita International conferences, announcements of books by and related to women and Buddhism, and articles of interest to women in Buddhism and their allies.",
+  image: "../assets/Lotus_Header.png"
+}
 
 // return a reverse sort of the newsletter
 const newsletters = newslettersRaw.toSorted((a, b) => {
@@ -28,10 +32,6 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
       text={frontmatter.description}
       image={frontmatter.image}
     />
-
-    <div class="mx-auto max-w-5xl px-4">
-      <slot />
-    </div>
 
     {
       newsletters.length === 0 ? (
