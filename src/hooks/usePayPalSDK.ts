@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { PAYPAL_CONFIG } from '../constants/paypal'
+import { PAYPAL_CONFIG } from '../SiteMetadata'
 
 declare global {
   interface Window {

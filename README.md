@@ -35,6 +35,7 @@ To ensure long-term stability and prevent regressions, the project now includes 
 
 ## Releases
 
+* 2.1.1: Clean up site metadata; remove unused constants and assets
 * 2.1.0: **Native Astro Migration & Tailwind v4 Finalization**
     - Migrated core presentational components (`NavBar`, `HomeGallery`, `Slideshow`) to native Astro, significantly reducing client-side JS overhead.
     - Integrated PhotoSwipe directly into Astro for a faster, more responsive home gallery experience.

@@ -3,7 +3,7 @@ import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection } from 'astro:content'
 
-import { EXTERNAL_ASSETS } from './constants/assets'
+import { SITE_ASSETS } from './SiteMetadata'
 
 const news = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/news' }),
@@ -93,7 +93,7 @@ const exco = defineCollection({
     rank: z.number().int().optional(),
     name: z.string(),
     position: z.string(),
-    imageLink: z.string().optional().default(EXTERNAL_ASSETS.DEFAULT_HEADSHOT),
+    imageLink: z.string().optional().default('./assets/headshot.jpg'),
     redirectLink: z.string().optional(),
     openInSameTab: z.boolean()
   })

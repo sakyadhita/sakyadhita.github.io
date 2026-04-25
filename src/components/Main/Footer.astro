@@ -13,11 +13,8 @@ import { Image } from 'astro:assets'
 import Brand from './Brand.astro'
 import License from '../../assets/by-nc-nd.png'
 import Logo from '../../assets/logo.svg'
-import { EXTERNAL_ASSETS } from '../../constants/assets'
-import { EXTERNAL_LINKS } from '../../constants/external'
-import { SITE_PAGES } from '../../constants/links'
-import { SOCIAL_LINKS } from '../../constants/social'
 import { cn } from '../../lib/utils'
+import { SITE_ASSETS, EXTERNAL_LINKS, SITE_PAGES, SOCIAL_LINKS } from '../../SiteMetadata'
 
 const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-all shrink-0'
 ---
@@ -30,9 +27,6 @@ const socialIconClasses = 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 transition-
       bg-position-[center,top] bg-no-repeat
       shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)] blur-[5px]
     "
-    style={{
-      backgroundImage: `url("${EXTERNAL_ASSETS.FOOTER_BG}")`
-    }}
   >
   </div>
 

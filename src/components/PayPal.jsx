@@ -9,9 +9,8 @@
  */
 import React from 'react'
 
-import { CONTACT_INFO } from '../constants/contact'
-import { PAYPAL_CONFIG } from '../constants/paypal'
 import { usePayPalSDK } from '../hooks/usePayPalSDK'
+import { CONTACT_INFO, PAYPAL_CONFIG } from '../SiteMetadata'
 
 // const config = require("../config.js");
 

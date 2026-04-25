@@ -47,7 +47,7 @@ export async function getOptimizedImage(
 
   // Try mapping to /src/assets
   // 1. If it already starts with /assets, it becomes /src/assets/...
-  // 2. If it's a root path like /Lotus_Header.jpg, it becomes /src/assets/Lotus_Header.jpg
+  // 2. If it's a root path like /Lotus_Header.png, it becomes /src/assets/Lotus_Header.png
   const srcPath = cleanPath.startsWith('/assets') ? `/src${cleanPath}` : `/src/assets${cleanPath}`
 
   const image = images[srcPath]
