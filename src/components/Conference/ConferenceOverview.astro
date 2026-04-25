@@ -1,9 +1,11 @@
 ---
 import { Icon } from 'astro-icon/components'
 
+import type { ConferenceEntry } from '../../lib/types'
+
 interface Props {
   title: string
-  info: any
+  info: ConferenceEntry
 }
 
 const { title, info } = Astro.props
@@ -28,20 +30,18 @@ const items = info.data
   <section class="max-w-md">
     <h4
       class="
-        mb-8 border-l-4 border-brand-orange pl-4 font-heading
-        text-xl/relaxed font-bold text-gray-600 lowercase italic
+        mb-8 border-l-4 border-brand-orange pl-4 font-heading text-xl/relaxed
+        font-bold text-gray-600 lowercase italic
       "
     >
       Conference resources are available for download as a PDF.
     </h4>
   </section>
 
-  <div
-    class="
-      flex flex-col gap-8
-      lg:flex-row lg:gap-12
-    "
-  >
+  <div class="
+    flex flex-col gap-8
+    lg:flex-row lg:gap-12
+  ">
     <div class="max-w-md flex-1 space-y-2">
       {/* brochures */}
       <div
@@ -55,11 +55,16 @@ const items = info.data
       <div class="mb-8 flex flex-col space-y-2">
         {
           !items.brochures || items.brochures.length === 0 ? (
-            <div class="rounded-lg border border-dashed border-gray-200 px-4 py-2 text-gray-400 italic">
+            <div
+              class="
+                rounded-lg border border-dashed border-gray-200 px-4 py-2
+                text-gray-400 italic
+              "
+            >
               No info available
             </div>
           ) : (
-            items.brochures.map((program: any) => (
+            items.brochures.map((program) => (
               <a
                 href={program.url}
                 download
@@ -97,11 +102,16 @@ const items = info.data
       <div class="mb-8 flex flex-col space-y-2">
         {
           !items.programs || items.programs.length === 0 ? (
-            <div class="rounded-lg border border-dashed border-gray-200 px-4 py-2 text-gray-400 italic">
+            <div
+              class="
+                rounded-lg border border-dashed border-gray-200 px-4 py-2
+                text-gray-400 italic
+              "
+            >
               No info available
             </div>
           ) : (
-            items.programs.map((program: any) => (
+            items.programs.map((program) => (
               <a
                 href={program.url}
                 download
@@ -139,11 +149,16 @@ const items = info.data
       <div class="mb-8 flex flex-col space-y-2">
         {
           !items.abstracts || items.abstracts.length === 0 ? (
-            <div class="rounded-lg border border-dashed border-gray-200 px-4 py-2 text-gray-400 italic">
+            <div
+              class="
+                rounded-lg border border-dashed border-gray-200 px-4 py-2
+                text-gray-400 italic
+              "
+            >
               No info available
             </div>
           ) : (
-            items.abstracts.map((program: any) => (
+            items.abstracts.map((program) => (
               <a
                 href={program.url}
                 download
@@ -181,11 +196,16 @@ const items = info.data
       <div class="mb-8 flex flex-col space-y-2">
         {
           !items.presentations || items.presentations.length === 0 ? (
-            <div class="rounded-lg border border-dashed border-gray-200 px-4 py-2 text-gray-400 italic">
+            <div
+              class="
+                rounded-lg border border-dashed border-gray-200 px-4 py-2
+                text-gray-400 italic
+              "
+            >
               No info available
             </div>
           ) : (
-            items.presentations.map((program: any) => (
+            items.presentations.map((program) => (
               <a
                 href={program.url}
                 download
@@ -212,12 +232,10 @@ const items = info.data
       </div>
     </div>
 
-    <div
-      class="
-        shrink-0
-        lg:w-1/2
-      "
-    >
+    <div class="
+      shrink-0
+      lg:w-1/2
+    ">
       <slot name="slideshow" />
     </div>
   </div>

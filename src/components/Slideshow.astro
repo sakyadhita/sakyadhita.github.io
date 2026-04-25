@@ -16,10 +16,7 @@ interface Props {
 const { height = '100%', width = '100%', className = '' } = Astro.props
 ---
 
-<div
-  class={cn('Slideshow group relative block overflow-hidden', className)}
-  style={{ width }}
->
+<div class={cn('Slideshow group relative block overflow-hidden', className)} style={{ width }}>
   <div class="embla h-full" style={{ height }}>
     <div class="embla__container flex h-full">
       <slot />
@@ -53,12 +50,9 @@ const { height = '100%', width = '100%', className = '' } = Astro.props
   </button>
 
   {/* Indicators */}
-  <div
-    class="
-      embla__dots absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4
-    "
-  >
-  </div>
+  <div class="
+    embla__dots absolute inset-x-0 bottom-16 z-20 flex justify-center gap-4
+  "></div>
 </div>
 
 <style>
@@ -112,10 +106,11 @@ const { height = '100%', width = '100%', className = '' } = Astro.props
   function initSlideshows() {
     const slideshowNodes = document.querySelectorAll('.Slideshow')
 
-    slideshowNodes.forEach((node) => {
+    slideshowNodes.forEach((el) => {
+      const node = el as HTMLElement
       // Prevent double initialization
-      if (node.hasAttribute('data-embla-initialized')) return
-      node.setAttribute('data-embla-initialized', 'true')
+      if (node.dataset.emblaInitialized === 'true') return
+      node.dataset.emblaInitialized = 'true'
 
       const viewportNode = node.querySelector('.embla') as HTMLElement
       const prevBtn = node.querySelector('.embla__prev')
@@ -139,11 +134,7 @@ const { height = '100%', width = '100%', className = '' } = Astro.props
           const selectedIndex = emblaApi.selectedScrollSnap()
           const dots = dotsNode.querySelectorAll('.embla__dot')
           dots.forEach((dot, index) => {
-            if (index === selectedIndex) {
-              dot.classList.add('embla__dot--selected')
-            } else {
-              dot.classList.remove('embla__dot--selected')
-            }
+            dot.classList.toggle('embla__dot--selected', index === selectedIndex)
           })
         }
 

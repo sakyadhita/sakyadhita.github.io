@@ -59,9 +59,6 @@ importers:
       react-dom:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
-      react-photoswipe-gallery:
-        specifier: ^4.0.0
-        version: 4.0.0(photoswipe@5.4.4)(prop-types@15.8.1)(react@19.2.5)
       react-player:
         specifier: ^3.4.0
         version: 3.4.0(@svta/cml-cta@1.0.1(@svta/cml-structured-field-values@1.0.1(@svta/cml-utils@1.0.1))(@svta/cml-utils@1.0.1))(@svta/cml-structured-field-values@1.0.1(@svta/cml-utils@1.0.1))(@svta/cml-utils@1.0.1)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -3675,13 +3672,6 @@ packages:
 
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
-
-  react-photoswipe-gallery@4.0.0:
-    resolution: {integrity: sha512-rpvGSBddLp1hZfTZgi3UFLJKlupHfDhW6e7w6jUUr5bagTWfrxJ7nB8yzNkx+BaoiMyy4FvJBwc4n/+QW2ft4g==}
-    peerDependencies:
-      photoswipe: '>= 5.2.2'
-      prop-types: '>= 15.7.0'
-      react: '>= 16.8.0'
 
   react-player@3.4.0:
     resolution: {integrity: sha512-QpQSHXtnMBKjQVNeaCYMtTVcynWQ0DDDhz/FJu1OR9PHLC1Aih94UqNstywzSHbJ6Oc7lI8/7kDDqcIvyTI6zQ==}
@@ -8598,12 +8588,6 @@ snapshots:
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
-
-  react-photoswipe-gallery@4.0.0(photoswipe@5.4.4)(prop-types@15.8.1)(react@19.2.5):
-    dependencies:
-      photoswipe: 5.4.4
-      prop-types: 15.8.1
-      react: 19.2.5
 
   react-player@3.4.0(@svta/cml-cta@1.0.1(@svta/cml-structured-field-values@1.0.1(@svta/cml-utils@1.0.1))(@svta/cml-utils@1.0.1))(@svta/cml-structured-field-values@1.0.1(@svta/cml-utils@1.0.1))(@svta/cml-utils@1.0.1)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
     dependencies:

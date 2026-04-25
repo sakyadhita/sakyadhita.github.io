@@ -19,7 +19,7 @@ declare global {
 export function usePayPalSDK() {
   useEffect(() => {
     // Check if PayPal is already loaded
-    if (window.paypal) {
+    if (globalThis.paypal) {
       return
     }
 
@@ -28,7 +28,7 @@ export function usePayPalSDK() {
     script.async = true
     script.addEventListener('load', () => {
       // PayPal SDK is now available
-      window.paypal?.Buttons?.()
+      globalThis.paypal?.Buttons?.()
     })
     script.addEventListener('error', () => {
       console.error('Failed to load PayPal SDK')

@@ -2,8 +2,10 @@
 import Slideshow from '../Slideshow.astro'
 import NewsSlide from './NewsSlide.astro'
 
+import type { NewsAndEvents } from '../../lib/types'
+
 interface Props {
-  newsAndEvents: any[]
+  newsAndEvents: NewsAndEvents[]
 }
 
 const { newsAndEvents } = Astro.props

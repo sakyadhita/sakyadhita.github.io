@@ -6,17 +6,17 @@
  * @author PatrickBrown1
  */
 
-export default function NewsletterCard({
-  title,
-  year,
-  image_url,
-  optimized_url,
-  redirect_link
-}) {
+export default function NewsletterCard({ title, year, image_url, optimized_url, redirect_link }) {
   const _displayImage = optimized_url || image_url
-  
+
   return (
-    <div className="group m-4 inline-block w-60 sm:m-5 sm:w-64 md:m-6 md:size-72">
+    <div
+      className="
+        group m-4 inline-block w-60
+        sm:m-5 sm:w-64
+        md:m-6 md:size-72
+      "
+    >
       <a
         href={redirect_link}
         target="_blank"
@@ -38,7 +38,7 @@ export default function NewsletterCard({
             md:mb-2.5 md:h-60
           "
         />
-        <span 
+        <span
           className="
             block h-5 text-left font-body text-sm/5 text-black
             sm:text-base/6
@@ -50,7 +50,7 @@ export default function NewsletterCard({
         <span
           className="
             mt-1 block h-7 overflow-hidden text-left font-body text-base/6
-            text-black text-wrap
+            text-wrap text-black
             sm:text-xl/7
             md:text-xl/7
           "

@@ -1,125 +1,210 @@
 ---
 import Slideshow from '../Slideshow.astro'
-import HorizontalStepper from './HorizontalStepper.astro'
-import ConferenceTheme from './ConferenceTheme.astro'
 import ConferenceOverview from './ConferenceOverview.astro'
+import ConferenceTheme from './ConferenceTheme.astro'
+import HorizontalStepper from './HorizontalStepper.astro'
+
+import type { ConferenceEntry } from '../../lib/types'
 
 interface Props {
-  data: any[]
+  data: ConferenceEntry[]
   id?: string
 }
 
 const { data, id } = Astro.props
 
 // Find initial index
-const initialIndex = id ? data.findIndex(x => x.id === id) : 0
+const initialIndex = id ? data.findIndex((x) => x.id === id) : 0
 const index = initialIndex === -1 ? 0 : initialIndex
 ---
 
-<div id="conference-mobile-root" class="flex min-h-screen flex-col pb-12 font-body" data-initial-index={index}>
+<div
+  id="conference-mobile-root"
+  class="flex min-h-screen flex-col pb-12 font-body"
+  data-initial-index={index}
+>
   <div class="component-display">
-    {data.map((item, idx) => (
-      <div class={`conference-item ${idx === index ? 'block' : 'hidden'}`} data-item-index={idx}>
-        {/* Render either the associated video or the slideshow of images */}
-        <div class="relative h-72 w-full overflow-hidden rounded-b-3xl shadow-xl sm:h-96">
-           {item.data.optimizedImages?.length === 1 ? (
+    {
+      data.map((item, idx) => (
+        <div
+          class={`
+            conference-item
+            ${idx === index ? 'block' : 'hidden'}
+          `}
+          data-item-index={idx}
+        >
+          {/* Render either the associated video or the slideshow of images */}
+          <div
+            class="
+              relative h-72 w-full overflow-hidden rounded-b-3xl shadow-xl
+              sm:h-96
+            "
+          >
+            {item.data.optimizedImages?.length === 1 ? (
               <div class="relative size-full">
-                <div class="absolute bottom-10 left-6 z-10 pr-12 text-white drop-shadow-md">
-                  <h1 class="font-heading text-2xl font-bold tracking-tight lowercase">{item.data.title}</h1>
-                  <h3 class="font-body text-sm font-bold tracking-widest uppercase opacity-90">{item.data.location}</h3>
+                <div
+                  class="
+                    absolute bottom-10 left-6 z-10 pr-12 text-white
+                    drop-shadow-md
+                  "
+                >
+                  <h1
+                    class="
+                      font-heading text-2xl font-bold tracking-tight lowercase
+                    "
+                  >
+                    {item.data.title}
+                  </h1>
+                  <h3
+                    class="
+                      font-body text-sm font-bold tracking-widest uppercase
+                      opacity-90
+                    "
+                  >
+                    {item.data.location}
+                  </h3>
                 </div>
-                <img class="size-full object-cover" alt="Event" src={item.data.optimizedImages[0]} />
-                <div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
+                <img
+                  class="size-full object-cover"
+                  alt="Event"
+                  src={item.data.optimizedImages[0]}
+                />
+                <div
+                  class="
+                    absolute inset-0 bg-linear-to-t from-black/60
+                    via-transparent to-transparent
+                  "
+                />
               </div>
-           ) : (
-             <Slideshow height="100%" width="100%" >
-               {item.data.optimizedImages?.map((image: any) => (
-                 <div class="embla__slide relative size-full">
-                    <div class="absolute bottom-12 left-6 z-10 pr-12 text-white drop-shadow-md">
-                      <h1 class="font-heading text-2xl font-bold tracking-tight lowercase">{item.data.title}</h1>
-                      <h3 class="font-body text-sm font-bold tracking-widest uppercase opacity-90">{item.data.location}</h3>
+            ) : (
+              <Slideshow height="100%" width="100%">
+                {item.data.optimizedImages?.map((image) => (
+                  <div class="embla__slide relative size-full">
+                    <div
+                      class="
+                        absolute bottom-12 left-6 z-10 pr-12 text-white
+                        drop-shadow-md
+                      "
+                    >
+                      <h1
+                        class="
+                          font-heading text-2xl font-bold tracking-tight
+                          lowercase
+                        "
+                      >
+                        {item.data.title}
+                      </h1>
+                      <h3
+                        class="
+                          font-body text-sm font-bold tracking-widest uppercase
+                          opacity-90
+                        "
+                      >
+                        {item.data.location}
+                      </h3>
                     </div>
                     <img class="size-full object-cover" alt="Event" src={image} />
-                    <div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
-                 </div>
-               ))}
-             </Slideshow>
-           )}
-        </div>
+                    <div
+                      class="
+                        absolute inset-0 bg-linear-to-t from-black/60
+                        via-transparent to-transparent
+                      "
+                    />
+                  </div>
+                ))}
+              </Slideshow>
+            )}
+          </div>
 
-        {/* The information for either theme or overview */}
-        <div class="px-6 mt-8 space-y-12">
-          <section class="fade-in slide-in-from-bottom-4 animate-in">
-            <h2 class="mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading text-2xl font-bold text-brand-dark-purple lowercase italic">Theme</h2>
-            <ConferenceTheme
-              redirect={item.data.signUpLink}
-              theme={item.data.htmlBody}
-              signup={item.data.signUpLink}
-              location={item.data.location}
-              
-            />
-          </section>
-          <section class="fade-in slide-in-from-bottom-4 animate-in delay-200">
-            <h2 class="mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading text-2xl font-bold text-brand-dark-purple lowercase italic">Overview</h2>
-            <ConferenceOverview info={item} title={item.data.title} />
-          </section>
-        </div>
+          {/* The information for either theme or overview */}
+          <div class="mt-8 space-y-12 px-6">
+            <section class="fade-in slide-in-from-bottom-4 animate-in">
+              <h2
+                class="
+                  mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading
+                  text-2xl font-bold text-brand-dark-purple lowercase italic
+                "
+              >
+                Theme
+              </h2>
+              <ConferenceTheme
+                redirect={item.data.signUpLink}
+                theme={item.data.htmlBody}
+                signup={item.data.signUpLink}
+                location={item.data.location}
+              />
+            </section>
+            <section class="fade-in slide-in-from-bottom-4 animate-in delay-200">
+              <h2
+                class="
+                  mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading
+                  text-2xl font-bold text-brand-dark-purple lowercase italic
+                "
+              >
+                Overview
+              </h2>
+              <ConferenceOverview info={item} title={item.data.title} />
+            </section>
+          </div>
 
-        {/* Render the video at bottom if it exists */}
-        {item.data.video && (
-          <div class="my-8 aspect-video overflow-hidden rounded-2xl bg-black shadow-lg mx-6">
-             <iframe
+          {/* Render the video at bottom if it exists */}
+          {item.data.video && (
+            <div
+              class="
+                mx-6 my-8 aspect-video overflow-hidden rounded-2xl bg-black
+                shadow-lg
+              "
+            >
+              <iframe
                 src={item.data.video.replace('watch?v=', 'embed/')}
                 class="size-full"
-                
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-              ></iframe>
-          </div>
-        )}
-      </div>
-    ))}
-
-        {/* The stepper component */}
-        <div
-          class="
-            no-scrollbar overflow-x-auto border-y border-gray-100 bg-gray-50
-            py-8 shadow-inner
-          "
-        >
-          <HorizontalStepper
-            items={data}
-            color="#6652a0"
-            id={id}
-          />
+              />
+            </div>
+          )}
         </div>
+      ))
+    }
+
+    {/* The stepper component */}
+    <div
+      class="
+        no-scrollbar overflow-x-auto border-y border-gray-100 bg-gray-50 py-8
+        shadow-inner
+      "
+    >
+      <HorizontalStepper items={data} color="#6652a0" id={id} />
+    </div>
   </div>
 </div>
 
 <script>
-  function initMobileConference() {
-    const root = document.getElementById('conference-mobile-root');
-    if (!root) return;
+  import type { ConferenceStepChangeEvent } from '../../lib/types'
 
-    const items = root.querySelectorAll('.conference-item');
+  function initMobileConference() {
+    const root = document.querySelector('#conference-mobile-root')
+    if (!root) return
+
+    const items = root.querySelectorAll('.conference-item')
 
     const updateConference = (index: number) => {
       items.forEach((item, idx) => {
         if (idx === index) {
-          item.classList.remove('hidden');
-          item.classList.add('block');
+          item.classList.remove('hidden')
+          item.classList.add('block')
         } else {
-          item.classList.remove('block');
-          item.classList.add('hidden');
+          item.classList.remove('block')
+          item.classList.add('hidden')
         }
-      });
-    };
+      })
+    }
 
-    document.addEventListener('conference-step-change', (e: any) => {
-       updateConference(e.detail.index);
-    });
+    document.addEventListener('conference-step-change', ((e: ConferenceStepChangeEvent) => {
+      updateConference(e.detail.index)
+    }) as EventListener)
   }
 
-  initMobileConference();
-  document.addEventListener('astro:page-load', initMobileConference);
+  initMobileConference()
+  document.addEventListener('astro:page-load', initMobileConference)
 </script>

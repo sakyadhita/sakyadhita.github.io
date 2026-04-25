@@ -6,7 +6,8 @@ Review the project structure and migrate purely presentational or simple interac
 ## Findings & Key Files
 - **Dynamic React Components (To Keep):**
   - Interactive layouts (`JoinUs.jsx`, `Volunteer.jsx`, `ContactUs.jsx`, `Newsletters.jsx`, `AboutUs.jsx`, `EPublications.jsx`) heavily rely on React hooks (`useState`, `useEffect`) for forms, modals, scroll tracking, and pagination.
-  - Interactive Home elements (`InteractiveMap.jsx`, `HomeGallery.jsx`, `Slideshow.jsx`) rely on dynamic third-party React libraries (e.g., `react-simple-maps`, `react-photoswipe-gallery`, `embla-carousel-react`).
+  - Interactive Home elements (`InteractiveMap.jsx`, `Slideshow.jsx`) rely on dynamic third-party React libraries (e.g., `react-simple-maps`, `embla-carousel-react`).
+  - `HomeGallery.jsx` has been migrated to `HomeGallery.astro` using native PhotoSwipe.
   - `HomeSlideshow.jsx` passes React elements to `Slideshow.jsx`, which relies on `React.Children.map`. It must remain React.
   - `CustomButtonReact.tsx` is required by the React components mentioned above and cannot be swapped with `CustomButton.astro` inside those files.
 - **Static/Simple React Components (To Migrate/Remove):**

@@ -11,9 +11,10 @@ interface CustomButtonProps {
 /**
  * Component that renders a button that redirects to a new page
  *
- * @param {string} text  - The display text for the button
- * @param {string} redirect_link  - The redirect url once the button is clicked
- * @param {boolean} openInSameTab  - True if redirect_link is open in same tab, false if it is opened in new tab
+ * @param {CustomButtonProps} props - The component props
+ * @param {string} props.text  - The display text for the button
+ * @param {string} props.redirect_link  - The redirect url once the button is clicked
+ * @param {boolean} props.openInSameTab  - True if redirect_link is open in same tab, false if it is opened in new tab
  *
  * @returns One Custom Button
  */

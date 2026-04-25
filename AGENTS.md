@@ -15,7 +15,7 @@ This project is the official website for **Sakyadhita International Association 
 
 ## 🏗️ Architectural Decisions
 
-- **Astro**: The project is committed to using Astro as the core meta-framework for static site generation and modern routing.
+- **Astro**: The project is committed to using Astro as the core meta-framework. We prioritize **Astro Native Components** (Server Islands/SSR) for presentational elements (e.g., Navigation, Galleries, Slideshows) to minimize client-side JavaScript, while reserving React for complex, state-driven interactivity.
 - **shadcn/ui (Base UI Native)**: All new UI components should be built using shadcn/ui. The project specifically uses the **Base UI** native version of shadcn components to ensure a headless, accessible, and highly customizable UI layer without the bloat of traditional component libraries.
 - **Tailwind CSS v4**: Tailwind CSS is the primary utility for styling, used in conjunction with shadcn/ui.
 - **E2E Testing**: Playwright is used to ensure stability across browsers and devices, with automated checks on PRs and pushes.

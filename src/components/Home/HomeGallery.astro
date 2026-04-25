@@ -1,0 +1,76 @@
+---
+/**
+ * HomeGallery component (Native Astro version).
+ * Migrated from HomeGallery.jsx to reduce React overhead.
+ * Uses PhotoSwipe for the lightbox gallery.
+ */
+interface ImageLike {
+  original: string
+  thumbnail: string
+  width: number
+  height: number
+}
+
+interface Props {
+  images: ImageLike[]
+}
+
+const { images } = Astro.props
+---
+
+<section
+  id="home-gallery"
+  class="
+    mt-4 grid w-full grid-cols-1 gap-4
+    sm:grid-cols-2
+    md:grid-cols-3
+  "
+  aria-label="Gallery"
+>
+  {
+    images.map((image) => (
+      <a
+        href={image.original}
+        data-pswp-width={image.width}
+        data-pswp-height={image.height}
+        class="
+          h-56 w-full cursor-pointer overflow-hidden rounded-md border-none p-0
+          transition-opacity
+          hover:opacity-90
+          md:h-64
+        "
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          src={image.thumbnail}
+          width={image.width}
+          height={image.height}
+          loading="lazy"
+          alt="Home gallery"
+          class="size-full object-cover"
+        />
+      </a>
+    ))
+  }
+</section>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+  import 'photoswipe/dist/photoswipe.css'
+
+  function initGallery() {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#home-gallery',
+      children: 'a',
+      pswpModule: () => import('photoswipe')
+    })
+    lightbox.init()
+  }
+
+  // Initialize on load
+  initGallery()
+
+  // Support Astro View Transitions if added in the future
+  document.addEventListener('astro:page-load', initGallery)
+</script>

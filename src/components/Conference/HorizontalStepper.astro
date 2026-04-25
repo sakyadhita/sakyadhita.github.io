@@ -1,25 +1,18 @@
 ---
 import Pagination from './Pagination.astro'
-import { cn } from '../../lib/utils'
+import { cn, ordinal_suffix_of } from '../../lib/utils'
+
+import type { ConferenceEntry } from '../../lib/types'
 
 interface Props {
-  items: any[]
+  items: ConferenceEntry[]
   color: string
   id?: string
 }
 
 const { items, color, id } = Astro.props
 
-const ordinal_suffix_of = (i: number) => {
-  const ones = i % 10
-  const hundreds = i % 100
-  if (ones === 1 && hundreds !== 11) return `${i}st`
-  if (ones === 2 && hundreds !== 12) return `${i}nd`
-  if (ones === 3 && hundreds !== 13) return `${i}rd`
-  return `${i}th`
-}
-
-const initialIndex = id ? items.findIndex(x => x.id === id) : 0
+const initialIndex = id ? items.findIndex((x) => x.id === id) : 0
 const index = initialIndex === -1 ? 0 : initialIndex
 ---
 
@@ -31,10 +24,17 @@ const index = initialIndex === -1 ? 0 : initialIndex
           <button
             type="button"
             class={cn(
-              'stepper-node-btn relative z-10 flex size-11 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-300',
+              `
+                stepper-node-btn relative z-10 flex size-11 cursor-pointer
+                items-center justify-center rounded-full border-2 transition-all
+                duration-300
+              `,
               idx === index
                 ? 'text-white shadow-md'
-                : 'bg-white hover:bg-gray-50'
+                : `
+                  bg-white
+                  hover:bg-gray-50
+                `
             )}
             style={{
               borderColor: color,
@@ -47,89 +47,93 @@ const index = initialIndex === -1 ? 0 : initialIndex
           </button>
 
           {/* Connector */}
-          {
-            idx < items.length - 1 && (
-              <div
-                class="connector -ml-0.5 h-0.5 w-14"
-                style={{ backgroundColor: color }}
-              />
-            )
-          }
+          {idx < items.length - 1 && (
+            <div class="connector -ml-0.5 h-0.5 w-14" style={{ backgroundColor: color }} />
+          )}
         </div>
       ))
     }
   </div>
 
-  <div class="mt-2 flex justify-center stepper-pagination-container">
+  <div class="stepper-pagination-container mt-2 flex justify-center">
     <Pagination count={items.length} page={1} size={10} />
   </div>
 </div>
 
 <script>
   function initHorizontalStepper() {
-    const root = document.getElementById('horizontal-stepper-root');
-    if (!root) return;
+    const root = document.querySelector('#horizontal-stepper-root') as HTMLElement
+    if (!root) return
 
-    let currentIndex = parseInt(root.getAttribute('data-initial-index') || '0');
-    const items = root.querySelectorAll('.stepper-item-wrapper');
-    const nodeBtns = root.querySelectorAll('.stepper-node-btn');
+    let currentIndex = Number.parseInt(root.dataset.initialIndex || '0')
+    const items = root.querySelectorAll('.stepper-item-wrapper')
+    const nodeBtns = root.querySelectorAll('.stepper-node-btn')
 
     const updateUI = () => {
-      items.forEach((item, idx) => {
-        const nodeBtn = nodeBtns[idx] as HTMLButtonElement;
-        const color = root.querySelector('.connector')?.getAttribute('style')?.match(/background-color:\s*(#[a-f0-9]+)/i)?.[1] || '#6652a0';
+      items.forEach((_, idx) => {
+        const nodeBtn = nodeBtns[idx] as HTMLButtonElement
+        const color =
+          root
+            .querySelector('.connector')
+            ?.getAttribute('style')
+            ?.match(/background-color:\s*(#[a-f0-9]+)/i)?.[1] || '#6652a0'
 
         if (idx === currentIndex) {
-          nodeBtn.classList.add('text-white', 'shadow-md');
-          nodeBtn.style.backgroundColor = color;
-          nodeBtn.style.color = 'white';
+          nodeBtn.classList.add('text-white', 'shadow-md')
+          nodeBtn.style.backgroundColor = color
+          nodeBtn.style.color = 'white'
         } else {
-          nodeBtn.classList.remove('text-white', 'shadow-md');
-          nodeBtn.style.backgroundColor = 'white';
-          nodeBtn.style.color = color;
+          nodeBtn.classList.remove('text-white', 'shadow-md')
+          nodeBtn.style.backgroundColor = 'white'
+          nodeBtn.style.color = color
         }
 
         // Handle responsive visibility - simplified: show all for now, or handle in CSS
-      });
-    };
+      })
+    }
 
     const handleStep = (index: number) => {
-      currentIndex = index;
-      updateUI();
-      document.dispatchEvent(new CustomEvent('conference-step-change', { detail: { index } }));
-    };
+      currentIndex = index
+      updateUI()
+      document.dispatchEvent(new CustomEvent('conference-step-change', { detail: { index } }))
+    }
 
     nodeBtns.forEach((btn, idx) => {
-      btn.addEventListener('click', () => handleStep(idx));
-    });
+      btn.addEventListener('click', () => handleStep(idx))
+    })
 
     // Pagination listeners
-    const paginationContainer = root.querySelector('.stepper-pagination-container');
+    const paginationContainer = root.querySelector('.stepper-pagination-container')
     if (paginationContainer) {
-       paginationContainer.addEventListener('click', (e) => {
-         const btn = (e.target as HTMLElement).closest('button');
-         if (btn && (btn.classList.contains('page-num-btn') || btn.classList.contains('prev-page-btn') || btn.classList.contains('next-page-btn'))) {
-            // Simplified pagination logic for horizontal
-            const newPage = parseInt(btn.getAttribute('data-page') || '1');
-            // ...
-         }
-       });
+      paginationContainer.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement).closest('button') as HTMLElement
+        if (
+          btn &&
+          (btn.classList.contains('page-num-btn') ||
+            btn.classList.contains('prev-page-btn') ||
+            btn.classList.contains('next-page-btn'))
+        ) {
+          // Simplified pagination logic for horizontal
+          // const newPage = Number.parseInt(btn.dataset.page || '1')
+          // ...
+        }
+      })
     }
   }
 
-  initHorizontalStepper();
-  document.addEventListener('astro:page-load', initHorizontalStepper);
+  initHorizontalStepper()
+  document.addEventListener('astro:page-load', initHorizontalStepper)
 </script>
 
 <style>
   /* Simplified responsive visibility for horizontal stepper items */
   @media (max-width: 600px) {
-    .stepper-item-wrapper:nth-child(n+5) {
+    .stepper-item-wrapper:nth-child(n + 5) {
       display: none;
     }
   }
   @media (min-width: 601px) and (max-width: 900px) {
-    .stepper-item-wrapper:nth-child(n+7) {
+    .stepper-item-wrapper:nth-child(n + 7) {
       display: none;
     }
   }

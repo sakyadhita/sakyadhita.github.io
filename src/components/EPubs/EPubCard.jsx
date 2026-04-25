@@ -6,18 +6,17 @@
  */
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '../ui/tooltip'
 
-export default function EPubCard({
-  title,
-  author,
-  image_url,
-  optimized_url,
-  redirect_link
-}) {
+export default function EPubCard({ title, author, image_url, optimized_url, redirect_link }) {
   const displayImage = optimized_url || image_url
-  
+
   return (
     <TooltipProvider>
-      <div className="group m-6 inline-block w-40 md:w-48">
+      <div
+        className="
+          group m-6 inline-block w-40
+          md:w-48
+        "
+      >
         {redirect_link !== null && (
           <a href={redirect_link} target="_blank" rel="noreferrer noopener">
             <img
@@ -55,9 +54,10 @@ export default function EPubCard({
               {author}
             </div>
           </TooltipTrigger>
-          <TooltipContent side="top" className="
-            border-black bg-black font-body text-white
-          ">
+          <TooltipContent
+            side="top"
+            className="border-black bg-black font-body text-white"
+          >
             {author}
           </TooltipContent>
         </Tooltip>

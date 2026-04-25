@@ -1,7 +1,7 @@
 {
   "name": "sakyadhita.github.io",
   "type": "module",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -33,7 +33,6 @@
     "react": "^19.2.5",
     "react-country-region-selector": "^4.0.6",
     "react-dom": "^19.2.5",
-    "react-photoswipe-gallery": "^4.0.0",
     "react-player": "^3.4.0",
     "react-simple-maps": "^3.0.0",
     "sharp": "^0.34.5"

@@ -1,11 +1,16 @@
 ---
-import Slideshow from '../Slideshow.astro'
 import EPubCard from '../EPubs/EPubCard'
 import EPubSection from '../EPubs/EPubSection.astro'
+import Slideshow from '../Slideshow.astro'
+
+import type { PublicationEntry } from '../../lib/types'
 
 interface Props {
-  sections: any[]
-  featuredEpubs: any[]
+  sections: {
+    section_title: string
+    section_list: PublicationEntry[]
+  }[]
+  featuredEpubs: PublicationEntry[]
 }
 
 const { sections, featuredEpubs } = Astro.props
@@ -14,7 +19,10 @@ const { sections, featuredEpubs } = Astro.props
 <div id="EPubPage">
   {/* Landing Page Content */}
   <div id="landing-view">
-    <Slideshow height="450px" width="100%" className="lg:h-[450px] max-md:h-[530px]">
+    <Slideshow height="450px" width="100%" className="
+      max-md:h-[530px]
+      lg:h-[450px]
+    ">
       {
         featuredEpubs.map((epub) => (
           <div
@@ -84,12 +92,11 @@ const { sections, featuredEpubs } = Astro.props
       }
     </Slideshow>
 
-    <div class="sections-container mt-14 mb-24 max-md:m-0">
-      {
-        sections.map((section) => (
-          <EPubSection publication_section={section} />
-        ))
-      }
+    <div class="
+      sections-container mt-14 mb-24
+      max-md:m-0
+    ">
+      {sections.map((section) => <EPubSection publication_section={section} />)}
     </div>
   </div>
 
@@ -97,18 +104,36 @@ const { sections, featuredEpubs } = Astro.props
   <div id="details-view" class="hidden">
     {
       sections.map((section) => (
-        <div id={`section-${section.section_title.replace(/\s+/g, '-')}`} class="section-details hidden">
-          <div class="relative mx-[10vw] mt-12 mb-24 lg:mt-32">
+        <div
+          id={`section-${section.section_title.replaceAll(/\s+/g, '-')}`}
+          class="section-details hidden"
+        >
+          <div
+            class="
+              relative mx-[10vw] mt-12 mb-24
+              lg:mt-32
+            "
+          >
             {/* Header */}
-            <div class="relative top-0 left-0 flex h-24 w-full flex-col lg:h-12 lg:flex-row">
+            <div
+              class="
+                relative top-0 left-0 flex h-24 w-full flex-col
+                lg:h-12 lg:flex-row
+              "
+            >
               <div
                 class="
-                  absolute -top-12 -left-[10vw] block h-24 w-[calc(100%+20vw)]
+                  absolute -top-12 left-[-10vw] block h-24 w-[calc(100%+20vw)]
                   shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]
                   lg:hidden
                 "
               />
-              <h1 class="z-10 w-full text-center font-heading text-2xl/tight font-bold lg:text-4xl/relaxed lg:font-normal">
+              <h1
+                class="
+                  z-10 w-full text-center font-heading text-2xl/tight font-bold
+                  lg:text-4xl/relaxed lg:font-normal
+                "
+              >
                 {section.section_title}
               </h1>
               <button
@@ -116,11 +141,23 @@ const { sections, featuredEpubs } = Astro.props
                 class="
                   back-btn z-10 mx-auto mt-3 mb-5 block w-fit cursor-pointer
                   border-none bg-inherit p-0 text-center font-body
-                  text-base/tight hover:underline
+                  text-base/tight
+                  hover:underline
                   lg:absolute lg:bottom-0 lg:left-6 lg:mb-4 lg:text-lg/relaxed
                 "
               >
-                &lt; <span class="lg:hidden">Back to latest</span><span class="hidden lg:inline">Back</span>
+                &lt;{' '}
+                <>
+                  <span class="lg:hidden">Back to latest</span>
+                  <span
+                    class="
+                      hidden
+                      lg:inline
+                    "
+                  >
+                    Back
+                  </span>
+                </>
               </button>
               <p
                 class="
@@ -140,7 +177,7 @@ const { sections, featuredEpubs } = Astro.props
                 text-center
               "
             >
-              {section.section_list.map((pub: any) => (
+              {section.section_list.map((pub) => (
                 <div class="flex flex-col items-center justify-start">
                   <EPubCard
                     title={pub.data.title}
@@ -173,15 +210,15 @@ const { sections, featuredEpubs } = Astro.props
 
 <script>
   function initEPubPage() {
-    const landingView = document.getElementById('landing-view')
-    const detailsView = document.getElementById('details-view')
+    const landingView = document.querySelector('#landing-view')
+    const detailsView = document.querySelector('#details-view')
     const sectionToggles = document.querySelectorAll('.section-toggle')
     const backButtons = document.querySelectorAll('.back-btn')
     const readMoreButtons = document.querySelectorAll('.read-more-btn')
     const readButtons = document.querySelectorAll('.read-btn')
 
     const showSection = (title: string) => {
-      const sectionId = `section-${title.replace(/\s+/g, '-')}`
+      const sectionId = `section-${title.replaceAll(/\s+/g, '-')}`
       const targetSection = document.getElementById(sectionId)
 
       if (landingView && detailsView && targetSection) {
@@ -207,7 +244,7 @@ const { sections, featuredEpubs } = Astro.props
 
     sectionToggles.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const section = btn.getAttribute('data-section')
+        const section = (btn as HTMLElement).dataset.section
         if (section) showSection(section)
       })
     })
@@ -218,14 +255,14 @@ const { sections, featuredEpubs } = Astro.props
 
     readMoreButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const url = btn.getAttribute('data-url')
-        if (url) window.location.href = url
+        const url = (btn as HTMLElement).dataset.url
+        if (url) globalThis.location.href = url
       })
     })
 
     readButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const url = btn.getAttribute('data-url')
+        const url = (btn as HTMLElement).dataset.url
         if (url) window.open(url, '_blank', 'norefferer')
       })
     })

@@ -1,6 +1,6 @@
 ---
 import BeInvolved from './BeInvolved.astro'
-import HomeGallery from './HomeGallery'
+import HomeGallery from './HomeGallery.astro'
 import InteractiveMap from './InteractiveMap'
 import Introduction from './Introduction.astro'
 import NewsFlash from './NewsFlash.astro'
@@ -93,9 +93,9 @@ const { IntroContent, newsflash, NewsFlashContent, additionalSections, images, b
     additionalSections.map((section) => (
       <div class="w-full">
         <div class="mx-auto my-16 h-0.5 w-1/2 bg-brand-orange" />
-        <section class="
-          flex w-full flex-col gap-8 text-left whitespace-pre-line
-        ">
+        <section
+          class="flex w-full flex-col gap-8 text-left whitespace-pre-line"
+        >
           <h1
             class="
               mt-5 mb-8 font-heading text-2xl font-bold text-black
@@ -117,7 +117,7 @@ const { IntroContent, newsflash, NewsFlashContent, additionalSections, images, b
     ))
   }
 
-  {images.length > 0 && <HomeGallery client:visible images={images} />}
+  {images.length > 0 && <HomeGallery images={images} />}
 
   <section
     id="branches-and-chapters"

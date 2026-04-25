@@ -45,7 +45,12 @@ const { title, location, redirect, theme, signup } = Astro.props
   {/* Button that opens the modal - Only on desktop */}
   {
     signup && (
-      <section class="hidden lg:block">
+      <section
+        class="
+          hidden
+          lg:block
+        "
+      >
         <button
           type="button"
           class="
@@ -63,25 +68,21 @@ const { title, location, redirect, theme, signup } = Astro.props
   }
 
   {/* The text describing the specific conference */}
-  <div
-    class="
-      mr-8 flex flex-col-reverse gap-8
-      lg:flex-row lg:gap-12
-    "
-  >
+  <div class="
+    mr-8 flex flex-col-reverse gap-8
+    lg:flex-row lg:gap-12
+  ">
     <div
       class="
-        prose prose-lg max-w-none flex-1 font-body leading-relaxed
-        text-gray-700 lowercase italic
+        prose prose-lg max-w-none flex-1 font-body leading-relaxed text-gray-700
+        lowercase italic
       "
       set:html={theme}
     />
-    <div
-      class="
-        shrink-0
-        lg:w-1/2
-      "
-    >
+    <div class="
+      shrink-0
+      lg:w-1/2
+    ">
       <slot name="slideshow" />
     </div>
   </div>

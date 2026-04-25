@@ -35,6 +35,12 @@ To ensure long-term stability and prevent regressions, the project now includes 
 
 ## Releases
 
+* 2.1.0: **Native Astro Migration & Tailwind v4 Finalization**
+    - Migrated core presentational components (`NavBar`, `HomeGallery`, `Slideshow`) to native Astro, significantly reducing client-side JS overhead.
+    - Integrated PhotoSwipe directly into Astro for a faster, more responsive home gallery experience.
+    - Finalized Tailwind CSS v4 migration, standardizing all brand colors into theme tokens and removing arbitrary hex values.
+    - Resolved widespread broken links and document reference issues across the site.
+    - Optimized image loading strategies and standardized component styling.
 * 2.0.2: **Tooling & Styling Standardization**
     - Overhauled ESLint Flat Config (v9) with TypeScript, React, Astro, and Markdown integration.
     - Implemented `eslint-plugin-unicorn` and `eslint-plugin-import` for modern JS patterns and sorted imports.
@@ -125,7 +131,7 @@ Inside this repository, you'll see the following folders and files:
 │   ├── media/                # Location of dynamic assets (eg. images)
 │   │   └── logo.svg
 │   ├── components/           # React and Astro components
-│   │   └── Slideshow.jsx
+│   │   └── Slideshow.astro
 │   ├── content/              # Location of page content (Markdown and data)
 │   │   └── config.ts
 │   ├── layouts/              # Location of layouts for pages

@@ -3,11 +3,10 @@ import { Icon } from 'astro-icon/components'
 
 import EPubCard from './EPubCard'
 
+import type { PublicationSection } from '../../lib/types'
+
 interface Props {
-  publication_section: {
-    section_title: string
-    section_list: any[]
-  }
+  publication_section: PublicationSection
 }
 
 const { publication_section } = Astro.props
@@ -18,8 +17,14 @@ const { publication_section } = Astro.props
   data-section-title={publication_section.section_title}
 >
   {/* Header */}
-  <div class="relative top-0 left-0 flex w-full flex-col lg:h-12 lg:flex-row">
-    <h1 class="w-full text-center font-heading text-2xl/tight font-bold lg:text-4xl/relaxed">
+  <div class="
+    relative top-0 left-0 flex w-full flex-col
+    lg:h-12 lg:flex-row
+  ">
+    <h1 class="
+      w-full text-center font-heading text-2xl/tight font-bold
+      lg:text-4xl/relaxed
+    ">
       {publication_section.section_title}
     </h1>
     <button
@@ -41,20 +46,23 @@ const { publication_section } = Astro.props
   <div
     class="
       content-desktop relative mx-[-25px] hidden flex-wrap items-start
-      justify-center text-center lg:flex
+      justify-center text-center
+      lg:flex
     "
   >
     {
-      publication_section.section_list.slice(0, 5).map((pub) => (
-        <EPubCard
-          title={pub.data.title}
-          author={pub.data.author}
-          image_url={pub.data.imageLink}
-          optimized_url={pub.data.optimizedImage}
-          redirect_link={pub.data.pdfLink}
-          client:load
-        />
-      ))
+      publication_section.section_list
+        .slice(0, 5)
+        .map((pub) => (
+          <EPubCard
+            title={pub.data.title}
+            author={pub.data.author}
+            image_url={pub.data.imageLink}
+            optimized_url={pub.data.optimizedImage}
+            redirect_link={pub.data.pdfLink}
+            client:load
+          />
+        ))
     }
   </div>
 
@@ -62,14 +70,16 @@ const { publication_section } = Astro.props
   <div
     class="
       content-mobile relative mx-[-25px] flex flex-wrap items-start
-      justify-center overflow-hidden text-center lg:hidden
+      justify-center overflow-hidden text-center
+      lg:hidden
     "
   >
     <button
       type="button"
       class="
-        prev-btn relative bottom-48 m-0 inline-block h-8 w-8 cursor-pointer
-        border-none bg-inherit disabled:invisible
+        prev-btn relative bottom-48 m-0 inline-block size-8 cursor-pointer
+        border-none bg-inherit
+        disabled:invisible
       "
     >
       <Icon name="lucide:chevron-left" class="size-full" />
@@ -95,15 +105,19 @@ const { publication_section } = Astro.props
     <button
       type="button"
       class="
-        next-btn relative bottom-48 m-0 inline-block h-8 w-8 cursor-pointer
-        border-none bg-inherit disabled:invisible
+        next-btn relative bottom-48 m-0 inline-block size-8 cursor-pointer
+        border-none bg-inherit
+        disabled:invisible
       "
     >
       <Icon name="lucide:chevron-right" class="size-full" />
     </button>
   </div>
 
-  <div class="absolute bottom-0 h-px w-full bg-brand-orange lg:h-2"></div>
+  <div class="
+    absolute bottom-0 h-px w-full bg-brand-orange
+    lg:h-2
+  "></div>
 </div>
 
 <script>
