@@ -152,7 +152,7 @@ export default tseslint.config(
     },
     settings: {
       'better-tailwindcss': {
-        entryPoint: 'src/css/index.css'
+        entryPoint: 'src/styles/global.css'
       }
     },
     rules: {
