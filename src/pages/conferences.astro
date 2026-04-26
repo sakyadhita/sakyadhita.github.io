@@ -5,7 +5,7 @@ import { marked } from 'marked'
 import ConferenceDesktop from '../components/ConferenceDesktop.astro'
 import MobileConference from '../components/ConferenceMobile.astro'
 import PageLayout from '../layouts/PageLayout.astro'
-import { getAssetUrl } from '../lib/images'
+import { getAssetUrl } from '../lib'
 
 const conferencesRaw = await getCollection('conference')
 const conferences = await Promise.all(

@@ -2,7 +2,7 @@ import { Checkbox as BaseCheckbox } from '@base-ui/react'
 import { Check } from 'lucide-react'
 import * as React from 'react'
 
-import { cn } from '../../lib/utils'
+import { cn } from '../../lib'
 
 interface CheckboxProps extends React.HTMLAttributes<HTMLSpanElement> {
   checked?: boolean

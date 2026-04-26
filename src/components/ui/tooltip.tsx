@@ -1,7 +1,7 @@
 import { Tooltip as BaseTooltip } from '@base-ui/react'
 import * as React from 'react'
 
-import { cn } from '../../lib/utils'
+import { cn } from '../../lib'
 
 const TooltipProvider = BaseTooltip.Provider
 

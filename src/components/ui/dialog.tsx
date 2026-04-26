@@ -2,7 +2,7 @@ import { Dialog as BaseDialog } from '@base-ui/react'
 import { X } from 'lucide-react'
 import * as React from 'react'
 
-import { cn } from '../../lib/utils'
+import { cn } from '../../lib'
 
 const Dialog = BaseDialog.Root
 const DialogTrigger = BaseDialog.Trigger

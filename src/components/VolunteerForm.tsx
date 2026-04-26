@@ -4,7 +4,7 @@ import { CountryDropdown } from 'react-country-region-selector'
 import CustomButton from './CustomButtonReact'
 import Modal from './Modal'
 import VolunteerOption from './VolunteerOption'
-import { cn } from '../lib/utils'
+import { cn } from '../lib'
 
 function displayCommittees(
   volunteerCommittees: any[],

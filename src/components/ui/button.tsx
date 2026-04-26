@@ -2,7 +2,7 @@ import { type VariantProps } from 'class-variance-authority'
 import { forwardRef, type ButtonHTMLAttributes } from 'react'
 
 import { buttonVariants } from './button-variants'
-import { cn } from '../../lib/utils'
+import { cn } from '../../lib'
 
 interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {}

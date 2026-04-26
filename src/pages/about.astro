@@ -5,7 +5,7 @@ import { getCollection, render } from 'astro:content'
 import LotusHeader from '../assets/Lotus_Header.png'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
-import { getAssetUrl } from '../lib/images'
+import { getAssetUrl } from '../lib'
 
 const committeesRaw = await getCollection('exco')
 const committees = await Promise.all(

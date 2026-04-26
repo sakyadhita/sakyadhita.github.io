@@ -1,8 +1,6 @@
 ---
 import Pagination from './ConferencePagination.astro'
-import { cn, ordinal_suffix_of } from '../lib/utils'
-
-import type { ConferenceEntry } from '../lib/types'
+import { cn, ordinal_suffix_of, type ConferenceEntry } from '../lib'
 
 interface Props {
   items: ConferenceEntry[]
