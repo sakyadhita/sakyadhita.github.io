@@ -8,7 +8,7 @@ import VolunteerImg from '../assets/Join Us Page/Volunteer.jpg'
 import HomeBeInvolved from '../components/HomeBeInvolved.astro'
 import HomeGallery from '../components/HomeGallery.astro'
 import HomeHero from '../components/HomeHero.astro'
-import HomeMap from '../components/HomeMap'
+import HomeMap from '../components/HomeMap.astro'
 import HomeNewsFlash from '../components/HomeNewsFlash.astro'
 import HomeNewsSlide from '../components/HomeNewsSlide.astro'
 import Slideshow from '../components/Slideshow.astro'
@@ -155,7 +155,6 @@ interface NewsFlashArticle {
           lg:w-1/2
         ">
           <HomeMap
-            client:visible
             disableZooming={false}
             markers={branchesWithHtml.map((m) => ({
               name: m.data.name as string,
