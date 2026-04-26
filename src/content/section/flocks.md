@@ -4,7 +4,7 @@ title: 'Flocks of Golden Beings'
 isPublished: false
 subtitle: Special Report on the Recent Full Ordination of Nuns in Bhutan
 image: ../../assets/Home Page/Flocks-of-Golden-Beings.jpg
-redirectLink: /assets/Home Page/Emma Slade Flocks of Golden Beings.pdf
+redirectLink: ../../assets/Home Page/Emma Slade Flocks of Golden Beings.pdf
 ---
 
 If it were hundreds of years ago perhaps, I would say I saw a flock of golden beings, the patches of their cloth glinting and catching the light. Making up a crowd of beaming joy, they gathered under a tent in the forest and drank tea together, looking at one another in the understanding of a deep and profound bond and enormous gratitude to all who made it possible.

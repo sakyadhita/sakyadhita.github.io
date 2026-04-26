@@ -6,16 +6,19 @@
  */
 import { Image } from 'astro:assets'
 
+import { getAssetUrl } from '../lib/images'
+
 import type { ImageMetadata } from 'astro'
 
 interface Props {
   title: string
   year: number | string
   image: ImageMetadata
-  pdfLink: string
+  pdfLink: any
 }
 
 const { title, year, image, pdfLink } = Astro.props
+const resolvedPdfLink = getAssetUrl(pdfLink)
 ---
 
 <div class="
@@ -24,7 +27,7 @@ const { title, year, image, pdfLink } = Astro.props
   md:m-6 md:size-72
 ">
   <a
-    href={pdfLink}
+    href={resolvedPdfLink}
     target="_blank"
     rel="noreferrer noopener"
     class="

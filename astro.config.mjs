@@ -33,5 +33,11 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      alias: [
+        { find: '/assets', replacement: '/src/assets' }
+      ]
+    },
+    assetsInclude: ['**/*.zip']
   }
 });

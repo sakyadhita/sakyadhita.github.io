@@ -6,16 +6,20 @@
  */
 import { Image } from 'astro:assets'
 
+import { getAssetUrl } from '../lib/images'
+
 import type { ImageMetadata } from 'astro'
 
 interface Props {
   title: string
   author: string
   image: ImageMetadata
-  pdfLink: string | null
+  pdfLink: any
 }
 
 const { title, author, image, pdfLink } = Astro.props
+const resolvedPdfLink = getAssetUrl(pdfLink)
+// console.log('Resolved PDF Link:', resolvedPdfLink)
 ---
 
 <div class="
@@ -23,8 +27,8 @@ const { title, author, image, pdfLink } = Astro.props
   md:w-48
 ">
   {
-    pdfLink !== null && (
-      <a href={pdfLink} target="_blank" rel="noreferrer noopener">
+    resolvedPdfLink !== null && (
+      <a href={resolvedPdfLink} target="_blank" rel="noreferrer noopener">
         <Image
           alt={title}
           src={image}

@@ -12,7 +12,7 @@ const conferences = await Promise.all(
   conferencesRaw.map(async (c) => {
     const htmlBody = await marked.parse(c.body || '')
 
-    const resolveList = (list?: { description: string; url: string | null }[]) =>
+    const resolveList = (list?: any[]) =>
       list ? list.map((i) => ({ ...i, url: getAssetUrl(i.url) })) : undefined
 
     return {
