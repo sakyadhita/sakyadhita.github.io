@@ -1,6 +1,6 @@
 ---
 page: 'NewsFlash'
-title: 19th Sakyadhita International Conference on Buddhist tWomen
+title: 19th Sakyadhita International Conference on Buddhist Women
 isPublished: true
 subtitle: '"Navigating Change: Buddhist Women in Transition"'
 image: ../../assets/Conference 19/2025 Sakyadhita Banner.jpg
