@@ -6,7 +6,7 @@ import DonateImg from '../assets/Donate Page/Donate.jpg'
 import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg'
 import JoiningHandsImg from '../assets/Join Us Page/JoinUs.jpg'
 import LotusHeader from '../assets/Lotus_Header.png'
-import BeInvolved from '../components/HomeBeInvolved.astro'
+import FeatureCard from '../components/FeatureCard.astro'
 import PayPal from '../components/PayPal.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 import { PAYPAL_CONFIG, SITE_PAGES } from '../SiteMetadata'
@@ -158,7 +158,7 @@ const frontmatter = {
           grid grid-cols-1 gap-8
           md:grid-cols-2
         ">
-          <BeInvolved
+          <FeatureCard
             title="Join Sakyadhita"
             description="Become a member and join our global network of Buddhist women"
             image_url={JoiningHandsImg}
@@ -166,7 +166,7 @@ const frontmatter = {
             redirect_link={SITE_PAGES.JOIN_US}
             button_title="Join Us"
           />
-          <BeInvolved
+          <FeatureCard
             title="Sakyadhita Endowment Fund"
             description="Help secure our future and stay connect by donating in any amount"
             image_url={DonateImg}

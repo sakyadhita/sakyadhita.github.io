@@ -2,8 +2,8 @@
 import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
-import EPubCard from '../components/EPubCard.astro'
-import EPubSection from '../components/EPubSection.astro'
+import MediaCard from '../components/MediaCard.astro'
+import MediaSection from '../components/MediaSection.astro'
 import ResourcesNavBar from '../components/ResourcesNavBar.astro'
 import Slideshow from '../components/Slideshow.astro'
 import PageLayout from '../layouts/PageLayout.astro'
@@ -96,7 +96,7 @@ const featuredEpubs = publications.filter((p) => p.data.feature)
         ">
           {
             sections.map((section) => (
-              <EPubSection
+              <MediaSection
                 section_title={section.section_title}
                 section_list={section.section_list}
               />
@@ -167,9 +167,9 @@ const featuredEpubs = publications.filter((p) => p.data.feature)
                 ">
                   {section.section_list.map((pub) => (
                     <div class="flex flex-col items-center justify-start">
-                      <EPubCard
+                      <MediaCard
                         title={pub.data.title}
-                        author={pub.data.author}
+                        subtitle={pub.data.author}
                         image={pub.data.imageLink}
                         pdfLink={pub.data.pdfLink}
                       />

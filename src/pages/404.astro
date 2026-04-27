@@ -1,17 +1,17 @@
 ---
 import LotusHeader from '../assets/Lotus_Header.png'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 ---
 
 <PageLayout>
   <div class="sm:hidden">
-    <ResourcesHeader title="404 - Invalid Page" image={LotusHeader} />
+    <SectionHeader title="404 - Invalid Page" image={LotusHeader} heightClass="min-h-80" />
   </div>
   <div class="
     hidden
     sm:block
   ">
-    <ResourcesHeader title="404" text="Page Not Found" image={LotusHeader} />
+    <SectionHeader title="404" text="Page Not Found" image={LotusHeader} />
   </div>
 </PageLayout>

@@ -1,8 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content'
 
-import ConferenceDesktop from '../../components/ConferenceDesktop.astro'
-import MobileConference from '../../components/ConferenceMobile.astro'
+import ConferenceSection from '../../components/ConferenceSection.astro'
 import PageLayout from '../../layouts/PageLayout.astro'
 
 // 1. Generate a new path for every collection entry
@@ -25,16 +24,5 @@ const data = conferencesRaw.toReversed()
 ---
 
 <PageLayout>
-  <div class="
-    hidden
-    lg:block
-  ">
-    <ConferenceDesktop data={data} id={conference.id} />
-  </div>
-  <div class="
-    block
-    lg:hidden
-  ">
-    <MobileConference data={data} id={conference.id} />
-  </div>
+  <ConferenceSection data={data} id={conference.id} />
 </PageLayout>

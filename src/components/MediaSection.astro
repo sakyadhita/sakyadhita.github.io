@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-import EPubCard from './EPubCard.astro'
+import MediaCard from './MediaCard.astro'
 
 import type { CollectionEntry } from 'astro:content'
 
@@ -13,22 +13,25 @@ interface Props {
 const { section_title, section_list } = Astro.props
 ---
 
-<div class="EPubSection relative mx-[10vw] block px-0 py-11" data-section-title={section_title}>
+<div class="media-section relative mx-auto max-w-7xl px-6 py-12" data-section-title={section_title}>
   {/* Header */}
   <div class="
-    relative top-0 left-0 flex w-full flex-col
-    lg:h-12 lg:flex-row
+    relative flex w-full flex-col
+    lg:h-12 lg:flex-row lg:items-center lg:justify-between
   ">
-    <h1 class="
-      w-full text-center font-heading text-2xl/tight font-bold
-      lg:text-4xl/relaxed
-    ">
+    <h1
+      class="
+        w-full text-center font-heading text-2xl font-bold lowercase
+        sm:text-4xl
+        lg:text-left
+      "
+    >
       {section_title}
     </h1>
     <button
       type="button"
       class="
-        section-toggle z-20 m-auto mb-4 w-fit cursor-pointer border-none
+        section-toggle z-20 mx-auto mt-4 mb-8 w-fit cursor-pointer border-none
         bg-inherit p-0 text-center font-body text-base/tight no-underline
         hover:underline
         lg:absolute lg:right-6 lg:bottom-0 lg:mb-4 lg:text-lg/relaxed
@@ -41,20 +44,17 @@ const { section_title, section_list } = Astro.props
   </div>
 
   {/* Desktop Content (Static) */}
-  <div
-    class="
-      content-desktop relative -mx-6 hidden flex-wrap items-start justify-center
-      text-center
-      lg:flex
-    "
-  >
+  <div class="
+    relative -mx-6 hidden flex-wrap items-start justify-center text-center
+    lg:flex
+  ">
     {
       section_list
         .slice(0, 5)
         .map((pub) => (
-          <EPubCard
+          <MediaCard
             title={pub.data.title}
-            author={pub.data.author}
+            subtitle={pub.data.author}
             image={pub.data.imageLink}
             pdfLink={pub.data.pdfLink}
           />
@@ -65,8 +65,8 @@ const { section_title, section_list } = Astro.props
   {/* Mobile Content (Carousel) */}
   <div
     class="
-      content-mobile relative -mx-6 flex flex-wrap items-start justify-center
-      overflow-hidden text-center
+      relative -mx-6 flex flex-wrap items-start justify-center overflow-hidden
+      text-center
       lg:hidden
     "
   >
@@ -85,9 +85,9 @@ const { section_title, section_list } = Astro.props
       {
         section_list.map((pub, index) => (
           <div class={index === 0 ? 'block' : 'hidden'} data-index={index}>
-            <EPubCard
+            <MediaCard
               title={pub.data.title}
-              author={pub.data.author}
+              subtitle={pub.data.author}
               image={pub.data.imageLink}
               pdfLink={pub.data.pdfLink}
             />
@@ -109,14 +109,14 @@ const { section_title, section_list } = Astro.props
   </div>
 
   <div class="
-    absolute bottom-0 h-px w-full bg-brand-orange
+    absolute inset-x-6 bottom-0 h-px bg-brand-orange
     lg:h-2
   "></div>
 </div>
 
 <script>
-  function initEPubSections() {
-    const sections = document.querySelectorAll('.EPubSection')
+  function initMediaSections() {
+    const sections = document.querySelectorAll('.media-section')
     sections.forEach((section) => {
       let currentIndex = 0
       const list = section.querySelectorAll('.mobile-card-container > div')
@@ -160,6 +160,6 @@ const { section_title, section_list } = Astro.props
     })
   }
 
-  initEPubSections()
-  document.addEventListener('astro:page-load', initEPubSections)
+  initMediaSections()
+  document.addEventListener('astro:page-load', initMediaSections)
 </script>

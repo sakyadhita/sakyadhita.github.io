@@ -3,7 +3,7 @@ import { Image } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
 
 import LotusHeader from '../assets/Lotus_Header.png'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 import { getAssetUrl } from '../lib'
 
@@ -49,7 +49,7 @@ function makeIdURLFriendly(idString: string) {
 ---
 
 <PageLayout>
-  <ResourcesHeader
+  <SectionHeader
     title={frontmatter.title}
     text={frontmatter.description}
     image={frontmatter.image}

@@ -2,9 +2,9 @@
 import { getCollection } from 'astro:content'
 
 import LotusHeader from '../assets/Lotus_Header.png'
-import NewsletterCard from '../components/NewsletterCard.astro'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
+import MediaCard from '../components/MediaCard.astro'
 import ResourcesNavBar from '../components/ResourcesNavBar.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const newslettersRaw = await getCollection('newsletter')
@@ -29,7 +29,7 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
 
 <PageLayout>
   <ResourcesNavBar>
-    <ResourcesHeader
+    <SectionHeader
       title={frontmatter.title}
       text={frontmatter.description}
       image={frontmatter.image}
@@ -56,9 +56,10 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
             "
           >
             {newsletters.map((newsletter) => (
-              <NewsletterCard
+              <MediaCard
+                type="newsletter"
                 title={`Volume ${newsletter.data.volume}, Number ${newsletter.data.number}`}
-                year={newsletter.data.year}
+                subtitle={newsletter.data.year}
                 image={newsletter.data.imageLink}
                 pdfLink={newsletter.data.pdfLink}
               />
@@ -88,7 +89,7 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
     if (!root) return
 
     const paginationContent = root.querySelector('#pagination-content')
-    const cards = [...root.querySelectorAll('.newsletter-card')]
+    const cards = [...root.querySelectorAll('.group.inline-block')]
 
     let currentPage = 0
     let numPerPage = 9

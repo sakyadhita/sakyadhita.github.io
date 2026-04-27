@@ -1,8 +1,8 @@
 ---
-import { Icon } from 'astro-icon/components'
 import countryRegionData from 'country-region-data/data.json'
 
 import CustomButton from './CustomButton.astro'
+import FormField from './FormField.astro'
 
 interface CommitteeData {
   id: string
@@ -19,8 +19,6 @@ interface Props {
 const { interests } = Astro.props
 
 const countries = countryRegionData.map((c) => c.countryName)
-
-const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg-white px-4 font-body text-lg transition-all outline-none focus:ring-2 focus:ring-brand-dark-purple`
 ---
 
 <div class="font-body" id="volunteer-form-root">
@@ -63,27 +61,9 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
         >
           Sign Me Up!
         </h1>
-        {/* first name field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input id="fName" name="fName" class={inputClasses} placeholder="First Name" required />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
-        {/* middle name field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input id="mName" name="mName" class={inputClasses} placeholder="Middle Name" />
-          </div>
-          <span class="ml-2 w-4 shrink-0"></span>
-        </div>
-        {/* last name field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input id="lName" name="lName" class={inputClasses} placeholder="Last Name" required />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
+        <FormField id="fName" name="fName" placeholder="First Name" required />
+        <FormField id="mName" name="mName" placeholder="Middle Name" />
+        <FormField id="lName" name="lName" placeholder="Last Name" required />
       </section>
 
       <section class="space-y-4">
@@ -95,62 +75,17 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
         >
           Contact Information
         </h1>
-        {/* email address field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input
-              id="email"
-              name="email"
-              class={inputClasses}
-              placeholder="Email Address"
-              type="email"
-              required
-            />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
-        {/* country dropdown field */}
-        <div class="flex items-center">
-          <div class="relative flex-1">
-            <select
-              name="country"
-              id="country-select"
-              class:list={[inputClasses, 'appearance-none bg-no-repeat']}
-              required
-            >
-              <option value="" disabled selected>Select Country</option>
-              {countries.map((country) => <option value={country}>{country}</option>)}
-            </select>
-            <Icon
-              name="lucide:chevron-down"
-              class="
-                pointer-events-none absolute top-1/2 right-4 size-5
-                -translate-y-1/2 text-gray-500
-              "
-            />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
-        {/* address field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input
-              id="address"
-              name="address"
-              class={inputClasses}
-              placeholder="Full Address"
-              required
-            />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
-        {/* phone number field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input id="phone" name="phone" class={inputClasses} placeholder="Phone Number" />
-          </div>
-          <span class="ml-2 w-4 shrink-0"></span>
-        </div>
+        <FormField id="email" name="email" type="email" placeholder="Email Address" required />
+        <FormField
+          id="country-select"
+          name="country"
+          type="select"
+          placeholder="Select Country"
+          options={countries}
+          required
+        />
+        <FormField id="address" name="address" placeholder="Full Address" required />
+        <FormField id="phone" name="phone" placeholder="Phone Number" />
       </section>
 
       <section class="space-y-4">
@@ -206,7 +141,6 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
         <p class="text-center font-body text-lg text-gray-500 italic">
           <span class="font-bold text-brand-red"> * </span> indicates a required field
         </p>
-        {/* submit button */}
         <div class="flex justify-center pb-12">
           <CustomButton
             className="h-16 w-auto rounded-full px-16 text-2xl"
@@ -228,7 +162,7 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
     <div
       class="
         w-full max-w-md rounded-lg border-2 border-brand-orange bg-white p-8
-        shadow-lg duration-200 fade-in zoom-in-95
+        shadow-lg fade-in zoom-in-95
       "
     >
       <p class="px-4 pt-4 text-center font-body text-2xl text-black">
@@ -279,7 +213,6 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
       el.classList.toggle('hidden', !show)
     }
 
-    // Snackbar
     function showSnackBar(msg) {
       errorMessage.textContent = msg
       toggleSection(snackbar, true)
@@ -299,8 +232,6 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
       if (isSubmitting) return
 
       const formData = new FormData(form)
-
-      // Basic validation
       const required = ['fName', 'lName', 'email', 'country', 'address']
       let hasError = false
 
@@ -330,7 +261,6 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(formData).toString()
         })
-
         toggleSection(thankYouModal, true)
         form.reset()
       } catch (error) {
@@ -342,10 +272,7 @@ const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg
     }
 
     if (submitBtn) submitBtn.addEventListener('click', handleSubmit)
-
-    closeThankYouBtn.addEventListener('click', () => {
-      toggleSection(thankYouModal, false)
-    })
+    closeThankYouBtn.addEventListener('click', () => toggleSection(thankYouModal, false))
   })
 </script>
 

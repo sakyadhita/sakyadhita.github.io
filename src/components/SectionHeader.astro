@@ -1,0 +1,96 @@
+---
+import { getImage } from 'astro:assets'
+
+interface Props {
+  image?: string | ImageMetadata
+  title?: string
+  text?: string
+  centered?: boolean
+  className?: string
+  heightClass?: string
+}
+
+const {
+  image,
+  title,
+  text,
+  centered = false,
+  className = '',
+  heightClass = 'min-h-[40vh] sm:min-h-[75vh]'
+} = Astro.props
+
+const optimizedImage =
+  typeof image === 'string'
+    ? null
+    : image
+      ? await getImage({ src: image, format: 'webp', width: 1600 })
+      : null
+
+const imageUrl = optimizedImage?.src || (typeof image === 'string' ? image : image ? image.src : '')
+---
+
+<div
+  class:list={[
+    'relative w-full bg-cover bg-position-[center,top] bg-no-repeat',
+    heightClass,
+    className
+  ]}
+  style={{ backgroundImage: imageUrl ? `url("${imageUrl}")` : 'none' }}
+>
+  {/* Purple info box */}
+  <div
+    class:list={[
+      `
+        absolute bg-brand-dark-purple/90 p-8 text-white
+        md:p-10
+      `,
+      centered
+        ? `
+          top-1/2 left-1/2 w-11/12 -translate-1/2
+          md:w-auto md:max-w-3xl
+        `
+        : `
+          top-8 left-6 w-11/12
+          sm:top-1/2 sm:left-[10%] sm:w-2/3 sm:-translate-y-1/2
+          lg:w-lg
+        `
+    ]}
+  >
+    {
+      title && (
+        <h1
+          class:list={[
+            'font-heading font-bold lowercase',
+            centered ? `
+              text-center text-3xl
+              md:text-5xl
+            ` : `
+              text-2xl
+              sm:text-4xl
+            `
+          ]}
+        >
+          {title}
+        </h1>
+      )
+    }
+    {
+      text && (
+        <p
+          class:list={[
+            `
+              mt-4 font-body text-lg/relaxed font-normal
+              md:text-xl
+            `,
+            centered ? 'text-center' : `
+              hidden
+              sm:block
+            `
+          ]}
+        >
+          {text}
+        </p>
+      )
+    }
+  </div>
+</div>

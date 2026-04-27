@@ -4,12 +4,12 @@ import { getCollection, getEntry, render } from 'astro:content'
 import DonateImg from '../assets/Donate Page/Donate.jpg'
 import JoiningHandsImg from '../assets/Join Us Page/JoinUs.jpg'
 import VolunteerImg from '../assets/Join Us Page/Volunteer.jpg'
-import HomeBeInvolved from '../components/HomeBeInvolved.astro'
-import HomeGallery from '../components/HomeGallery.astro'
-import HomeHero from '../components/HomeHero.astro'
+import FeatureCard from '../components/FeatureCard.astro'
+import HeroIntroduction from '../components/HeroIntroduction.astro'
 import HomeMap from '../components/HomeMap.astro'
-import HomeNewsFlash from '../components/HomeNewsFlash.astro'
-import HomeNewsSlide from '../components/HomeNewsSlide.astro'
+import NewsFlash from '../components/NewsFlash.astro'
+import NewsSlide from '../components/NewsSlide.astro'
+import PhotoGallery from '../components/PhotoGallery.astro'
 import Slideshow from '../components/Slideshow.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 import { SITE_PAGES } from '../SiteMetadata'
@@ -60,7 +60,7 @@ interface NewsFlashArticle {
       newsAndEvents && newsAndEvents.length > 0 && (
         <Slideshow height="85vh" width="100%">
           {newsAndEvents.map((slideInfo) => (
-            <HomeNewsSlide
+            <NewsSlide
               height="85vh"
               showButton={!!slideInfo.redirectLink}
               openInSameTab={false}
@@ -82,9 +82,9 @@ interface NewsFlashArticle {
       "
     >
       <section id="home-intro" class="w-full whitespace-pre-line text-black">
-        <HomeHero>
+        <HeroIntroduction>
           {IntroContent && <IntroContent />}
-        </HomeHero>
+        </HeroIntroduction>
       </section>
 
       <div class="
@@ -95,9 +95,9 @@ interface NewsFlashArticle {
       {
         newsflash && newsflash.data.isPublished && NewsFlashContent && (
           <section id="latest-news" class="w-full">
-            <HomeNewsFlash article={newsflash as unknown as NewsFlashArticle}>
+            <NewsFlash article={newsflash as unknown as NewsFlashArticle}>
               <NewsFlashContent />
-            </HomeNewsFlash>
+            </NewsFlash>
           </section>
         )
       }
@@ -126,7 +126,7 @@ interface NewsFlashArticle {
         ))
       }
 
-      {homeImages.length > 0 && <HomeGallery images={homeImages} />}
+      {homeImages.length > 0 && <PhotoGallery images={homeImages} />}
 
       <section
         id="branches-and-chapters"
@@ -200,21 +200,21 @@ interface NewsFlashArticle {
             lg:gap-12
           "
         >
-          <HomeBeInvolved
+          <FeatureCard
             description="Become a member of Sakyadhita!"
             image_url={JoiningHandsImg}
             openInSameTab="true"
             redirect_link={SITE_PAGES.JOIN_US}
             button_title="Join Us"
           />
-          <HomeBeInvolved
+          <FeatureCard
             description="Interested in helping us with anything from writing content to building?"
             image_url={VolunteerImg}
             openInSameTab="true"
             redirect_link={SITE_PAGES.VOLUNTEER}
             button_title="Volunteer"
           />
-          <HomeBeInvolved
+          <FeatureCard
             description="Help us grow and continue to connect by donating in any amount"
             image_url={DonateImg}
             openInSameTab="true"

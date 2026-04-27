@@ -2,8 +2,8 @@
 import { getCollection, render } from 'astro:content'
 
 import LotusHeader from '../assets/Lotus_Header.png'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
 import ResourcesNavBar from '../components/ResourcesNavBar.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const sectionsRaw = await getCollection('section', ({ data }) => {
@@ -26,7 +26,7 @@ const frontmatter = {
 <PageLayout>
   <ResourcesNavBar>
     <div class="relative w-full">
-      <ResourcesHeader
+      <SectionHeader
         image={frontmatter.image}
         title={frontmatter.title}
         text={frontmatter.description}

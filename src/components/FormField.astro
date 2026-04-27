@@ -1,0 +1,127 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+  id: string
+  name: string
+  type?: 'text' | 'email' | 'number' | 'tel' | 'select' | 'textarea' | 'checkbox'
+  placeholder?: string
+  required?: boolean
+  value?: string | number
+  className?: string
+  options?: string[] | { label: string; value: string | number; data?: any }[]
+  rows?: number
+  label?: string
+}
+
+const {
+  id,
+  name,
+  type = 'text',
+  placeholder,
+  required = false,
+  value,
+  className = '',
+  options = [],
+  rows = 3,
+  label
+} = Astro.props
+
+const baseInputClasses =
+  'h-12 w-full rounded-2xl border border-black bg-white px-4 font-body text-lg outline-none transition-all focus-visible:border-brand-dark-purple focus-visible:ring-2 focus-visible:ring-brand-dark-purple'
+const textareaClasses = 'h-32 resize-none py-2'
+const selectClasses = 'appearance-none bg-no-repeat'
+const checkboxClasses =
+  'peer size-4 shrink-0 rounded-sm border border-black accent-brand-orange shadow-sm'
+---
+
+{
+  type === 'checkbox' ? (
+    <div
+      class:list={[
+        `
+          flex items-center space-x-3 rounded-lg border border-brand-orange/20
+          bg-brand-orange/10 p-4
+        `,
+        className
+      ]}
+    >
+      <input
+        type="checkbox"
+        id={id}
+        name={name}
+        class={checkboxClasses}
+        checked={value === 'true'}
+      />
+      {label && (
+        <label for={id} class="cursor-pointer text-lg font-bold text-black">
+          {label}
+        </label>
+      )}
+    </div>
+  ) : (
+    <div class="flex items-center">
+      <div class="relative flex-1">
+        {type === 'textarea' ? (
+          <textarea
+            id={id}
+            name={name}
+            class:list={[baseInputClasses, textareaClasses, className]}
+            placeholder={placeholder}
+            required={required}
+            rows={rows}
+          >
+            {value}
+          </textarea>
+        ) : type === 'select' ? (
+          <div class="relative">
+            <select
+              id={id}
+              name={name}
+              class:list={[baseInputClasses, selectClasses, className]}
+              required={required}
+            >
+              <option value="" disabled selected={!value}>
+                {placeholder || 'Select option'}
+              </option>
+              {options.map((opt) => {
+                const isString = typeof opt === 'string'
+                const optLabel = isString ? opt : opt.label
+                const optValue = isString ? opt : opt.value
+                const optData = isString ? {} : opt.data || {}
+                return (
+                  <option value={optValue} selected={value === optValue} {...optData}>
+                    {optLabel}
+                  </option>
+                )
+              })}
+            </select>
+            <Icon
+              name="lucide:chevron-down"
+              class="
+                pointer-events-none absolute top-1/2 right-4 size-5
+                -translate-y-1/2 text-gray-500
+              "
+            />
+          </div>
+        ) : (
+          <input
+            id={id}
+            name={name}
+            type={type}
+            class:list={[baseInputClasses, className]}
+            placeholder={placeholder}
+            required={required}
+            value={value}
+            step={type === 'number' ? '0.01' : undefined}
+          />
+        )}
+      </div>
+      {required ? (
+        <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+      ) : (
+        <span class="ml-2 w-4 shrink-0" />
+      )}
+    </div>
+  )
+}

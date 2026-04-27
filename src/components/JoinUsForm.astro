@@ -1,14 +1,17 @@
 ---
-import { Icon } from 'astro-icon/components'
 import countryRegionData from 'country-region-data/data.json'
 
 import CustomButton from './CustomButton.astro'
+import FormField from './FormField.astro'
 
 const { memberships } = Astro.props
 
 const countries = countryRegionData.map((c) => c.countryName)
-
-const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 font-body text-lg focus-visible:border-brand-dark-purple focus-visible:ring-brand-dark-purple outline-none`
+const membershipOptions = memberships.map((m: any, idx: number) => ({
+  label: `${m.title} $${m.cost} USD`,
+  value: idx,
+  data: { 'data-title': m.title, 'data-cost': m.cost }
+}))
 ---
 
 <div class="font-body" id="join-us-form-root" data-memberships={JSON.stringify(memberships)}>
@@ -26,27 +29,13 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
         all required fields are filled out. If you wish to only be on the email list, please check
         the “Not interested in membership” box below.
       </p>
-      {/* checkbox to only join email list */}
-      <div
-        class="
-          flex items-center space-x-3 rounded-lg border border-brand-orange/20
-          bg-brand-orange/10 p-4
-        "
-      >
-        <input
-          type="checkbox"
-          id="membershipCheck"
-          class="
-            peer size-4 shrink-0 rounded-sm border border-black
-            accent-brand-orange shadow-sm
-          "
-        />
-        <label for="membershipCheck" class="
-          cursor-pointer text-lg font-bold text-black
-        ">
-          Not interested in membership, but want to be on the email list.
-        </label>
-      </div>
+
+      <FormField
+        id="membershipCheck"
+        name="membershipCheck"
+        type="checkbox"
+        label="Not interested in membership, but want to be on the email list."
+      />
     </div>
 
     <form
@@ -74,27 +63,9 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
         >
           Sign Me Up!
         </h1>
-        {/* first name field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input id="fName" name="fName" class={inputClasses} placeholder="First Name" required />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
-        {/* middle name field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input id="mName" name="mName" class={inputClasses} placeholder="Middle Name" />
-          </div>
-          <span class="ml-2 w-4 shrink-0"></span>
-        </div>
-        {/* last name field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input id="lName" name="lName" class={inputClasses} placeholder="Last Name" required />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
+        <FormField id="fName" name="fName" placeholder="First Name" required />
+        <FormField id="mName" name="mName" placeholder="Middle Name" />
+        <FormField id="lName" name="lName" placeholder="Last Name" required />
       </section>
 
       <section class="space-y-4">
@@ -106,112 +77,26 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
         >
           Contact Information
         </h1>
-        {/* email address field */}
-        <div class="flex items-center">
-          <div class="flex-1">
-            <input
-              id="email"
-              name="email"
-              class={inputClasses}
-              placeholder="Email Address"
-              type="email"
-              required
-            />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
-        {/* country dropdown field */}
-        <div class="flex items-center">
-          <div class="relative flex-1">
-            <select
-              id="country-select"
-              name="country"
-              class:list={[inputClasses, 'appearance-none bg-no-repeat']}
-              required
-            >
-              <option value="" disabled selected>Select Country</option>
-              {countries.map((country) => <option value={country}>{country}</option>)}
-            </select>
-            <Icon
-              name="lucide:chevron-down"
-              class="
-                pointer-events-none absolute top-1/2 right-4 size-5
-                -translate-y-1/2 text-gray-500
-              "
-            />
-          </div>
-          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-        </div>
+        <FormField id="email" name="email" type="email" placeholder="Email Address" required />
+        <FormField
+          id="country-select"
+          name="country"
+          type="select"
+          placeholder="Select Country"
+          options={countries}
+          required
+        />
 
         {/* address fields - hidden by default, shown when country selected */}
         <div id="address-fields" class="
           hidden space-y-4 pt-2 fade-in slide-in-from-top-4
         ">
-          {/* address line 1 field */}
-          <div class="flex items-center">
-            <div class="flex-1">
-              <input
-                id="addressOne"
-                class={inputClasses}
-                placeholder="Address Line 1"
-                name="addressOne"
-                required
-              />
-            </div>
-            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-          </div>
-          {/* address line 2 field */}
-          <div class="flex items-center">
-            <div class="flex-1">
-              <input
-                id="addressTwo"
-                class={inputClasses}
-                placeholder="Address Line 2"
-                name="addressTwo"
-              />
-            </div>
-            <span class="ml-2 w-4 shrink-0"></span>
-          </div>
-          {/* city field */}
-          <div class="flex items-center">
-            <div class="flex-1">
-              <input id="city" class={inputClasses} placeholder="City" name="city" required />
-            </div>
-            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-          </div>
-          {/* state field */}
-          <div class="flex items-center">
-            <div class="flex-1">
-              <input
-                id="stateLocation"
-                class={inputClasses}
-                placeholder="State"
-                name="stateLocation"
-                required
-              />
-            </div>
-            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-          </div>
-          {/* zipcode field */}
-          <div class="flex items-center">
-            <div class="flex-1">
-              <input
-                id="zipcode"
-                class={inputClasses}
-                placeholder="Zip Code"
-                name="zipcode"
-                required
-              />
-            </div>
-            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-          </div>
-          {/* phone number field */}
-          <div class="flex items-center">
-            <div class="flex-1">
-              <input id="phone" class={inputClasses} placeholder="Phone Number" name="phone" />
-            </div>
-            <span class="ml-2 w-4 shrink-0"></span>
-          </div>
+          <FormField id="addressOne" name="addressOne" placeholder="Address Line 1" required />
+          <FormField id="addressTwo" name="addressTwo" placeholder="Address Line 2" />
+          <FormField id="city" name="city" placeholder="City" required />
+          <FormField id="stateLocation" name="stateLocation" placeholder="State" required />
+          <FormField id="zipcode" name="zipcode" placeholder="Zip Code" required />
+          <FormField id="phone" name="phone" placeholder="Phone Number" />
         </div>
       </section>
 
@@ -226,40 +111,24 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
           >
             Additional Information
           </h1>
-          {/* new member dropdown */}
-          <div class="flex items-center">
-            <div class="relative flex-1">
-              <select
-                id="isNewMember"
-                name="isNewMember"
-                class:list={[inputClasses, 'appearance-none bg-no-repeat']}
-              >
-                <option value="" disabled selected>New or Renewing Member?</option>
-                <option value="new">New</option>
-                <option value="renew">Renewing</option>
-              </select>
-              <Icon
-                name="lucide:chevron-down"
-                class="
-                  pointer-events-none absolute top-1/2 right-4 size-5
-                  -translate-y-1/2 text-gray-500
-                "
-              />
-            </div>
-            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-          </div>
-          {/* past organizations field */}
-          <div class="flex items-start">
-            <div class="flex-1">
-              <textarea
-                id="affiliatedOrgs"
-                class:list={[inputClasses, 'h-32 resize-none py-2']}
-                placeholder="List any organizations you’re involved with"
-                name="affiliatedOrgs"
-                rows="3"></textarea>
-            </div>
-            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-          </div>
+          <FormField
+            id="isNewMember"
+            name="isNewMember"
+            type="select"
+            placeholder="New or Renewing Member?"
+            options={[
+              { label: 'New', value: 'new' },
+              { label: 'Renewing', value: 'renew' }
+            ]}
+            required
+          />
+          <FormField
+            id="affiliatedOrgs"
+            name="affiliatedOrgs"
+            type="textarea"
+            placeholder="List any organizations you’re involved with"
+            required
+          />
         </section>
 
         <section class="space-y-4">
@@ -271,55 +140,23 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
           >
             Payment Options
           </h1>
-          <div class="flex items-center">
-            <div class="relative flex-1">
-              <select
-                name="membershipType"
-                id="membership-select"
-                class:list={[inputClasses, 'appearance-none bg-no-repeat']}
-              >
-                <option value="" disabled selected>Select Membership</option>
-                {
-                  memberships.map((m: any, idx: number) => (
-                    <option value={idx} data-title={m.title} data-cost={m.cost}>
-                      {m.title} ${m.cost} USD
-                    </option>
-                  ))
-                }
-              </select>
-              <Icon
-                name="lucide:chevron-down"
-                class="
-                  pointer-events-none absolute top-1/2 right-4 size-5
-                  -translate-y-1/2 text-gray-500
-                "
-              />
-            </div>
-            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
-          </div>
-          {/* checkbox to add a donation */}
-          <div
-            class="
-              mt-8! flex items-center space-x-3 rounded-xl border
-              border-brand-orange/10 bg-brand-orange/5 p-5
-            "
-          >
-            <input
-              type="checkbox"
-              id="donateCheck"
-              class="
-                peer size-4 shrink-0 rounded-sm border border-black
-                accent-brand-orange shadow-sm
-              "
-            />
-            <label for="donateCheck" class="
-              cursor-pointer text-lg/tight font-bold text-black
-            ">
-              I would like to donate in addition to membership fees
-            </label>
-          </div>
+          <FormField
+            id="membership-select"
+            name="membershipType"
+            type="select"
+            placeholder="Select Membership"
+            options={membershipOptions}
+            required
+          />
 
-          {/* displays donation field if donate checkbox is checked */}
+          <FormField
+            id="donateCheck"
+            name="donateCheck"
+            type="checkbox"
+            className="mt-8!"
+            label="I would like to donate in addition to membership fees"
+          />
+
           <div id="donation-field" class="relative mt-4! hidden items-center">
             <div class="relative w-full">
               <span
@@ -332,11 +169,16 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
               </span>
               <input
                 id="totalPaid"
-                class:list={[inputClasses, 'pl-10']}
-                placeholder="Insert Donation Amount"
                 name="totalPaid"
                 type="number"
                 step="0.01"
+                placeholder="Insert Donation Amount"
+                class="
+                  h-12 w-full rounded-2xl border border-black bg-white pl-10
+                  font-body text-lg transition-all outline-none
+                  focus-visible:border-brand-dark-purple focus-visible:ring-2
+                  focus-visible:ring-brand-dark-purple
+                "
               />
             </div>
             <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
@@ -484,39 +326,27 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
       el.classList.toggle('hidden', !show)
     }
 
-    // Toggle Membership sections
     membershipCheck.addEventListener('change', () => {
-      if (membershipCheck.checked) {
-        toggleSection(membershipSections, false)
-        toggleSection(emailOnlySubmit, true)
-      } else {
-        toggleSection(membershipSections, true)
-        toggleSection(emailOnlySubmit, false)
-      }
+      toggleSection(membershipSections, !membershipCheck.checked)
+      toggleSection(emailOnlySubmit, membershipCheck.checked)
       checkPaymentReady()
     })
 
-    // Toggle Address fields
     countrySelect.addEventListener('change', () => {
       toggleSection(addressFields, !!countrySelect.value)
       checkPaymentReady()
     })
 
-    // Toggle Donation field
     donateCheck.addEventListener('change', () => {
-      if (donateCheck.checked) {
-        toggleSection(donationField, true)
-      } else {
-        toggleSection(donationField, false)
+      toggleSection(donationField, donateCheck.checked)
+      if (!donateCheck.checked) {
         ;(form.querySelector('[name="totalPaid"]') as HTMLInputElement).value = ''
       }
       checkPaymentReady()
     })
 
-    // Check if form is ready for payment
     function checkPaymentReady() {
       const isEmailOnly = membershipCheck.checked
-
       let ready = true
       const required = ['fName', 'lName', 'email', 'country']
       if (countrySelect.value) {
@@ -553,7 +383,6 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
     form.addEventListener('input', checkPaymentReady)
     form.addEventListener('change', checkPaymentReady)
 
-    // Snackbar
     function showSnackBar(msg: string) {
       errorMessage.textContent = msg
       toggleSection(snackbar, true)
@@ -575,7 +404,6 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
       const formData = new FormData(form)
       const data = Object.fromEntries(formData)
 
-      // Basic validation
       const required = [
         'fName',
         'lName',
@@ -640,29 +468,21 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
 
     if (submitEmailBtn) submitEmailBtn.addEventListener('click', handleEmailOnlySubmit)
 
-    // Modals
     function showThankYou(msg: string) {
       const thankYouMessage = thankYouModal.querySelector('#thank-you-message')
       if (thankYouMessage) thankYouMessage.textContent = msg
       toggleSection(thankYouModal, true)
     }
 
-    closeThankYouBtn.addEventListener('click', () => {
-      toggleSection(thankYouModal, false)
-    })
+    closeThankYouBtn.addEventListener('click', () => toggleSection(thankYouModal, false))
+    closePaypalBtn.addEventListener('click', () => toggleSection(paypalModal, false))
 
-    closePaypalBtn.addEventListener('click', () => {
-      toggleSection(paypalModal, false)
-    })
-
-    // PayPal
     async function openPayPalModal() {
       const data = Object.fromEntries(new FormData(form))
       const membershipIdx = Number.parseInt(data.membershipType as string)
       const selectedMembership = memberships[membershipIdx]
 
       toggleSection(paypalModal, true)
-
       const container = root.querySelector('#paypal-button-container')
       if (container) container.innerHTML = ''
 
@@ -770,10 +590,7 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
                   membershipCheck.dispatchEvent(new Event('change'))
                 } catch (error: any) {
                   document.body.style.cursor = 'default'
-                  // Check for INSTRUMENT_DECLINED to allow buyer to select another funding source
-                  if (error.details?.[0]?.issue === 'INSTRUMENT_DECLINED') {
-                    return actions.restart()
-                  }
+                  if (error.details?.[0]?.issue === 'INSTRUMENT_DECLINED') return actions.restart()
                   console.error('Capture error:', error)
                   alert(
                     `Transaction completed but it wasn't sent to us. Please email us at ${CONTACT_INFO.SERVICE_EMAIL} with the receipt. Error: ${error}`
@@ -808,16 +625,11 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
 </script>
 
 <style>
-  .hidden {
-    display: none !important;
-  }
-
   #paypal-modal:not(.hidden),
   #thank-you-modal:not(.hidden),
   #error-snackbar:not(.hidden) {
     display: flex !important;
   }
-
   .fade-in {
     animation: fadeIn 0.5s ease-in-out forwards;
   }

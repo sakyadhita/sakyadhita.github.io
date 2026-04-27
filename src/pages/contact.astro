@@ -4,7 +4,7 @@ import { getImage } from 'astro:assets'
 
 import HongKongVideo from '../assets/Contact Page/Hong Kong Conference Video.jpeg'
 import CustomButton from '../components/CustomButton.astro'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const frontmatter = {
@@ -37,7 +37,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
       w-full
       lg:hidden
     ">
-      <ResourcesHeader image={headerImageUrl} title="Contact Us" />
+      <SectionHeader image={headerImageUrl} title="Contact Us" heightClass="min-h-80" />
     </div>
 
     {/* The Interactive Form */}

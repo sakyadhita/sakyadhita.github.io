@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content'
 
 import LotusHeader from '../assets/Lotus_Header.png'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import VolunteerComponent from '../components/VolunteerForm.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
@@ -20,7 +20,7 @@ const interests = volinterests.map((interest) => ({
 ---
 
 <PageLayout>
-  <ResourcesHeader
+  <SectionHeader
     title={frontmatter.title}
     text={frontmatter.description}
     image={frontmatter.image}

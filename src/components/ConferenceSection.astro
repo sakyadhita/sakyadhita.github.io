@@ -1,0 +1,383 @@
+---
+import { YouTube } from '@astro-community/astro-embed-youtube'
+import { Image } from 'astro:assets'
+import { render, type CollectionEntry } from 'astro:content'
+
+import HorizontalStepper from './ConferenceHorizontalStepper.astro'
+import ConferenceOverview from './ConferenceOverview.astro'
+import ConferenceTheme from './ConferenceTheme.astro'
+import VerticalStepper from './ConferenceVerticalStepper.astro'
+import Slideshow from './Slideshow.astro'
+
+interface Props {
+  data: CollectionEntry<'conference'>[]
+  id?: string
+}
+
+const { data, id } = Astro.props
+
+const initialIndex = id ? data.findIndex((x) => x.id === id) : 0
+const index = initialIndex === -1 ? 0 : initialIndex
+
+const renderedData = await Promise.all(
+  data.map(async (item) => {
+    const { Content } = await render(item)
+    return { item, Content }
+  })
+)
+---
+
+<div id="conference-section-root" class="mx-auto w-full font-body" data-initial-index={index}>
+  {/* Desktop Layout */}
+  <div class="
+    hidden
+    lg:block
+  ">
+    <div class="
+      mx-auto flex max-w-7xl flex-col gap-8 p-12
+      lg:flex-row lg:gap-16
+    ">
+      <aside class="w-48 shrink-0">
+        <div class="sticky top-32">
+          <VerticalStepper items={data} color="#6652a0" id={id} />
+        </div>
+      </aside>
+
+      <main class="min-w-0 flex-1">
+        <div class="duration-500 animate-in fade-in slide-in-from-bottom-4">
+          <div class="conference-content-container">
+            {
+              renderedData.map(({ item, Content }, idx) => {
+                const optimizedImages = item.data.slideShowImages || null
+
+                return (
+                  <div
+                    class={`
+                      conference-item
+                      ${idx === index ? 'block' : 'hidden'}
+                    `}
+                    data-item-index={idx}
+                  >
+                    <div class="
+                      tabs-container mb-8 flex w-fit space-x-1 rounded-xl
+                      bg-gray-100 p-1 font-body
+                    ">
+                      <button
+                        class="
+                          tab-btn theme-tab rounded-lg bg-white px-6 py-2
+                          font-bold text-brand-dark-purple shadow-sm
+                          transition-all
+                        "
+                        data-type="theme"
+                      >
+                        Theme
+                      </button>
+                      <button
+                        class="
+                          tab-btn overview-tab rounded-lg px-6 py-2 font-bold
+                          text-gray-500 transition-all
+                          hover:text-gray-700
+                        "
+                        data-type="overview"
+                      >
+                        Overview
+                      </button>
+                    </div>
+
+                    <div class="tab-content theme-content">
+                      <ConferenceTheme
+                        title={item.data.title}
+                        location={item.data.location}
+                        redirect={item.data.signupLink}
+                        signup={item.data.signupLink}
+                      >
+                        <Content />
+                        <div
+                          slot="slideshow"
+                          class="
+                            h-112 overflow-hidden rounded-3xl border
+                            border-gray-100 bg-gray-50 shadow-2xl
+                          "
+                        >
+                          {optimizedImages?.length === 1 ? (
+                            <Image
+                              class="size-full object-cover"
+                              alt="Event Visual"
+                              src={optimizedImages[0] as ImageMetadata}
+                              width={1200}
+                              height={800}
+                            />
+                          ) : (
+                            <Slideshow height="100%" width="100%">
+                              {optimizedImages?.map((image) => (
+                                <div class="embla__slide size-full">
+                                  <Image
+                                    class="size-full object-cover"
+                                    alt="Event Visual"
+                                    src={image as ImageMetadata}
+                                    width={1200}
+                                    height={800}
+                                  />
+                                </div>
+                              ))}
+                            </Slideshow>
+                          )}
+                        </div>
+                      </ConferenceTheme>
+                    </div>
+
+                    <div class="tab-content overview-content hidden">
+                      <ConferenceOverview info={item} title={item.data.title}>
+                        <div
+                          slot="slideshow"
+                          class="
+                            h-112 overflow-hidden rounded-3xl border
+                            border-gray-100 bg-gray-50 shadow-2xl
+                          "
+                        >
+                          {item.data.video ? (
+                            <YouTube id={item.data.video} class="
+                              size-full bg-black
+                            " />
+                          ) : optimizedImages?.length === 1 ? (
+                            <Image
+                              class="size-full object-cover"
+                              alt="Event Visual"
+                              src={optimizedImages[0] as ImageMetadata}
+                              width={1200}
+                              height={800}
+                            />
+                          ) : (
+                            <Slideshow height="100%" width="100%">
+                              {optimizedImages?.map((image) => (
+                                <div class="embla__slide size-full">
+                                  <Image
+                                    class="size-full object-cover"
+                                    alt="Event Visual"
+                                    src={image as ImageMetadata}
+                                    width={1200}
+                                    height={800}
+                                  />
+                                </div>
+                              ))}
+                            </Slideshow>
+                          )}
+                        </div>
+                      </ConferenceOverview>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  {/* Mobile Layout */}
+  <div class="lg:hidden">
+    <div class="flex flex-col pb-12">
+      <div class="component-display">
+        {
+          renderedData.map(({ item, Content }, idx) => {
+            const optimizedImages = item.data.slideShowImages || null
+
+            return (
+              <div
+                class={`
+                  conference-item
+                  ${idx === index ? 'block' : 'hidden'}
+                `}
+                data-item-index={idx}
+              >
+                <div class="
+                  relative h-72 w-full overflow-hidden rounded-b-3xl shadow-xl
+                  sm:h-96
+                ">
+                  {optimizedImages?.length === 1 ? (
+                    <div class="relative size-full">
+                      <div class="
+                        absolute bottom-10 left-6 z-10 pr-12 text-white
+                        drop-shadow-md
+                      ">
+                        <h1 class="
+                          font-heading text-2xl font-bold tracking-tight
+                          lowercase
+                        ">
+                          {item.data.title}
+                        </h1>
+                        <h3 class="
+                          font-body text-sm font-bold tracking-widest uppercase
+                          opacity-90
+                        ">
+                          {item.data.location}
+                        </h3>
+                      </div>
+                      <Image
+                        class="size-full object-cover"
+                        alt="Event"
+                        src={optimizedImages[0] as ImageMetadata}
+                        width={800}
+                        height={600}
+                      />
+                      <div class="
+                        absolute inset-0 bg-linear-to-t from-black/60
+                        via-transparent to-transparent
+                      " />
+                    </div>
+                  ) : (
+                    <Slideshow height="100%" width="100%">
+                      {optimizedImages?.map((image) => (
+                        <div class="embla__slide relative size-full">
+                          <div class="
+                            absolute bottom-12 left-6 z-10 pr-12 text-white
+                            drop-shadow-md
+                          ">
+                            <h1 class="
+                              font-heading text-2xl font-bold tracking-tight
+                              lowercase
+                            ">
+                              {item.data.title}
+                            </h1>
+                            <h3 class="
+                              font-body text-sm font-bold tracking-widest
+                              uppercase opacity-90
+                            ">
+                              {item.data.location}
+                            </h3>
+                          </div>
+                          <Image
+                            class="size-full object-cover"
+                            alt="Event"
+                            src={image as ImageMetadata}
+                            width={800}
+                            height={600}
+                          />
+                          <div class="
+                            absolute inset-0 bg-linear-to-t from-black/60
+                            via-transparent to-transparent
+                          " />
+                        </div>
+                      ))}
+                    </Slideshow>
+                  )}
+                </div>
+
+                <div class="mt-8 space-y-12 px-6">
+                  <section class="animate-in fade-in slide-in-from-bottom-4">
+                    <h2 class="
+                      mb-6 w-fit border-b-2 border-brand-orange pb-1
+                      font-heading text-2xl font-bold text-brand-dark-purple
+                      lowercase italic
+                    ">
+                      Theme
+                    </h2>
+                    <ConferenceTheme
+                      redirect={item.data.signupLink}
+                      signup={item.data.signupLink}
+                      location={item.data.location}
+                    >
+                      <Content />
+                    </ConferenceTheme>
+                  </section>
+                  <section class="
+                    delay-200 animate-in fade-in slide-in-from-bottom-4
+                  ">
+                    <h2 class="
+                      mb-6 w-fit border-b-2 border-brand-orange pb-1
+                      font-heading text-2xl font-bold text-brand-dark-purple
+                      lowercase italic
+                    ">
+                      Overview
+                    </h2>
+                    <ConferenceOverview info={item} title={item.data.title} />
+                  </section>
+                </div>
+
+                {item.data.video && (
+                  <YouTube
+                    id={item.data.video}
+                    class="
+                      mx-6 my-8 aspect-video overflow-hidden rounded-2xl
+                      bg-black shadow-lg
+                    "
+                  />
+                )}
+              </div>
+            )
+          })
+        }
+      </div>
+
+      <div
+        class="
+          no-scrollbar overflow-x-auto border-y border-gray-100 bg-gray-50 py-8
+          shadow-inner
+        "
+      >
+        <HorizontalStepper items={data} color="#6652a0" id={id} />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import type { ConferenceStepChangeEvent } from '../lib'
+
+  function initConferenceSection() {
+    const root = document.querySelector('#conference-section-root')
+    if (!root) return
+
+    const items = root.querySelectorAll('.conference-item')
+
+    const updateConference = (index: number) => {
+      items.forEach((item) => {
+        const itemIndex = Number.parseInt((item as HTMLElement).dataset.itemIndex || '0')
+        if (itemIndex === index) {
+          item.classList.remove('hidden')
+          item.classList.add('block')
+        } else {
+          item.classList.remove('block')
+          item.classList.add('hidden')
+        }
+      })
+    }
+
+    // Tab switching logic for desktop
+    items.forEach((item) => {
+      const themeTab = item.querySelector('.theme-tab')
+      const overviewTab = item.querySelector('.overview-tab')
+      const themeContent = item.querySelector('.theme-content')
+      const overviewContent = item.querySelector('.overview-content')
+
+      const switchTab = (type: 'theme' | 'overview') => {
+        if (type === 'theme') {
+          themeTab?.classList.add('bg-white', 'text-brand-dark-purple', 'shadow-sm')
+          themeTab?.classList.remove('text-gray-500')
+          overviewTab?.classList.remove('bg-white', 'text-brand-dark-purple', 'shadow-sm')
+          overviewTab?.classList.add('text-gray-500')
+          themeContent?.classList.remove('hidden')
+          overviewContent?.classList.add('hidden')
+        } else {
+          overviewTab?.classList.add('bg-white', 'text-brand-dark-purple', 'shadow-sm')
+          overviewTab?.classList.remove('text-gray-500')
+          themeTab?.classList.remove('bg-white', 'text-brand-dark-purple', 'shadow-sm')
+          themeTab?.classList.add('text-gray-500')
+          overviewContent?.classList.remove('hidden')
+          themeContent?.classList.add('hidden')
+        }
+      }
+
+      themeTab?.addEventListener('click', () => switchTab('theme'))
+      overviewTab?.addEventListener('click', () => switchTab('overview'))
+    })
+
+    document.addEventListener('conference-step-change', ((e: ConferenceStepChangeEvent) => {
+      updateConference(e.detail.index)
+    }) as EventListener)
+  }
+
+  initConferenceSection()
+  document.addEventListener('astro:page-load', initConferenceSection)
+</script>

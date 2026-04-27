@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 
-import ConferenceDesktop from '../components/ConferenceDesktop.astro'
-import MobileConference from '../components/ConferenceMobile.astro'
+import ConferenceSection from '../components/ConferenceSection.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const conferencesRaw = await getCollection('conference')
@@ -10,16 +9,5 @@ const data = conferencesRaw.toReversed()
 ---
 
 <PageLayout>
-  <div class="
-    hidden
-    lg:block
-  ">
-    <ConferenceDesktop data={data} />
-  </div>
-  <div class="
-    block
-    lg:hidden
-  ">
-    <MobileConference data={data} />
-  </div>
+  <ConferenceSection data={data} />
 </PageLayout>

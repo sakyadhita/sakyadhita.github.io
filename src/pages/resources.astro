@@ -1,7 +1,7 @@
 ---
 import LotusHeader from '../assets/Lotus_Header.png'
-import ResourcesHeader from '../components/ResourcesHero.astro'
 import ResourcesNavBar from '../components/ResourcesNavBar.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const frontmatter = {
@@ -14,12 +14,12 @@ const frontmatter = {
 <PageLayout hideFooter={true}>
   <ResourcesNavBar>
     <div class="w-full">
-      <ResourcesHeader
+      <SectionHeader
         image={frontmatter.image}
         title={frontmatter.title}
         text={frontmatter.description}
-        height="calc(100vh - 128px)"
-        width="100%"
+        heightClass="h-[calc(100vh-128px)]"
+        centered={false}
       />
     </div>
     <slot />

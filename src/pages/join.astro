@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 
 import FirstConference from '../assets/Join Us Page/1stConference.jpeg'
 import JoinUsComponent from '../components/JoinUsForm.astro'
-import ResourcesHeader from '../components/ResourcesHeader.astro'
+import SectionHeader from '../components/SectionHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const membertypes = await getCollection('membertype')
@@ -22,7 +22,7 @@ const frontmatter = {
 ---
 
 <PageLayout>
-  <ResourcesHeader
+  <SectionHeader
     title={frontmatter.title}
     text={frontmatter.description}
     image={frontmatter.image}

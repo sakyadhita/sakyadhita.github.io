@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets'
+
+import { getAssetUrl } from '../lib'
+
+interface Props {
+  title: string
+  subtitle?: string | number
+  image: ImageMetadata
+  pdfLink?: any
+  type?: 'publication' | 'newsletter'
+}
+
+const { title, subtitle, image, pdfLink, type = 'publication' } = Astro.props
+const resolvedPdfLink = getAssetUrl(pdfLink)
+
+const isNewsletter = type === 'newsletter'
+---
+
+<div
+  class:list={[
+    'group inline-block transition-all',
+    isNewsletter ? `
+      m-4 w-64
+      sm:m-5
+      md:m-6 md:w-72
+    ` : `
+      m-6 w-40
+      md:w-48
+    `
+  ]}
+>
+  <a
+    href={resolvedPdfLink}
+    target="_blank"
+    rel="noreferrer noopener"
+    class="
+      block text-black no-underline
+      hover:no-underline
+    "
+  >
+    <div class="overflow-hidden rounded-lg">
+      <Image
+        alt={title}
+        src={image}
+        width={isNewsletter ? 300 : 200}
+        height={isNewsletter ? 400 : 300}
+        loading="lazy"
+        decoding="async"
+        class:list={[
+          `
+            w-full object-cover shadow-card transition-all
+            group-hover:scale-105 group-hover:shadow-card-hover
+          `,
+          isNewsletter ? `
+            mb-3 h-48
+            sm:h-52
+            md:h-60
+          ` : `
+            mb-4 h-56
+            md:mb-5 md:h-64 md:shadow-card-lg
+          `
+        ]}
+      />
+    </div>
+
+    {
+      isNewsletter && subtitle && (
+        <span class="
+          block h-5 text-left font-body text-sm/5 text-black
+          sm:text-base/6
+          md:text-base/5
+        ">
+          {subtitle}
+        </span>
+      )
+    }
+
+    <div
+      class:list={[
+        'block overflow-hidden text-wrap text-black',
+        isNewsletter
+          ? `
+            mt-1 h-7 text-left font-body text-base/6
+            sm:text-xl/7
+          `
+          : `
+            text-center font-heading text-lg/6 font-bold
+            md:text-left md:text-lg/relaxed
+          `
+      ]}
+    >
+      {title}
+    </div>
+
+    {
+      !isNewsletter && subtitle && (
+        <div
+          title={String(subtitle)}
+          class="
+            block max-h-5 cursor-default truncate pt-1.5 text-center font-body
+            text-sm/tight
+            md:max-h-none md:text-left md:text-lg/relaxed md:font-normal
+          "
+        >
+          {subtitle}
+        </div>
+      )
+    }
+  </a>
+</div>
