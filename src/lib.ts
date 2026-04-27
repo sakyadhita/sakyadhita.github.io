@@ -3,8 +3,8 @@
  * Uses Vite's asset bundling to serve links for assets in src/assets.
  */
 
-// Import all assets from src/assets to ensure they are processed by Vite
-const allAssets = import.meta.glob('/src/assets/**/*', {
+// Export for testing
+export const allAssets = import.meta.glob('/src/assets/**/*', {
   eager: true,
   query: '?url',
   import: 'default'
@@ -12,6 +12,8 @@ const allAssets = import.meta.glob('/src/assets/**/*', {
 
 export function getAssetUrl(assetPath: string | null | undefined): string | null {
   if (!assetPath) return null
+
+  const assets: Record<string, unknown> = allAssets
 
   // If it's already a full URL or mailto link
   if (
@@ -36,7 +38,7 @@ export function getAssetUrl(assetPath: string | null | undefined): string | null
   }
 
   // Return the bundled URL from the glob map
-  let resolved = (allAssets[normalizedPath] as string) || null
+  let resolved = (assets[normalizedPath] as string) || null
 
   // In development, if it points to /src/assets, we rewrite it to /assets
   // This ensures it bypasses Astro's page router (which intercepts /src/ for text/html)
@@ -64,7 +66,7 @@ export const ordinal_suffix_of = (i: number) => {
 }
 
 export const determineLocationLabel = (location: string) => {
-  const splitLocation = location.split(',')
+  const splitLocation = location.split(',').map((s) => s.trim())
   if (splitLocation.length > 2) splitLocation.shift()
   return splitLocation.join(', ')
 }

@@ -8,7 +8,7 @@ test.describe('Navigation', () => {
   async function openNav(page: any) {
     const hamburger = page.getByRole('button', { name: 'Toggle Navigation' })
     await hamburger.click()
-    const navPanel = page.locator('div.fixed.bg-brand-orange')
+    const navPanel = page.locator('#nav-panel')
     await expect(navPanel).toBeVisible()
     await navPanel.evaluate((element: HTMLElement) => {
       element.scrollTop = element.scrollHeight
@@ -22,7 +22,7 @@ test.describe('Navigation', () => {
 
   test('should navigate to About page', async ({ page }) => {
     await openNav(page)
-    await page.locator('div.fixed.bg-brand-orange').getByRole('link', { name: 'About Us' }).click()
+    await page.locator('#nav-panel').getByRole('link', { name: 'About Us' }).click()
     await expect(page).toHaveURL(/\/about/)
     await expect(
       page.getByRole('heading', { level: 1 }).filter({ visible: true }).first()
@@ -43,7 +43,7 @@ test.describe('Navigation', () => {
 
   test('should navigate to Resources page', async ({ page }) => {
     await openNav(page)
-    await page.locator('div.fixed.bg-brand-orange').getByRole('link', { name: 'Resources' }).click()
+    await page.locator('#nav-panel').getByRole('link', { name: 'Resources' }).click()
     await expect(page).toHaveURL(/\/resources/)
     await expect(
       page.getByRole('heading', { level: 1 }).filter({ visible: true }).first()
@@ -52,9 +52,7 @@ test.describe('Navigation', () => {
 
   test('should navigate to Contact page', async ({ page }) => {
     await openNav(page)
-    const contactLink = page
-      .locator('div.fixed.bg-brand-orange')
-      .getByRole('link', { name: 'Contact Us' })
+    const contactLink = page.locator('#nav-panel').getByRole('link', { name: 'Contact Us' })
 
     await contactLink.scrollIntoViewIfNeeded()
     await contactLink.click()

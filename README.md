@@ -2,6 +2,18 @@
 
 Official website for Sakyadhita International Association of Buddhist Women.
 
+## 🚀 4.1 Component Consolidation & Semantic Refactor
+
+The project has been significantly streamlined by consolidating redundant components and standardizing UI patterns.
+
+- **Semantic Component Library**: Consolidated previous specialized components into universal versions:
+  - `SectionHeader`: Replaces all hero and page header variations.
+  - `MediaCard` & `MediaSection`: Unifies E-Publication and Newsletter listings.
+  - `ConferenceSection`: Merges desktop and mobile conference logic into a single responsive controller.
+- **Universal Form Logic**: Introduced `FormField` to handle all input types, significantly reducing boilerplate in the Volunteer and Join Us forms.
+- **Dual-Layered Testing**: Added a Vitest logic testing suite to complement the existing Playwright E2E tests, ensuring both functional behavior and visual integrity.
+- **Design Token Standardization**: Fully moved all arbitrary spacing, shadows, and colors into the Tailwind v4 `@theme` block, resulting in a perfectly aligned and consistent layout.
+
 ## 🚀 4.0 Deployment & Integration Optimization
 
 The project has undergone a major optimization of its deployment and external integration layers, achieving a **pure Astro native** architecture.
@@ -38,6 +50,11 @@ Styling is handled exclusively by **Tailwind CSS v4**, removing heavy frameworks
 
 ## Releases
 
+- 4.1.0: **Component Consolidation & Semantic Refactor**
+  - Consolidated redundant components (`SectionHeader`, `MediaCard`, `ConferenceSection`).
+  - Implemented `FormField` for standardized, accessible form logic.
+  - Established a Vitest unit/logic testing suite.
+  - Standardized all design tokens (colors, shadows, z-index) in Tailwind v4.
 - 4.0.0: **Astro Native & Deployment Optimization**
   - Removed React and shadcn/ui dependencies; migrated to pure Astro native components.
   - Implemented centralized Netlify Forms skeleton and SSR-safe submission logic.

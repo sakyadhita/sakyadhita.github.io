@@ -1,12 +1,15 @@
 {
   "name": "sakyadhita.github.io",
   "type": "module",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "pnpm run test:unit && pnpm run test:e2e",
+    "test:unit": "vitest run",
+    "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
     "lint": "pnpm run lint:prettier && pnpm run lint:eslint",
     "lint:prettier": "prettier --write  .",
@@ -38,10 +41,13 @@
     "@playwright/test": "^1.59.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
     "@types/d3": "^7.4.3",
     "@types/node": "^25.6.0",
     "@types/topojson-client": "^3.1.5",
     "@typescript-eslint/parser": "^8.59.0",
+    "@vitest/ui": "^4.1.5",
     "astro-eslint-parser": "^1.4.0",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
@@ -51,13 +57,15 @@
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-unicorn": "^64.0.0",
     "globals": "^17.5.0",
+    "jsdom": "^29.1.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "0.7.3",
     "tailwindcss": "^4.2.4",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.0"
+    "typescript-eslint": "^8.59.0",
+    "vitest": "^4.1.5"
   },
   "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
 }

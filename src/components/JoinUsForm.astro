@@ -297,33 +297,37 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
 
   import { PAYPAL_CONFIG, CONTACT_INFO } from '../SiteMetadata'
 
-  document.addEventListener('astro:page-load', () => {
+  function initJoinUsForm() {
     const root = document.querySelector('#join-us-form-root') as HTMLElement
     if (!root) return
 
     const memberships = JSON.parse(root.dataset.memberships || '[]')
-    const form = root.querySelector('#join-us-form') as HTMLFormElement
-    const membershipCheck = root.querySelector('#membershipCheck') as HTMLInputElement
-    const countrySelect = root.querySelector('#country-select') as HTMLSelectElement
-    const addressFields = root.querySelector('#address-fields') as HTMLElement
-    const membershipSections = root.querySelector('#membership-sections') as HTMLElement
-    const emailOnlySubmit = root.querySelector('#email-only-submit') as HTMLElement
-    const donateCheck = root.querySelector('#donateCheck') as HTMLInputElement
-    const donationField = root.querySelector('#donation-field') as HTMLElement
-    const paymentButtonContainer = root.querySelector('#payment-button-container') as HTMLElement
-    const paymentNotice = root.querySelector('#payment-requirement-notice') as HTMLElement
-    const continueBtn = root.querySelector('#continue-to-payment') as HTMLElement
-    const submitEmailBtn = root.querySelector('#submit-email-only') as HTMLElement
-    const paypalModal = root.querySelector('#paypal-modal') as HTMLElement
-    const thankYouModal = root.querySelector('#thank-you-modal') as HTMLElement
-    const closePaypalBtn = root.querySelector('#close-paypal-modal') as HTMLElement
-    const closeThankYouBtn = root.querySelector('#close-thank-you') as HTMLElement
-    const snackbar = root.querySelector('#error-snackbar') as HTMLElement
-    const errorMessage = root.querySelector('#error-message') as HTMLElement
-    const closeSnackbar = root.querySelector('#close-snackbar') as HTMLElement
+    const form = document.querySelector('#join-us-form') as HTMLFormElement
+    const membershipCheck = document.querySelector('#membershipCheck') as HTMLInputElement
+    const countrySelect = document.querySelector('#country-select') as HTMLSelectElement
+    const addressFields = document.querySelector('#address-fields') as HTMLElement
+    const membershipSections = document.querySelector('#membership-sections') as HTMLElement
+    const emailOnlySubmit = document.querySelector('#email-only-submit') as HTMLElement
+    const donateCheck = document.querySelector('#donateCheck') as HTMLInputElement
+    const donationField = document.querySelector('#donation-field') as HTMLElement
+    const paymentButtonContainer = document.querySelector(
+      '#payment-button-container'
+    ) as HTMLElement
+    const paymentNotice = document.querySelector('#payment-requirement-notice') as HTMLElement
+    const continueBtn = document.querySelector('#continue-to-payment') as HTMLElement
+    const submitEmailBtn = document.querySelector('#submit-email-only') as HTMLElement
+    const paypalModal = document.querySelector('#paypal-modal') as HTMLElement
+    const thankYouModal = document.querySelector('#thank-you-modal') as HTMLElement
+    const closePaypalBtn = document.querySelector('#close-paypal-modal') as HTMLElement
+    const closeThankYouBtn = document.querySelector('#close-thank-you') as HTMLElement
+    const snackbar = document.querySelector('#error-snackbar') as HTMLElement
+    const errorMessage = document.querySelector('#error-message') as HTMLElement
+    const closeSnackbar = document.querySelector('#close-snackbar') as HTMLElement
+
+    if (!form || !membershipCheck || !countrySelect) return
 
     function toggleSection(el: HTMLElement, show: boolean) {
-      el.classList.toggle('hidden', !show)
+      if (el) el.classList.toggle('hidden', !show)
     }
 
     membershipCheck.addEventListener('change', () => {
@@ -340,7 +344,8 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
     donateCheck.addEventListener('change', () => {
       toggleSection(donationField, donateCheck.checked)
       if (!donateCheck.checked) {
-        ;(form.querySelector('[name="totalPaid"]') as HTMLInputElement).value = ''
+        const input = form.querySelector('[name="totalPaid"]') as HTMLInputElement
+        if (input) input.value = ''
       }
       checkPaymentReady()
     })
@@ -359,24 +364,23 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
       }
 
       if (!isEmailOnly) {
-        if (!(form.querySelector('[name="isNewMember"]') as HTMLSelectElement).value) ready = false
-        if (!(form.querySelector('[name="affiliatedOrgs"]') as HTMLTextAreaElement).value)
-          ready = false
-        if ((form.querySelector('#membership-select') as HTMLSelectElement).value === '')
-          ready = false
-        if (
-          donateCheck.checked &&
-          !(form.querySelector('[name="totalPaid"]') as HTMLInputElement).value
-        )
-          ready = false
+        const newMemberEl = form.querySelector('[name="isNewMember"]') as HTMLSelectElement
+        const affiliatedEl = form.querySelector('[name="affiliatedOrgs"]') as HTMLTextAreaElement
+        const typeEl = document.querySelector('#membership-select') as HTMLSelectElement
+        const paidEl = form.querySelector('[name="totalPaid"]') as HTMLInputElement
+
+        if (!newMemberEl || !newMemberEl.value) ready = false
+        if (!affiliatedEl || !affiliatedEl.value) ready = false
+        if (!typeEl || typeEl.value === '') ready = false
+        if (donateCheck.checked && (!paidEl || !paidEl.value)) ready = false
       }
 
       if (ready && !isEmailOnly) {
-        paymentButtonContainer.classList.remove('hidden')
-        paymentNotice.classList.add('hidden')
+        paymentButtonContainer?.classList.remove('hidden')
+        paymentNotice?.classList.add('hidden')
       } else {
-        paymentButtonContainer.classList.add('hidden')
-        paymentNotice.classList.remove('hidden')
+        paymentButtonContainer?.classList.add('hidden')
+        paymentNotice?.classList.remove('hidden')
       }
     }
 
@@ -384,7 +388,7 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
     form.addEventListener('change', checkPaymentReady)
 
     function showSnackBar(msg: string) {
-      errorMessage.textContent = msg
+      if (errorMessage) errorMessage.textContent = msg
       toggleSection(snackbar, true)
       setTimeout(() => hideSnackBar(), 5000)
     }
@@ -393,7 +397,7 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
       toggleSection(snackbar, false)
     }
 
-    closeSnackbar.addEventListener('click', hideSnackBar)
+    closeSnackbar?.addEventListener('click', hideSnackBar)
 
     let isSubmitting = false
 
@@ -454,7 +458,13 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: submissionData.toString()
         })
-        showThankYou('Thank you for your support! We will get in touch with you shortly.')
+
+        const thankYouMsg = thankYouModal?.querySelector('#thank-you-message')
+        if (thankYouMsg)
+          thankYouMsg.textContent =
+            'Thank you for your support! We will get in touch with you shortly.'
+        toggleSection(thankYouModal, true)
+
         form.reset()
         membershipCheck.checked = false
         membershipCheck.dispatchEvent(new Event('change'))
@@ -468,14 +478,8 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
 
     if (submitEmailBtn) submitEmailBtn.addEventListener('click', handleEmailOnlySubmit)
 
-    function showThankYou(msg: string) {
-      const thankYouMessage = thankYouModal.querySelector('#thank-you-message')
-      if (thankYouMessage) thankYouMessage.textContent = msg
-      toggleSection(thankYouModal, true)
-    }
-
-    closeThankYouBtn.addEventListener('click', () => toggleSection(thankYouModal, false))
-    closePaypalBtn.addEventListener('click', () => toggleSection(paypalModal, false))
+    closeThankYouBtn?.addEventListener('click', () => toggleSection(thankYouModal, false))
+    closePaypalBtn?.addEventListener('click', () => toggleSection(paypalModal, false))
 
     async function openPayPalModal() {
       const data = Object.fromEntries(new FormData(form))
@@ -483,7 +487,7 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
       const selectedMembership = memberships[membershipIdx]
 
       toggleSection(paypalModal, true)
-      const container = root.querySelector('#paypal-button-container')
+      const container = document.querySelector('#paypal-button-container')
       if (container) container.innerHTML = ''
 
       try {
@@ -584,7 +588,13 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
                   })
 
                   toggleSection(paypalModal, false)
-                  showThankYou('Thank you for your support! We will get in touch with you shortly.')
+                  if (thankYouModal) {
+                    const thankYouMsg = thankYouModal.querySelector('#thank-you-message')
+                    if (thankYouMsg)
+                      thankYouMsg.textContent =
+                        'Thank you for your support! We will get in touch with you shortly.'
+                    toggleSection(thankYouModal, true)
+                  }
                   form.reset()
                   membershipCheck.checked = false
                   membershipCheck.dispatchEvent(new Event('change'))
@@ -611,7 +621,10 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
         }
       } catch (error) {
         console.error(error)
-        showSnackBar('Failed to load payment system')
+        const errorMessage = document.querySelector('#error-message')
+        const snackbar = document.querySelector('#error-snackbar')
+        if (errorMessage) errorMessage.textContent = 'Failed to load payment system'
+        if (snackbar) snackbar.classList.remove('hidden')
       }
     }
 
@@ -621,7 +634,10 @@ const membershipOptions = memberships.map((m: any, idx: number) => ({
         openPayPalModal()
       })
     }
-  })
+  }
+
+  initJoinUsForm()
+  document.addEventListener('astro:page-load', initJoinUsForm)
 </script>
 
 <style>

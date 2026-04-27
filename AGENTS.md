@@ -5,16 +5,21 @@ This project is the official website for **Sakyadhita International Association 
 ## 🚀 Project Overview
 
 - **Framework**: [Astro](https://astro.build/) (v6)
-- **Testing**: [Playwright](https://playwright.dev/) for End-to-End (E2E) testing; [Vitest](https://vitest.dev/) for component tests.
+- **Testing**: Dual-layered strategy:
+  - [Playwright](https://playwright.dev/) for End-to-End (E2E) visual and interaction testing.
+  - [Vitest](https://vitest.dev/) for fast unit and logic testing (using `jsdom`).
 - **Content**: Managed via [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/) in `src/content/`.
 - **Icons**: [Astro Icon](https://astro-icon.dev/) using Lucide and Simple Icons sets.
-- **Styling**: Tailwind CSS v4.
+- **Styling**: Tailwind CSS v4 (CSS-first configuration).
 - **Deployment**: Netlify.
 
 ## 🏗️ Architectural Decisions
 
+- **Consolidated Component Library**: Redundant components have been merged into versatile, semantic versions (e.g., `SectionHeader`, `MediaCard`, `ConferenceSection`).
+- **Standardized Form Architecture**: A universal `FormField.astro` component handles inputs, selects, and checkboxes with built-in accessibility and icon support.
 - **Astro Native Pages**: All user-facing pages are native `.astro` components in `src/pages/`. Legacy markdown layouts and React islands have been removed in favor of co-located logic and content.
 - **Flattened Components**: The `src/components/` directory is completely flattened. All UI components reside in the root of `src/components/` for maximum clarity and simpler imports.
+- **Standardized Design Tokens**: Standardized on brand theme variables for colors, shadows, and z-index to eliminate arbitrary values and ensure visual consistency.
 - **Native Asset Bundling**: All assets (images, PDFs, ZIPs, and other documents) reside in `src/assets/`. The project leverages Vite's asset bundling via `import.meta.glob` to resolve and serve these files, ensuring consistent path resolution and hashing in production.
 - **Development Asset Middleware**: A custom middleware (`src/middleware.ts`) intercepts requests for files in `src/assets/` during development. This bypasses Astro's default page-routing logic for browser navigations (which typically 404s (or returns index) on direct `/src/` paths) and ensures documents are served with the correct MIME types.
 - **Netlify Forms Optimization**: Forms are optimized for Netlify's SSR environment. A centralized `public/__forms.html` file acts as a skeleton for build-time form detection. Client-side submissions use `URLSearchParams` and target the skeleton file path to ensure they bypass SSR interception and are processed by Netlify's origin middleware.
@@ -30,14 +35,16 @@ This project is the official website for **Sakyadhita International Association 
 
 ### Commands
 
-| Command         | Action                      |
-| :-------------- | :-------------------------- |
-| `pnpm install`  | Install dependencies.       |
-| `pnpm dev`      | Start development server.   |
-| `pnpm build`    | Build the static site.      |
-| `pnpm test:ui`  | Run Vitest component tests. |
-| `pnpm test:e2e` | Run Playwright E2E tests.   |
-| `pnpm lint`     | Run Prettier and ESLint.    |
+| Command          | Action                                        |
+| :--------------- | :-------------------------------------------- |
+| `pnpm install`   | Install dependencies.                         |
+| `pnpm dev`       | Start development server.                     |
+| `pnpm build`     | Build the static site.                        |
+| `pnpm test`      | Run all tests (Unit + E2E).                   |
+| `pnpm test:unit` | Run Vitest logic tests.                       |
+| `pnpm test:ui`   | Run Vitest with interactive UI.               |
+| `pnpm test:e2e`  | Run Playwright E2E tests.                     |
+| `pnpm lint`      | Run Prettier and ESLint (including Tailwind). |
 
 ## 📂 Project Structure
 

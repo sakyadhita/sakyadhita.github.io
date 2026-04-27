@@ -196,25 +196,27 @@ const countries = countryRegionData.map((c) => c.countryName)
   </div>
 </div>
 
-<script is:inline>
-  document.addEventListener('astro:page-load', () => {
+<script>
+  function initVolunteerForm() {
     const root = document.querySelector('#volunteer-form-root')
     if (!root) return
 
-    const form = root.querySelector('#volunteer-form')
-    const submitBtn = root.querySelector('#volunteer-submit-btn')
-    const thankYouModal = root.querySelector('#thank-you-modal')
-    const closeThankYouBtn = root.querySelector('#close-thank-you')
-    const snackbar = root.querySelector('#error-snackbar')
-    const errorMessage = root.querySelector('#error-message')
-    const closeSnackbar = root.querySelector('#close-snackbar')
+    const form = document.querySelector('#volunteer-form') as HTMLFormElement
+    const submitBtn = document.querySelector('#volunteer-submit-btn') as HTMLElement
+    const thankYouModal = document.querySelector('#thank-you-modal') as HTMLElement
+    const closeThankYouBtn = document.querySelector('#close-thank-you') as HTMLElement
+    const snackbar = document.querySelector('#error-snackbar') as HTMLElement
+    const errorMessage = document.querySelector('#error-message') as HTMLElement
+    const closeSnackbar = document.querySelector('#close-snackbar') as HTMLElement
+
+    if (!form) return
 
     function toggleSection(el, show) {
-      el.classList.toggle('hidden', !show)
+      if (el) el.classList.toggle('hidden', !show)
     }
 
     function showSnackBar(msg) {
-      errorMessage.textContent = msg
+      if (errorMessage) errorMessage.textContent = msg
       toggleSection(snackbar, true)
       setTimeout(() => hideSnackBar(), 5000)
     }
@@ -223,7 +225,7 @@ const countries = countryRegionData.map((c) => c.countryName)
       toggleSection(snackbar, false)
     }
 
-    closeSnackbar.addEventListener('click', hideSnackBar)
+    closeSnackbar?.addEventListener('click', hideSnackBar)
 
     let isSubmitting = false
 
@@ -259,7 +261,7 @@ const countries = countryRegionData.map((c) => c.countryName)
         await fetch('/__forms.html', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
+          body: new URLSearchParams(formData as unknown as Record<string, string>).toString()
         })
         toggleSection(thankYouModal, true)
         form.reset()
@@ -272,8 +274,11 @@ const countries = countryRegionData.map((c) => c.countryName)
     }
 
     if (submitBtn) submitBtn.addEventListener('click', handleSubmit)
-    closeThankYouBtn.addEventListener('click', () => toggleSection(thankYouModal, false))
-  })
+    closeThankYouBtn?.addEventListener('click', () => toggleSection(thankYouModal, false))
+  }
+
+  initVolunteerForm()
+  document.addEventListener('astro:page-load', initVolunteerForm)
 </script>
 
 <style>
