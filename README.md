@@ -11,6 +11,7 @@ The project has been significantly streamlined by consolidating redundant compon
   - `MediaCard` & `MediaSection`: Unifies E-Publication and Newsletter listings.
   - `ConferenceSection`: Merges desktop and mobile conference logic into a single responsive controller.
 - **Universal Form Logic**: Introduced `FormField` to handle all input types, significantly reducing boilerplate in the Volunteer and Join Us forms.
+- **Decap CMS Integration**: Added a git-based CMS available at `/admin` for user-friendly management of conferences, news, and publications.
 - **Dual-Layered Testing**: Added a Vitest logic testing suite to complement the existing Playwright E2E tests, ensuring both functional behavior and visual integrity.
 - **Design Token Standardization**: Fully moved all arbitrary spacing, shadows, and colors into the Tailwind v4 `@theme` block, resulting in a perfectly aligned and consistent layout.
 
@@ -53,6 +54,7 @@ Styling is handled exclusively by **Tailwind CSS v4**, removing heavy frameworks
 - 4.1.0: **Component Consolidation & Semantic Refactor**
   - Consolidated redundant components (`SectionHeader`, `MediaCard`, `ConferenceSection`).
   - Implemented `FormField` for standardized, accessible form logic.
+  - Integrated **Decap CMS** at `/admin` for user-friendly content management.
   - Established a Vitest unit/logic testing suite.
   - Standardized all design tokens (colors, shadows, z-index) in Tailwind v4.
 - 4.0.0: **Astro Native & Deployment Optimization**

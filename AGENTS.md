@@ -5,6 +5,7 @@ This project is the official website for **Sakyadhita International Association 
 ## 🚀 Project Overview
 
 - **Framework**: [Astro](https://astro.build/) (v6)
+- **CMS**: [Decap CMS](https://decapcms.org/) (via `astro-decap-cms`) for user-friendly content management.
 - **Testing**: Dual-layered strategy:
   - [Playwright](https://playwright.dev/) for End-to-End (E2E) visual and interaction testing.
   - [Vitest](https://vitest.dev/) for fast unit and logic testing (using `jsdom`).
@@ -20,6 +21,7 @@ This project is the official website for **Sakyadhita International Association 
 - **Astro Native Pages**: All user-facing pages are native `.astro` components in `src/pages/`. Legacy markdown layouts and React islands have been removed in favor of co-located logic and content.
 - **Flattened Components**: The `src/components/` directory is completely flattened. All UI components reside in the root of `src/components/` for maximum clarity and simpler imports.
 - **Standardized Design Tokens**: Standardized on brand theme variables for colors, shadows, and z-index to eliminate arbitrary values and ensure visual consistency.
+- **Decap CMS Integration**: A git-based CMS is integrated at the `/admin` route. It is configured to mirror the Astro Content Collections schemas and utilizes relative asset paths (`../../assets`) to maintain compatibility with Astro's native image optimization pipeline.
 - **Native Asset Bundling**: All assets (images, PDFs, ZIPs, and other documents) reside in `src/assets/`. The project leverages Vite's asset bundling via `import.meta.glob` to resolve and serve these files, ensuring consistent path resolution and hashing in production.
 - **Development Asset Middleware**: A custom middleware (`src/middleware.ts`) intercepts requests for files in `src/assets/` during development. This bypasses Astro's default page-routing logic for browser navigations (which typically 404s (or returns index) on direct `/src/` paths) and ensures documents are served with the correct MIME types.
 - **Netlify Forms Optimization**: Forms are optimized for Netlify's SSR environment. A centralized `public/__forms.html` file acts as a skeleton for build-time form detection. Client-side submissions use `URLSearchParams` and target the skeleton file path to ensure they bypass SSR interception and are processed by Netlify's origin middleware.
@@ -61,7 +63,7 @@ This project is the official website for **Sakyadhita International Association 
 
 ### Content Updates
 
-Modify markdown files in `src/content/`. Images and documents must be relative paths (e.g., `../../assets/...`) to be processed by the Vite asset loader.
+Modify markdown files in `src/content/` directly or via the Decap CMS dashboard at `/admin`. Images and documents must be relative paths (e.g., `../../assets/...`) to be processed by the Vite asset loader; the CMS is configured to handle this automatically.
 
 ### Code Style
 
