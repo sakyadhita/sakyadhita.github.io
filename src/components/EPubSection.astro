@@ -3,19 +3,17 @@ import { Icon } from 'astro-icon/components'
 
 import EPubCard from './EPubCard.astro'
 
-import type { PublicationSection } from '../lib'
+import type { CollectionEntry } from 'astro:content'
 
 interface Props {
-  publication_section: PublicationSection
+  section_title: string
+  section_list: CollectionEntry<'publication'>[]
 }
 
-const { publication_section } = Astro.props
+const { section_title, section_list } = Astro.props
 ---
 
-<div
-  class="EPubSection relative mx-[10vw] block px-0 py-11"
-  data-section-title={publication_section.section_title}
->
+<div class="EPubSection relative mx-[10vw] block px-0 py-11" data-section-title={section_title}>
   {/* Header */}
   <div class="
     relative top-0 left-0 flex w-full flex-col
@@ -25,7 +23,7 @@ const { publication_section } = Astro.props
       w-full text-center font-heading text-2xl/tight font-bold
       lg:text-4xl/relaxed
     ">
-      {publication_section.section_title}
+      {section_title}
     </h1>
     <button
       type="button"
@@ -35,9 +33,9 @@ const { publication_section } = Astro.props
         hover:underline
         lg:absolute lg:right-6 lg:bottom-0 lg:mb-4 lg:text-lg/relaxed
       "
-      data-section={publication_section.section_title}
+      data-section={section_title}
     >
-      All <span class="text-brand-orange">({publication_section.section_list.length})</span>
+      All <span class="text-brand-orange">({section_list.length})</span>
       <span class="lg:inline">&gt;</span>
     </button>
   </div>
@@ -51,7 +49,7 @@ const { publication_section } = Astro.props
     "
   >
     {
-      publication_section.section_list
+      section_list
         .slice(0, 5)
         .map((pub) => (
           <EPubCard
@@ -85,7 +83,7 @@ const { publication_section } = Astro.props
 
     <div class="mobile-card-container">
       {
-        publication_section.section_list.map((pub, index) => (
+        section_list.map((pub, index) => (
           <div class={index === 0 ? 'block' : 'hidden'} data-index={index}>
             <EPubCard
               title={pub.data.title}

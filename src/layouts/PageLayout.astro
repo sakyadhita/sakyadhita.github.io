@@ -38,14 +38,6 @@ const { hideFooter = false } = Astro.props
       {hideFooter ? null : <Footer />}
     </div>
 
-    <!-- For netlify forms -->
-    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <input type="tel" name="phone" />
-      <textarea name="message"></textarea>
-    </form>
-
     <iframe
       src={EXTERNAL_LINKS.TRUSTARC_CONSENT}
       data-merchant={EXTERNAL_LINKS.TRUSTARC_MERCHANT_ID}

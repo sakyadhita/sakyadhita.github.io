@@ -1,0 +1,847 @@
+---
+import countryRegionData from 'country-region-data/data.json'
+
+import CustomButton from './CustomButton.astro'
+
+const { memberships } = Astro.props
+
+const countries = countryRegionData.map((c) => c.countryName)
+
+const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 font-body text-lg focus-visible:border-brand-dark-purple focus-visible:ring-brand-dark-purple outline-none`
+---
+
+<div class="font-body" id="join-us-form-root" data-memberships={JSON.stringify(memberships)}>
+  <div class="
+    mx-auto max-w-7xl space-y-12 px-6 py-12 text-black
+    md:px-12
+  ">
+    <div class="space-y-6">
+      <h1 class="font-heading text-4xl text-brand-dark-purple lowercase">
+        Thank you for your interest!
+      </h1>
+      <p class="text-lg/relaxed text-gray-700">
+        By filling out this form, you will be added to the email list. If you wish to also have a
+        membership with Sakyadhita, you will be asked to pay a membership fee through PayPal once
+        all required fields are filled out. If you wish to only be on the email list, please check
+        the “Not interested in membership” box below.
+      </p>
+      {/* checkbox to only join email list */}
+      <div
+        class="
+          flex items-center space-x-3 rounded-lg border border-brand-orange/20
+          bg-brand-orange/10 p-4
+        "
+      >
+        <input
+          type="checkbox"
+          id="membershipCheck"
+          class="
+            peer size-4 shrink-0 rounded-sm border border-black
+            accent-brand-orange shadow-sm
+          "
+        />
+        <label for="membershipCheck" class="
+          cursor-pointer text-lg font-bold text-black
+        ">
+          Not interested in membership, but want to be on the email list.
+        </label>
+      </div>
+    </div>
+
+    <form
+      name="membership"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      autocomplete="off"
+      class="mx-auto max-w-2xl space-y-4"
+      id="join-us-form"
+    >
+      <p class="hidden">
+        <label>
+          Don’t fill this out if you're human: <input name="bot-field" />
+        </label>
+      </p>
+      <input type="hidden" name="form-name" value="membership" />
+
+      <section class="space-y-4">
+        <h1
+          class="
+            mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+            text-3xl text-brand-dark-purple lowercase italic
+          "
+        >
+          Sign Me Up!
+        </h1>
+        {/* first name field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input id="fName" name="fName" class={inputClasses} placeholder="First Name" required />
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+        {/* middle name field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input id="mName" name="mName" class={inputClasses} placeholder="Middle Name" />
+          </div>
+          <span class="ml-2 w-4 shrink-0"></span>
+        </div>
+        {/* last name field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input id="lName" name="lName" class={inputClasses} placeholder="Last Name" required />
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h1
+          class="
+            mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+            text-3xl text-brand-dark-purple lowercase italic
+          "
+        >
+          Contact Information
+        </h1>
+        {/* email address field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input
+              id="email"
+              name="email"
+              class={inputClasses}
+              placeholder="Email Address"
+              type="email"
+              required
+            />
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+        {/* country dropdown field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <select
+              id="country-select"
+              name="country"
+              class:list={[
+                inputClasses,
+                `
+                  appearance-none
+                  bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
+                  bg-size-[1.5em_1.5em] bg-position-[right_1rem_center]
+                  bg-no-repeat
+                `
+              ]}
+              required
+            >
+              <option value="" disabled selected>Select Country</option>
+              {countries.map((country) => <option value={country}>{country}</option>)}
+            </select>
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+
+        {/* address fields - hidden by default, shown when country selected */}
+        <div id="address-fields" class="
+          fade-in slide-in-from-top-4 hidden space-y-4 pt-2
+        ">
+          {/* address line 1 field */}
+          <div class="flex items-center">
+            <div class="flex-1">
+              <input
+                id="addressOne"
+                class={inputClasses}
+                placeholder="Address Line 1"
+                name="addressOne"
+                required
+              />
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+          {/* address line 2 field */}
+          <div class="flex items-center">
+            <div class="flex-1">
+              <input
+                id="addressTwo"
+                class={inputClasses}
+                placeholder="Address Line 2"
+                name="addressTwo"
+              />
+            </div>
+            <span class="ml-2 w-4 shrink-0"></span>
+          </div>
+          {/* city field */}
+          <div class="flex items-center">
+            <div class="flex-1">
+              <input id="city" class={inputClasses} placeholder="City" name="city" required />
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+          {/* state field */}
+          <div class="flex items-center">
+            <div class="flex-1">
+              <input
+                id="stateLocation"
+                class={inputClasses}
+                placeholder="State"
+                name="stateLocation"
+                required
+              />
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+          {/* zipcode field */}
+          <div class="flex items-center">
+            <div class="flex-1">
+              <input
+                id="zipcode"
+                class={inputClasses}
+                placeholder="Zip Code"
+                name="zipcode"
+                required
+              />
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+          {/* phone number field */}
+          <div class="flex items-center">
+            <div class="flex-1">
+              <input id="phone" class={inputClasses} placeholder="Phone Number" name="phone" />
+            </div>
+            <span class="ml-2 w-4 shrink-0"></span>
+          </div>
+        </div>
+      </section>
+
+      {/* Membership specific sections */}
+      <div id="membership-sections" class="fade-in space-y-8 pt-8">
+        <section class="space-y-4">
+          <h1
+            class="
+              mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+              text-3xl text-brand-dark-purple lowercase italic
+            "
+          >
+            Additional Information
+          </h1>
+          {/* new member dropdown */}
+          <div class="flex items-center">
+            <div class="flex-1">
+              <select
+                id="isNewMember"
+                name="isNewMember"
+                class:list={[
+                  inputClasses,
+                  `
+                    appearance-none
+                    bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
+                    bg-size-[1.5em_1.5em] bg-position-[right_1rem_center]
+                    bg-no-repeat
+                  `
+                ]}
+              >
+                <option value="" disabled selected>New or Renewing Member?</option>
+                <option value="new">New</option>
+                <option value="renew">Renewing</option>
+              </select>
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+          {/* past organizations field */}
+          <div class="flex items-start">
+            <div class="flex-1">
+              <textarea
+                id="affiliatedOrgs"
+                class:list={[inputClasses, 'h-32 resize-none py-2']}
+                placeholder="List any organizations you’re involved with"
+                name="affiliatedOrgs"
+                rows="3"></textarea>
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+        </section>
+
+        <section class="space-y-4">
+          <h1
+            class="
+              mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+              text-3xl text-brand-dark-purple lowercase italic
+            "
+          >
+            Payment Options
+          </h1>
+          <div class="flex items-center">
+            <div class="flex-1">
+              <select
+                name="membershipType"
+                id="membership-select"
+                class:list={[
+                  inputClasses,
+                  `
+                    appearance-none
+                    bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
+                    bg-size-[1.5em_1.5em] bg-position-[right_1rem_center]
+                    bg-no-repeat
+                  `
+                ]}
+              >
+                <option value="" disabled selected>Select Membership</option>
+                {
+                  memberships.map((m: any, idx: number) => (
+                    <option value={idx} data-title={m.title} data-cost={m.cost}>
+                      {m.title} ${m.cost} USD
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+          {/* checkbox to add a donation */}
+          <div
+            class="
+              mt-8! flex items-center space-x-3 rounded-xl border
+              border-brand-orange/10 bg-brand-orange/5 p-5
+            "
+          >
+            <input
+              type="checkbox"
+              id="donateCheck"
+              class="
+                peer size-4 shrink-0 rounded-sm border border-black
+                accent-brand-orange shadow-sm
+              "
+            />
+            <label for="donateCheck" class="
+              cursor-pointer text-lg/tight font-bold text-black
+            ">
+              I would like to donate in addition to membership fees
+            </label>
+          </div>
+
+          {/* displays donation field if donate checkbox is checked */}
+          <div id="donation-field" class="relative mt-4! hidden items-center">
+            <div class="relative w-full">
+              <span
+                class="
+                  absolute top-1/2 left-4 z-10 -translate-y-1/2 text-lg
+                  font-bold text-black
+                "
+              >
+                $
+              </span>
+              <input
+                id="totalPaid"
+                class:list={[inputClasses, 'pl-10']}
+                placeholder="Insert Donation Amount"
+                name="totalPaid"
+                type="number"
+                step="0.01"
+              />
+            </div>
+            <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+          </div>
+        </section>
+
+        <div class="flex flex-col items-center space-y-6 pt-12">
+          <div id="payment-button-container" class="hidden">
+            <CustomButton
+              className="h-16 w-auto rounded-full px-16 text-2xl"
+              text="Continue to Payment"
+              id="continue-to-payment"
+            />
+          </div>
+          <div
+            id="payment-requirement-notice"
+            class="
+              rounded-lg border border-brand-red/20 bg-brand-red/5 p-4
+              text-center
+            "
+          >
+            <p class="animate-pulse text-lg font-bold text-brand-red">
+              *Please fill out all required fields to proceed to payment.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Email List Only submit button */}
+      <div id="email-only-submit" class="hidden space-y-10 pt-16">
+        <p class="text-center font-body text-lg text-gray-500 italic">
+          <span class="font-bold text-brand-red"> * </span> indicates a required field
+        </p>
+        <div class="flex justify-center pb-12">
+          <CustomButton
+            className="h-16 w-auto rounded-full px-16 text-2xl"
+            text="Submit"
+            id="submit-email-only"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  {/* PayPal Modal */}
+  <div
+    id="paypal-modal"
+    class="
+      fixed inset-0 z-1001 hidden items-center justify-center bg-black/80 p-4
+    "
+  >
+    <div
+      class="
+        fade-in zoom-in-95 w-full max-w-xl rounded-lg border-2
+        border-brand-orange bg-white p-8 shadow-lg
+      "
+    >
+      <h1 class="
+        mb-8 text-center font-heading text-2xl font-bold text-brand-dark-purple
+        lowercase
+      ">
+        Choose Your Payment Method
+      </h1>
+      <div id="paypal-button-container" class="py-8"></div>
+      <div class="flex justify-center">
+        <CustomButton text="Return to Form" id="close-paypal-modal" />
+      </div>
+    </div>
+  </div>
+
+  {/* Thank You Modal */}
+  <div
+    id="thank-you-modal"
+    class="
+      fixed inset-0 z-1001 hidden items-center justify-center bg-black/80 p-4
+    "
+  >
+    <div
+      class="
+        fade-in zoom-in-95 w-full max-w-md rounded-lg border-2
+        border-brand-orange bg-white p-8 shadow-lg
+      "
+    >
+      <p class="px-4 pt-4 text-center font-body text-2xl text-black" id="thank-you-message"></p>
+      <div class="mt-6 mb-4 flex justify-center">
+        <button
+          id="close-thank-you"
+          class="
+            h-10 min-w-32 rounded-full border-[1.2px] border-black
+            bg-transparent font-body text-lg font-bold text-black
+            hover:bg-gray-100
+          "
+        >
+          Ok
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Snackbar for errors */}
+  <div
+    id="error-snackbar"
+    class="
+      fixed bottom-5 left-5 z-50 hidden min-w-80 items-center justify-between
+      rounded-lg bg-brand-red px-6 py-3 text-white shadow-lg
+    "
+  >
+    <span id="error-message"></span>
+    <button id="close-snackbar" class="ml-4 font-bold text-white">X</button>
+  </div>
+</div>
+
+<script>
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  import { loadScript } from '@paypal/paypal-js'
+
+  import { PAYPAL_CONFIG, CONTACT_INFO } from '../SiteMetadata'
+
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector('#join-us-form-root') as HTMLElement
+    if (!root) return
+
+    const memberships = JSON.parse(root.dataset.memberships || '[]')
+    const form = root.querySelector('#join-us-form') as HTMLFormElement
+    const membershipCheck = root.querySelector('#membershipCheck') as HTMLInputElement
+    const countrySelect = root.querySelector('#country-select') as HTMLSelectElement
+    const addressFields = root.querySelector('#address-fields') as HTMLElement
+    const membershipSections = root.querySelector('#membership-sections') as HTMLElement
+    const emailOnlySubmit = root.querySelector('#email-only-submit') as HTMLElement
+    const donateCheck = root.querySelector('#donateCheck') as HTMLInputElement
+    const donationField = root.querySelector('#donation-field') as HTMLElement
+    const paymentButtonContainer = root.querySelector('#payment-button-container') as HTMLElement
+    const paymentNotice = root.querySelector('#payment-requirement-notice') as HTMLElement
+    const continueBtn = root.querySelector('#continue-to-payment') as HTMLElement
+    const submitEmailBtn = root.querySelector('#submit-email-only') as HTMLElement
+    const paypalModal = root.querySelector('#paypal-modal') as HTMLElement
+    const thankYouModal = root.querySelector('#thank-you-modal') as HTMLElement
+    const closePaypalBtn = root.querySelector('#close-paypal-modal') as HTMLElement
+    const closeThankYouBtn = root.querySelector('#close-thank-you') as HTMLElement
+    const snackbar = root.querySelector('#error-snackbar') as HTMLElement
+    const errorMessage = root.querySelector('#error-message') as HTMLElement
+    const closeSnackbar = root.querySelector('#close-snackbar') as HTMLElement
+
+    function toggleSection(el: HTMLElement, show: boolean) {
+      el.classList.toggle('hidden', !show)
+    }
+
+    // Toggle Membership sections
+    membershipCheck.addEventListener('change', () => {
+      if (membershipCheck.checked) {
+        toggleSection(membershipSections, false)
+        toggleSection(emailOnlySubmit, true)
+      } else {
+        toggleSection(membershipSections, true)
+        toggleSection(emailOnlySubmit, false)
+      }
+      checkPaymentReady()
+    })
+
+    // Toggle Address fields
+    countrySelect.addEventListener('change', () => {
+      toggleSection(addressFields, !!countrySelect.value)
+      checkPaymentReady()
+    })
+
+    // Toggle Donation field
+    donateCheck.addEventListener('change', () => {
+      if (donateCheck.checked) {
+        toggleSection(donationField, true)
+      } else {
+        toggleSection(donationField, false)
+        ;(form.querySelector('[name="totalPaid"]') as HTMLInputElement).value = ''
+      }
+      checkPaymentReady()
+    })
+
+    // Check if form is ready for payment
+    function checkPaymentReady() {
+      const isEmailOnly = membershipCheck.checked
+
+      let ready = true
+      const required = ['fName', 'lName', 'email', 'country']
+      if (countrySelect.value) {
+        required.push('addressOne', 'city', 'stateLocation', 'zipcode')
+      }
+
+      for (const name of required) {
+        const el = form.querySelector(`[name="${name}"]`) as HTMLInputElement
+        if (!el || !el.value) ready = false
+      }
+
+      if (!isEmailOnly) {
+        if (!(form.querySelector('[name="isNewMember"]') as HTMLSelectElement).value) ready = false
+        if (!(form.querySelector('[name="affiliatedOrgs"]') as HTMLTextAreaElement).value)
+          ready = false
+        if ((form.querySelector('#membership-select') as HTMLSelectElement).value === '')
+          ready = false
+        if (
+          donateCheck.checked &&
+          !(form.querySelector('[name="totalPaid"]') as HTMLInputElement).value
+        )
+          ready = false
+      }
+
+      if (ready && !isEmailOnly) {
+        paymentButtonContainer.classList.remove('hidden')
+        paymentNotice.classList.add('hidden')
+      } else {
+        paymentButtonContainer.classList.add('hidden')
+        paymentNotice.classList.remove('hidden')
+      }
+    }
+
+    form.addEventListener('input', checkPaymentReady)
+    form.addEventListener('change', checkPaymentReady)
+
+    // Snackbar
+    function showSnackBar(msg: string) {
+      errorMessage.textContent = msg
+      toggleSection(snackbar, true)
+      setTimeout(() => hideSnackBar(), 5000)
+    }
+
+    function hideSnackBar() {
+      toggleSection(snackbar, false)
+    }
+
+    closeSnackbar.addEventListener('click', hideSnackBar)
+
+    let isSubmitting = false
+
+    async function handleEmailOnlySubmit(e: Event) {
+      e.preventDefault()
+      if (isSubmitting) return
+
+      const formData = new FormData(form)
+      const data = Object.fromEntries(formData)
+
+      // Basic validation
+      const required = [
+        'fName',
+        'lName',
+        'email',
+        'country',
+        'addressOne',
+        'city',
+        'stateLocation',
+        'zipcode'
+      ]
+      let hasError = false
+
+      form
+        .querySelectorAll('input, select, textarea')
+        .forEach((el) => el.classList.remove('border-brand-red'))
+
+      for (const name of required) {
+        const el = form.querySelector(`[name="${name}"]`) as HTMLElement
+        if (!data[name]) {
+          hasError = true
+          el?.classList.add('border-brand-red')
+        }
+      }
+
+      if (hasError) {
+        showSnackBar('Missing required fields')
+        return
+      }
+
+      isSubmitting = true
+      document.body.style.cursor = 'wait'
+
+      const addressOpt = data.addressTwo ? `${data.addressTwo} ` : ''
+      const givenAddress = `${data.addressOne} ${addressOpt}${data.city} ${data.stateLocation} ${data.country} ${data.zipcode}`
+
+      try {
+        const submissionData = new URLSearchParams()
+        submissionData.append('form-name', 'membership')
+        submissionData.append('fName', data.fName as string)
+        submissionData.append('mName', data.mName as string)
+        submissionData.append('lName', data.lName as string)
+        submissionData.append('phone', data.phone as string)
+        submissionData.append('email', data.email as string)
+        submissionData.append('address', givenAddress)
+
+        await fetch('/__forms.html', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: submissionData.toString()
+        })
+        showThankYou('Thank you for your support! We will get in touch with you shortly.')
+        form.reset()
+        membershipCheck.checked = false
+        membershipCheck.dispatchEvent(new Event('change'))
+      } catch (error: any) {
+        showSnackBar(error.toString())
+      } finally {
+        isSubmitting = false
+        document.body.style.cursor = 'default'
+      }
+    }
+
+    if (submitEmailBtn) submitEmailBtn.addEventListener('click', handleEmailOnlySubmit)
+
+    // Modals
+    function showThankYou(msg: string) {
+      const thankYouMessage = thankYouModal.querySelector('#thank-you-message')
+      if (thankYouMessage) thankYouMessage.textContent = msg
+      toggleSection(thankYouModal, true)
+    }
+
+    closeThankYouBtn.addEventListener('click', () => {
+      toggleSection(thankYouModal, false)
+    })
+
+    closePaypalBtn.addEventListener('click', () => {
+      toggleSection(paypalModal, false)
+    })
+
+    // PayPal
+    async function openPayPalModal() {
+      const data = Object.fromEntries(new FormData(form))
+      const membershipIdx = Number.parseInt(data.membershipType as string)
+      const selectedMembership = memberships[membershipIdx]
+
+      toggleSection(paypalModal, true)
+
+      const container = root.querySelector('#paypal-button-container')
+      if (container) container.innerHTML = ''
+
+      try {
+        const paypal = await loadScript({
+          clientId: PAYPAL_CONFIG.CLIENT_ID,
+          currency: PAYPAL_CONFIG.CURRENCY
+        })
+
+        const membershipCost = Number.parseFloat(selectedMembership.cost)
+        const donationAmount = Number.parseFloat((data.totalPaid as string) || '0') || 0
+        const tax = membershipCost * PAYPAL_CONFIG.TAX_RATE
+        const total = membershipCost + donationAmount + tax
+
+        const items: any[] = []
+        if (membershipCost > 0) {
+          items.push({
+            name: selectedMembership.title,
+            unit_amount: { currency_code: 'USD', value: selectedMembership.cost },
+            tax: { currency_code: 'USD', value: tax.toFixed(2) },
+            quantity: 1
+          })
+        }
+        if (donationAmount > 0) {
+          items.push({
+            name: 'Donation',
+            unit_amount: { currency_code: 'USD', value: donationAmount.toFixed(2) },
+            tax: { currency_code: 'USD', value: '0.00' },
+            quantity: 1
+          })
+        }
+
+        if (paypal && paypal.Buttons) {
+          paypal
+            .Buttons({
+              createOrder: (_data: any, actions: any) => {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        currency_code: 'USD',
+                        value: total.toFixed(2),
+                        breakdown: {
+                          item_total: {
+                            currency_code: 'USD',
+                            value: (membershipCost + donationAmount).toFixed(2)
+                          },
+                          tax_total: { currency_code: 'USD', value: tax.toFixed(2) }
+                        }
+                      },
+                      items: items
+                    }
+                  ]
+                })
+              },
+              onApprove: async (_data: any, actions: any) => {
+                document.body.style.cursor = 'wait'
+                try {
+                  const details = await actions.order.capture()
+                  document.body.style.cursor = 'default'
+
+                  const formValues = Object.fromEntries(new FormData(form))
+                  const addressOpt = formValues.addressTwo ? `${formValues.addressTwo} ` : ''
+                  const givenAddress = `${formValues.addressOne} ${addressOpt}${formValues.city} ${formValues.stateLocation} ${formValues.country} ${formValues.zipcode}`
+
+                  const submissionData = new URLSearchParams()
+                  submissionData.append('form-name', 'paidmembership')
+                  submissionData.append(
+                    'fName',
+                    (formValues.fName || details.payer.name.given_name) as string
+                  )
+                  submissionData.append(
+                    'lName',
+                    (formValues.lName || details.payer.name.surname) as string
+                  )
+                  submissionData.append(
+                    'email',
+                    (formValues.email || details.payer.email_address) as string
+                  )
+                  submissionData.append('phone', formValues.phone as string)
+                  submissionData.append('mName', formValues.mName as string)
+                  submissionData.append('address', givenAddress)
+                  submissionData.append(
+                    'isNewMember',
+                    (formValues.isNewMember === 'new').toString()
+                  )
+                  submissionData.append('affiliatedOrgs', formValues.affiliatedOrgs as string)
+                  submissionData.append('membershipType', selectedMembership.title)
+                  submissionData.append('totalPaid', details.purchase_units[0].amount.value)
+                  submissionData.append(
+                    'payPalTransactionId',
+                    details.purchase_units[0].payments.captures[0].id
+                  )
+
+                  await fetch('/__forms.html', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: submissionData.toString()
+                  })
+
+                  toggleSection(paypalModal, false)
+                  showThankYou('Thank you for your support! We will get in touch with you shortly.')
+                  form.reset()
+                  membershipCheck.checked = false
+                  membershipCheck.dispatchEvent(new Event('change'))
+                } catch (error: any) {
+                  document.body.style.cursor = 'default'
+                  // Check for INSTRUMENT_DECLINED to allow buyer to select another funding source
+                  if (error.details?.[0]?.issue === 'INSTRUMENT_DECLINED') {
+                    return actions.restart()
+                  }
+                  console.error('Capture error:', error)
+                  alert(
+                    `Transaction completed but it wasn't sent to us. Please email us at ${CONTACT_INFO.SERVICE_EMAIL} with the receipt. Error: ${error}`
+                  )
+                }
+              },
+              onCancel: () => {
+                document.body.style.cursor = 'default'
+              },
+              onError: (err: any) => {
+                console.error(err)
+                alert(
+                  'An unexpected error occurred - your payment did not go through. Please try again later.'
+                )
+              }
+            })
+            .render('#paypal-button-container')
+        }
+      } catch (error) {
+        console.error(error)
+        showSnackBar('Failed to load payment system')
+      }
+    }
+
+    if (continueBtn) {
+      continueBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        openPayPalModal()
+      })
+    }
+  })
+</script>
+
+<style>
+  .hidden {
+    display: none !important;
+  }
+
+  #paypal-modal:not(.hidden),
+  #thank-you-modal:not(.hidden),
+  #error-snackbar:not(.hidden) {
+    display: flex !important;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .zoom-in-95 {
+    transform: scale(0.95);
+  }
+  .slide-in-from-top-4 {
+    transform: translateY(-1rem);
+    animation: slideInFromTop 0.5s ease-out forwards;
+  }
+  @keyframes slideInFromTop {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>

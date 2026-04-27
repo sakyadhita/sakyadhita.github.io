@@ -1,9 +1,11 @@
 # Plan: Simplify and Enforce Native Astro Image Optimization
 
 ## Objective
+
 Ensure all images are displayed optimized using Astro's native `<Image />` component. Now that the `ImageMetadata` type is widely used across all content collections, we can eliminate raw `<img>` tags and manual `src` extractions in favor of `<Image />`, which automatically handles format conversion, `srcset`, and lazy loading.
 
 ## Key Files & Context
+
 - Components needing `<Image />` replacement:
   - `src/components/Conference/ConferenceDesktop.astro`
   - `src/components/Conference/MobileConference.astro`
@@ -24,11 +26,13 @@ Ensure all images are displayed optimized using Astro's native `<Image />` compo
    - In `ConferenceDesktop.astro` and `MobileConference.astro`, import `Image` from `astro:assets`.
    - Update the `<img class="size-full object-cover"...>` logic to use conditional rendering:
      ```astro
-     {typeof image === 'string' ? (
-       <img class="size-full object-cover" alt="Event Visual" src={image} />
-     ) : (
-       <Image class="size-full object-cover" alt="Event Visual" src={image} />
-     )}
+     {
+       typeof image === 'string' ? (
+         <img class="size-full object-cover" alt="Event Visual" src={image} />
+       ) : (
+         <Image class="size-full object-cover" alt="Event Visual" src={image} />
+       )
+     }
      ```
 2. **Update Cards & NewsFlash:**
    - In `EPubCard.astro`, replace `<img>` with `<Image>` for the `image.src` rendering.
@@ -44,6 +48,7 @@ Ensure all images are displayed optimized using Astro's native `<Image />` compo
    - Check `src/layouts/ContactUs.astro` to ensure it passes the `frontmatter.image` cleanly to `ResourcesHeader` without redundant manual calls to `getOptimizedImage`, simplifying `images.ts` usage.
 
 ## Verification & Testing
+
 - Run `pnpm astro check` to ensure correct prop typings on `<Image>` components.
 - Run `pnpm build` to verify images bundle without errors.
 - Visually inspect components in `pnpm preview` or `pnpm dev` to ensure `srcset` and webp optimizations are active.

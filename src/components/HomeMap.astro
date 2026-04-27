@@ -1,4 +1,6 @@
 ---
+import { getCollection, render } from 'astro:content'
+
 /**
  * Displays Interactive World Map, containing custom color-coded markers on certain coordinates with custom information
  * upon hover/click.
@@ -6,22 +8,29 @@
  * @summary Displays Interactive World Map.
  */
 
-interface MarkerData {
-  name: string
-  latitude: number
-  longitude: number
-  isBranch: boolean
-  siteLink?: string
-  email?: string
-  html?: string
-}
-
 interface Props {
-  markers: MarkerData[]
   disableZooming?: boolean
 }
 
-const { markers, disableZooming = false } = Astro.props
+const { disableZooming = false } = Astro.props
+
+const branchesRaw = await getCollection('branch')
+const branches = await Promise.all(
+  branchesRaw.map(async (b) => {
+    const { Content } = await render(b)
+    return { ...b, Content }
+  })
+)
+
+const markers = branches.map((m) => ({
+  id: m.id,
+  name: m.data.name,
+  latitude: m.data.latitude,
+  longitude: m.data.longitude,
+  isBranch: m.data.isBranch,
+  siteLink: m.data.siteLink,
+  email: m.data.email
+}))
 ---
 
 <div
@@ -32,20 +41,42 @@ const { markers, disableZooming = false } = Astro.props
 >
   <div
     id="map-tooltip"
-    class="pointer-events-none absolute z-50 hidden max-w-xs translate-x-4 rounded-md border border-brand-grey/20 bg-white p-3 text-black shadow-lg fade-in animate-in"
+    class="
+      fade-in pointer-events-none absolute z-50 hidden max-w-xs translate-x-4
+      animate-in rounded-md border border-brand-grey/20 bg-white p-3 text-black
+      shadow-lg
+    "
   >
   </div>
+
+  {
+    branches.map((b) => (
+      <template id={`marker-html-${b.id}`}>
+        <b.Content />
+      </template>
+    ))
+  }
 </div>
 
 <script>
   import * as d3 from 'd3'
   import * as topojson from 'topojson-client'
 
+  interface Marker {
+    id: string
+    name: string
+    latitude: number
+    longitude: number
+    isBranch: boolean
+    siteLink?: string
+    email?: string
+  }
+
   function initMap() {
     const container = document.querySelector('#home-map-container') as HTMLElement
     if (!container) return
 
-    const markers = JSON.parse(container.dataset.markers || '[]')
+    const markers: Marker[] = JSON.parse(container.dataset.markers || '[]')
     const disableZooming = container.dataset.disableZooming === 'true'
     const tooltip = document.querySelector('#map-tooltip') as HTMLElement
 
@@ -80,7 +111,7 @@ const { markers, disableZooming = false } = Astro.props
     g.append('path')
       .datum(graticule)
       .attr('class', 'graticule')
-      .attr('d', (d: any) => path(d))
+      .attr('d', (d) => path(d as d3.GeoPermissibleObjects))
       .attr('fill', 'none')
       .attr('stroke', '#EAEAEC')
       .attr('stroke-width', 0.5)
@@ -89,7 +120,10 @@ const { markers, disableZooming = false } = Astro.props
     fetch(geoUrl)
       .then((res) => res.json())
       .then((topology) => {
-        const countries = topojson.feature(topology, topology.objects.countries) as any
+        const countries = topojson.feature(
+          topology,
+          topology.objects.countries
+        ) as unknown as GeoJSON.FeatureCollection
 
         g.append('g')
           .attr('class', 'countries')
@@ -97,7 +131,7 @@ const { markers, disableZooming = false } = Astro.props
           .data(countries.features)
           .enter()
           .append('path')
-          .attr('d', (d: any) => path(d))
+          .attr('d', (d) => path(d as d3.GeoPermissibleObjects))
           .attr('fill', '#BBDBF0')
           .attr('stroke', '#FFFFFF')
           .attr('stroke-width', 0.5)
@@ -106,7 +140,7 @@ const { markers, disableZooming = false } = Astro.props
         // Render Markers
         const markerGroup = g.append('g').attr('class', 'markers')
 
-        markers.forEach((marker: any) => {
+        markers.forEach((marker) => {
           const coords = projection([marker.longitude, marker.latitude])
           if (!coords) return
 
@@ -148,7 +182,7 @@ const { markers, disableZooming = false } = Astro.props
 
     // Zoom and Pan
     const zoom = d3
-      .zoom()
+      .zoom<SVGSVGElement, unknown>()
       .scaleExtent([1, 8])
       .translateExtent([
         [-100, -100],
@@ -162,13 +196,17 @@ const { markers, disableZooming = false } = Astro.props
       })
 
     if (!disableZooming) {
-      svg.call(zoom as any)
+      svg.call(zoom)
     }
 
     // Tooltip functions
-    function showTooltip(event: any, marker: any) {
+    function showTooltip(event: MouseEvent | FocusEvent, marker: Marker) {
       if (!tooltip) return
       tooltip.classList.remove('hidden')
+
+      const template = document.querySelector(`#marker-html-${marker.id}`) as HTMLTemplateElement
+      const htmlContent = template?.innerHTML || ''
+
       tooltip.innerHTML = `
         <div class="flex flex-col gap-1">
           ${
@@ -178,8 +216,8 @@ const { markers, disableZooming = false } = Astro.props
           }
           ${marker.email ? `<div class="text-sm text-brand-dark-grey">${marker.email}</div>` : ''}
           ${
-            marker.html
-              ? `<div class="prose prose-sm mt-2 max-w-none leading-tight italic text-brand-dark-grey">${marker.html}</div>`
+            htmlContent
+              ? `<div class="prose prose-sm mt-2 max-w-none leading-tight italic text-brand-dark-grey">${htmlContent}</div>`
               : ''
           }
         </div>
@@ -187,11 +225,14 @@ const { markers, disableZooming = false } = Astro.props
       moveTooltip(event)
     }
 
-    function moveTooltip(event: any) {
+    function moveTooltip(event: MouseEvent | FocusEvent) {
       if (!tooltip || !container) return
       const containerRect = container.getBoundingClientRect()
-      const x = event.clientX - containerRect.left
-      const y = event.clientY - containerRect.top
+      const clientX = 'clientX' in event ? event.clientX : 0
+      const clientY = 'clientY' in event ? event.clientY : 0
+
+      const x = clientX - containerRect.left
+      const y = clientY - containerRect.top
 
       tooltip.style.left = `${x}px`
       tooltip.style.top = `${y}px`

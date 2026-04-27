@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 @theme {
   --color-brand-light-purple: #8477b9;
@@ -37,8 +37,8 @@
   --animate-slide-in-from-top: slide-in-from-top 0.2s ease-out;
   --animate-slide-in-from-bottom: slide-in-from-bottom 0.2s ease-out;
 
-  --font-heading: "Libre Baskerville", serif;
-  --font-body: "Nunito", sans-serif;
+  --font-heading: 'Libre Baskerville', serif;
+  --font-body: 'Nunito', sans-serif;
 }
 
 @utility no-scrollbar {
@@ -54,7 +54,7 @@
   position: relative;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     transform: scaleX(0);
@@ -95,5 +95,5 @@ h6 {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

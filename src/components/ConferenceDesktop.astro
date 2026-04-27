@@ -1,16 +1,15 @@
 ---
 import { YouTube } from '@astro-community/astro-embed-youtube'
 import { Image } from 'astro:assets'
+import { render, type CollectionEntry } from 'astro:content'
 
 import ConferenceOverview from './ConferenceOverview.astro'
 import ConferenceTheme from './ConferenceTheme.astro'
 import VerticalStepper from './ConferenceVerticalStepper.astro'
 import Slideshow from './Slideshow.astro'
 
-import type { ConferenceEntry } from '../lib'
-
 interface Props {
-  data: ConferenceEntry[]
+  data: CollectionEntry<'conference'>[]
   id?: string
 }
 
@@ -44,155 +43,161 @@ const index = initialIndex === -1 ? 0 : initialIndex
       <div class="fade-in slide-in-from-bottom-4 animate-in duration-500">
         <div id="conference-content-container">
           {
-            data.map((item, idx) => (
-              <div
-                class={`
-                  conference-item
-                  ${idx === index ? 'block' : 'hidden'}
-                `}
-                data-item-index={idx}
-              >
+            data.map(async (item, idx) => {
+              const { Content } = await render(item)
+              const optimizedImages = item.data.slideShowImages || null
+
+              return (
                 <div
-                  class="
+                  class={`
+                    conference-item
+                    ${idx === index ? 'block' : 'hidden'}
+                  `}
+                  data-item-index={idx}
+                >
+                  <div class="
                     tabs-container mb-8 flex w-fit space-x-1 rounded-xl
                     bg-gray-100 p-1 font-body
-                  "
-                >
-                  <button
-                    class="
-                      tab-btn theme-tab rounded-lg bg-white px-6 py-2 font-bold
-                      text-brand-dark-purple shadow-sm transition-all
-                    "
-                    data-type="theme"
-                  >
-                    Theme
-                  </button>
-                  <button
-                    class="
-                      tab-btn overview-tab rounded-lg px-6 py-2 font-bold
-                      text-gray-500 transition-all
-                      hover:text-gray-700
-                    "
-                    data-type="overview"
-                  >
-                    Overview
-                  </button>
-                </div>
-
-                <div class="tab-content theme-content">
-                  <ConferenceTheme
-                    title={item.data.title}
-                    location={item.data.location}
-                    redirect={item.data.signupLink}
-                    theme={item.data.htmlBody}
-                    signup={item.data.signupLink}
-                  >
-                    <div
-                      slot="slideshow"
+                  ">
+                    <button
                       class="
-                        h-112 overflow-hidden rounded-3xl border border-gray-100
-                        bg-gray-50 shadow-2xl
+                        tab-btn theme-tab rounded-lg bg-white px-6 py-2
+                        font-bold text-brand-dark-purple shadow-sm
+                        transition-all
                       "
+                      data-type="theme"
                     >
-                      {item.data.optimizedImages?.length === 1 ? (
-                        typeof item.data.optimizedImages[0] === 'string' ? (
-                          <img
-                            class="size-full object-cover"
-                            alt="Event Visual"
-                            src={item.data.optimizedImages[0]}
-                          />
-                        ) : (
-                          <Image
-                            class="size-full object-cover"
-                            alt="Event Visual"
-                            src={item.data.optimizedImages[0]}
-                            width={1200}
-                            height={800}
-                          />
-                        )
-                      ) : (
-                        <Slideshow height="100%" width="100%">
-                          {item.data.optimizedImages?.map((image) => (
-                            <div class="embla__slide size-full">
-                              {typeof image === 'string' ? (
-                                <img
-                                  class="size-full object-cover"
-                                  alt="Event Visual"
-                                  src={image}
-                                />
-                              ) : (
-                                <Image
-                                  class="size-full object-cover"
-                                  alt="Event Visual"
-                                  src={image}
-                                  width={1200}
-                                  height={800}
-                                />
-                              )}
-                            </div>
-                          ))}
-                        </Slideshow>
-                      )}
-                    </div>
-                  </ConferenceTheme>
-                </div>
-
-                <div class="tab-content overview-content hidden">
-                  <ConferenceOverview info={item} title={item.data.title}>
-                    <div
-                      slot="slideshow"
+                      Theme
+                    </button>
+                    <button
                       class="
-                        h-112 overflow-hidden rounded-3xl border border-gray-100
-                        bg-gray-50 shadow-2xl
+                        tab-btn overview-tab rounded-lg px-6 py-2 font-bold
+                        text-gray-500 transition-all
+                        hover:text-gray-700
                       "
+                      data-type="overview"
                     >
-                      {/* Same slideshow as theme for now or video if it exists */}
-                      {item.data.video ? (
-                        <YouTube id={item.data.video} class="size-full bg-black" />
-                      ) : item.data.optimizedImages?.length === 1 ? (
-                        typeof item.data.optimizedImages[0] === 'string' ? (
-                          <img
-                            class="size-full object-cover"
-                            alt="Event Visual"
-                            src={item.data.optimizedImages[0]}
-                          />
+                      Overview
+                    </button>
+                  </div>
+
+                  <div class="tab-content theme-content">
+                    <ConferenceTheme
+                      title={item.data.title}
+                      location={item.data.location}
+                      redirect={item.data.signupLink}
+                      signup={item.data.signupLink}
+                    >
+                      <Content />
+                      <div
+                        slot="slideshow"
+                        class="
+                          h-112 overflow-hidden rounded-3xl border
+                          border-gray-100 bg-gray-50 shadow-2xl
+                        "
+                      >
+                        {optimizedImages?.length === 1 ? (
+                          typeof optimizedImages[0] === 'string' ? (
+                            <img
+                              class="size-full object-cover"
+                              alt="Event Visual"
+                              src={optimizedImages[0]}
+                            />
+                          ) : (
+                            <Image
+                              class="size-full object-cover"
+                              alt="Event Visual"
+                              src={optimizedImages[0]}
+                              width={1200}
+                              height={800}
+                            />
+                          )
                         ) : (
-                          <Image
-                            class="size-full object-cover"
-                            alt="Event Visual"
-                            src={item.data.optimizedImages[0]}
-                            width={1200}
-                            height={800}
-                          />
-                        )
-                      ) : (
-                        <Slideshow height="100%" width="100%">
-                          {item.data.optimizedImages?.map((image) => (
-                            <div class="embla__slide size-full">
-                              {typeof image === 'string' ? (
-                                <img
-                                  class="size-full object-cover"
-                                  alt="Event Visual"
-                                  src={image}
-                                />
-                              ) : (
-                                <Image
-                                  class="size-full object-cover"
-                                  alt="Event Visual"
-                                  src={image}
-                                  width={1200}
-                                  height={800}
-                                />
-                              )}
-                            </div>
-                          ))}
-                        </Slideshow>
-                      )}
-                    </div>
-                  </ConferenceOverview>
+                          <Slideshow height="100%" width="100%">
+                            {optimizedImages?.map((image) => (
+                              <div class="embla__slide size-full">
+                                {typeof image === 'string' ? (
+                                  <img
+                                    class="size-full object-cover"
+                                    alt="Event Visual"
+                                    src={image}
+                                  />
+                                ) : (
+                                  <Image
+                                    class="size-full object-cover"
+                                    alt="Event Visual"
+                                    src={image}
+                                    width={1200}
+                                    height={800}
+                                  />
+                                )}
+                              </div>
+                            ))}
+                          </Slideshow>
+                        )}
+                      </div>
+                    </ConferenceTheme>
+                  </div>
+
+                  <div class="tab-content overview-content hidden">
+                    <ConferenceOverview info={item} title={item.data.title}>
+                      <div
+                        slot="slideshow"
+                        class="
+                          h-112 overflow-hidden rounded-3xl border
+                          border-gray-100 bg-gray-50 shadow-2xl
+                        "
+                      >
+                        {/* Same slideshow as theme for now or video if it exists */}
+                        {item.data.video ? (
+                          <YouTube id={item.data.video} class="
+                            size-full bg-black
+                          " />
+                        ) : optimizedImages?.length === 1 ? (
+                          typeof optimizedImages[0] === 'string' ? (
+                            <img
+                              class="size-full object-cover"
+                              alt="Event Visual"
+                              src={optimizedImages[0]}
+                            />
+                          ) : (
+                            <Image
+                              class="size-full object-cover"
+                              alt="Event Visual"
+                              src={optimizedImages[0]}
+                              width={1200}
+                              height={800}
+                            />
+                          )
+                        ) : (
+                          <Slideshow height="100%" width="100%">
+                            {optimizedImages?.map((image) => (
+                              <div class="embla__slide size-full">
+                                {typeof image === 'string' ? (
+                                  <img
+                                    class="size-full object-cover"
+                                    alt="Event Visual"
+                                    src={image}
+                                  />
+                                ) : (
+                                  <Image
+                                    class="size-full object-cover"
+                                    alt="Event Visual"
+                                    src={image}
+                                    width={1200}
+                                    height={800}
+                                  />
+                                )}
+                              </div>
+                            ))}
+                          </Slideshow>
+                        )}
+                      </div>
+                    </ConferenceOverview>
+                  </div>
                 </div>
-              </div>
-            ))
+              )
+            })
           }
         </div>
       </div>

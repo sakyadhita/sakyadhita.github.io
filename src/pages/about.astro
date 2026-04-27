@@ -18,8 +18,8 @@ const committees = await Promise.all(
 
 // Group committees by year range
 const yearRanges = [...new Set(committees.map((c) => `${c.data.startYear}-${c.data.endYear}`))]
-  .sort()
-  .reverse()
+  .toSorted()
+  .toReversed()
 const initialYearRange = yearRanges[0]
 
 const sectionsRaw = await getCollection('section', ({ data }) => {
@@ -61,13 +61,11 @@ function makeIdURLFriendly(idString: string) {
       md:flex-row
     ">
       {/* Sticky Nav */}
-      <aside
-        class="
-          sticky top-32 mt-24 ml-8 hidden h-fit w-64 shrink-0
-          md:block
-          lg:ml-16
-        "
-      >
+      <aside class="
+        sticky top-32 mt-24 ml-8 hidden h-fit w-64 shrink-0
+        md:block
+        lg:ml-16
+      ">
         <nav class="relative flex border-r border-gray-300 pr-8">
           <ul class="m-0 flex list-none flex-col space-y-4 p-0">
             {
@@ -133,12 +131,10 @@ function makeIdURLFriendly(idString: string) {
         </div>
 
         {/* Mini Divider */}
-        <hr
-          class="
-            mx-auto my-24 hidden h-2 w-1/2 border-none bg-brand-orange
-            md:block md:w-3/4
-          "
-        />
+        <hr class="
+          mx-auto my-24 hidden h-2 w-1/2 border-none bg-brand-orange
+          md:block md:w-3/4
+        " />
 
         {/* Executive Committee Section */}
         <div class="
@@ -148,9 +144,7 @@ function makeIdURLFriendly(idString: string) {
           <h1 class="
             mb-8 font-heading text-3xl font-bold
             md:text-5xl
-          ">
-            Executive Committee
-          </h1>
+          ">Executive Committee</h1>
 
           {/* Committee Selector */}
           {
@@ -226,12 +220,10 @@ function makeIdURLFriendly(idString: string) {
                     data-year-range={yearRange}
                   >
                     {members.map((member) => (
-                      <div
-                        class="
-                          relative mx-5 flex w-full flex-col items-center
-                          md:w-80 md:items-start
-                        "
-                      >
+                      <div class="
+                        relative mx-5 flex w-full flex-col items-center
+                        md:w-80 md:items-start
+                      ">
                         {member.data.imageLink ? (
                           <Image
                             class="
@@ -253,20 +245,16 @@ function makeIdURLFriendly(idString: string) {
                             alt="Exec Headshot"
                           />
                         )}
-                        <h2
-                          class="
-                            my-1 text-center font-heading text-3xl font-bold
-                            md:text-left
-                          "
-                        >
+                        <h2 class="
+                          my-1 text-center font-heading text-3xl font-bold
+                          md:text-left
+                        ">
                           {member.data.name}
                         </h2>
-                        <div
-                          class="
-                            relative flex flex-row items-center justify-center
-                            md:justify-start
-                          "
-                        >
+                        <div class="
+                          relative flex flex-row items-center justify-center
+                          md:justify-start
+                        ">
                           {member.data.redirectLink && (
                             <a
                               href={member.data.redirectLink}
@@ -296,21 +284,17 @@ function makeIdURLFriendly(idString: string) {
                               </svg>
                             </a>
                           )}
-                          <h3
-                            class="
-                              my-1 text-center font-heading text-[1.5em]
-                              font-normal
-                              md:text-left
-                            "
-                          >
+                          <h3 class="
+                            my-1 text-center font-heading text-[1.5em]
+                            font-normal
+                            md:text-left
+                          ">
                             {member.data.position}
                           </h3>
                         </div>
-                        <div
-                          class="
-                            prose prose-sm max-w-none px-2.5 py-5 font-body
-                          "
-                        >
+                        <div class="
+                          prose prose-sm max-w-none px-2.5 py-5 font-body
+                        ">
                           <member.Content />
                         </div>
                       </div>

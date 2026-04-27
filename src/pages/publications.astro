@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
-import LotusHeader from '../assets/Lotus_Header.png'
 import EPubCard from '../components/EPubCard.astro'
 import EPubSection from '../components/EPubSection.astro'
 import ResourcesNavBar from '../components/ResourcesNavBar.astro'
@@ -19,13 +18,6 @@ const sections = categories.map((c) => ({
   section_list: publications.filter((p) => p.data.category === c)
 }))
 const featuredEpubs = publications.filter((p) => p.data.feature)
-
-const frontmatter = {
-  title: 'E-Publications',
-  description:
-    'Sakyadhita promotes research and publications on Buddhist women’s history and document their achievements. We strive to create equal opportunities for women in all Buddhist traditions.',
-  image: LotusHeader
-}
 ---
 
 <PageLayout>
@@ -33,55 +25,37 @@ const frontmatter = {
     <div id="EPubPage">
       {/* Landing Page Content */}
       <div id="landing-view">
-        <Slideshow
-          height="450px"
-          width="100%"
-          className="
-            max-md:h-[530px]
-            lg:h-[450px]
-          "
-        >
+        <Slideshow height="450px" width="100%" className="
+          max-md:h-[530px]
+          lg:h-[450px]
+        ">
           {
             featuredEpubs.map((epub) => (
-              <div
-                class="
-                  embla__slide relative flex size-full items-center
-                  justify-center bg-brand-dark-purple text-white
-                  lg:items-stretch lg:justify-start
-                "
-              >
-                <div
-                  class="
-                    absolute top-0 left-0 z-10 block h-fit bg-brand-dark-purple
-                    p-2.5 text-left font-heading
-                    max-md:bg-brand-dark-purple/90 max-md:p-5
-                    max-sm:mx-auto max-sm:mt-10 max-sm:h-108 max-sm:w-52
-                    md:w-72
-                    lg:m-8 lg:mt-8 lg:ml-40 lg:w-80
-                  "
-                >
-                  <h1
-                    class="
-                      text-4xl/tight font-bold
-                      max-sm:text-lg/relaxed
-                    "
-                  >
-                    {epub.data.title}
-                  </h1>
-                  <h2
-                    class="
-                      text-lg/relaxed font-bold
-                      max-md:hidden
-                    "
-                  >
-                    {epub.data.author}
-                  </h2>
-                  <p
-                    class="
-                      font-body text-base/relaxed font-normal
-                      max-sm:leading-normal
-                    "
-                  >
+              <div class="
+                embla__slide relative flex size-full items-center justify-center
+                bg-brand-dark-purple text-white
+                lg:items-stretch lg:justify-start
+              ">
+                <div class="
+                  absolute top-0 left-0 z-10 block h-fit bg-brand-dark-purple
+                  p-2.5 text-left font-heading
+                  max-md:bg-brand-dark-purple/90 max-md:p-5
+                  max-sm:mx-auto max-sm:mt-10 max-sm:h-108 max-sm:w-52
+                  md:w-72
+                  lg:m-8 lg:mt-8 lg:ml-40 lg:w-80
+                ">
+                  <h1 class="
+                    text-4xl/tight font-bold
+                    max-sm:text-lg/relaxed
+                  ">{epub.data.title}</h1>
+                  <h2 class="
+                    text-lg/relaxed font-bold
+                    max-md:hidden
+                  ">{epub.data.author}</h2>
+                  <p class="
+                    font-body text-base/relaxed font-normal
+                    max-sm:leading-normal
+                  ">
                     {epub.data.description}
                   </p>
                   <button
@@ -120,7 +94,14 @@ const frontmatter = {
           sections-container mt-14 mb-24
           max-md:m-0
         ">
-          {sections.map((section) => <EPubSection publication_section={section} />)}
+          {
+            sections.map((section) => (
+              <EPubSection
+                section_title={section.section_title}
+                section_list={section.section_list}
+              />
+            ))
+          }
         </div>
       </div>
 
@@ -132,34 +113,25 @@ const frontmatter = {
               id={`section-${section.section_title.replaceAll(/\s+/g, '-')}`}
               class="section-details hidden"
             >
-              <div
-                class="
-                  relative mx-[10vw] mt-12 mb-24
-                  lg:mt-32
-                "
-              >
+              <div class="
+                relative mx-[10vw] mt-12 mb-24
+                lg:mt-32
+              ">
                 {/* Header */}
-                <div
-                  class="
-                    relative top-0 left-0 flex h-24 w-full flex-col
-                    lg:h-12 lg:flex-row
-                  "
-                >
-                  <div
-                    class="
-                      absolute -top-12 left-[-10vw] block h-24
-                      w-[calc(100%+20vw)]
-                      shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]
-                      lg:hidden
-                    "
-                  />
-                  <h1
-                    class="
-                      z-10 w-full text-center font-heading text-2xl/tight
-                      font-bold
-                      lg:text-4xl/relaxed lg:font-normal
-                    "
-                  >
+                <div class="
+                  relative top-0 left-0 flex h-24 w-full flex-col
+                  lg:h-12 lg:flex-row
+                ">
+                  <div class="
+                    absolute -top-12 left-[-10vw] block h-24 w-[calc(100%+20vw)]
+                    shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]
+                    lg:hidden
+                  " />
+                  <h1 class="
+                    z-10 w-full text-center font-heading text-2xl/tight
+                    font-bold
+                    lg:text-4xl/relaxed lg:font-normal
+                  ">
                     {section.section_title}
                   </h1>
                   <button
@@ -174,33 +146,25 @@ const frontmatter = {
                     "
                   >
                     &lt; <span class="lg:hidden">Back to latest</span>
-                    <span
-                      class="
-                        hidden
-                        lg:inline
-                      "
-                    >
-                      Back
-                    </span>
+                    <span class="
+                      hidden
+                      lg:inline
+                    ">Back</span>
                   </button>
-                  <p
-                    class="
-                      absolute right-6 bottom-0 z-10 hidden w-fit font-body
-                      text-lg/relaxed no-underline
-                      lg:block
-                    "
-                  >
+                  <p class="
+                    absolute right-6 bottom-0 z-10 hidden w-fit font-body
+                    text-lg/relaxed no-underline
+                    lg:block
+                  ">
                     All <span class="text-brand-orange">({section.section_list.length})</span>
                   </p>
                 </div>
 
                 {/* Content */}
-                <div
-                  class="
-                    relative mx-[-25px] flex flex-wrap items-start
-                    justify-center text-center
-                  "
-                >
+                <div class="
+                  relative mx-[-25px] flex flex-wrap items-start justify-center
+                  text-center
+                ">
                   {section.section_list.map((pub) => (
                     <div class="flex flex-col items-center justify-start">
                       <EPubCard

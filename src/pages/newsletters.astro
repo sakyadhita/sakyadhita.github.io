@@ -18,8 +18,8 @@ const frontmatter = {
 
 // return a reverse sort of the newsletter
 const newsletters = newslettersRaw.toSorted((a, b) => {
-  let a_d = a.data
-  let b_d = b.data
+  const a_d = a.data
+  const b_d = b.data
 
   if (a_d.year !== b_d.year) return b_d.year - a_d.year
   if (a_d.volume !== b_d.volume) return b_d.volume - a_d.volume
@@ -41,11 +41,9 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
 
     {
       newsletters.length === 0 ? (
-        <div
-          class="
-            flex w-full justify-center py-20 font-body text-gray-500 italic
-          "
-        >
+        <div class="
+          flex w-full justify-center py-20 font-body text-gray-500 italic
+        ">
           We have no newsletters to show you at this time
         </div>
       ) : (
@@ -73,10 +71,9 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
               aria-label="pagination"
               class="mx-auto flex w-full justify-center"
             >
-              <ul
-                id="pagination-content"
-                class="flex flex-row items-center gap-1"
-              />
+              <ul id="pagination-content" class="
+                flex flex-row items-center gap-1
+              " />
             </nav>
           </div>
         </div>

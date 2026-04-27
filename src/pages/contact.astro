@@ -1,6 +1,6 @@
 ---
+import { Icon } from 'astro-icon/components'
 import { getImage } from 'astro:assets'
-import { Mail, Phone, House, X } from 'lucide-react'
 
 import HongKongVideo from '../assets/Contact Page/Hong Kong Conference Video.jpeg'
 import CustomButton from '../components/CustomButton.astro'
@@ -46,13 +46,11 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
         flex h-auto w-full flex-1 flex-col font-body
         lg:flex-row
       ">
-        <section
-          class="
-            prose max-w-none flex-1 p-6 text-left text-black
-            md:p-12
-            lg:p-24
-          "
-        >
+        <section class="
+          prose max-w-none flex-1 p-6 text-left text-black
+          md:p-12
+          lg:p-24
+        ">
           <h2
             class="
               mb-5 font-heading text-2xl font-bold tracking-tight text-black
@@ -88,9 +86,9 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
 
           <div class="space-y-3 font-body">
             {
-              emailInfo.map((email: any) => (
+              emailInfo.map((email) => (
                 <p class="m-0 flex items-center space-x-2 text-black">
-                  <Mail className="size-5 text-brand-orange" />
+                  <Icon name="lucide:mail" class="size-5 text-brand-orange" />
                   <a
                     href={`mailto:${email.address}`}
                     class="
@@ -105,25 +103,40 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
               ))
             }
             <p class="m-0 flex items-center space-x-2 text-black">
-              <Phone className="size-5 text-brand-orange" />
+              <Icon name="lucide:phone" class="size-5 text-brand-orange" />
               <span>{phone}</span>
             </p>
             <div class="flex items-start space-x-2 text-black">
-              <House className="mt-1 size-6 shrink-0 text-brand-orange" />
+              <Icon name="lucide:house" class="
+                mt-1 size-6 shrink-0 text-brand-orange
+              " />
               <span>{address}</span>
             </div>
           </div>
 
-          <h4
-            class="
-              mt-12 mb-6 font-heading text-2xl font-semibold text-black
-              lowercase italic
-            "
-          >
+          <h4 class="
+            mt-12 mb-6 font-heading text-2xl font-semibold text-black lowercase
+            italic
+          ">
             Send us a message!
           </h4>
 
-          <form id="contact-form" class="space-y-4" novalidate>
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            id="contact-form"
+            class="space-y-4"
+            novalidate
+          >
+            <p class="hidden">
+              <label>
+                Don’t fill this out if you're human: <input name="bot-field" />
+              </label>
+            </p>
+            <input type="hidden" name="form-name" value="contact" />
+
             <div class="flex">
               <input
                 name="name"
@@ -197,7 +210,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
           >
             <span id="error-message"></span>
             <button id="close-snackbar" class="ml-4 cursor-pointer font-bold">
-              <X className="size-4" />
+              <Icon name="lucide:x" class="size-4" />
             </button>
           </div>
         </section>
@@ -222,12 +235,10 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
       fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4
     "
   >
-    <div
-      class="
-        w-full max-w-md rounded-lg border-2 border-brand-orange bg-white p-8
-        shadow-xl
-      "
-    >
+    <div class="
+      w-full max-w-md rounded-lg border-2 border-brand-orange bg-white p-8
+      shadow-xl
+    ">
       <p class="px-4 pt-4 text-center font-body text-2xl text-black">
         Thank you for contacting us. We will get in touch with you shortly.
       </p>
@@ -246,14 +257,6 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
       </div>
     </div>
   </div>
-
-  {/* Hidden form for Netlify detection */}
-  <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input type="text" name="name" />
-    <input type="email" name="email" />
-    <input type="tel" name="phone" />
-    <textarea name="message"></textarea>
-  </form>
 </PageLayout>
 
 <script>
@@ -284,12 +287,6 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
       snackbar?.classList.add('hidden')
     }
 
-    const encode = (data: any) => {
-      return Object.keys(data)
-        .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-        .join('&')
-    }
-
     submitBtn.addEventListener('click', async (e) => {
       e.preventDefault()
       if (isSubmitting) return
@@ -297,7 +294,6 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
       hideSnackbar()
 
       const formData = new FormData(form)
-      const data = Object.fromEntries(formData.entries())
 
       // Validation
       let hasError = false
@@ -308,7 +304,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
       })
 
       requiredFields.forEach((field) => {
-        const val = data[field] as string
+        const val = formData.get(field) as string
         if (!val || val.trim() === '') {
           hasError = true
           const el = form.querySelector(`[name="${field}"]`)
@@ -327,13 +323,10 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
       submitBtn.disabled = true
 
       try {
-        const response = await fetch('/', {
+        const response = await fetch('/__forms.html', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: encode({
-            'form-name': 'contact',
-            ...data
-          })
+          body: new URLSearchParams(formData as unknown as Record<string, string>).toString()
         })
 
         if (response.ok) {
@@ -343,8 +336,9 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
         } else {
           throw new Error('Failed to send message')
         }
-      } catch (error: any) {
-        showSnackbar(error.message || 'An error occurred')
+      } catch (error) {
+        const msg = error instanceof Error ? error.message : 'An error occurred'
+        showSnackbar(msg)
       } finally {
         isSubmitting = false
         document.body.style.cursor = ''

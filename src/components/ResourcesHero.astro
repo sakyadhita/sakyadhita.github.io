@@ -46,29 +46,13 @@ const imageUrl = optimizedImage?.src || (typeof image === 'string' ? image : ima
       md:top-[40%] md:left-[15%] md:w-auto md:p-10
     "
   >
-    {
-      title ? (
-        <h1
-          class="
-            font-heading text-3xl/tight font-bold
-            md:text-4xl
-          "
-        >
-          {title}
-        </h1>
-      ) : null
-    }
-    {
-      text ? (
-        <p
-          class="
-            mt-4 font-body text-lg/relaxed font-normal
-            md:text-xl
-          "
-        >
-          {text}
-        </p>
-      ) : null
-    }
+    {title ? <h1 class="
+      font-heading text-3xl/tight font-bold
+      md:text-4xl
+    ">{title}</h1> : null}
+    {text ? <p class="
+      mt-4 font-body text-lg/relaxed font-normal
+      md:text-xl
+    ">{text}</p> : null}
   </div>
 </div>

@@ -7,8 +7,6 @@
  */
 import { getImage } from 'astro:assets'
 
-import { cn } from '../lib'
-
 interface Props {
   image?: string | ImageMetadata
   title?: string
@@ -29,14 +27,14 @@ const imageUrl = optimizedImage?.src || (typeof image === 'string' ? image : ima
 ---
 
 <div
-  class={cn(
+  class:list={[
     `
       relative min-h-[max(40vh,300px)] w-full bg-cover bg-position-[center,top]
       bg-no-repeat
       sm:min-h-[max(75vh,400px)]
     `,
     className
-  )}
+  ]}
   style={{ backgroundImage: imageUrl ? `url("${imageUrl}")` : 'none' }}
 >
   {/* Purple box with a title and description */}
@@ -49,27 +47,17 @@ const imageUrl = optimizedImage?.src || (typeof image === 'string' ? image : ima
   >
     {
       title && (
-        <h1
-          class="
-            mt-4 ml-6 w-full font-heading text-2xl/relaxed font-bold
-            sm:mt-0 sm:ml-0 sm:text-4xl
-          "
-        >
+        <h1 class="
+          mt-4 ml-6 w-full font-heading text-2xl/relaxed font-bold
+          sm:mt-0 sm:ml-0 sm:text-4xl
+        ">
           {title}
         </h1>
       )
     }
-    {
-      text && (
-        <p
-          class="
-            mt-4 hidden font-body text-lg/relaxed font-normal
-            sm:block
-          "
-        >
-          {text}
-        </p>
-      )
-    }
+    {text && <p class="
+      mt-4 hidden font-body text-lg/relaxed font-normal
+      sm:block
+    ">{text}</p>}
   </div>
 </div>

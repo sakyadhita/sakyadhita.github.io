@@ -5,16 +5,8 @@
  */
 import { Icon } from 'astro-icon/components'
 
-import { SITE_PAGES } from '../SiteMetadata'
+import { MAIN_NAV_LINKS } from '../SiteMetadata'
 import Brand from './Brand.astro'
-
-const navLinks = [
-  { label: 'Home', link: SITE_PAGES.HOME },
-  { label: 'Conferences', link: SITE_PAGES.CONFERENCES },
-  { label: 'Resources', link: SITE_PAGES.RESOURCES_LANDING },
-  { label: 'About Us', link: SITE_PAGES.ABOUT_US },
-  { label: 'Contact Us', link: SITE_PAGES.CONTACT_US }
-]
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
 ---
@@ -75,7 +67,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
       md:h-auto
     ">
       {
-        navLinks.map((item) => {
+        MAIN_NAV_LINKS.map((item) => {
           const isActive =
             currentPath === (item.link.replace(/\/$/, '') || '/') ? 'bg-brand-dark-orange' : ''
           return (
@@ -89,14 +81,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
                 ${isActive}
               `}
             >
-              <span
-                class="
-                  font-heading text-lg text-white lowercase
-                  md:text-xl
-                "
-              >
-                {item.label}
-              </span>
+              <span class="
+                font-heading text-lg text-white lowercase
+                md:text-xl
+              ">{item.label}</span>
             </a>
           )
         })

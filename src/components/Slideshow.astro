@@ -1,8 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-import { cn } from '../lib'
-
 /**
  * Slideshow component built with Embla Carousel (Native Astro version).
  * Matches the functionality of Slideshow.jsx while reducing React overhead.
@@ -16,7 +14,7 @@ interface Props {
 const { height = '100%', width = '100%', className = '' } = Astro.props
 ---
 
-<div class={cn('Slideshow group relative block overflow-hidden', className)} style={{ width }}>
+<div class:list={['Slideshow group relative block overflow-hidden', className]} style={{ width }}>
   <div class="embla h-full" style={{ height }}>
     <div class="embla__container flex h-full">
       <slot />

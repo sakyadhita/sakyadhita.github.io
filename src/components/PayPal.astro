@@ -1,0 +1,221 @@
+---
+interface Props {
+  membershipTitle?: string
+  membershipCost?: number
+  donationAmount?: number
+  disable?: boolean
+}
+
+const { membershipTitle, membershipCost = 0, donationAmount = 0, disable = false } = Astro.props
+
+const isGeneralDonation = !membershipTitle && membershipCost === 0 && donationAmount === 0
+---
+
+<div
+  id="paypal-component-root"
+  data-membership-title={membershipTitle}
+  data-membership-cost={membershipCost}
+  data-donation-amount={donationAmount}
+  data-disable={disable}
+  class="space-y-6"
+>
+  {
+    !disable && isGeneralDonation && (
+      <div class="space-y-2">
+        <label for="donation-input" class="
+          block font-body text-sm font-bold text-gray-700
+        ">
+          Donation Amount (USD)
+        </label>
+        <div class="relative">
+          <span class="
+            absolute top-1/2 left-4 -translate-y-1/2 font-bold text-gray-500
+          ">$</span>
+          <input
+            type="number"
+            id="donation-input"
+            placeholder="0.00"
+            step="1.00"
+            min="1.00"
+            class="
+              h-12 w-full rounded-2xl border border-black bg-white pr-4 pl-8
+              font-body text-lg outline-none
+              focus:ring-2 focus:ring-brand-dark-purple
+            "
+          />
+        </div>
+      </div>
+    )
+  }
+  {!disable && <div id="paypal-button-container" />}
+</div>
+
+<script>
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  import { loadScript } from '@paypal/paypal-js'
+
+  import { PAYPAL_CONFIG, CONTACT_INFO } from '../SiteMetadata'
+
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector('#paypal-component-root') as HTMLElement
+    if (!root || root.dataset.disable === 'true') return
+
+    const membershipTitle = root.dataset.membershipTitle
+    const membershipCost = Number.parseFloat(root.dataset.membershipCost || '0')
+    const initialDonationAmount = Number.parseFloat(root.dataset.donationAmount || '0')
+    const donationInput = root.querySelector('#donation-input') as HTMLInputElement
+
+    function getDonationAmount() {
+      if (donationInput) {
+        return Number.parseFloat(donationInput.value || '0')
+      }
+      return initialDonationAmount
+    }
+
+    function getTotalAmount() {
+      const donation = getDonationAmount()
+      const tax = membershipCost > 0 ? membershipCost * PAYPAL_CONFIG.TAX_RATE : 0
+      return membershipCost + donation + tax
+    }
+
+    function getOrderObject() {
+      const currentDonation = getDonationAmount()
+      const TAX_RATE = PAYPAL_CONFIG.TAX_RATE
+      const taxTotal = membershipCost > 0 ? membershipCost * TAX_RATE : 0
+      const itemTotal = Math.max(membershipCost, 0) + Math.max(currentDonation, 0)
+
+      const itemsList: any[] = []
+      if (membershipCost > 0) {
+        itemsList.push({
+          name: membershipTitle,
+          description: `Membership level: ${membershipTitle}`,
+          unit_amount: { currency_code: 'USD', value: membershipCost.toFixed(2) },
+          tax: { currency_code: 'USD', value: taxTotal.toFixed(2) },
+          quantity: 1
+        })
+      }
+      if (currentDonation > 0) {
+        itemsList.push({
+          name: 'Donation',
+          description: `Donation of $${currentDonation}`,
+          unit_amount: { currency_code: 'USD', value: currentDonation.toFixed(2) },
+          tax: { currency_code: 'USD', value: '0.00' },
+          quantity: 1
+        })
+      }
+
+      return {
+        intent: 'CAPTURE',
+        application_context: {
+          shipping_preference: 'NO_SHIPPING'
+        },
+        purchase_units: [
+          {
+            description: 'Sakyadhita Membership or Donation Confirmation',
+            amount: {
+              currency_code: 'USD',
+              value: (itemTotal + taxTotal).toFixed(2),
+              breakdown: {
+                item_total: { currency_code: 'USD', value: itemTotal.toFixed(2) },
+                tax_total: { currency_code: 'USD', value: taxTotal.toFixed(2) }
+              }
+            },
+            items: itemsList
+          }
+        ]
+      }
+    }
+
+    async function initPayPal() {
+      try {
+        const paypal = await loadScript({
+          clientId: PAYPAL_CONFIG.CLIENT_ID,
+          currency: PAYPAL_CONFIG.CURRENCY
+        })
+
+        if (paypal && paypal.Buttons) {
+          paypal
+            .Buttons({
+              onInit: (_data: any, actions: any) => {
+                // Disable button if amount is 0
+                if (getTotalAmount() <= 0) {
+                  actions.disable()
+                }
+
+                // Listen for input changes if it's a general donation
+                if (donationInput) {
+                  donationInput.addEventListener('input', () => {
+                    if (Number.parseFloat(donationInput.value || '0') > 0) {
+                      actions.enable()
+                    } else {
+                      actions.disable()
+                    }
+                  })
+                }
+              },
+              onClick: () => {
+                if (getTotalAmount() <= 0) {
+                  alert('Please enter a valid donation amount.')
+                }
+              },
+              createOrder: (_data: any, actions: any) => {
+                return actions.order.create(getOrderObject())
+              },
+              onApprove: async (_data: any, actions: any) => {
+                document.body.style.cursor = 'wait'
+                try {
+                  const details = await actions.order.capture()
+                  document.body.style.cursor = 'default'
+
+                  const submissionData = new URLSearchParams()
+                  submissionData.append('form-name', 'paidmembership')
+                  submissionData.append('fName', details.payer.name.given_name)
+                  submissionData.append('lName', details.payer.name.surname)
+                  submissionData.append('email', details.payer.email_address)
+                  submissionData.append('membershipType', membershipTitle || 'Donation')
+                  submissionData.append('totalPaid', details.purchase_units[0].amount.value)
+                  submissionData.append(
+                    'payPalTransactionId',
+                    details.purchase_units[0].payments.captures[0].id
+                  )
+
+                  await fetch('/__forms.html', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: submissionData.toString()
+                  })
+                  alert('Thank you for your support!')
+                  if (donationInput) donationInput.value = ''
+                } catch (error: any) {
+                  document.body.style.cursor = 'default'
+                  // Check for INSTRUMENT_DECLINED to allow buyer to select another funding source
+                  if (error.details?.[0]?.issue === 'INSTRUMENT_DECLINED') {
+                    return actions.restart()
+                  }
+                  console.error('Capture error:', error)
+                  alert(
+                    `Transaction completed but it wasn't sent to us. Please email us at ${CONTACT_INFO.SERVICE_EMAIL} with the receipt. Error: ${error}`
+                  )
+                }
+              },
+              onCancel: () => {
+                document.body.style.cursor = 'default'
+              },
+              onError: (err: any) => {
+                document.body.style.cursor = 'default'
+                console.error(err)
+                alert(
+                  'An unexpected error occurred - your payment did not go through. Please try again later.'
+                )
+              }
+            })
+            .render('#paypal-button-container')
+        }
+      } catch (error) {
+        console.error('Failed to load PayPal:', error)
+      }
+    }
+
+    initPayPal()
+  })
+</script>

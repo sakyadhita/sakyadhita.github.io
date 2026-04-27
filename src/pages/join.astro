@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content'
 
 import FirstConference from '../assets/Join Us Page/1stConference.jpeg'
-import JoinUsComponent from '../components/JoinUsForm'
+import JoinUsComponent from '../components/JoinUsForm.astro'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
@@ -28,30 +28,7 @@ const frontmatter = {
     image={frontmatter.image}
   />
 
-  <JoinUsComponent client:load frontmatter={frontmatter} memberships={memberships}>
+  <JoinUsComponent memberships={memberships}>
     <slot />
   </JoinUsComponent>
-
-  {/* Hidden forms for Netlify detection */}
-  <form name="membership" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input type="text" name="fName" />
-    <input type="text" name="mName" />
-    <input type="text" name="lName" />
-    <input type="tel" name="phone" />
-    <input type="email" name="email" />
-    <input type="text" name="address" />
-  </form>
-  <form name="paidmembership" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input type="text" name="fName" />
-    <input type="text" name="lName" />
-    <input type="email" name="email" />
-    <input type="tel" name="phone" />
-    <input type="text" name="mName" />
-    <input type="text" name="address" />
-    <input type="text" name="isNewMember" />
-    <input type="text" name="affiliatedOrgs" />
-    <input type="text" name="membershipType" />
-    <input type="number" name="totalPaid" />
-    <input type="text" name="payPalTransactionId" />
-  </form>
 </PageLayout>

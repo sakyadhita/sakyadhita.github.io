@@ -1,9 +1,11 @@
 ---
 import Pagination from './ConferencePagination.astro'
-import { cn, ordinal_suffix_of, determineLocationLabel, type ConferenceEntry } from '../lib'
+import { ordinal_suffix_of, determineLocationLabel } from '../lib'
+
+import type { CollectionEntry } from 'astro:content'
 
 interface Props {
-  items: ConferenceEntry[]
+  items: CollectionEntry<'conference'>[]
   color: string
   id?: string
 }
@@ -25,17 +27,17 @@ const initialPage = Math.floor(index / 9) + 1
     {
       items.map((item, idx) => (
         <div
-          class={cn(
+          class:list={[
             'stepper-item group flex w-full flex-col items-start',
             Math.floor(idx / 9) + 1 === initialPage ? 'block' : 'hidden'
-          )}
+          ]}
           data-page={Math.floor(idx / 9) + 1}
           data-item-index={idx}
         >
           <div class="flex w-full items-center">
             <button
               type="button"
-              class={cn(
+              class:list={[
                 `
                   stepper-node-btn relative z-10 flex size-9 shrink-0
                   cursor-pointer items-center justify-center rounded-full
@@ -47,7 +49,7 @@ const initialPage = Math.floor(index / 9) + 1
                     bg-white text-brand-dark-purple
                     hover:bg-brand-dark-purple hover:text-white
                   `
-              )}
+              ]}
               style={{
                 borderColor: color,
                 backgroundColor: idx === index ? color : 'white',
@@ -62,7 +64,7 @@ const initialPage = Math.floor(index / 9) + 1
 
             <button
               type="button"
-              class={cn(
+              class:list={[
                 `
                   stepper-label-btn ml-4 max-w-40 cursor-pointer truncate
                   border-none bg-transparent p-0 text-left font-body text-base
@@ -70,7 +72,7 @@ const initialPage = Math.floor(index / 9) + 1
                   hover:underline
                 `,
                 idx === index ? 'font-bold opacity-100' : 'opacity-80'
-              )}
+              ]}
               style={{ color: color }}
               data-index={idx}
             >

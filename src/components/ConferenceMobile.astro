@@ -1,16 +1,15 @@
 ---
 import { YouTube } from '@astro-community/astro-embed-youtube'
 import { Image } from 'astro:assets'
+import { render, type CollectionEntry } from 'astro:content'
 
 import HorizontalStepper from './ConferenceHorizontalStepper.astro'
 import ConferenceOverview from './ConferenceOverview.astro'
 import ConferenceTheme from './ConferenceTheme.astro'
 import Slideshow from './Slideshow.astro'
 
-import type { ConferenceEntry } from '../lib'
-
 interface Props {
-  data: ConferenceEntry[]
+  data: CollectionEntry<'conference'>[]
   id?: string
 }
 
@@ -28,169 +27,149 @@ const index = initialIndex === -1 ? 0 : initialIndex
 >
   <div class="component-display">
     {
-      data.map((item, idx) => (
-        <div
-          class={`
-            conference-item
-            ${idx === index ? 'block' : 'hidden'}
-          `}
-          data-item-index={idx}
-        >
-          {/* Render either the associated video or the slideshow of images */}
+      data.map(async (item, idx) => {
+        const { Content } = await render(item)
+        const optimizedImages = item.data.slideShowImages || null
+
+        return (
           <div
-            class="
+            class={`
+              conference-item
+              ${idx === index ? 'block' : 'hidden'}
+            `}
+            data-item-index={idx}
+          >
+            {/* Render either the associated video or the slideshow of images */}
+            <div class="
               relative h-72 w-full overflow-hidden rounded-b-3xl shadow-xl
               sm:h-96
-            "
-          >
-            {item.data.optimizedImages?.length === 1 ? (
-              <div class="relative size-full">
-                <div
-                  class="
+            ">
+              {optimizedImages?.length === 1 ? (
+                <div class="relative size-full">
+                  <div class="
                     absolute bottom-10 left-6 z-10 pr-12 text-white
                     drop-shadow-md
-                  "
-                >
-                  <h1
-                    class="
+                  ">
+                    <h1 class="
                       font-heading text-2xl font-bold tracking-tight lowercase
-                    "
-                  >
-                    {item.data.title}
-                  </h1>
-                  <h3
-                    class="
+                    ">
+                      {item.data.title}
+                    </h1>
+                    <h3 class="
                       font-body text-sm font-bold tracking-widest uppercase
                       opacity-90
-                    "
-                  >
-                    {item.data.location}
-                  </h3>
-                </div>
-                {typeof item.data.optimizedImages[0] === 'string' ? (
-                  <img
-                    class="size-full object-cover"
-                    alt="Event"
-                    src={item.data.optimizedImages[0]}
-                  />
-                ) : (
-                  <Image
-                    class="size-full object-cover"
-                    alt="Event"
-                    src={item.data.optimizedImages[0]}
-                    width={800}
-                    height={600}
-                  />
-                )}
-                <div
-                  class="
+                    ">
+                      {item.data.location}
+                    </h3>
+                  </div>
+                  {typeof optimizedImages[0] === 'string' ? (
+                    <img class="size-full object-cover" alt="Event" src={optimizedImages[0]} />
+                  ) : (
+                    <Image
+                      class="size-full object-cover"
+                      alt="Event"
+                      src={optimizedImages[0]}
+                      width={800}
+                      height={600}
+                    />
+                  )}
+                  <div class="
                     absolute inset-0 bg-linear-to-t from-black/60
                     via-transparent to-transparent
-                  "
-                />
-              </div>
-            ) : (
-              <Slideshow height="100%" width="100%">
-                {item.data.optimizedImages?.map((image) => (
-                  <div class="embla__slide relative size-full">
-                    <div
-                      class="
+                  " />
+                </div>
+              ) : (
+                <Slideshow height="100%" width="100%">
+                  {optimizedImages?.map((image) => (
+                    <div class="embla__slide relative size-full">
+                      <div class="
                         absolute bottom-12 left-6 z-10 pr-12 text-white
                         drop-shadow-md
-                      "
-                    >
-                      <h1
-                        class="
+                      ">
+                        <h1 class="
                           font-heading text-2xl font-bold tracking-tight
                           lowercase
-                        "
-                      >
-                        {item.data.title}
-                      </h1>
-                      <h3
-                        class="
+                        ">
+                          {item.data.title}
+                        </h1>
+                        <h3 class="
                           font-body text-sm font-bold tracking-widest uppercase
                           opacity-90
-                        "
-                      >
-                        {item.data.location}
-                      </h3>
-                    </div>
-                    {typeof image === 'string' ? (
-                      <img class="size-full object-cover" alt="Event" src={image} />
-                    ) : (
-                      <Image
-                        class="size-full object-cover"
-                        alt="Event"
-                        src={image}
-                        width={800}
-                        height={600}
-                      />
-                    )}
-                    <div
-                      class="
+                        ">
+                          {item.data.location}
+                        </h3>
+                      </div>
+                      {typeof image === 'string' ? (
+                        <img class="size-full object-cover" alt="Event" src={image} />
+                      ) : (
+                        <Image
+                          class="size-full object-cover"
+                          alt="Event"
+                          src={image}
+                          width={800}
+                          height={600}
+                        />
+                      )}
+                      <div class="
                         absolute inset-0 bg-linear-to-t from-black/60
                         via-transparent to-transparent
-                      "
-                    />
-                  </div>
-                ))}
-              </Slideshow>
+                      " />
+                    </div>
+                  ))}
+                </Slideshow>
+              )}
+            </div>
+
+            {/* The information for either theme or overview */}
+            <div class="mt-8 space-y-12 px-6">
+              <section class="fade-in slide-in-from-bottom-4 animate-in">
+                <h2 class="
+                  mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading
+                  text-2xl font-bold text-brand-dark-purple lowercase italic
+                ">
+                  Theme
+                </h2>
+                <ConferenceTheme
+                  redirect={item.data.signupLink}
+                  signup={item.data.signupLink}
+                  location={item.data.location}
+                >
+                  <Content />
+                </ConferenceTheme>
+              </section>
+              <section class="
+                fade-in slide-in-from-bottom-4 animate-in delay-200
+              ">
+                <h2 class="
+                  mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading
+                  text-2xl font-bold text-brand-dark-purple lowercase italic
+                ">
+                  Overview
+                </h2>
+                <ConferenceOverview info={item} title={item.data.title} />
+              </section>
+            </div>
+
+            {/* Render the video at bottom if it exists */}
+            {item.data.video && (
+              <YouTube
+                id={item.data.video}
+                class="
+                  mx-6 my-8 aspect-video overflow-hidden rounded-2xl bg-black
+                  shadow-lg
+                "
+              />
             )}
           </div>
-
-          {/* The information for either theme or overview */}
-          <div class="mt-8 space-y-12 px-6">
-            <section class="fade-in slide-in-from-bottom-4 animate-in">
-              <h2
-                class="
-                  mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading
-                  text-2xl font-bold text-brand-dark-purple lowercase italic
-                "
-              >
-                Theme
-              </h2>
-              <ConferenceTheme
-                redirect={item.data.signupLink}
-                theme={item.data.htmlBody}
-                signup={item.data.signupLink}
-                location={item.data.location}
-              />
-            </section>
-            <section class="fade-in slide-in-from-bottom-4 animate-in delay-200">
-              <h2
-                class="
-                  mb-6 w-fit border-b-2 border-brand-orange pb-1 font-heading
-                  text-2xl font-bold text-brand-dark-purple lowercase italic
-                "
-              >
-                Overview
-              </h2>
-              <ConferenceOverview info={item} title={item.data.title} />
-            </section>
-          </div>
-
-          {/* Render the video at bottom if it exists */}
-          {item.data.video && (
-            <YouTube
-              id={item.data.video}
-              class="
-                mx-6 my-8 aspect-video overflow-hidden rounded-2xl bg-black
-                shadow-lg
-              "
-            />
-          )}
-        </div>
-      ))
+        )
+      })
     }
 
     {/* The stepper component */}
-    <div
-      class="
-        no-scrollbar overflow-x-auto border-y border-gray-100 bg-gray-50 py-8
-        shadow-inner
-      "
-    >
+    <div class="
+      no-scrollbar overflow-x-auto border-y border-gray-100 bg-gray-50 py-8
+      shadow-inner
+    ">
       <HorizontalStepper items={data} color="#6652a0" id={id} />
     </div>
   </div>

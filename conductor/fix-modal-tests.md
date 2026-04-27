@@ -13,6 +13,7 @@
 ### Task 1: Fix Basic Rendering and Visibility Tests
 
 **Files:**
+
 - Modify: `src/components/Modal.test.tsx`
 
 - [ ] **Step 1: Update imports to include `screen`**
@@ -59,6 +60,7 @@ git commit -m "test: fix basic rendering tests for Modal using screen"
 ### Task 2: Fix Button and Callback Tests
 
 **Files:**
+
 - Modify: `src/components/Modal.test.tsx`
 
 - [ ] **Step 1: Fix "renders negative button when negativeButtonText is provided" test**
@@ -114,6 +116,7 @@ git commit -m "test: fix button and callback tests for Modal"
 ### Task 3: Fix Styling and Final Polish
 
 **Files:**
+
 - Modify: `src/components/Modal.test.tsx`
 
 - [ ] **Step 1: Fix "has modal styling" test**

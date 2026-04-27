@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 
 import LotusHeader from '../assets/Lotus_Header.png'
 import ResourcesHeader from '../components/ResourcesHeader.astro'
-import VolunteerComponent from '../components/VolunteerForm'
+import VolunteerComponent from '../components/VolunteerForm.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 
 const frontmatter = {
@@ -26,18 +26,7 @@ const interests = volinterests.map((interest) => ({
     image={frontmatter.image}
   />
 
-  <VolunteerComponent client:load interests={interests}>
+  <VolunteerComponent interests={interests}>
     <slot />
   </VolunteerComponent>
-
-  {/* Hidden form for Netlify detection */}
-  <form name="volunteer" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input type="text" name="fName" />
-    <input type="text" name="mName" />
-    <input type="text" name="lName" />
-    <input type="tel" name="phone" />
-    <input type="email" name="email" />
-    <input type="text" name="address" />
-    <input type="text" name="interests" />
-  </form>
 </PageLayout>

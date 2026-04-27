@@ -1,9 +1,11 @@
 # Plan: Migrate Custom Tailwind Variants to Standard Classes
 
 ## Objective
+
 Review the project for arbitrary Tailwind values (`[...]`) and custom inline breakpoints (e.g., `min-[350px]:`), migrating them to the nearest standard Tailwind sizes or standard breakpoint variants according to Tailwind v4 best practices. This improves maintainability and aligns the design system with standard utility scales.
 
 ## Key Files & Context
+
 - `src/components/ui/dialog.tsx`: Uses arbitrary percentages for positioning that have standard fraction equivalents.
 - `src/components/Layouts/AboutUs.jsx`: Contains numerous hardcoded pixel widths (`w-[175px]`, `w-[140px]`, `w-[250px]`, `w-[700px]`) and heights.
 - `src/components/Home/NewsSlideReact.jsx`: Uses a non-standard `min-[350px]:` breakpoint.
@@ -13,6 +15,7 @@ Review the project for arbitrary Tailwind values (`[...]`) and custom inline bre
 - `src/components/Layouts/Volunteer.jsx`, `JoinUs.jsx`, `ContactUs.jsx`: Use `min-w-[300px]` for their snackbars.
 
 ## Implementation Steps
+
 1. **`src/components/ui/dialog.tsx`**:
    - Replace `top-[50%] left-[50%] translate-[-50%]` with `top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`.
 2. **`src/components/Layouts/AboutUs.jsx`**:
@@ -36,5 +39,6 @@ Review the project for arbitrary Tailwind values (`[...]`) and custom inline bre
    - Change `min-w-[300px]` to `min-w-80` (320px).
 
 ## Verification & Testing
+
 - Run `pnpm run lint` and verify no new conflicting class errors are introduced.
 - Confirm visual fidelity isn't disrupted by these minor sub-pixel shifts.

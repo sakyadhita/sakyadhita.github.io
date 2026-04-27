@@ -1,8 +1,3 @@
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-import type { ImageMetadata } from 'astro'
-import type { CollectionEntry } from 'astro:content'
-
 /**
  * Returns the resolved URL for any asset (document).
  * Uses Vite's asset bundling to serve links for assets in src/assets.
@@ -53,51 +48,10 @@ export function getAssetUrl(assetPath: string | null | undefined): string | null
   return resolved
 }
 
-export interface ConferenceResource {
-  description: string
-  url: string | null
-}
-
-export type ConferenceEntry = CollectionEntry<'conference'> & {
-  data: {
-    optimizedImages: (ImageMetadata | string)[] | null
-    htmlBody: string
-    brochures?: ConferenceResource[]
-    programs?: ConferenceResource[]
-    abstracts?: ConferenceResource[]
-    presentations?: ConferenceResource[]
-  }
-}
-
-export interface NewsAndEvents {
-  title?: string
-  subtitle?: string
-  imageLink: string | ImageMetadata
-  redirectLink?: string
-  optimizedImage?: string | ImageMetadata
-  description?: string
-  date?: string | Date
-}
-
-export interface PublicationEntry extends CollectionEntry<'publication'> {
-  data: CollectionEntry<'publication'>['data'] & {
-    optimizedImage?: string | ImageMetadata
-  }
-}
-
-export interface PublicationSection {
-  section_title: string
-  section_list: PublicationEntry[]
-}
-
 export interface ConferenceStepChangeEvent extends CustomEvent {
   detail: {
     index: number
   }
-}
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
 }
 
 export const ordinal_suffix_of = (i: number) => {

@@ -1,9 +1,11 @@
 # Plan: Migrate React Components to Astro Native Components
 
 ## Objective
+
 Review the project structure and migrate purely presentational or simple interactive React components to Astro native components. This aligns with Astro best practices to minimize the amount of client-side JavaScript (React) shipped to the browser, relying on vanilla JavaScript for simple interactions. We will also leverage `astro-icon` where possible and clean up duplicate/unused React components.
 
 ## Findings & Key Files
+
 - **Dynamic React Components (To Keep):**
   - Interactive layouts (`JoinUs.jsx`, `Volunteer.jsx`, `ContactUs.jsx`, `Newsletters.jsx`, `AboutUs.jsx`, `EPublications.jsx`) heavily rely on React hooks (`useState`, `useEffect`) for forms, modals, scroll tracking, and pagination.
   - Interactive Home elements (`InteractiveMap.jsx`, `Slideshow.jsx`) rely on dynamic third-party React libraries (e.g., `react-simple-maps`, `embla-carousel-react`).
@@ -17,6 +19,7 @@ Review the project structure and migrate purely presentational or simple interac
   - **`src/components/Main/Loader.jsx`**: Not imported anywhere in the project. Can be removed.
 
 ## Implementation Steps
+
 1. **Migrate Navigation Bar:**
    - Create `src/components/Main/NavBar/NavBar.astro` combining the structure of `NavBar.jsx` and `Nav.jsx`.
    - Implement Vanilla JS (`<script>`) to handle toggling the mobile menu classes.
@@ -31,5 +34,6 @@ Review the project structure and migrate purely presentational or simple interac
 3. **Verify:** Run `pnpm run lint` and confirm the site builds successfully via `pnpm build`.
 
 ## Verification & Testing
+
 - Start the dev server and verify the mobile navigation toggle works correctly without React.
 - Ensure that the deleted files do not break any builds or tests.

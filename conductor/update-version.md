@@ -1,6 +1,7 @@
 # Plan: Update Version and Documentation to 3.0.0
 
 ## Objective
+
 Update the project version to `3.0.0` in `package.json` to reflect the major architectural changes (flattened component structure, native Astro page migration, full native image optimization). Update `README.md` and `AGENTS.md` to document these v3.0 changes.
 
 ## Implementation Steps
@@ -23,5 +24,6 @@ Update the project version to `3.0.0` in `package.json` to reflect the major arc
    - Under `src/components/`, mention that the hierarchy is completely flattened.
 
 ## Verification
+
 - Run `pnpm build` to ensure `package.json` parsing hasn't broken.
 - Read `README.md` and `AGENTS.md` to confirm the documentation accurately reflects the current state of the repository.

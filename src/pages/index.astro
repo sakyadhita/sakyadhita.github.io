@@ -1,6 +1,5 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content'
-import { marked } from 'marked'
 
 import DonateImg from '../assets/Donate Page/Donate.jpg'
 import JoiningHandsImg from '../assets/Join Us Page/JoinUs.jpg'
@@ -14,8 +13,6 @@ import HomeNewsSlide from '../components/HomeNewsSlide.astro'
 import Slideshow from '../components/Slideshow.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 import { SITE_PAGES } from '../SiteMetadata'
-
-const branches = await getCollection('branch')
 
 const newsRaw = await getCollection('news', ({ data }) => {
   return data.draft !== true
@@ -46,14 +43,6 @@ const additionalSections = await Promise.all(
 const homeImages = Object.values(
   import.meta.glob<{ default: ImageMetadata }>('../assets/home/*.jpg', { eager: true })
 ).map((m) => m.default)
-
-// For tooltips, we still need HTML strings
-const branchesWithHtml = await Promise.all(
-  branches.map(async (b) => {
-    const html = await marked.parse(b.body || '')
-    return { ...b, html }
-  })
-)
 
 interface NewsFlashArticle {
   data: {
@@ -119,20 +108,16 @@ interface NewsFlashArticle {
             <section class="
               flex w-full flex-col gap-8 text-left whitespace-pre-line
             ">
-              <h1
-                class="
-                  mt-5 mb-8 font-heading text-2xl font-bold text-black
-                  md:text-3xl
-                "
-              >
+              <h1 class="
+                mt-5 mb-8 font-heading text-2xl font-bold text-black
+                md:text-3xl
+              ">
                 {section.data.title}
               </h1>
-              <div
-                class="
-                  prose flex max-w-none flex-col items-center justify-center
-                  text-black
-                "
-              >
+              <div class="
+                prose flex max-w-none flex-col items-center justify-center
+                text-black
+              ">
                 <section.Content />
               </div>
             </section>
@@ -154,18 +139,7 @@ interface NewsFlashArticle {
           md:h-[600px]
           lg:w-1/2
         ">
-          <HomeMap
-            disableZooming={false}
-            markers={branchesWithHtml.map((m) => ({
-              name: m.data.name as string,
-              latitude: m.data.latitude as number,
-              longitude: m.data.longitude as number,
-              isBranch: m.data.isBranch as boolean,
-              siteLink: m.data.siteLink as string,
-              email: m.data.email as string,
-              html: m.html
-            }))}
-          />
+          <HomeMap disableZooming={false} />
         </div>
 
         <div class="
@@ -175,9 +149,7 @@ interface NewsFlashArticle {
           <h1 class="
             mb-8 font-heading text-2xl font-bold text-black
             md:text-3xl
-          ">
-            Branches
-          </h1>
+          ">Branches</h1>
           <p class="text-gray-700">
             Buddhist women and their allies gather at the Sakyadhita International Conferences every
             two years and also organize national branches and local chapters to facilitate

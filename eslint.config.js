@@ -1,26 +1,31 @@
 import markdown from '@eslint/markdown'
 import tsParser from '@typescript-eslint/parser'
 import astroParser from 'astro-eslint-parser'
+import { defineConfig } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import astroPlugin from 'eslint-plugin-astro'
 import betterTailwindPlugin from 'eslint-plugin-better-tailwindcss'
-import importPlugin from 'eslint-plugin-import'
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y'
-import reactPlugin from 'eslint-plugin-react'
-import reactHooksPlugin from 'eslint-plugin-react-hooks'
-import reactRefreshPlugin from 'eslint-plugin-react-refresh'
+import importPlugin from 'eslint-plugin-import-x'
 import unicornPlugin from 'eslint-plugin-unicorn'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
-export default tseslint.config(
+export default defineConfig(
   {
-    ignores: ['dist/**', '.astro/**', 'node_modules/**', 'public/**', 'playwright-report/**']
+    ignores: [
+      'dist/**',
+      '.astro/**',
+      '**/node_modules/**',
+      'public/**',
+      'playwright-report/**',
+      '.netlify/**',
+      'src/**/.astro/**'
+    ]
   },
 
   // Base configuration
   {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx,astro}'],
+    files: ['**/*.{js,mjs,cjs,ts,astro}'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -54,7 +59,7 @@ export default tseslint.config(
       'unicorn/prefer-query-selector': 'warn',
       'unicorn/no-array-reverse': 'warn',
       'unicorn/no-array-sort': 'warn',
-      
+
       'import/order': [
         'error',
         {
@@ -69,8 +74,15 @@ export default tseslint.config(
   },
 
   // JS/TS
-  ...tseslint.configs.recommended,
   {
+    files: ['**/*.{js,mjs,cjs,ts}'],
+    extends: [tseslint.configs.recommended],
+    languageOptions: {
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: import.meta.dirname
+      }
+    },
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -87,45 +99,11 @@ export default tseslint.config(
     }
   },
 
-  // React + JSX-a11y
+  // Tests
   {
-    files: ['**/*.{jsx,tsx}'],
-    ...reactPlugin.configs.flat.recommended,
-    languageOptions: {
-      ...reactPlugin.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.browser
-      },
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true
-        }
-      }
-    },
-    plugins: {
-      ...reactPlugin.configs.flat.recommended.plugins,
-      'react-hooks': reactHooksPlugin,
-      'jsx-a11y': jsxA11yPlugin,
-      'react-refresh': reactRefreshPlugin
-    },
-    settings: {
-      react: {
-        version: 'detect'
-      }
-    },
+    files: ['tests/**/*.ts', '**/*.spec.ts'],
     rules: {
-      ...reactPlugin.configs.flat.recommended.rules,
-      ...reactHooksPlugin.configs.recommended.rules,
-      ...jsxA11yPlugin.configs.recommended.rules,
-      'react-refresh/only-export-components': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
-      'react/self-closing-comp': 'error',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'react-hooks/set-state-in-effect': 'off'
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   },
 
@@ -149,7 +127,7 @@ export default tseslint.config(
 
   // Tailwind (Better Tailwind)
   {
-    files: ['**/*.{jsx,tsx,astro}'],
+    files: ['**/*.astro'],
     plugins: {
       'better-tailwindcss': betterTailwindPlugin
     },

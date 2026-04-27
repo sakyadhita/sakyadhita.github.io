@@ -1,29 +1,32 @@
 ---
-import Modal from './Modal'
+import Modal from './Modal.astro'
 
 interface Props {
   title?: string
   location: string
   redirect?: string
-  theme: string
+  theme?: string
   signup?: string
 }
 
-const { title, location, redirect, theme, signup } = Astro.props
+const { title, location, redirect, signup } = Astro.props
+
+const modalId = `signup-modal-${location.replaceAll(/\s+/g, '-')}`
 ---
 
-<div class="fade-in slide-in-from-bottom-4 animate-in space-y-10">
+<div class="
+  fade-in slide-in-from-bottom-4 conference-theme-container animate-in
+  space-y-10
+">
   {/* The title of the conference */}
   {
     title && (
       <section class="space-y-6">
-        <h1
-          class="
-            font-heading text-3xl font-bold tracking-tight
-            text-brand-dark-purple lowercase
-            md:text-5xl
-          "
-        >
+        <h1 class="
+          font-heading text-3xl font-bold tracking-tight text-brand-dark-purple
+          lowercase
+          md:text-5xl
+        ">
           {title}
         </h1>
       </section>
@@ -32,12 +35,10 @@ const { title, location, redirect, theme, signup } = Astro.props
 
   {/* The location of the conference */}
   <section>
-    <h3
-      class="
-        font-heading text-xl font-bold text-brand-orange lowercase italic
-        md:text-2xl
-      "
-    >
+    <h3 class="
+      font-heading text-xl font-bold text-brand-orange lowercase italic
+      md:text-2xl
+    ">
       {location}
     </h3>
   </section>
@@ -45,12 +46,10 @@ const { title, location, redirect, theme, signup } = Astro.props
   {/* Button that opens the modal - Only on desktop */}
   {
     signup && (
-      <section
-        class="
-          hidden
-          lg:block
-        "
-      >
+      <section class="
+        hidden
+        lg:block
+      ">
         <button
           type="button"
           class="
@@ -60,6 +59,7 @@ const { title, location, redirect, theme, signup } = Astro.props
             hover:bg-brand-dark-orange
             active:scale-95
           "
+          data-target-modal={modalId}
         >
           Sign Up
         </button>
@@ -77,8 +77,9 @@ const { title, location, redirect, theme, signup } = Astro.props
         prose prose-lg max-w-none flex-1 font-body leading-relaxed text-gray-700
         lowercase italic
       "
-      set:html={theme}
-    />
+    >
+      <slot />
+    </div>
     <div class="
       shrink-0
       lg:w-1/2
@@ -88,12 +89,31 @@ const { title, location, redirect, theme, signup } = Astro.props
   </div>
 
   <Modal
-    client:load
-    open={false}
-    hide={() => {}}
+    id={modalId}
     text="You will be redirected to a new link to sign up for the conference. Do you want to be redirected?"
     positiveUrl={redirect}
     positiveButtonText="Yes"
     negativeButtonText="No"
   />
 </div>
+
+<script>
+  function initConferenceTheme() {
+    const containers = document.querySelectorAll('.conference-theme-container')
+
+    containers.forEach((container) => {
+      const signupBtn = container.querySelector('.signup-btn') as HTMLButtonElement
+      const modalId = signupBtn?.dataset.targetModal
+
+      if (signupBtn && modalId) {
+        signupBtn.addEventListener('click', () => {
+          const modal = document.querySelector(`#${modalId}`) as HTMLDialogElement
+          modal?.showModal()
+        })
+      }
+    })
+  }
+
+  initConferenceTheme()
+  document.addEventListener('astro:page-load', initConferenceTheme)
+</script>

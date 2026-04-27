@@ -1,0 +1,147 @@
+---
+interface Props {
+  id?: string
+  text: string
+  negativeButtonText?: string
+  positiveButtonText?: string
+  positiveUrl?: string
+  className?: string
+}
+
+const {
+  id = 'custom-modal',
+  text,
+  negativeButtonText,
+  positiveButtonText,
+  positiveUrl,
+  className
+} = Astro.props
+---
+
+<dialog
+  id={id}
+  class:list={[
+    `
+      modal-dialog max-w-md rounded-lg border-2 border-brand-orange bg-white p-4
+      shadow-lg
+      backdrop:bg-black/80
+    `,
+    className
+  ]}
+>
+  <div class="flex flex-col">
+    <div class="px-4 pt-4 text-center font-body text-2xl text-black">
+      {text}
+    </div>
+
+    <div class="mt-6 mb-4 flex flex-row justify-center space-x-4">
+      {
+        negativeButtonText && (
+          <button
+            type="button"
+            class="
+              modal-close-btn h-10 min-w-32 cursor-pointer rounded-full
+              border-[1.2px] border-black bg-transparent font-body text-lg
+              font-bold text-black transition-colors
+              hover:bg-gray-100
+            "
+          >
+            {negativeButtonText}
+          </button>
+        )
+      }
+
+      {
+        positiveButtonText && (
+          <button
+            type="button"
+            class="
+              modal-confirm-btn h-10 min-w-32 cursor-pointer rounded-full
+              border-none bg-brand-orange font-body text-lg font-bold text-white
+              transition-all
+              hover:bg-brand-dark-orange
+              active:scale-95
+            "
+            data-url={positiveUrl}
+          >
+            {positiveButtonText}
+          </button>
+        )
+      }
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function initModals() {
+    const dialogs = document.querySelectorAll('dialog.modal-dialog')
+
+    dialogs.forEach((el) => {
+      const dialog = el as HTMLDialogElement
+      const closeBtns = dialog.querySelectorAll('.modal-close-btn')
+      const confirmBtns = dialog.querySelectorAll('.modal-confirm-btn')
+
+      closeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => dialog.close())
+      })
+
+      confirmBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const url = (btn as HTMLElement).dataset.url
+          if (url) {
+            globalThis.location.href = url
+          }
+          dialog.close()
+        })
+      })
+
+      // Close on click outside
+      dialog.addEventListener('click', (e) => {
+        const rect = dialog.getBoundingClientRect()
+        const isInDialog =
+          rect.top <= e.clientY &&
+          e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX &&
+          e.clientX <= rect.left + rect.width
+        if (!isInDialog) {
+          dialog.close()
+        }
+      })
+    })
+  }
+
+  // Support Astro View Transitions and regular load
+  initModals()
+  document.addEventListener('astro:page-load', initModals)
+</script>
+
+<style>
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  dialog[open] {
+    animation: zoomIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+</style>

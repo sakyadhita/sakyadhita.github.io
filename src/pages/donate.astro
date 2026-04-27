@@ -7,7 +7,7 @@ import workingTogetherImg from '../assets/Donate Page/WorkingTogether-440px.jpeg
 import JoiningHandsImg from '../assets/Join Us Page/JoinUs.jpg'
 import LotusHeader from '../assets/Lotus_Header.png'
 import BeInvolved from '../components/HomeBeInvolved.astro'
-import PayPal from '../components/PayPal'
+import PayPal from '../components/PayPal.astro'
 import PageLayout from '../layouts/PageLayout.astro'
 import { PAYPAL_CONFIG, SITE_PAGES } from '../SiteMetadata'
 
@@ -59,18 +59,16 @@ const frontmatter = {
 
           <div class="pt-8">
             <h3 class="mb-6 font-heading text-2xl font-bold text-black">Make a Contribution</h3>
-            <PayPal client:only="react" />
+            <PayPal />
           </div>
         </section>
 
         {/* Right Column: Other ways to help */}
         <section class="space-y-12">
-          <div
-            class="
-              group overflow-hidden rounded-3xl bg-white shadow-xl ring-1
-              ring-black/5
-            "
-          >
+          <div class="
+            group overflow-hidden rounded-3xl bg-white shadow-xl ring-1
+            ring-black/5
+          ">
             <div class="
               flex flex-col
               md:flex-row
@@ -104,12 +102,10 @@ const frontmatter = {
             </div>
           </div>
 
-          <div
-            class="
-              group overflow-hidden rounded-3xl bg-white shadow-xl ring-1
-              ring-black/5
-            "
-          >
+          <div class="
+            group overflow-hidden rounded-3xl bg-white shadow-xl ring-1
+            ring-black/5
+          ">
             <div class="
               flex flex-col
               md:flex-row
@@ -143,6 +139,7 @@ const frontmatter = {
 
           {/* Netlify Form Detection Pixel */}
           <form name="_pixel" data-netlify="true" hidden>
+            <input type="hidden" name="form-name" value="_pixel" />
             <img alt="" src={PAYPAL_CONFIG.PIXEL_IMG} width="1" height="1" />
           </form>
         </section>

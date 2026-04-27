@@ -9,15 +9,7 @@
  */
 import { Icon } from 'astro-icon/components'
 
-import { SITE_PAGES } from '../SiteMetadata'
-
-const navItems = [
-  { label: 'resources', link: SITE_PAGES.RESOURCES_LANDING },
-  { label: 'newsletters', link: SITE_PAGES.RESOURCES_NEWSLETTERS },
-  { label: 'publications', link: SITE_PAGES.RESOURCES_EPUBS },
-  { label: 'buddhist culture', link: SITE_PAGES.RESOURCES_BUDDHIST_CULTURE },
-  { label: 'ordination issue', link: SITE_PAGES.RESOURCES_ORDINATION_ISSUE }
-]
+import { RESOURCES_NAV_LINKS } from '../SiteMetadata'
 
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/'
 
@@ -68,7 +60,7 @@ const textClasses = 'font-heading text-white text-lg lowercase'
 
   <nav class="flex flex-col">
     {
-      navItems.map((item) => (
+      RESOURCES_NAV_LINKS.map((item) => (
         <a
           href={item.link}
           class:list={[mobileItemClasses, { 'bg-brand-dark-orange': isActive(item.link) }]}
@@ -90,7 +82,7 @@ const textClasses = 'font-heading text-white text-lg lowercase'
   "
 >
   {
-    navItems.map((item) => (
+    RESOURCES_NAV_LINKS.map((item) => (
       <a
         href={item.link}
         class:list={[desktopItemClasses, { 'bg-brand-dark-orange': isActive(item.link) }]}

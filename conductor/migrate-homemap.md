@@ -1,7 +1,9 @@
 # Objective
+
 Migrate `src/components/HomeMap.tsx` from React to a native `src/components/HomeMap.astro` component using D3 and TopoJSON, maintaining the exact look, feel, and functionality of the interactive map.
 
 # Key Files & Context
+
 - `src/components/HomeMap.tsx` (to be removed)
 - `src/components/ui/tooltip.tsx` (to be removed)
 - `src/pages/index.astro` (to be updated)
@@ -38,6 +40,7 @@ Migrate `src/components/HomeMap.tsx` from React to a native `src/components/Home
    - Delete `src/components/ui/tooltip.tsx` (and `src/components/ui/tooltip.test.tsx` if it exists).
 
 # Verification & Testing
+
 - Start the dev server (`pnpm dev`) and visually inspect the map on the homepage.
 - Verify that map markers render in the correct locations with correct colors (orange/purple based on `isBranch`).
 - Hover over markers to confirm the tooltip displays the custom HTML content correctly and follows mouse position or marker position.

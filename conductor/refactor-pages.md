@@ -1,9 +1,11 @@
 # Plan: Refactor Markdown Pages to Native Astro Pages
 
 ## Objective
+
 Convert all Markdown pages (`.md`) in `src/pages/` to native Astro pages (`.astro`). Move the layout logic from `src/layouts/` directly into the new `.astro` pages, incorporating the frontmatter content as local variables within the components.
 
 ## Key Files & Context
+
 - **Markdown Pages to Convert:**
   - `src/pages/about.md` -> `src/pages/about.astro`
   - `src/pages/buddhist-culture.md` -> `src/pages/buddhist-culture.astro`
@@ -51,6 +53,7 @@ Convert all Markdown pages (`.md`) in `src/pages/` to native Astro pages (`.astr
    - Ensure the base `src/layouts/PageLayout.astro` remains intact as the core wrapper.
 
 ## Verification & Testing
+
 - Run `pnpm astro check` to verify types and imports.
 - Run `pnpm build` to ensure all static pages generate without markdown layouts.
 - Visually inspect each page via `pnpm preview` or `pnpm dev` to ensure layout, styling, and data match the previous implementation.

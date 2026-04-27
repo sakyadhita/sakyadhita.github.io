@@ -1,51 +1,60 @@
+# Sakyadhita International Association of Buddhist Women
+
+Official website for Sakyadhita International Association of Buddhist Women.
+
+## 🚀 4.0 Deployment & Integration Optimization
+
+The project has undergone a major optimization of its deployment and external integration layers, achieving a **pure Astro native** architecture.
+
+- **Astro Native Architecture**: Removed all React dependencies and shadcn/ui primitives. The site is now built entirely with native `.astro` components, utilizing Astro's built-in client-side scripting and component logic for maximum performance and a lean bundle.
+- **Netlify Forms for SSR**: Implemented a centralized `public/__forms.html` skeleton for reliable Netlify Form detection in an SSR environment. Updated all AJAX submissions (`Volunteer`, `Join Us`, `Contact`) to use `URLSearchParams` and target the skeleton file, ensuring 100% reliable submission delivery.
+- **PayPal SDK Overhaul**: Fully refactored the PayPal integration to use dynamic order creation inside the `createOrder` callback. Added a dynamic donation input to the Donate page and implemented robust error recovery for `INSTRUMENT_DECLINED` events, allowing users to gracefully select alternative payment methods.
+- **Enhanced Security & Performance**: Updated `netlify.toml` with standard security headers and implemented aggressive caching for hashed assets in the `/_astro/` directory to improve site performance.
+
 ## 🚀 3.1 Native Asset Bundling
 
-The project has transitioned to a fully native asset management system, moving all assets (images, PDFs, ZIPs) into `src/assets/`.
+The project manages all assets (images, PDFs, ZIPs) within `src/assets/`.
 
-- **Vite Asset Bundling**: All site assets are now co-located in `src/assets/`. We use Vite's `import.meta.glob` to dynamically resolve these files. This ensures that even non-image assets (like conference PDFs and ZIPs) are correctly bundled, hashed for production, and served through the Vite pipeline.
-- **Development Middleware**: A custom Astro middleware (`src/middleware.ts`) was implemented to solve the issue of browser 404s when navigating to assets in `src/`. This middleware intercepts asset requests during development and serves them directly from disk with correct MIME types, bypassing Astro's page-routing logic.
-- **Simplified Content Config**: Restored string-based paths in `src/content.config.ts` for maximum flexibility, while using the `getAssetUrl` utility to resolve these strings to their bundled URLs.
-- **Configuration Optimization**: Updated `astro.config.mjs` to include standard ZIP files in the Vite bundle and established a structured `resolve.alias` for `/assets`.
+- **Vite Asset Bundling**: All site assets are co-located in `src/assets/`. We use Vite's `import.meta.glob` to dynamically resolve these files. This ensures that even non-image assets (like conference PDFs and ZIPs) are correctly bundled, hashed for production, and served through the Vite pipeline.
+- **Development Middleware**: A custom Astro middleware (`src/middleware.ts`) solves the issue of browser 404s when navigating to assets in `src/` during development. This middleware intercepts asset requests and serves them directly from disk with correct MIME types.
 
 ## 🚀 3.0 Major Architecture Flattening
 
-The project has achieved a streamlined, idiomatic Astro architecture. Key updates in this major release include:
+The project has achieved a streamlined, idiomatic Astro architecture.
 
-- **Native Astro Pages**: Migrated all remaining `.md` pages to native `.astro` pages in `src/pages/`. Layout logic is now co-located with page content, removing the dependency on legacy markdown layouts.
-- **Flattened Component Hierarchy**: Completely flattened the `src/components/` directory. Nested subdirectories (e.g., `Home/`, `Main/`, `Conference/`) were removed in favor of a clean, root-level component structure for better discoverability and simpler imports.
-- **Full Native Image Optimization**: Standardized on Astro's native `image()` schema type and `<Image />` component. Removed all manual glob mapping and legacy optimization helpers in `src/lib/images.ts`.
-- **Component Refinement**: Reverted key components (NavBar, Footer, About Us, Publications) to their refined previous designs while fully integrating them into the new optimized architecture.
-- **Clean Build & Type Safety**: Resolved all project-wide TypeScript errors and confirmed a 100% pass rate in the Playwright E2E and Vitest component test suites.
+- **Native Astro Pages**: All pages are native `.astro` components in `src/pages/`.
+- **Flattened Component Hierarchy**: Completely flattened the `src/components/` directory for better discoverability and simpler imports.
+- **Full Native Image Optimization**: Standardized on Astro's native `image()` schema type and `<Image />` component.
 
 ## 🚀 2.0 Refactor & Modernization
 
-...
 ### Content Collections Migration
-A critical part of the modernization was the migration of the content management system to the **Astro 6 `glob` loader API**. All collections defined in `src/content.config.ts` use the performant `glob` loader.
 
-### Asset Bundling & Middleware (v3.1)
-Starting with version 3.1, the project manages **all** website assets (including documents) in `src/assets/`.
-- **Dynamic Resolution**: We use a central utility `src/lib/images.ts` that uses Vite's `import.meta.glob` to resolve string paths from markdown content to their actual bundled URLs.
-- **Development Stability**: Because Astro's dev server typically blocks direct browser access to `/src/` paths (returning 404 for HTML navigations), we use `src/middleware.ts` to intercept and serve these files from the project root during development.
+The project uses the **Astro 6 `glob` loader API** for all content management. All collections defined in `src/content.config.ts` use the performant `glob` loader.
 
 ### Styling & UI Architecture
-Styling is handled exclusively by **Tailwind CSS v4**, removing heavy frameworks like Material UI and Bootstrap. 
-...
+
+Styling is handled exclusively by **Tailwind CSS v4**, removing heavy frameworks like Material UI and Bootstrap.
+
 ## Releases
 
-* 3.1.0: **Native Asset Bundling & Asset Migration**
-    - Moved all assets from `public/assets/` to `src/assets/`.
-    - Implemented `src/middleware.ts` for stable asset serving in development.
-    - Updated `getAssetUrl` to resolve string paths via Vite bundling.
-    - Configured `assetsInclude` for ZIP files and set up Vite aliases.
-* 3.0.0: **Major Architecture Flattening & Native Astro Pages**
-...
+- 4.0.0: **Astro Native & Deployment Optimization**
+  - Removed React and shadcn/ui dependencies; migrated to pure Astro native components.
+  - Implemented centralized Netlify Forms skeleton and SSR-safe submission logic.
+  - Overhauled PayPal integration with dynamic orders and error recovery.
+  - Hardened Netlify configuration with security headers and caching rules.
+- 3.1.0: **Native Asset Bundling & Asset Migration**
+  - Moved all assets from `public/assets/` to `src/assets/`.
+  - Implemented `src/middleware.ts` for stable asset serving in development.
+- 3.0.0: **Major Architecture Flattening & Native Astro Pages**
+  - Flattened component directory and migrated to native `.astro` pages.
+
 ## 🚀 Project Structure
 
 ```text
 /
 ├── src/
-│   ├── components/           # Flattened Astro and React components
+│   ├── components/           # Flattened pure Astro components
 │   ├── content/              # Markdown content and config.ts
 │   ├── layouts/              # Base layout wrappers (e.g., PageLayout.astro)
 │   ├── pages/                # Native Astro pages and routing

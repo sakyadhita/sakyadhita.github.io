@@ -8,7 +8,6 @@
 import { Image } from 'astro:assets'
 
 import Logo from '../assets/logo.svg'
-import { cn } from '../lib'
 import { SITE_PAGES } from '../SiteMetadata'
 
 interface Props {
@@ -21,7 +20,7 @@ const isFooter = location === 'footer'
 
 <a
   href={SITE_PAGES.HOME}
-  class={cn(
+  class:list={[
     `
       inline-flex items-center text-inherit
       hover:text-inherit hover:no-underline
@@ -32,66 +31,51 @@ const isFooter = location === 'footer'
         hover:text-white
       `
       : 'h-full max-h-full justify-start overflow-hidden text-left'
-  )}
+  ]}
 >
   <Image
     src={Logo}
     alt="Logo"
-    class={cn(
-      isFooter
-        ? `
-          h-12
-          md:h-20
-        `
-        : `
-          h-9 max-h-full w-auto object-contain
-          md:h-full
-        `
-    )}
+    class:list={[isFooter ? `
+      h-12
+      md:h-20
+    ` : `
+      h-9 max-h-full w-auto object-contain
+      md:h-full
+    `]}
   />
-  <div
-    class={cn(
-      'branding flex flex-col',
-      isFooter
-        ? `
-          mr-2
-          md:mr-2.5
-        `
-        : `
-          ml-1
-          md:ml-2.5
-        `
-    )}
-  >
+  <div class:list={['branding flex flex-col', isFooter ? `
+    mr-2
+    md:mr-2.5
+  ` : `
+    ml-1
+    md:ml-2.5
+  `]}>
     <h3
-      class={cn(
+      class:list={[
         'mb-0 font-heading lowercase',
-        isFooter
-          ? `
-            text-xl
-            md:text-4xl
-          `
-          : `
-            text-lg
-            md:text-3xl
-          `
-      )}
+        isFooter ? `
+          text-xl
+          md:text-4xl
+        ` : `
+          text-lg
+          md:text-3xl
+        `
+      ]}
     >
       sakyadhita
     </h3>
     <span
-      class={cn(
+      class:list={[
         'font-body text-lg lowercase opacity-90',
-        isFooter
-          ? `
-            hidden
-            sm:block
-          `
-          : `
-            hidden
-            md:block
-          `
-      )}
+        isFooter ? `
+          hidden
+          sm:block
+        ` : `
+          hidden
+          md:block
+        `
+      ]}
     >
       international association of buddhist women
     </span>

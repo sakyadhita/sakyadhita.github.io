@@ -42,25 +42,21 @@ const frontmatter = {
               <h1 class="text-center font-heading text-3xl font-bold">Coming soon</h1>
             </div>
           ) : (
-            <div
-              class="
-                prose prose-lg max-w-none text-black
-                prose-headings:mb-8 prose-headings:font-heading
-                prose-headings:font-bold
-                prose-img:mx-auto prose-img:mt-12 prose-img:w-full
-                prose-img:rounded-lg prose-img:shadow-lg
-              "
-            >
+            <div class="
+              prose prose-lg max-w-none text-black
+              prose-headings:mb-8 prose-headings:font-heading
+              prose-headings:font-bold
+              prose-img:mx-auto prose-img:mt-12 prose-img:w-full
+              prose-img:rounded-lg prose-img:shadow-lg
+            ">
               {sections.map((item, index) => (
                 <div class="mb-12">
                   <div id={item.data.title.replaceAll(' ', '')} />
                   <h1>{item.data.title}</h1>
                   <item.Content />
-                  {index === sections.length - 1 ? null : (
-                    <hr
-                      class="my-12 border-brand-orange"
-                    />
-                  )}
+                  {index === sections.length - 1 ? null : <hr class="
+                    my-12 border-brand-orange
+                  " />}
                 </div>
               ))}
               <slot />

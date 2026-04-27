@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Netlify Forms Skeleton</title>
+  </head>
+  <body>
+    <!-- This file is used by Netlify for form detection in SSR environments. -->
+
+    <!-- Volunteer Form -->
+    <form name="volunteer" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="hidden" name="form-name" value="volunteer" />
+      <input type="text" name="fName" />
+      <input type="text" name="mName" />
+      <input type="text" name="lName" />
+      <input type="email" name="email" />
+      <input type="text" name="country" />
+      <input type="text" name="address" />
+      <input type="text" name="phone" />
+      <input type="checkbox" name="interests" />
+    </form>
+
+    <!-- Membership Form (Email Only) -->
+    <form name="membership" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="hidden" name="form-name" value="membership" />
+      <input type="text" name="fName" />
+      <input type="text" name="mName" />
+      <input type="text" name="lName" />
+      <input type="email" name="email" />
+      <input type="text" name="country" />
+      <input type="text" name="addressOne" />
+      <input type="text" name="addressTwo" />
+      <input type="text" name="city" />
+      <input type="text" name="stateLocation" />
+      <input type="text" name="zipcode" />
+      <input type="text" name="phone" />
+      <input type="text" name="isNewMember" />
+      <textarea name="affiliatedOrgs"></textarea>
+      <input type="text" name="membershipType" />
+      <input type="number" name="totalPaid" />
+    </form>
+
+    <!-- Paid Membership Form (After PayPal) -->
+    <form name="paidmembership" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="hidden" name="form-name" value="paidmembership" />
+      <input type="text" name="fName" />
+      <input type="text" name="lName" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="mName" />
+      <input type="text" name="address" />
+      <input type="text" name="isNewMember" />
+      <textarea name="affiliatedOrgs"></textarea>
+      <input type="text" name="membershipType" />
+      <input type="number" name="totalPaid" />
+      <input type="text" name="payPalTransactionId" />
+    </form>
+
+    <!-- Contact Form -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <!-- Pixel Form (Legacy/Tracking) -->
+    <form name="_pixel" data-netlify="true" hidden>
+      <input type="hidden" name="form-name" value="_pixel" />
+    </form>
+  </body>
+</html>

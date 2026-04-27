@@ -31,6 +31,22 @@ export const SITE_PAGES = {
   RESOURCES_ORDINATION_ISSUE: '/ordination-issue'
 } as const
 
+export const MAIN_NAV_LINKS = [
+  { label: 'Home', link: SITE_PAGES.HOME },
+  { label: 'Conferences', link: SITE_PAGES.CONFERENCES },
+  { label: 'Resources', link: SITE_PAGES.RESOURCES_LANDING },
+  { label: 'About Us', link: SITE_PAGES.ABOUT_US },
+  { label: 'Contact Us', link: SITE_PAGES.CONTACT_US }
+] as const
+
+export const RESOURCES_NAV_LINKS = [
+  { label: 'resources', link: SITE_PAGES.RESOURCES_LANDING },
+  { label: 'newsletters', link: SITE_PAGES.RESOURCES_NEWSLETTERS },
+  { label: 'publications', link: SITE_PAGES.RESOURCES_EPUBS },
+  { label: 'buddhist culture', link: SITE_PAGES.RESOURCES_BUDDHIST_CULTURE },
+  { label: 'ordination issue', link: SITE_PAGES.RESOURCES_ORDINATION_ISSUE }
+] as const
+
 export const PAYPAL_CONFIG = {
   CLIENT_ID: 'AT0I6Qa0JYVBvlExcrLDBJAY3oqylXV_pIIn471l6C289hFh7E19i46YhR5G3Nq9mYyZ8v4u3m_m',
   CURRENCY: 'USD',

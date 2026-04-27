@@ -1,9 +1,11 @@
 ---
 import Pagination from './ConferencePagination.astro'
-import { cn, ordinal_suffix_of, type ConferenceEntry } from '../lib'
+import { ordinal_suffix_of } from '../lib'
+
+import type { CollectionEntry } from 'astro:content'
 
 interface Props {
-  items: ConferenceEntry[]
+  items: CollectionEntry<'conference'>[]
   color: string
   id?: string
 }
@@ -21,19 +23,17 @@ const index = initialIndex === -1 ? 0 : initialIndex
         <div class="stepper-item-wrapper flex items-center" data-item-index={idx}>
           <button
             type="button"
-            class={cn(
+            class:list={[
               `
                 stepper-node-btn relative z-10 flex size-11 cursor-pointer
                 items-center justify-center rounded-full border-2 transition-all
                 duration-300
               `,
-              idx === index
-                ? 'text-white shadow-md'
-                : `
-                  bg-white
-                  hover:bg-gray-50
-                `
-            )}
+              idx === index ? 'text-white shadow-md' : `
+                bg-white
+                hover:bg-gray-50
+              `
+            ]}
             style={{
               borderColor: color,
               backgroundColor: idx === index ? color : 'white',

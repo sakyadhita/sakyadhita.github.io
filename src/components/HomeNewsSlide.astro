@@ -45,31 +45,15 @@ const imageUrl = typeof image_url === 'string' ? image_url : image_url.src
     "
   >
     {/* Title */}
-    {
-      title && (
-        <h1
-          class="
-            mb-5 font-heading text-2xl font-bold
-            lg:text-3xl
-          "
-        >
-          {title}
-        </h1>
-      )
-    }
+    {title && <h1 class="
+      mb-5 font-heading text-2xl font-bold
+      lg:text-3xl
+    ">{title}</h1>}
     {/* Description */}
-    {
-      description && (
-        <p
-          class="
-            mb-5 text-sm
-            lg:text-base
-          "
-        >
-          {description}
-        </p>
-      )
-    }
+    {description && <p class="
+      mb-5 text-sm
+      lg:text-base
+    ">{description}</p>}
     {/* Button */}
     {
       showButton && redirect_link && (

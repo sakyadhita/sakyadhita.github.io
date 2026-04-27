@@ -1,0 +1,367 @@
+---
+import countryRegionData from 'country-region-data/data.json'
+
+import CustomButton from './CustomButton.astro'
+
+interface CommitteeData {
+  id: string
+  data: {
+    title: string
+    description: string
+  }
+}
+
+interface Props {
+  interests: CommitteeData[]
+}
+
+const { interests } = Astro.props
+
+const countries = countryRegionData.map((c) => c.countryName)
+
+const inputClasses = `input-field h-12 w-full rounded-2xl border border-black bg-white px-4 font-body text-lg transition-all outline-none focus:ring-2 focus:ring-brand-dark-purple`
+---
+
+<div class="font-body" id="volunteer-form-root">
+  <div class="
+    mx-auto max-w-7xl space-y-12 px-6 py-12 text-black
+    md:px-12
+  ">
+    <div class="space-y-6">
+      <h1 class="font-heading text-4xl text-brand-dark-purple lowercase">Support Sakyadhita!</h1>
+      <p class="text-lg/relaxed text-gray-700">
+        Sakyadhita is a 501(c)3 non-profit organization. We are a volunteer-run organization and
+        rely on the generous support of our members and donors. We are always looking for volunteers
+        to help us with our various initiatives. If you are interested in volunteering with us,
+        please fill out the form below and select the committees you are interested in joining.
+      </p>
+    </div>
+
+    <form
+      name="volunteer"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      autocomplete="off"
+      class="mx-auto max-w-2xl space-y-4"
+      id="volunteer-form"
+    >
+      <p class="hidden">
+        <label>
+          Don’t fill this out if you're human: <input name="bot-field" />
+        </label>
+      </p>
+      <input type="hidden" name="form-name" value="volunteer" />
+
+      <section class="space-y-4">
+        <h1
+          class="
+            mt-12 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+            text-3xl text-brand-dark-purple lowercase italic
+          "
+        >
+          Sign Me Up!
+        </h1>
+        {/* first name field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input id="fName" name="fName" class={inputClasses} placeholder="First Name" required />
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+        {/* middle name field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input id="mName" name="mName" class={inputClasses} placeholder="Middle Name" />
+          </div>
+          <span class="ml-2 w-4 shrink-0"></span>
+        </div>
+        {/* last name field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input id="lName" name="lName" class={inputClasses} placeholder="Last Name" required />
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h1
+          class="
+            mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+            text-3xl text-brand-dark-purple lowercase italic
+          "
+        >
+          Contact Information
+        </h1>
+        {/* email address field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input
+              id="email"
+              name="email"
+              class={inputClasses}
+              placeholder="Email Address"
+              type="email"
+              required
+            />
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+        {/* country dropdown field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <select
+              name="country"
+              id="country-select"
+              class:list={[
+                inputClasses,
+                `
+                  appearance-none
+                  bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
+                  bg-size-[1.5em_1.5em] bg-position-[right_1rem_center]
+                  bg-no-repeat
+                `
+              ]}
+              required
+            >
+              <option value="" disabled selected>Select Country</option>
+              {countries.map((country) => <option value={country}>{country}</option>)}
+            </select>
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+        {/* address field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input
+              id="address"
+              name="address"
+              class={inputClasses}
+              placeholder="Full Address"
+              required
+            />
+          </div>
+          <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
+        </div>
+        {/* phone number field */}
+        <div class="flex items-center">
+          <div class="flex-1">
+            <input id="phone" name="phone" class={inputClasses} placeholder="Phone Number" />
+          </div>
+          <span class="ml-2 w-4 shrink-0"></span>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h1
+          class="
+            mt-16 mb-8 w-fit border-b-2 border-brand-orange pb-1 font-heading
+            text-3xl text-brand-dark-purple lowercase italic
+          "
+        >
+          Committee Interests
+        </h1>
+        <p class="text-lg/relaxed text-gray-700 italic">
+          Select any and all committees you are interested in joining:
+        </p>
+        <div class="mt-8 space-y-6">
+          {
+            interests.map((committee) => (
+              <div class="mb-4">
+                <div class="committee-row flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    id={`committee-${committee.id}`}
+                    value={committee.data.title}
+                    class="
+                      peer size-6 shrink-0 rounded-md border border-black
+                      accent-brand-orange shadow-sm
+                    "
+                    name="interests"
+                  />
+                  <label
+                    for={`committee-${committee.id}`}
+                    class="
+                      committee-title cursor-pointer font-body text-lg font-bold
+                      text-brand-dark-purple
+                    "
+                  >
+                    {committee.data.title}
+                  </label>
+                </div>
+                <p class="
+                  committee-description mt-2 ml-9 font-body text-base/relaxed
+                  text-gray-600 italic
+                ">
+                  {committee.data.description}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <div class="space-y-10 pt-16">
+        <p class="text-center font-body text-lg text-gray-500 italic">
+          <span class="font-bold text-brand-red"> * </span> indicates a required field
+        </p>
+        {/* submit button */}
+        <div class="flex justify-center pb-12">
+          <CustomButton
+            className="h-16 w-auto rounded-full px-16 text-2xl"
+            text="Submit"
+            id="volunteer-submit-btn"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  {/* Thank You Modal */}
+  <div
+    id="thank-you-modal"
+    class="
+      fixed inset-0 z-1001 hidden items-center justify-center bg-black/80 p-4
+    "
+  >
+    <div
+      class="
+        fade-in zoom-in-95 w-full max-w-md rounded-lg border-2
+        border-brand-orange bg-white p-8 shadow-lg duration-200
+      "
+    >
+      <p class="px-4 pt-4 text-center font-body text-2xl text-black">
+        Thank you for your interest! We will get in touch with you shortly.
+      </p>
+      <div class="mt-6 mb-4 flex justify-center">
+        <button
+          id="close-thank-you"
+          class="
+            h-10 min-w-32 rounded-full border-[1.2px] border-black
+            bg-transparent font-body text-lg font-bold text-black
+            hover:bg-gray-100
+          "
+        >
+          Ok
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Snackbar for errors */}
+  <div
+    id="error-snackbar"
+    class="
+      fixed bottom-5 left-5 z-50 hidden min-w-80 items-center justify-between
+      rounded-lg bg-brand-red px-6 py-3 text-white shadow-lg
+    "
+  >
+    <span id="error-message"></span>
+    <button id="close-snackbar" class="ml-4 font-bold text-white">X</button>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector('#volunteer-form-root')
+    if (!root) return
+
+    const form = root.querySelector('#volunteer-form')
+    const submitBtn = root.querySelector('#volunteer-submit-btn')
+    const thankYouModal = root.querySelector('#thank-you-modal')
+    const closeThankYouBtn = root.querySelector('#close-thank-you')
+    const snackbar = root.querySelector('#error-snackbar')
+    const errorMessage = root.querySelector('#error-message')
+    const closeSnackbar = root.querySelector('#close-snackbar')
+
+    function toggleSection(el, show) {
+      el.classList.toggle('hidden', !show)
+    }
+
+    // Snackbar
+    function showSnackBar(msg) {
+      errorMessage.textContent = msg
+      toggleSection(snackbar, true)
+      setTimeout(() => hideSnackBar(), 5000)
+    }
+
+    function hideSnackBar() {
+      toggleSection(snackbar, false)
+    }
+
+    closeSnackbar.addEventListener('click', hideSnackBar)
+
+    let isSubmitting = false
+
+    async function handleSubmit(e) {
+      e.preventDefault()
+      if (isSubmitting) return
+
+      const formData = new FormData(form)
+
+      // Basic validation
+      const required = ['fName', 'lName', 'email', 'country', 'address']
+      let hasError = false
+
+      form
+        .querySelectorAll('input, select, textarea')
+        .forEach((el) => el.classList.remove('border-brand-red'))
+
+      for (const name of required) {
+        const el = form.querySelector(`[name="${name}"]`)
+        if (!formData.get(name)) {
+          hasError = true
+          el?.classList.add('border-brand-red')
+        }
+      }
+
+      if (hasError) {
+        showSnackBar('Missing required fields')
+        return
+      }
+
+      isSubmitting = true
+      document.body.style.cursor = 'wait'
+
+      try {
+        await fetch('/__forms.html', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        })
+
+        toggleSection(thankYouModal, true)
+        form.reset()
+      } catch (error) {
+        showSnackBar(error.toString())
+      } finally {
+        isSubmitting = false
+        document.body.style.cursor = 'default'
+      }
+    }
+
+    if (submitBtn) submitBtn.addEventListener('click', handleSubmit)
+
+    closeThankYouBtn.addEventListener('click', () => {
+      toggleSection(thankYouModal, false)
+    })
+  })
+</script>
+
+<style>
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .zoom-in-95 {
+    transform: scale(0.95);
+  }
+</style>

@@ -23,10 +23,10 @@ const branch = defineCollection({
   schema: z.object({
     name: z.string(),
     isBranch: z.boolean(),
-    email: z.string().email().optional(),
+    email: z.email().optional(),
     latitude: z.number(),
     longitude: z.number(),
-    siteLink: z.string().url().optional()
+    siteLink: z.url().optional()
   })
 })
 
@@ -42,8 +42,8 @@ const conference = defineCollection({
       presentations: item.array().optional(),
       brochures: item.array().optional(),
       abstracts: item.array().optional(),
-      video: z.string().url().optional(),
-      signupLink: z.string().url().optional()
+      video: z.url().optional(),
+      signupLink: z.url().optional()
     })
 })
 

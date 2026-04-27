@@ -1,6 +1,4 @@
 ---
-import { cn } from '../lib'
-
 /**
  * Component that renders a button that redirects to a new page
  *
@@ -19,7 +17,7 @@ interface Props {
 
 const { text, redirect_link, openInSameTab = false, className = '', id } = Astro.props
 
-const classes = cn(
+const classes = [
   `
     inline-flex h-auto w-44 items-center justify-center rounded-full border-none
     bg-brand-orange py-2 font-body text-sm font-bold text-white uppercase
@@ -28,7 +26,7 @@ const classes = cn(
     active:scale-95
   `,
   className
-)
+]
 ---
 
 {
@@ -37,12 +35,12 @@ const classes = cn(
       href={redirect_link}
       target={openInSameTab ? null : '_blank'}
       rel="noreferrer"
-      class={classes}
+      class:list={classes}
     >
       {text}
     </a>
   ) : (
-    <button type="button" class={classes} id={id}>
+    <button type="button" class:list={classes} id={id}>
       {text}
     </button>
   )

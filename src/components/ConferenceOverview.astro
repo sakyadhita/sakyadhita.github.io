@@ -1,15 +1,25 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-import type { ConferenceEntry } from '../lib'
+import { getAssetUrl } from '../lib'
+
+import type { CollectionEntry } from 'astro:content'
 
 interface Props {
   title: string
-  info: ConferenceEntry
+  info: CollectionEntry<'conference'>
 }
 
 const { title, info } = Astro.props
 const items = info.data
+
+const resolveList = (list?: any[]) =>
+  list ? list.map((i) => ({ ...i, url: getAssetUrl(i.url) })) : []
+
+const brochures = resolveList(items.brochures)
+const programs = resolveList(items.programs)
+const abstracts = resolveList(items.abstracts)
+const presentations = resolveList(items.presentations)
 ---
 
 <div class="fade-in slide-in-from-bottom-4 w-full animate-in space-y-10">
@@ -54,17 +64,15 @@ const items = info.data
       </div>
       <div class="mb-8 flex flex-col space-y-2">
         {
-          !items.brochures || items.brochures.length === 0 ? (
-            <div
-              class="
-                rounded-lg border border-dashed border-gray-200 px-4 py-2
-                text-gray-400 italic
-              "
-            >
+          brochures.length === 0 ? (
+            <div class="
+              rounded-lg border border-dashed border-gray-200 px-4 py-2
+              text-gray-400 italic
+            ">
               No info available
             </div>
           ) : (
-            items.brochures.map((program) => (
+            brochures.map((program) => (
               <a
                 href={program.url}
                 download
@@ -101,17 +109,15 @@ const items = info.data
       </div>
       <div class="mb-8 flex flex-col space-y-2">
         {
-          !items.programs || items.programs.length === 0 ? (
-            <div
-              class="
-                rounded-lg border border-dashed border-gray-200 px-4 py-2
-                text-gray-400 italic
-              "
-            >
+          programs.length === 0 ? (
+            <div class="
+              rounded-lg border border-dashed border-gray-200 px-4 py-2
+              text-gray-400 italic
+            ">
               No info available
             </div>
           ) : (
-            items.programs.map((program) => (
+            programs.map((program) => (
               <a
                 href={program.url}
                 download
@@ -148,17 +154,15 @@ const items = info.data
       </div>
       <div class="mb-8 flex flex-col space-y-2">
         {
-          !items.abstracts || items.abstracts.length === 0 ? (
-            <div
-              class="
-                rounded-lg border border-dashed border-gray-200 px-4 py-2
-                text-gray-400 italic
-              "
-            >
+          abstracts.length === 0 ? (
+            <div class="
+              rounded-lg border border-dashed border-gray-200 px-4 py-2
+              text-gray-400 italic
+            ">
               No info available
             </div>
           ) : (
-            items.abstracts.map((program) => (
+            abstracts.map((program) => (
               <a
                 href={program.url}
                 download
@@ -195,17 +199,15 @@ const items = info.data
       </div>
       <div class="mb-8 flex flex-col space-y-2">
         {
-          !items.presentations || items.presentations.length === 0 ? (
-            <div
-              class="
-                rounded-lg border border-dashed border-gray-200 px-4 py-2
-                text-gray-400 italic
-              "
-            >
+          presentations.length === 0 ? (
+            <div class="
+              rounded-lg border border-dashed border-gray-200 px-4 py-2
+              text-gray-400 italic
+            ">
               No info available
             </div>
           ) : (
-            items.presentations.map((program) => (
+            presentations.map((program) => (
               <a
                 href={program.url}
                 download
