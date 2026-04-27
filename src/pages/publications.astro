@@ -26,8 +26,8 @@ const featuredEpubs = publications.filter((p) => p.data.feature)
       {/* Landing Page Content */}
       <div id="landing-view">
         <Slideshow height="450px" width="100%" className="
-          max-md:h-[530px]
-          lg:h-[450px]
+          max-md:h-132
+          lg:h-112
         ">
           {
             featuredEpubs.map((epub) => (
@@ -162,7 +162,7 @@ const featuredEpubs = publications.filter((p) => p.data.feature)
 
                 {/* Content */}
                 <div class="
-                  relative mx-[-25px] flex flex-wrap items-start justify-center
+                  relative -mx-6 flex flex-wrap items-start justify-center
                   text-center
                 ">
                   {section.section_list.map((pub) => (

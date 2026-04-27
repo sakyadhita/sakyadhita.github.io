@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-animate';
 
 @theme {
   --color-brand-light-purple: #8477b9;
@@ -9,36 +10,27 @@
   --color-brand-red: #ea4444;
   --color-brand-grey: #9b9b9b;
   --color-brand-dark-grey: #5a5a5a;
+  --color-brand-off-white: #f7f7f7;
 
-  /* shadcn/ui theme variables */
-  --color-background: white;
-  --color-foreground: black;
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-popover: white;
-  --color-popover-foreground: black;
-  --color-border: #e4e4e7;
-  --color-input: #e4e4e7;
-  --color-ring: #a1a1aa;
-  --color-accent: #f4f4f5;
-  --color-accent-foreground: black;
-  --color-primary: var(--color-brand-orange);
-  --color-primary-foreground: white;
-  --color-secondary: var(--color-brand-light-purple);
-  --color-secondary-foreground: white;
-
-  /* Animation primitives (Tailwind v4) */
-  --animate-in: animate-in 0.2s ease-out;
-  --animate-out: animate-out 0.2s ease-in;
-  --animate-fade-in: fade-in 0.2s ease-out;
-  --animate-fade-out: fade-out 0.2s ease-in;
-  --animate-zoom-in: zoom-in 0.2s ease-out;
-  --animate-zoom-out: zoom-out 0.2s ease-in;
-  --animate-slide-in-from-top: slide-in-from-top 0.2s ease-out;
-  --animate-slide-in-from-bottom: slide-in-from-bottom 0.2s ease-out;
+  --color-social-facebook: #3b5998;
+  --color-social-youtube: #c4302b;
+  --color-social-pinterest: #e60023;
+  --color-social-goodreads: #e9e5cd;
 
   --font-heading: 'Libre Baskerville', serif;
   --font-body: 'Nunito', sans-serif;
+
+  /* Custom shadows */
+  --shadow-nav: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  --shadow-button: 2px 2px 2px rgb(63, 62, 62);
+  --shadow-footer-overlay: inset 0 0 0 1000px rgba(26, 23, 194, 0.4);
+  --shadow-card: 0px 0px 3px 0.75px rgba(0, 0, 0, 0.25);
+  --shadow-card-lg: 0px 0px 12px 3px rgba(0, 0, 0, 0.25);
+  --shadow-card-hover: 0px 0px 12px 3px var(--color-brand-dark-orange);
+}
+
+@utility download-card {
+  @apply hover:bg-brand-orange/10 hover:text-brand-orange flex items-center space-x-3 rounded-xl border border-gray-100 bg-gray-50 p-3 no-underline transition-all hover:no-underline;
 }
 
 @utility no-scrollbar {

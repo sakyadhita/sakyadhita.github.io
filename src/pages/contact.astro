@@ -143,7 +143,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
                 type="text"
                 placeholder="Full Name"
                 class="
-                  contact-input m-2 h-12 w-[95%] rounded-3xl border border-black
+                  contact-input m-2 h-12 w-11/12 rounded-3xl border border-black
                   bg-white px-6 font-body
                   focus:ring-1 focus:ring-brand-dark-purple focus:outline-none
                 "
@@ -157,7 +157,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
                 type="email"
                 placeholder="Email"
                 class="
-                  contact-input m-2 h-12 w-[95%] rounded-3xl border border-black
+                  contact-input m-2 h-12 w-11/12 rounded-3xl border border-black
                   bg-white px-6 font-body
                   focus:ring-1 focus:ring-brand-dark-purple focus:outline-none
                 "
@@ -171,7 +171,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
                 type="tel"
                 placeholder="Phone Number"
                 class="
-                  contact-input m-2 h-12 w-[95%] rounded-3xl border border-black
+                  contact-input m-2 h-12 w-11/12 rounded-3xl border border-black
                   bg-white px-6 font-body
                   focus:ring-1 focus:ring-brand-dark-purple focus:outline-none
                 "
@@ -183,7 +183,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
                 name="message"
                 placeholder="Write your message here"
                 class="
-                  contact-input m-2 h-48 w-[95%] resize-none rounded-2xl border
+                  contact-input m-2 h-48 w-11/12 resize-none rounded-2xl border
                   border-black bg-white px-6 py-4 font-body
                   focus:ring-1 focus:ring-brand-dark-purple focus:outline-none
                 "
@@ -220,7 +220,7 @@ const headerImageUrl = optimizedHeader?.src || frontmatter.image.src
     {/* The Side Image for Desktop */}
     <div
       class="
-        hidden min-h-[500px] flex-1 bg-cover bg-center bg-no-repeat
+        hidden min-h-128 flex-1 bg-cover bg-center bg-no-repeat
         lg:block
       "
       style={{ backgroundImage: `url("${headerImageUrl}")` }}

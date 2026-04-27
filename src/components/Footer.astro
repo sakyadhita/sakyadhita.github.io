@@ -24,8 +24,7 @@ const currentYear = new Date().getFullYear()
   <div
     class="
       absolute inset-0 z-[-1] size-full rounded-md bg-cover
-      bg-position-[center,top] bg-no-repeat
-      shadow-[inset_0_0_0_1000px_rgba(26,23,194,0.4)] blur-[5px]
+      bg-position-[center,top] bg-no-repeat shadow-footer-overlay blur-[5px]
     "
     style={{
       backgroundImage:
@@ -278,7 +277,7 @@ const currentYear = new Date().getFullYear()
               name="simple-icons:facebook"
               class:list={[socialIconClasses, `
                 p-1 text-white
-                group-hover:bg-[#3b5998]
+                group-hover:bg-social-facebook
               `]}
             />
           </a>
@@ -293,10 +292,13 @@ const currentYear = new Date().getFullYear()
           >
             <Icon
               name="simple-icons:youtube"
-              class:list={[socialIconClasses, `
-                rounded-xl p-1 text-white
-                group-hover:bg-[#c4302b]
-              `]}
+              class:list={[
+                socialIconClasses,
+                `
+                  rounded-xl p-1 text-white
+                  group-hover:bg-social-youtube
+                `
+              ]}
             />
           </a>
           <a
@@ -314,7 +316,7 @@ const currentYear = new Date().getFullYear()
                 socialIconClasses,
                 `
                   rounded-2xl p-2 text-white
-                  group-hover:bg-[#E60023]
+                  group-hover:bg-social-pinterest
                 `
               ]}
             />
@@ -349,7 +351,7 @@ const currentYear = new Date().getFullYear()
               name="simple-icons:goodreads"
               class:list={[socialIconClasses, `
                 p-1 text-white
-                group-hover:text-[#e9e5cd]
+                group-hover:text-social-goodreads
               `]}
             />
           </a>

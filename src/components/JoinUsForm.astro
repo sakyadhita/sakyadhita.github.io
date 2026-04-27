@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components'
 import countryRegionData from 'country-region-data/data.json'
 
 import CustomButton from './CustomButton.astro'
@@ -121,31 +122,30 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
         </div>
         {/* country dropdown field */}
         <div class="flex items-center">
-          <div class="flex-1">
+          <div class="relative flex-1">
             <select
               id="country-select"
               name="country"
-              class:list={[
-                inputClasses,
-                `
-                  appearance-none
-                  bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
-                  bg-size-[1.5em_1.5em] bg-position-[right_1rem_center]
-                  bg-no-repeat
-                `
-              ]}
+              class:list={[inputClasses, 'appearance-none bg-no-repeat']}
               required
             >
               <option value="" disabled selected>Select Country</option>
               {countries.map((country) => <option value={country}>{country}</option>)}
             </select>
+            <Icon
+              name="lucide:chevron-down"
+              class="
+                pointer-events-none absolute top-1/2 right-4 size-5
+                -translate-y-1/2 text-gray-500
+              "
+            />
           </div>
           <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
         </div>
 
         {/* address fields - hidden by default, shown when country selected */}
         <div id="address-fields" class="
-          fade-in slide-in-from-top-4 hidden space-y-4 pt-2
+          hidden space-y-4 pt-2 fade-in slide-in-from-top-4
         ">
           {/* address line 1 field */}
           <div class="flex items-center">
@@ -216,7 +216,7 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
       </section>
 
       {/* Membership specific sections */}
-      <div id="membership-sections" class="fade-in space-y-8 pt-8">
+      <div id="membership-sections" class="space-y-8 pt-8 fade-in">
         <section class="space-y-4">
           <h1
             class="
@@ -228,24 +228,23 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
           </h1>
           {/* new member dropdown */}
           <div class="flex items-center">
-            <div class="flex-1">
+            <div class="relative flex-1">
               <select
                 id="isNewMember"
                 name="isNewMember"
-                class:list={[
-                  inputClasses,
-                  `
-                    appearance-none
-                    bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
-                    bg-size-[1.5em_1.5em] bg-position-[right_1rem_center]
-                    bg-no-repeat
-                  `
-                ]}
+                class:list={[inputClasses, 'appearance-none bg-no-repeat']}
               >
                 <option value="" disabled selected>New or Renewing Member?</option>
                 <option value="new">New</option>
                 <option value="renew">Renewing</option>
               </select>
+              <Icon
+                name="lucide:chevron-down"
+                class="
+                  pointer-events-none absolute top-1/2 right-4 size-5
+                  -translate-y-1/2 text-gray-500
+                "
+              />
             </div>
             <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
           </div>
@@ -273,19 +272,11 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
             Payment Options
           </h1>
           <div class="flex items-center">
-            <div class="flex-1">
+            <div class="relative flex-1">
               <select
                 name="membershipType"
                 id="membership-select"
-                class:list={[
-                  inputClasses,
-                  `
-                    appearance-none
-                    bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')]
-                    bg-size-[1.5em_1.5em] bg-position-[right_1rem_center]
-                    bg-no-repeat
-                  `
-                ]}
+                class:list={[inputClasses, 'appearance-none bg-no-repeat']}
               >
                 <option value="" disabled selected>Select Membership</option>
                 {
@@ -296,6 +287,13 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
                   ))
                 }
               </select>
+              <Icon
+                name="lucide:chevron-down"
+                class="
+                  pointer-events-none absolute top-1/2 right-4 size-5
+                  -translate-y-1/2 text-gray-500
+                "
+              />
             </div>
             <span class="ml-2 shrink-0 text-xl font-bold text-brand-red">*</span>
           </div>
@@ -392,8 +390,8 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
   >
     <div
       class="
-        fade-in zoom-in-95 w-full max-w-xl rounded-lg border-2
-        border-brand-orange bg-white p-8 shadow-lg
+        w-full max-w-xl rounded-lg border-2 border-brand-orange bg-white p-8
+        shadow-lg fade-in zoom-in-95
       "
     >
       <h1 class="
@@ -418,8 +416,8 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
   >
     <div
       class="
-        fade-in zoom-in-95 w-full max-w-md rounded-lg border-2
-        border-brand-orange bg-white p-8 shadow-lg
+        w-full max-w-md rounded-lg border-2 border-brand-orange bg-white p-8
+        shadow-lg fade-in zoom-in-95
       "
     >
       <p class="px-4 pt-4 text-center font-body text-2xl text-black" id="thank-you-message"></p>
@@ -427,8 +425,8 @@ const inputClasses = `h-12 w-full rounded-2xl border border-black bg-white px-4 
         <button
           id="close-thank-you"
           class="
-            h-10 min-w-32 rounded-full border-[1.2px] border-black
-            bg-transparent font-body text-lg font-bold text-black
+            h-10 min-w-32 rounded-full border border-black bg-transparent
+            font-body text-lg font-bold text-black
             hover:bg-gray-100
           "
         >

@@ -15,9 +15,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/'
   {/* The actual Navigation Bar */}
   <div
     class="
-      flex h-12 w-full items-center justify-between bg-brand-light-purple px-6
-      py-2 text-white shadow-none
-      md:h-32 md:px-14 md:py-4 md:shadow-[0px_3px_6px_rgba(0,0,0,0.16)]
+      relative z-1010 flex h-12 w-full items-center justify-between
+      bg-brand-light-purple px-6 py-2 text-white shadow-none
+      md:h-32 md:px-14 md:py-4 md:shadow-nav
     "
   >
     {/* Logo and Branding */}

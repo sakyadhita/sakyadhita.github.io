@@ -141,7 +141,7 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
       const prevItem = document.createElement('li')
       const isFirst = currentPage === 0
       prevItem.innerHTML = `
-        <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 gap-1 pl-2.5 cursor-pointer ${isFirst ? 'pointer-events-none opacity-50' : ''}" aria-label="Go to previous page">
+        <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2 gap-1 pl-2.5 cursor-pointer ${isFirst ? 'pointer-events-none opacity-50' : ''}" aria-label="Go to previous page">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left h-4 w-4"><path d="m15 18-6-6 6-6"/></svg>
           <span>Previous</span>
         </a>
@@ -169,7 +169,7 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
           const item = document.createElement('li')
           const isActive = currentPage === i
           item.innerHTML = `
-            <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${isActive ? 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground' : 'hover:bg-accent hover:text-accent-foreground'} h-9 w-9 cursor-pointer font-body" ${isActive ? 'aria-current="page"' : ''}>
+            <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300 disabled:pointer-events-none disabled:opacity-50 ${isActive ? 'border border-gray-200 bg-white shadow-sm hover:bg-gray-100 hover:text-gray-900' : 'hover:bg-gray-100 hover:text-gray-900'} h-9 w-9 cursor-pointer font-body" ${isActive ? 'aria-current="page"' : ''}>
               ${i + 1}
             </a>
           `
@@ -202,7 +202,7 @@ const newsletters = newslettersRaw.toSorted((a, b) => {
       const nextItem = document.createElement('li')
       const isLast = currentPage === maxPages - 1
       nextItem.innerHTML = `
-        <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 gap-1 pr-2.5 cursor-pointer ${isLast ? 'pointer-events-none opacity-50' : ''}" aria-label="Go to next page">
+        <a class="inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2 gap-1 pr-2.5 cursor-pointer ${isLast ? 'pointer-events-none opacity-50' : ''}" aria-label="Go to next page">
           <span>Next</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
         </a>
