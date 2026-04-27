@@ -54,9 +54,8 @@ This project is the official website for **Sakyadhita International Association 
 - `src/components/`: Flattened directory of Astro components.
 - `src/content/`: Content collections (news, branch, conference, etc.).
 - `src/layouts/`: Global wrapper components (e.g., `PageLayout.astro`).
-- `src/lib/`: Shared TypeScript types, utility functions, and image helpers.
 - `src/assets/`: Local images and branding assets for Astro optimization. All documents (PDFs, ZIPs) are also co-located here for Vite bundling.
-- `public/`: Legacy directory for unprocessed static assets (fonts, robots.txt). All website assets have been moved to `src/assets/`.
+- `public/`: Unprocessed static assets (fonts, robots.txt).
 - `tests/`: Playwright E2E tests.
 
 ## ✍️ Development Conventions
