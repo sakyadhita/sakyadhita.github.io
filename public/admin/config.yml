@@ -1,0 +1,158 @@
+backend:
+  name: git-gateway
+  branch: main
+media_folder: src/assets
+public_folder: ../../assets
+collections:
+  - name: news
+    label: News & Events
+    folder: src/content/news
+    create: true
+    delete: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Publish Date, name: pubDate, widget: datetime }
+      - { label: Image, name: imageLink, widget: image }
+      - { label: Redirect Link, name: redirectLink, widget: string, required: false }
+      - label: Open In Same Tab
+        name: openInSameTab
+        widget: boolean
+        default: false
+        required: false
+      - label: Draft
+        name: draft
+        widget: boolean
+        default: false
+        required: false
+  - name: branch
+    label: Branches & Chapters
+    folder: src/content/branch
+    create: true
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Is Branch, name: isBranch, widget: boolean }
+      - { label: Email, name: email, widget: string, required: false }
+      - { label: Latitude, name: latitude, widget: number, value_type: float }
+      - { label: Longitude, name: longitude, widget: number, value_type: float }
+      - { label: Site Link, name: siteLink, widget: string, required: false }
+  - name: conference
+    label: Conferences
+    folder: src/content/conference
+    create: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Conference Number
+        name: confNum
+        widget: number
+        value_type: int
+      - { label: Location, name: location, widget: string }
+      - label: Slideshow Images
+        name: slideShowImages
+        widget: list
+        field: { label: Image, name: image, widget: image }
+        required: false
+      - label: Programs
+        name: programs
+        widget: list
+        fields:
+          - { label: Description, name: description, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+        required: false
+      - label: Presentations
+        name: presentations
+        widget: list
+        fields:
+          - { label: Description, name: description, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+        required: false
+      - label: Brochures
+        name: brochures
+        widget: list
+        fields:
+          - { label: Description, name: description, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+        required: false
+      - label: Abstracts
+        name: abstracts
+        widget: list
+        fields:
+          - { label: Description, name: description, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+        required: false
+      - { label: Video ID (YouTube), name: video, widget: string, required: false }
+      - { label: Signup Link, name: signupLink, widget: string, required: false }
+  - name: newsletter
+    label: Newsletters
+    folder: src/content/newsletter
+    create: true
+    fields:
+      - { label: Volume, name: volume, widget: number, value_type: int }
+      - { label: Number, name: number, widget: number, value_type: int }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - { label: PDF Link, name: pdfLink, widget: string }
+      - { label: Image Preview, name: imageLink, widget: image }
+  - name: publication
+    label: Publications
+    folder: src/content/publication
+    create: true
+    fields:
+      - { label: Category, name: category, widget: string }
+      - { label: ID, name: id, widget: number, value_type: int }
+      - { label: Title, name: title, widget: string }
+      - { label: Author, name: author, widget: string }
+      - { label: Feature, name: feature, widget: boolean }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Image Preview, name: imageLink, widget: image }
+      - { label: PDF Link, name: pdfLink, widget: string }
+  - name: section
+    label: Sections
+    folder: src/content/section
+    create: true
+    fields:
+      - { label: Page, name: page, widget: string }
+      - { label: Title, name: title, widget: string }
+      - { label: Subtitle, name: subtitle, widget: string, required: false }
+      - { label: Is Published, name: isPublished, widget: boolean }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Redirect Link, name: redirectLink, widget: string, required: false }
+  - name: exco
+    label: Executive Committee
+    folder: src/content/exco
+    create: true
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Position, name: position, widget: string }
+      - { label: Subtitle, name: subtitle, widget: string, required: false }
+      - { label: Start Year, name: startYear, widget: number, value_type: int }
+      - { label: End Year, name: endYear, widget: number, value_type: int }
+      - label: Rank
+        name: rank
+        widget: number
+        value_type: int
+        required: false
+      - { label: Image, name: imageLink, widget: image, required: false }
+      - { label: Redirect Link, name: redirectLink, widget: string, required: false }
+      - label: Open In Same Tab
+        name: openInSameTab
+        widget: boolean
+        default: false
+  - name: volinterest
+    label: Volunteer Interests
+    folder: src/content/volinterest
+    create: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+  - name: membertype
+    label: Membership Types
+    folder: src/content/membertype
+    create: true
+    fields:
+      - { label: ID, name: id, widget: number, value_type: int }
+      - { label: Title, name: title, widget: string }
+      - label: Cost
+        name: cost
+        widget: number
+        value_type: float
+        required: false
