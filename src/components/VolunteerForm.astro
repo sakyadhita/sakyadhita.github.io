@@ -211,11 +211,11 @@ const countries = countryRegionData.map((c) => c.countryName)
 
     if (!form) return
 
-    function toggleSection(el, show) {
+    function toggleSection(el: HTMLElement | null, show: boolean) {
       if (el) el.classList.toggle('hidden', !show)
     }
 
-    function showSnackBar(msg) {
+    function showSnackBar(msg: string) {
       if (errorMessage) errorMessage.textContent = msg
       toggleSection(snackbar, true)
       setTimeout(() => hideSnackBar(), 5000)
@@ -229,7 +229,7 @@ const countries = countryRegionData.map((c) => c.countryName)
 
     let isSubmitting = false
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: Event) {
       e.preventDefault()
       if (isSubmitting) return
 
@@ -266,7 +266,7 @@ const countries = countryRegionData.map((c) => c.countryName)
         toggleSection(thankYouModal, true)
         form.reset()
       } catch (error) {
-        showSnackBar(error.toString())
+        showSnackBar(error instanceof Error ? error.message : String(error))
       } finally {
         isSubmitting = false
         document.body.style.cursor = 'default'

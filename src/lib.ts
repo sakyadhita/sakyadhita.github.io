@@ -10,7 +10,7 @@ export const allAssets = import.meta.glob('/src/assets/**/*', {
   import: 'default'
 })
 
-export function getAssetUrl(assetPath: string | null | undefined): string | null {
+export function getAssetUrl(assetPath?: string | null): string | null {
   if (!assetPath) return null
 
   const assets: Record<string, unknown> = allAssets

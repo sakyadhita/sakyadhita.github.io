@@ -14,15 +14,16 @@
     "lint": "pnpm run lint:prettier && pnpm run lint:eslint",
     "lint:prettier": "prettier --write  .",
     "lint:eslint": "eslint --fix .",
-    "clean": "rm -rf dist .astro node_modules"
+    "clean": "rm -rf dist .astro node_modules",
+    "refresh": "pnpm dlx @astrojs/upgrade ; pnpm up -L"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.10",
     "@astrojs/netlify": "^7.0.8",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "@paypal/paypal-js": "^9.6.0",
-    "astro": "^6.1.9",
+    "@paypal/paypal-js": "^9.7.0",
+    "astro": "^6.1.10",
     "astro-icon": "^1.1.5",
     "country-region-data": "^4.1.0",
     "d3": "^7.9.0",
@@ -34,7 +35,7 @@
     "topojson-client": "^3.1.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
+    "@astrojs/check": "^0.9.9",
     "@eslint/markdown": "^8.0.1",
     "@iconify-json/lucide": "^1.2.104",
     "@iconify-json/simple-icons": "^1.2.80",
@@ -46,27 +47,26 @@
     "@types/d3": "^7.4.3",
     "@types/node": "^25.6.0",
     "@types/topojson-client": "^3.1.5",
-    "@typescript-eslint/parser": "^8.59.0",
+    "@typescript-eslint/parser": "^8.59.1",
     "@vitest/ui": "^4.1.5",
-    "astro-decap-cms": "^0.2.0",
     "astro-eslint-parser": "^1.4.0",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-astro": "^1.7.0",
-    "eslint-plugin-better-tailwindcss": "^4.4.1",
+    "eslint-plugin-better-tailwindcss": "^4.5.0",
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-unicorn": "^64.0.0",
     "globals": "^17.5.0",
     "jsdom": "^29.1.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "0.7.3",
+    "prettier-plugin-tailwindcss": "0.8.0",
     "tailwindcss": "^4.2.4",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.0",
+    "typescript-eslint": "^8.59.1",
     "vitest": "^4.1.5"
   },
-  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
+  "packageManager": "pnpm@10.33.2+sha512.a90faf6feeab71ad6c6e57f94e0fe1a12f5dcc22cd754db40ae9593eb6a3e0b6b12e3540218bb37ae083404b1f2ce6db2a4121e979829b4aff94b99f49da1cf8"
 }
